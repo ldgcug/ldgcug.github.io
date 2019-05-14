@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ldg个人博客</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.github.com/"/>
+  <updated>2019-05-14T09:42:04.830Z</updated>
+  <id>http://www.github.com/</id>
+  
+  <author>
+    <name>ldg</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python实现谷歌翻译PDF换行的问题</title>
+    <link href="http://www.github.com/2019/05/14/python%E5%AE%9E%E7%8E%B0%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91PDF%E6%8D%A2%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://www.github.com/2019/05/14/python实现谷歌翻译PDF换行的问题/</id>
+    <published>2019-05-14T09:04:16.000Z</published>
+    <updated>2019-05-14T09:42:04.830Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前提条件&quot;&gt;&lt;a href=&quot;#前提条件&quot; class=&quot;headerlink&quot; title=&quot;前提条件&quot;&gt;&lt;/a&gt;前提条件&lt;/h1&gt;&lt;h3 id=&quot;（1）浏览器-chrome&quot;&gt;&lt;a href=&quot;#（1）浏览器-chrome&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://www.github.com/tags/Hexo/"/>
+    
+      <category term="随手笔记" scheme="http://www.github.com/tags/%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo图片显示和Github上图片显示的解决办法</title>
+    <link href="http://www.github.com/2019/05/14/Hexo%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E5%92%8CGithub%E4%B8%8A%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>http://www.github.com/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/</id>
+    <published>2019-05-14T07:56:32.000Z</published>
+    <updated>2019-05-14T09:37:50.782Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;1、配置-config-yml文件&quot;&gt;&lt;a href=&quot;#1、配置-config-yml文件&quot; class=&quot;headerlink&quot; title=&quot;1、配置_config.yml文件&quot;&gt;&lt;/a&gt;1、配置_config.yml文件&lt;/h1&gt;&lt;h3
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://www.github.com/tags/Hexo/"/>
+    
+      <category term="随手笔记" scheme="http://www.github.com/tags/%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo + Github创建博客过程中踩过的坑</title>
+    <link href="http://www.github.com/2019/05/14/Hexo-Github%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/"/>
+    <id>http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/</id>
+    <published>2019-05-14T01:58:45.000Z</published>
+    <updated>2019-05-14T09:37:58.497Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一、系统环境配置&quot;&gt;&lt;a href=&quot;#一、系统环境配置&quot; class=&quot;headerlink&quot; title=&quot;一、系统环境配置&quot;&gt;&lt;/a&gt;一、系统环境配置&lt;/h1&gt;&lt;h2 id=&quot;要使用Hexo，需要在系统中支持Nodejs以及Git&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://www.github.com/tags/Hexo/"/>
+    
+      <category term="随手笔记" scheme="http://www.github.com/tags/%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://www.github.com/2019/05/13/hello-world/"/>
+    <id>http://www.github.com/2019/05/13/hello-world/</id>
+    <published>2019-05-13T14:33:19.072Z</published>
+    <updated>2019-05-14T09:38:04.854Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://www.github.com/tags/Hexo/"/>
+    
+      <category term="随手笔记" scheme="http://www.github.com/tags/%E9%9A%8F%E6%89%8B%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+</feed>
