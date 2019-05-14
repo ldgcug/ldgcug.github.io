@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo,随手笔记,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、系统环境配置要使用Hexo，需要在系统中支持Nodejs以及Git1、安装Node.jsNode.js官网 ​        打开cmd命令行，输入node -v和npm -v，成功界面如下  2、安装GitGit官网 ​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）   二、Github配置前提条件：已经拥有一个github账号，并已成功登陆1、点击【">
+<meta name="keywords" content="Hexo,随手笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo + Github创建博客过程中踩过的坑">
+<meta property="og:url" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/index.html">
+<meta property="og:site_name" content="ldgcug">
+<meta property="og:description" content="一、系统环境配置要使用Hexo，需要在系统中支持Nodejs以及Git1、安装Node.jsNode.js官网 ​        打开cmd命令行，输入node -v和npm -v，成功界面如下  2、安装GitGit官网 ​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）   二、Github配置前提条件：已经拥有一个github账号，并已成功登陆1、点击【">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Nodejs.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Git.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/new_repository.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Github_Pages.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/blog.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_version.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/npm_install.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_g.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_s.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_interface.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/git_set.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_key.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_sshkey.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_file.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/github_ssh.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_t.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/config_yaml.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/github_repo.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_chajian.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/new_blog.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/deploy_bloh.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/blog_contents.png">
+<meta property="og:updated_time" content="2019-05-14T09:37:58.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo + Github创建博客过程中踩过的坑">
+<meta name="twitter:description" content="一、系统环境配置要使用Hexo，需要在系统中支持Nodejs以及Git1、安装Node.jsNode.js官网 ​        打开cmd命令行，输入node -v和npm -v，成功界面如下  2、安装GitGit官网 ​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）   二、Github配置前提条件：已经拥有一个github账号，并已成功登陆1、点击【">
+<meta name="twitter:image" content="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Nodejs.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/">
+
+
+
+
+
+  <title>Hexo + Github创建博客过程中踩过的坑 | ldgcug</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldgcug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldgcug">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hexo + Github创建博客过程中踩过的坑</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-14T09:58:45+08:00">
+                2019-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、系统环境配置"><a href="#一、系统环境配置" class="headerlink" title="一、系统环境配置"></a>一、系统环境配置</h1><h2 id="要使用Hexo，需要在系统中支持Nodejs以及Git"><a href="#要使用Hexo，需要在系统中支持Nodejs以及Git" class="headerlink" title="要使用Hexo，需要在系统中支持Nodejs以及Git"></a>要使用Hexo，需要在系统中支持Nodejs以及Git</h2><h3 id="1、安装Node-js"><a href="#1、安装Node-js" class="headerlink" title="1、安装Node.js"></a>1、安装Node.js</h3><p><a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js官网</a></p>
+<p>​        打开cmd命令行，输入node -v和npm -v，成功界面如下</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Nodejs.png" alt="logo"></p>
+<h3 id="2、安装Git"><a href="#2、安装Git" class="headerlink" title="2、安装Git"></a>2、安装Git</h3><p><a href="https://git-scm.com/download/" target="_blank" rel="noopener">Git官网</a></p>
+<p>​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Git.png" alt="logo"></p>
+<h1 id><a href="#" class="headerlink" title=" "></a> </h1><h1 id="二、Github配置"><a href="#二、Github配置" class="headerlink" title="二、Github配置"></a>二、Github配置</h1><h2 id="前提条件：已经拥有一个github账号，并已成功登陆"><a href="#前提条件：已经拥有一个github账号，并已成功登陆" class="headerlink" title="前提条件：已经拥有一个github账号，并已成功登陆"></a>前提条件：已经拥有一个github账号，并已成功登陆</h2><h3 id="1、点击【New-repository】，创建一个版本仓库"><a href="#1、点击【New-repository】，创建一个版本仓库" class="headerlink" title="1、点击【New repository】，创建一个版本仓库"></a>1、点击【New repository】，创建一个版本仓库</h3><p>​        注：仓库名称必须为username.github.io，我这里的username为ldgcug</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/new_repository.png" alt="logo"></p>
+<h3 id="2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问"><a href="#2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问" class="headerlink" title="2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问"></a>2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问</h3><p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Github_Pages.png" alt="logo"></p>
+<h1 id="三、安装Hexo并配置"><a href="#三、安装Hexo并配置" class="headerlink" title="三、安装Hexo并配置"></a>三、安装Hexo并配置</h1><h3 id="安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"><a href="#安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面" class="headerlink" title="安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"></a>安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面</h3><p>​        输入  npm install hexo -g ，开始安装Hexo</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/blog.png" alt="logo"></p>
+<p>​        安装成功后，输入   hexo -v，能看到版本号</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_version.png" alt="logo"></p>
+<p>​        输入 hexo init，初始化该文件夹（此处不显示图片过程）</p>
+<p>​        输入  npm install ，安装所需要的组件</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/npm_install.png" alt="logo"></p>
+<p>​        输入  hexo g，体验Hexo</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_g.png" alt="logo"></p>
+<p>​        输入 hexo s，开启服务器，访问该网址，正式体验Hexo</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_s.png" alt="logo"></p>
+<p>​        出现下图，则安装成功</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_interface.png" alt="logo"></p>
+<h1 id="四、Hexo与Github-Pages联系起来"><a href="#四、Hexo与Github-Pages联系起来" class="headerlink" title="四、Hexo与Github Pages联系起来"></a>四、Hexo与Github Pages联系起来</h1><h2 id="1、设置Git的user-name-和email（如果第一次配置）"><a href="#1、设置Git的user-name-和email（如果第一次配置）" class="headerlink" title="1、设置Git的user name 和email（如果第一次配置）"></a>1、设置Git的user name 和email（如果第一次配置）</h2><p>​        注：将用户名和邮箱换成自己的用户名和邮箱</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/git_set.png" alt="logo"></p>
+<h3 id="2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）"><a href="#2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）" class="headerlink" title="2、输入   ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）"></a>2、输入   ssh-keygen -t rsa -C “<a href="mailto:569167692@qq.com" target="_blank" rel="noopener">569167692@qq.com</a>”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）</h3><p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh.png" alt="logo"></p>
+<p>​        输入   eval “$(ssh-agent -s)”  ，添加密钥到 ssh-agent</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_key.png" alt="logo"></p>
+<p>​        输入  ssh-add ~/.ssh/id_rsa  ，添加生成的SSH key 到 ssh-agent</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_sshkey.png" alt="logo"></p>
+<p>​        输入 cd ~/.ssh，检查是否有.ssh文件夹，若没有，则进入C:\Users\Administrator\.ssh</p>
+<p>​        输入 ls，查看.ssh文件夹下文件</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_file.png" alt="logo"></p>
+<p>​        打开   id_rsa.pub文件，将其中的内容复制到缓存中</p>
+<p>​        登陆Github，点击【头像】下的【setting】，点击左侧的【SSH  and GPG keys】，点击【New SSH key】，将刚才复制的 id_rsa.pub 文件复制到Key中，添加ssh</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/github_ssh.png" alt="logo"></p>
+<p>​        输入  ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>  ，测试添加ssh是否成功，如果看到Hi 后面是你的用户名，则添加成功</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_t.png" alt="logo"></p>
+<h3 id="3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）"><a href="#3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）" class="headerlink" title="3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）"></a>3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）</h3><p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/config_yaml.png" alt="logo"></p>
+<p>​        其中，repo的值在github项目里的ssh中</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/github_repo.png" alt="logo"></p>
+<p>​        注：在_config_yaml文件中，type、repo、branch文件后面有一个空格，即上图中添加的代码会变成绿色，最开始没有空格时，遇到了很多的坑</p>
+<h1 id="五、新建博客"><a href="#五、新建博客" class="headerlink" title="五、新建博客"></a>五、新建博客</h1><h3 id="1、在cmd-命令种安装扩展"><a href="#1、在cmd-命令种安装扩展" class="headerlink" title="1、在cmd 命令种安装扩展"></a>1、在cmd 命令种安装扩展</h3><p>​        输入 ：  npm install hexo-deployer-git –save</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_chajian.png" alt="logo"></p>
+<h3 id="2、新建博客"><a href="#2、新建博客" class="headerlink" title="2、新建博客"></a>2、新建博客</h3><p>​        在git bash窗口中，执行命令：  hexo new post “博客名”</p>
+<p>​        会发现在soucrce\_posts 文件下，多出刚创建的博客.md</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/new_blog.png" alt="logo"></p>
+<h3 id="3、部署发布"><a href="#3、部署发布" class="headerlink" title="3、部署发布"></a>3、部署发布</h3><p>​        使用编辑器编辑好文章后，使用命令： hexo d -g ，就可以生成和部署了</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/deploy_bloh.png" alt="logo"></p>
+<p>​        部署成功后，访问你的地址：http//用户名.github.io 。就能看到刚生成的文章。</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/blog_contents.png" alt="logo"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/随手笔记/" rel="tag"># 随手笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/13/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/" rel="prev" title="Hexo图片显示和Github上图片显示的解决办法">
+                Hexo图片显示和Github上图片显示的解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、系统环境配置"><span class="nav-number">1.</span> <span class="nav-text">一、系统环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#要使用Hexo，需要在系统中支持Nodejs以及Git"><span class="nav-number">1.1.</span> <span class="nav-text">要使用Hexo，需要在系统中支持Nodejs以及Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装Node-js"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、安装Git"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、安装Git</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Github配置"><span class="nav-number">3.</span> <span class="nav-text">二、Github配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前提条件：已经拥有一个github账号，并已成功登陆"><span class="nav-number">3.1.</span> <span class="nav-text">前提条件：已经拥有一个github账号，并已成功登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、点击【New-repository】，创建一个版本仓库"><span class="nav-number">3.1.1.</span> <span class="nav-text">1、点击【New repository】，创建一个版本仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问"><span class="nav-number">3.1.2.</span> <span class="nav-text">2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、安装Hexo并配置"><span class="nav-number">4.</span> <span class="nav-text">三、安装Hexo并配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"><span class="nav-number">4.0.1.</span> <span class="nav-text">安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Hexo与Github-Pages联系起来"><span class="nav-number">5.</span> <span class="nav-text">四、Hexo与Github Pages联系起来</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、设置Git的user-name-和email（如果第一次配置）"><span class="nav-number">5.1.</span> <span class="nav-text">1、设置Git的user name 和email（如果第一次配置）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）"><span class="nav-number">5.1.1.</span> <span class="nav-text">2、输入   ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）"><span class="nav-number">5.1.2.</span> <span class="nav-text">3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、新建博客"><span class="nav-number">6.</span> <span class="nav-text">五、新建博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、在cmd-命令种安装扩展"><span class="nav-number">6.0.1.</span> <span class="nav-text">1、在cmd 命令种安装扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、新建博客"><span class="nav-number">6.0.2.</span> <span class="nav-text">2、新建博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、部署发布"><span class="nav-number">6.0.3.</span> <span class="nav-text">3、部署发布</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
