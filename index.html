@@ -62,6 +62,50 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-python实现谷歌翻译PDF换行的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/14/python实现谷歌翻译PDF换行的问题/" class="article-date">
+  <time datetime="2019-05-14T09:04:16.000Z" itemprop="datePublished">2019-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/14/python实现谷歌翻译PDF换行的问题/">python实现谷歌翻译PDF换行的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><h3 id="（1）浏览器-chrome"><a href="#（1）浏览器-chrome" class="headerlink" title="（1）浏览器 chrome"></a>（1）浏览器 chrome</h3><h3 id="（2）python编辑器：pycharm"><a href="#（2）python编辑器：pycharm" class="headerlink" title="（2）python编辑器：pycharm"></a>（2）python编辑器：pycharm</h3><h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><h3 id="1、-pycharm上安装pyperclip、webbrowserdownloader"><a href="#1、-pycharm上安装pyperclip、webbrowserdownloader" class="headerlink" title="1、 pycharm上安装pyperclip、webbrowserdownloader"></a>1、 pycharm上安装pyperclip、webbrowserdownloader</h3><p><img src="/2019/05/14/python实现谷歌翻译PDF换行的问题/pycharm.png" alt="logo"></p>
+<h3 id="2、创建google-translate-py文件，并将如下代码复制粘贴至google-translate-py文件"><a href="#2、创建google-translate-py文件，并将如下代码复制粘贴至google-translate-py文件" class="headerlink" title="2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件"></a>2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> pyperclip</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line">copyBuff = <span class="string">' '</span></span><br><span class="line">num = <span class="number">1</span></span><br><span class="line"><span class="comment">#convinent to change num</span></span><br><span class="line"><span class="keyword">while</span> num == <span class="number">1</span>:</span><br><span class="line">    num = num + <span class="number">1</span></span><br><span class="line">    copyedText = pyperclip.paste()</span><br><span class="line">    <span class="keyword">if</span> copyBuff != copyedText:</span><br><span class="line">        copyBuff = copyedText</span><br><span class="line">    normalizedText = copyBuff.replace(<span class="string">'\n'</span>, <span class="string">' '</span>)</span><br><span class="line">    url = <span class="string">'https://translate.google.cn/#en/zh-CN/'</span> + normalizedText</span><br><span class="line">    webbrowser.open(url)</span><br></pre></td></tr></table></figure>
+<h3 id="3、运行"><a href="#3、运行" class="headerlink" title="3、运行"></a>3、运行</h3><h4 id="（1）在pdf上任意选择一个段落，复制"><a href="#（1）在pdf上任意选择一个段落，复制" class="headerlink" title="（1）在pdf上任意选择一个段落，复制"></a>（1）在pdf上任意选择一个段落，复制</h4><p><img src="/2019/05/14/python实现谷歌翻译PDF换行的问题/pdf.png" alt="logo"></p>
+<h4 id="（2）运行google-translate-py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译"><a href="#（2）运行google-translate-py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译" class="headerlink" title="（2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译"></a>（2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译</h4><p><img src="/2019/05/14/python实现谷歌翻译PDF换行的问题/google_trans.png" alt="logo"></p>
+<h2 id="注：在换行出现‘-’的情况下，可能没有处理，即如下情况："><a href="#注：在换行出现‘-’的情况下，可能没有处理，即如下情况：" class="headerlink" title="注：在换行出现‘-’的情况下，可能没有处理，即如下情况："></a>注：在换行出现‘-’的情况下，可能没有处理，即如下情况：</h2><pre><code>在di-rectly这里，google翻译中没有解决，不过不影响翻译
+We present the first deep learning model to successfully learn control policies di-rectly from high-dimensional sensory input using reinforcement learning. 
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.github.com/2019/05/14/python实现谷歌翻译PDF换行的问题/" data-id="cjvnkxuy20004q4qo5sc8rhjv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随手笔记/">随手笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Hexo图片显示和Github上图片显示的解决办法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/" class="article-date">
@@ -84,19 +128,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
-        
-          <h1 id="1、配置-config-yml文件"><a href="#1、配置-config-yml文件" class="headerlink" title="1、配置_config.yml文件"></a>1、配置_config.yml文件</h1><h3 id="找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml"><a href="#找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml" class="headerlink" title="找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml"></a>找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml</h3><h3 id="打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图"><a href="#打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图" class="headerlink" title="打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图"></a>打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/config.png" alt="logo"></p>
-          
-            <p class="article-more-link">
-              <a href="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/#more">Read More</a>
-            </p>
-          
-        
+        <h1 id="1、配置-config-yml文件"><a href="#1、配置-config-yml文件" class="headerlink" title="1、配置_config.yml文件"></a>1、配置_config.yml文件</h1><h3 id="找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml"><a href="#找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml" class="headerlink" title="找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml"></a>找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml</h3><h3 id="打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图"><a href="#打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图" class="headerlink" title="打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图"></a>打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/config.png" alt="logo"></p>
+<h1 id="2、post-asset-folder-设置为true和false的区别"><a href="#2、post-asset-folder-设置为true和false的区别" class="headerlink" title="2、post_asset_folder 设置为true和false的区别"></a>2、post_asset_folder 设置为true和false的区别</h1><h3 id="当post-asset-folder设置为true后，使用命令：hexo-new-post-“新博客名称”-，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图"><a href="#当post-asset-folder设置为true后，使用命令：hexo-new-post-“新博客名称”-，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图" class="headerlink" title="当post_asset_folder设置为true后，使用命令：hexo new post “新博客名称” ，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图"></a>当post_asset_folder设置为true后，使用命令：hexo new post “新博客名称” ，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/same_name_file.png" alt="logo"></p>
+<h1 id="3、安装插件"><a href="#3、安装插件" class="headerlink" title="3、安装插件"></a>3、安装插件</h1><h3 id="打开git-bash，进入到博客的根目录下（如：cd-d-blog-），执行命令：npm-install-https-github-com-CodeFalling-hexo-asset-image–save-，完成插件的安装"><a href="#打开git-bash，进入到博客的根目录下（如：cd-d-blog-），执行命令：npm-install-https-github-com-CodeFalling-hexo-asset-image–save-，完成插件的安装" class="headerlink" title="打开git bash，进入到博客的根目录下（如：cd d/blog/），执行命令：npm install https://github.com/CodeFalling/hexo-asset-image–save  ，完成插件的安装"></a>打开git bash，进入到博客的根目录下（如：cd d/blog/），执行命令：npm install <a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2FCodeFalling%2Fhexo-asset-image" target="_blank" rel="noopener">https://github.com/CodeFalling/hexo-asset-image</a>–save  ，完成插件的安装</h3><h1 id="4、图片存放"><a href="#4、图片存放" class="headerlink" title="4、图片存放"></a>4、图片存放</h1><h3 id="将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）"><a href="#将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）" class="headerlink" title="将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）"></a>将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）</h3><h3 id><a href="#" class="headerlink" title></a><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/sub_same_name.png" alt="logo"></h3><h1 id="5、本地查看显示效果"><a href="#5、本地查看显示效果" class="headerlink" title="5、本地查看显示效果"></a>5、本地查看显示效果</h1><h3 id="使用-hexo-s-命令，运行本地博客，成功显示图片如下图"><a href="#使用-hexo-s-命令，运行本地博客，成功显示图片如下图" class="headerlink" title="使用 hexo s 命令，运行本地博客，成功显示图片如下图"></a>使用 hexo s 命令，运行本地博客，成功显示图片如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/local_blog.png" alt="logo"></p>
+<h1 id="6、上传github并显示"><a href="#6、上传github并显示" class="headerlink" title="6、上传github并显示"></a>6、上传github并显示</h1><h3 id="使用-hexo-g-d-，重新生成并上传，浏览器输入https-ldgcug-github-io-即可查看效果"><a href="#使用-hexo-g-d-，重新生成并上传，浏览器输入https-ldgcug-github-io-即可查看效果" class="headerlink" title="使用 hexo g -d ，重新生成并上传，浏览器输入https://ldgcug.github.io 即可查看效果"></a>使用 hexo g -d ，重新生成并上传，浏览器输入<a href="https://ldgcug.github.io" target="_blank" rel="noopener">https://ldgcug.github.io</a> 即可查看效果</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/github_blog.png" alt="logo"></p>
+<h1 id="遇到过的坑："><a href="#遇到过的坑：" class="headerlink" title="遇到过的坑："></a>遇到过的坑：</h1><h2 id="（1）图片的路径问题"><a href="#（1）图片的路径问题" class="headerlink" title="（1）图片的路径问题"></a>（1）图片的路径问题</h2><blockquote>
+<p>图片加载格式：由两部分组成（![图片描述]  + (图片路径)）</p>
+</blockquote>
+<h2 id="输入-logo-图片路径-，（由于正确加载，前面的输入会变成一个图片，因此在-logo-（图片路径）中间加了一个空格，正确输入时，应去掉空格）会出现一个输入图片路径的提示，从文件中选择路径后如下图"><a href="#输入-logo-图片路径-，（由于正确加载，前面的输入会变成一个图片，因此在-logo-（图片路径）中间加了一个空格，正确输入时，应去掉空格）会出现一个输入图片路径的提示，从文件中选择路径后如下图" class="headerlink" title="输入![logo] (图片路径)，（由于正确加载，前面的输入会变成一个图片，因此在[logo] （图片路径）中间加了一个空格，正确输入时，应去掉空格）会出现一个输入图片路径的提示，从文件中选择路径后如下图"></a>输入![logo] (图片路径)，（由于正确加载，前面的输入会变成一个图片，因此在[logo] （图片路径）中间加了一个空格，正确输入时，应去掉空格）会出现一个输入图片路径的提示，从文件中选择路径后如下图</h2><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/image_path.png" alt="logo"></p>
+<h2 id="此时，用该绝对路径上传到github后，输入https-ldgcug-github-io-，会发现，图片无法加载"><a href="#此时，用该绝对路径上传到github后，输入https-ldgcug-github-io-，会发现，图片无法加载" class="headerlink" title="此时，用该绝对路径上传到github后，输入https://ldgcug.github.io/，会发现，图片无法加载"></a>此时，用该绝对路径上传到github后，输入<a href="https://ldgcug.github.io/" target="_blank" rel="noopener">https://ldgcug.github.io/</a>，会发现，图片无法加载</h2><h2 id="解决方法：将绝对路径改为相对路径"><a href="#解决方法：将绝对路径改为相对路径" class="headerlink" title="解决方法：将绝对路径改为相对路径"></a>解决方法：将绝对路径改为相对路径</h2><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/image_real_path.png" alt="logo"></p>
+<h2 id="（2）图片的命名问题"><a href="#（2）图片的命名问题" class="headerlink" title="（2）图片的命名问题"></a>（2）图片的命名问题</h2><blockquote>
+<p>不能使用”_”作为开头</p>
+</blockquote>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.github.com/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/" data-id="cjvniadlq000144qozk2qnqwt" class="article-share-link">Share</a>
+      <a data-url="http://www.github.com/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/" data-id="cjvnkxuxe0001q4qoxkdjtjrs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
@@ -130,19 +178,61 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
-        
-          <h1 id="一、系统环境配置"><a href="#一、系统环境配置" class="headerlink" title="一、系统环境配置"></a>一、系统环境配置</h1><h2 id="要使用Hexo，需要在系统中支持Nodejs以及Git"><a href="#要使用Hexo，需要在系统中支持Nodejs以及Git" class="headerlink" title="要使用Hexo，需要在系统中支持Nodejs以及Git"></a>要使用Hexo，需要在系统中支持Nodejs以及Git</h2><h3 id="1、安装Node-js"><a href="#1、安装Node-js" class="headerlink" title="1、安装Node.js"></a>1、安装Node.js</h3><p><a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js官网</a></p>
-          
-            <p class="article-more-link">
-              <a href="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/#more">Read More</a>
-            </p>
-          
-        
+        <h1 id="一、系统环境配置"><a href="#一、系统环境配置" class="headerlink" title="一、系统环境配置"></a>一、系统环境配置</h1><h2 id="要使用Hexo，需要在系统中支持Nodejs以及Git"><a href="#要使用Hexo，需要在系统中支持Nodejs以及Git" class="headerlink" title="要使用Hexo，需要在系统中支持Nodejs以及Git"></a>要使用Hexo，需要在系统中支持Nodejs以及Git</h2><h3 id="1、安装Node-js"><a href="#1、安装Node-js" class="headerlink" title="1、安装Node.js"></a>1、安装Node.js</h3><p><a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js官网</a></p>
+<p>​        打开cmd命令行，输入node -v和npm -v，成功界面如下</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Nodejs.png" alt="logo"></p>
+<h3 id="2、安装Git"><a href="#2、安装Git" class="headerlink" title="2、安装Git"></a>2、安装Git</h3><p><a href="https://git-scm.com/download/" target="_blank" rel="noopener">Git官网</a></p>
+<p>​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Git.png" alt="logo"></p>
+<h1 id><a href="#" class="headerlink" title=" "></a> </h1><h1 id="二、Github配置"><a href="#二、Github配置" class="headerlink" title="二、Github配置"></a>二、Github配置</h1><h2 id="前提条件：已经拥有一个github账号，并已成功登陆"><a href="#前提条件：已经拥有一个github账号，并已成功登陆" class="headerlink" title="前提条件：已经拥有一个github账号，并已成功登陆"></a>前提条件：已经拥有一个github账号，并已成功登陆</h2><h3 id="1、点击【New-repository】，创建一个版本仓库"><a href="#1、点击【New-repository】，创建一个版本仓库" class="headerlink" title="1、点击【New repository】，创建一个版本仓库"></a>1、点击【New repository】，创建一个版本仓库</h3><p>​        注：仓库名称必须为username.github.io，我这里的username为ldgcug</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/new_repository.png" alt="logo"></p>
+<h3 id="2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问"><a href="#2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问" class="headerlink" title="2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问"></a>2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问</h3><p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Github_Pages.png" alt="logo"></p>
+<h1 id="三、安装Hexo并配置"><a href="#三、安装Hexo并配置" class="headerlink" title="三、安装Hexo并配置"></a>三、安装Hexo并配置</h1><h3 id="安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"><a href="#安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面" class="headerlink" title="安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"></a>安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面</h3><p>​        输入  npm install hexo -g ，开始安装Hexo</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/blog.png" alt="logo"></p>
+<p>​        安装成功后，输入   hexo -v，能看到版本号</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_version.png" alt="logo"></p>
+<p>​        输入 hexo init，初始化该文件夹（此处不显示图片过程）</p>
+<p>​        输入  npm install ，安装所需要的组件</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/npm_install.png" alt="logo"></p>
+<p>​        输入  hexo g，体验Hexo</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_g.png" alt="logo"></p>
+<p>​        输入 hexo s，开启服务器，访问该网址，正式体验Hexo</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_s.png" alt="logo"></p>
+<p>​        出现下图，则安装成功</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_interface.png" alt="logo"></p>
+<h1 id="四、Hexo与Github-Pages联系起来"><a href="#四、Hexo与Github-Pages联系起来" class="headerlink" title="四、Hexo与Github Pages联系起来"></a>四、Hexo与Github Pages联系起来</h1><h2 id="1、设置Git的user-name-和email（如果第一次配置）"><a href="#1、设置Git的user-name-和email（如果第一次配置）" class="headerlink" title="1、设置Git的user name 和email（如果第一次配置）"></a>1、设置Git的user name 和email（如果第一次配置）</h2><p>​        注：将用户名和邮箱换成自己的用户名和邮箱</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/git_set.png" alt="logo"></p>
+<h3 id="2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）"><a href="#2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）" class="headerlink" title="2、输入   ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）"></a>2、输入   ssh-keygen -t rsa -C “<a href="mailto:569167692@qq.com" target="_blank" rel="noopener">569167692@qq.com</a>”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）</h3><p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh.png" alt="logo"></p>
+<p>​        输入   eval “$(ssh-agent -s)”  ，添加密钥到 ssh-agent</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_key.png" alt="logo"></p>
+<p>​        输入  ssh-add ~/.ssh/id_rsa  ，添加生成的SSH key 到 ssh-agent</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_sshkey.png" alt="logo"></p>
+<p>​        输入 cd ~/.ssh，检查是否有.ssh文件夹，若没有，则进入C:\Users\Administrator\.ssh</p>
+<p>​        输入 ls，查看.ssh文件夹下文件</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_file.png" alt="logo"></p>
+<p>​        打开   id_rsa.pub文件，将其中的内容复制到缓存中</p>
+<p>​        登陆Github，点击【头像】下的【setting】，点击左侧的【SSH  and GPG keys】，点击【New SSH key】，将刚才复制的 id_rsa.pub 文件复制到Key中，添加ssh</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/github_ssh.png" alt="logo"></p>
+<p>​        输入  ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>  ，测试添加ssh是否成功，如果看到Hi 后面是你的用户名，则添加成功</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/ssh_t.png" alt="logo"></p>
+<h3 id="3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）"><a href="#3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）" class="headerlink" title="3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）"></a>3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）</h3><p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/config_yaml.png" alt="logo"></p>
+<p>​        其中，repo的值在github项目里的ssh中</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/github_repo.png" alt="logo"></p>
+<p>​        注：在_config_yaml文件中，type、repo、branch文件后面有一个空格，即上图中添加的代码会变成绿色，最开始没有空格时，遇到了很多的坑</p>
+<h1 id="五、新建博客"><a href="#五、新建博客" class="headerlink" title="五、新建博客"></a>五、新建博客</h1><h3 id="1、在cmd-命令种安装扩展"><a href="#1、在cmd-命令种安装扩展" class="headerlink" title="1、在cmd 命令种安装扩展"></a>1、在cmd 命令种安装扩展</h3><p>​        输入 ：  npm install hexo-deployer-git –save</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/hexo_chajian.png" alt="logo"></p>
+<h3 id="2、新建博客"><a href="#2、新建博客" class="headerlink" title="2、新建博客"></a>2、新建博客</h3><p>​        在git bash窗口中，执行命令：  hexo new post “博客名”</p>
+<p>​        会发现在soucrce\_posts 文件下，多出刚创建的博客.md</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/new_blog.png" alt="logo"></p>
+<h3 id="3、部署发布"><a href="#3、部署发布" class="headerlink" title="3、部署发布"></a>3、部署发布</h3><p>​        使用编辑器编辑好文章后，使用命令： hexo d -g ，就可以生成和部署了</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/deploy_bloh.png" alt="logo"></p>
+<p>​        部署成功后，访问你的地址：http//用户名.github.io 。就能看到刚生成的文章。</p>
+<p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/blog_contents.png" alt="logo"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/" data-id="cjvniadlg000044qo620z2kcj" class="article-share-link">Share</a>
+      <a data-url="http://www.github.com/2019/05/14/Hexo-Github创建博客过程中踩过的坑/" data-id="cjvnkxuxq0003q4qorn0kp56c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
@@ -176,19 +266,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
-        
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-          
-            <p class="article-more-link">
-              <a href="/2019/05/13/hello-world/#more">Read More</a>
-            </p>
-          
-        
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.github.com/2019/05/13/hello-world/" data-id="cjvniadlw000244qo606dlhdg" class="article-share-link">Share</a>
+      <a data-url="http://www.github.com/2019/05/13/hello-world/" data-id="cjvnkxux20000q4qoqgz0p17q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
@@ -213,7 +304,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随手笔记/">随手笔记</a></li></ul>
     </div>
   </div>
 
@@ -223,7 +314,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+      <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/随手笔记/" style="font-size: 10px;">随手笔记</a>
     </div>
   </div>
 
@@ -243,6 +334,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/14/python实现谷歌翻译PDF换行的问题/">python实现谷歌翻译PDF换行的问题</a>
+          </li>
         
           <li>
             <a href="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/">Hexo图片显示和Github上图片显示的解决办法</a>
