@@ -7,10 +7,6 @@
       <categories>
         <category>随手笔记</category>
       </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>随手笔记</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[Hexo图片显示和Github上图片显示的解决办法]]></title>
@@ -19,10 +15,6 @@
       <categories>
         <category>Hexo</category>
       </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>随手笔记</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[Hexo + Github创建博客过程中踩过的坑]]></title>
@@ -31,10 +23,6 @@
       <categories>
         <category>Hexo</category>
       </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>随手笔记</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[Hello World]]></title>
@@ -43,9 +31,5 @@
       <categories>
         <category>Hexo</category>
       </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>随手笔记</tag>
-      </tags>
   </entry>
 </search>
