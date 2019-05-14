@@ -313,9 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/14/python实现谷歌翻译PDF换行的问题/" itemprop="url">python实现谷歌翻译PDF换行的问题</a></h1>
+          <h1 class="post-title" itemprop="name headline">python实现谷歌翻译PDF换行的问题</h1>
         
 
         <div class="post-meta">
@@ -369,9 +367,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
           
-          
-
 
           
 
@@ -390,17 +390,13 @@
       
 
       
-        
-          
-            <h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><h3 id="（1）浏览器-chrome"><a href="#（1）浏览器-chrome" class="headerlink" title="（1）浏览器 chrome"></a>（1）浏览器 chrome</h3><h3 id="（2）python编辑器：pycharm"><a href="#（2）python编辑器：pycharm" class="headerlink" title="（2）python编辑器：pycharm"></a>（2）python编辑器：pycharm</h3><h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><h3 id="1、-pycharm上安装pyperclip、webbrowserdownloader"><a href="#1、-pycharm上安装pyperclip、webbrowserdownloader" class="headerlink" title="1、 pycharm上安装pyperclip、webbrowserdownloader"></a>1、 pycharm上安装pyperclip、webbrowserdownloader</h3><p><img src="/2019/05/14/python实现谷歌翻译PDF换行的问题/pycharm.png" alt="logo"></p>
+        <h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><h3 id="（1）浏览器-chrome"><a href="#（1）浏览器-chrome" class="headerlink" title="（1）浏览器 chrome"></a>（1）浏览器 chrome</h3><h3 id="（2）python编辑器：pycharm"><a href="#（2）python编辑器：pycharm" class="headerlink" title="（2）python编辑器：pycharm"></a>（2）python编辑器：pycharm</h3><h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><h3 id="1、-pycharm上安装pyperclip、webbrowserdownloader"><a href="#1、-pycharm上安装pyperclip、webbrowserdownloader" class="headerlink" title="1、 pycharm上安装pyperclip、webbrowserdownloader"></a>1、 pycharm上安装pyperclip、webbrowserdownloader</h3><p><img src="/2019/05/14/python实现谷歌翻译PDF换行的问题/pycharm.png" alt="logo"></p>
 <h3 id="2、创建google-translate-py文件，并将如下代码复制粘贴至google-translate-py文件"><a href="#2、创建google-translate-py文件，并将如下代码复制粘贴至google-translate-py文件" class="headerlink" title="2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件"></a>2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> pyperclip</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line">copyBuff = <span class="string">' '</span></span><br><span class="line">num = <span class="number">1</span></span><br><span class="line"><span class="comment">#convinent to change num</span></span><br><span class="line"><span class="keyword">while</span> num == <span class="number">1</span>:</span><br><span class="line">    num = num + <span class="number">1</span></span><br><span class="line">    copyedText = pyperclip.paste()</span><br><span class="line">    <span class="keyword">if</span> copyBuff != copyedText:</span><br><span class="line">        copyBuff = copyedText</span><br><span class="line">    normalizedText = copyBuff.replace(<span class="string">'\n'</span>, <span class="string">' '</span>)</span><br><span class="line">    url = <span class="string">'https://translate.google.cn/#en/zh-CN/'</span> + normalizedText</span><br><span class="line">    webbrowser.open(url)</span><br></pre></td></tr></table></figure>
 <h3 id="3、运行"><a href="#3、运行" class="headerlink" title="3、运行"></a>3、运行</h3><h4 id="（1）在pdf上任意选择一个段落，复制"><a href="#（1）在pdf上任意选择一个段落，复制" class="headerlink" title="（1）在pdf上任意选择一个段落，复制"></a>（1）在pdf上任意选择一个段落，复制</h4><p><img src="/2019/05/14/python实现谷歌翻译PDF换行的问题/pdf.png" alt="logo"></p>
 <h4 id="（2）运行google-translate-py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译"><a href="#（2）运行google-translate-py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译" class="headerlink" title="（2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译"></a>（2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译</h4><p><img src="/2019/05/14/python实现谷歌翻译PDF换行的问题/google_trans.png" alt="logo"></p>
 <h2 id="注：在换行出现‘-’的情况下，可能没有处理，即如下情况："><a href="#注：在换行出现‘-’的情况下，可能没有处理，即如下情况：" class="headerlink" title="注：在换行出现‘-’的情况下，可能没有处理，即如下情况："></a>注：在换行出现‘-’的情况下，可能没有处理，即如下情况：</h2><pre><code>在di-rectly这里，google翻译中没有解决，不过不影响翻译
 We present the first deep learning model to successfully learn control policies di-rectly from high-dimensional sensory input using reinforcement learning. 
 </code></pre>
-          
-        
       
     </div>
     
@@ -417,12 +413,28 @@ We present the first deep learning model to successfully learn control policies 
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/" rel="next" title="Hexo图片显示和Github上图片显示的解决办法">
+                <i class="fa fa-chevron-left"></i> Hexo图片显示和Github上图片显示的解决办法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -463,9 +475,7 @@ We present the first deep learning model to successfully learn control policies 
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/" itemprop="url">Hexo图片显示和Github上图片显示的解决办法</a></h1>
+          <h1 class="post-title" itemprop="name headline">Hexo图片显示和Github上图片显示的解决办法</h1>
         
 
         <div class="post-meta">
@@ -519,9 +529,11 @@ We present the first deep learning model to successfully learn control policies 
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
           
-          
-
 
           
 
@@ -540,9 +552,7 @@ We present the first deep learning model to successfully learn control policies 
       
 
       
-        
-          
-            <h1 id="1、配置-config-yml文件"><a href="#1、配置-config-yml文件" class="headerlink" title="1、配置_config.yml文件"></a>1、配置_config.yml文件</h1><h3 id="找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml"><a href="#找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml" class="headerlink" title="找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml"></a>找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml</h3><h3 id="打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图"><a href="#打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图" class="headerlink" title="打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图"></a>打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/config.png" alt="logo"></p>
+        <h1 id="1、配置-config-yml文件"><a href="#1、配置-config-yml文件" class="headerlink" title="1、配置_config.yml文件"></a>1、配置_config.yml文件</h1><h3 id="找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml"><a href="#找到博客根目录下的-config-yml，如我的文件路径为-D-blog-config-yml" class="headerlink" title="找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml"></a>找到博客根目录下的 _config.yml，如我的文件路径为 D:\blog\_config.yml</h3><h3 id="打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图"><a href="#打开-config-yml，查找-post-asset-folder字段，将post-asset-floder设置为true。如下图" class="headerlink" title="打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图"></a>打开_config.yml，查找 post_asset_folder字段，将post_asset_floder设置为true。如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/config.png" alt="logo"></p>
 <h1 id="2、post-asset-folder-设置为true和false的区别"><a href="#2、post-asset-folder-设置为true和false的区别" class="headerlink" title="2、post_asset_folder 设置为true和false的区别"></a>2、post_asset_folder 设置为true和false的区别</h1><h3 id="当post-asset-folder设置为true后，使用命令：hexo-new-post-“新博客名称”-，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图"><a href="#当post-asset-folder设置为true后，使用命令：hexo-new-post-“新博客名称”-，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图" class="headerlink" title="当post_asset_folder设置为true后，使用命令：hexo new post “新博客名称” ，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图"></a>当post_asset_folder设置为true后，使用命令：hexo new post “新博客名称” ，创建新博客时，Hexo会自动建立一个与文章同名的文件夹，如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/same_name_file.png" alt="logo"></p>
 <h1 id="3、安装插件"><a href="#3、安装插件" class="headerlink" title="3、安装插件"></a>3、安装插件</h1><h3 id="打开git-bash，进入到博客的根目录下（如：cd-d-blog-），执行命令：npm-install-https-github-com-CodeFalling-hexo-asset-image–save-，完成插件的安装"><a href="#打开git-bash，进入到博客的根目录下（如：cd-d-blog-），执行命令：npm-install-https-github-com-CodeFalling-hexo-asset-image–save-，完成插件的安装" class="headerlink" title="打开git bash，进入到博客的根目录下（如：cd d/blog/），执行命令：npm install https://github.com/CodeFalling/hexo-asset-image–save  ，完成插件的安装"></a>打开git bash，进入到博客的根目录下（如：cd d/blog/），执行命令：npm install <a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2FCodeFalling%2Fhexo-asset-image" target="_blank" rel="noopener">https://github.com/CodeFalling/hexo-asset-image</a>–save  ，完成插件的安装</h3><h1 id="4、图片存放"><a href="#4、图片存放" class="headerlink" title="4、图片存放"></a>4、图片存放</h1><h3 id="将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）"><a href="#将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）" class="headerlink" title="将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）"></a>将所有图片资源都放到对应的文件夹下（如：Hexo图片显示和Github上图片显示的解决办法）</h3><h3 id><a href="#" class="headerlink" title></a><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/sub_same_name.png" alt="logo"></h3><h1 id="5、本地查看显示效果"><a href="#5、本地查看显示效果" class="headerlink" title="5、本地查看显示效果"></a>5、本地查看显示效果</h1><h3 id="使用-hexo-s-命令，运行本地博客，成功显示图片如下图"><a href="#使用-hexo-s-命令，运行本地博客，成功显示图片如下图" class="headerlink" title="使用 hexo s 命令，运行本地博客，成功显示图片如下图"></a>使用 hexo s 命令，运行本地博客，成功显示图片如下图</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/local_blog.png" alt="logo"></p>
 <h1 id="6、上传github并显示"><a href="#6、上传github并显示" class="headerlink" title="6、上传github并显示"></a>6、上传github并显示</h1><h3 id="使用-hexo-g-d-，重新生成并上传，浏览器输入https-ldgcug-github-io-即可查看效果"><a href="#使用-hexo-g-d-，重新生成并上传，浏览器输入https-ldgcug-github-io-即可查看效果" class="headerlink" title="使用 hexo g -d ，重新生成并上传，浏览器输入https://ldgcug.github.io 即可查看效果"></a>使用 hexo g -d ，重新生成并上传，浏览器输入<a href="https://ldgcug.github.io" target="_blank" rel="noopener">https://ldgcug.github.io</a> 即可查看效果</h3><p><img src="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/github_blog.png" alt="logo"></p>
@@ -555,8 +565,6 @@ We present the first deep learning model to successfully learn control policies 
 <p>不能使用”_”作为开头</p>
 </blockquote>
 
-          
-        
       
     </div>
     
@@ -573,12 +581,32 @@ We present the first deep learning model to successfully learn control policies 
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/" rel="next" title="Hexo + Github创建博客过程中踩过的坑">
+                <i class="fa fa-chevron-left"></i> Hexo + Github创建博客过程中踩过的坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/python实现谷歌翻译PDF换行的问题/" rel="prev" title="python实现谷歌翻译PDF换行的问题">
+                python实现谷歌翻译PDF换行的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -619,9 +647,7 @@ We present the first deep learning model to successfully learn control policies 
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/" itemprop="url">Hexo + Github创建博客过程中踩过的坑</a></h1>
+          <h1 class="post-title" itemprop="name headline">Hexo + Github创建博客过程中踩过的坑</h1>
         
 
         <div class="post-meta">
@@ -675,9 +701,11 @@ We present the first deep learning model to successfully learn control policies 
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
           
-          
-
 
           
 
@@ -696,9 +724,7 @@ We present the first deep learning model to successfully learn control policies 
       
 
       
-        
-          
-            <h1 id="一、系统环境配置"><a href="#一、系统环境配置" class="headerlink" title="一、系统环境配置"></a>一、系统环境配置</h1><h2 id="要使用Hexo，需要在系统中支持Nodejs以及Git"><a href="#要使用Hexo，需要在系统中支持Nodejs以及Git" class="headerlink" title="要使用Hexo，需要在系统中支持Nodejs以及Git"></a>要使用Hexo，需要在系统中支持Nodejs以及Git</h2><h3 id="1、安装Node-js"><a href="#1、安装Node-js" class="headerlink" title="1、安装Node.js"></a>1、安装Node.js</h3><p><a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js官网</a></p>
+        <h1 id="一、系统环境配置"><a href="#一、系统环境配置" class="headerlink" title="一、系统环境配置"></a>一、系统环境配置</h1><h2 id="要使用Hexo，需要在系统中支持Nodejs以及Git"><a href="#要使用Hexo，需要在系统中支持Nodejs以及Git" class="headerlink" title="要使用Hexo，需要在系统中支持Nodejs以及Git"></a>要使用Hexo，需要在系统中支持Nodejs以及Git</h2><h3 id="1、安装Node-js"><a href="#1、安装Node-js" class="headerlink" title="1、安装Node.js"></a>1、安装Node.js</h3><p><a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js官网</a></p>
 <p>​        打开cmd命令行，输入node -v和npm -v，成功界面如下</p>
 <p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/Nodejs.png" alt="logo"></p>
 <h3 id="2、安装Git"><a href="#2、安装Git" class="headerlink" title="2、安装Git"></a>2、安装Git</h3><p><a href="https://git-scm.com/download/" target="_blank" rel="noopener">Git官网</a></p>
@@ -749,8 +775,6 @@ We present the first deep learning model to successfully learn control policies 
 <p>​        部署成功后，访问你的地址：http//用户名.github.io 。就能看到刚生成的文章。</p>
 <p><img src="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/blog_contents.png" alt="logo"></p>
 
-          
-        
       
     </div>
     
@@ -767,12 +791,32 @@ We present the first deep learning model to successfully learn control policies 
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/13/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/Hexo图片显示和Github上图片显示的解决办法/" rel="prev" title="Hexo图片显示和Github上图片显示的解决办法">
+                Hexo图片显示和Github上图片显示的解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -813,9 +857,7 @@ We present the first deep learning model to successfully learn control policies 
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/13/hello-world/" itemprop="url">Hello World</a></h1>
+          <h1 class="post-title" itemprop="name headline">Hello World</h1>
         
 
         <div class="post-meta">
@@ -869,9 +911,11 @@ We present the first deep learning model to successfully learn control policies 
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
           
-          
-
 
           
 
@@ -890,9 +934,7 @@ We present the first deep learning model to successfully learn control policies 
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
@@ -902,8 +944,6 @@ We present the first deep learning model to successfully learn control policies 
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
-          
-        
       
     </div>
     
@@ -920,12 +960,28 @@ We present the first deep learning model to successfully learn control policies 
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/Hexo-Github创建博客过程中踩过的坑/" rel="prev" title="Hexo + Github创建博客过程中踩过的坑">
+                Hexo + Github创建博客过程中踩过的坑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1060,7 +1116,6 @@ We present the first deep learning model to successfully learn control policies 
 
 
   <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
 
 
 
