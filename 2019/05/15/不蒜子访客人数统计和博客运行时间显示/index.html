@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time.png">
 <meta property="og:image" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time_show.png">
 <meta property="og:image" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/count_visitor.png">
-<meta property="og:updated_time" content="2019-05-15T11:57:06.210Z">
+<meta property="og:updated_time" content="2019-05-15T12:20:28.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不蒜子访客人数统计和博客运行时间显示">
 <meta name="twitter:description" content="一、Hexo页脚增加网站运行时间统计解决方案 1、找到  \themes\next\layout\_partials\ 下的  footer.swig文件 2、在以下位置插入所示代码     123456789101112131415161718192021222324252627282930313233343536&amp;lt;span id=&quot;sitetime&quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;l">
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.1k
+                  752
                 </span>
               
 
@@ -411,7 +411,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  5
+                  3
                 </span>
               
             </div>
@@ -438,43 +438,6 @@
 </blockquote>
 <p><img src="/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time.png" alt></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"sitetime"</span>&gt;&lt;/span&gt;</span><br><span class="line">&lt;script language=javascript&gt;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">siteTime</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.setTimeout(<span class="string">"siteTime()"</span>, <span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">var</span> seconds = <span class="number">1000</span>;</span><br><span class="line">    <span class="keyword">var</span> minutes = seconds * <span class="number">60</span>;</span><br><span class="line">    <span class="keyword">var</span> hours = minutes * <span class="number">60</span>;</span><br><span class="line">    <span class="keyword">var</span> days = hours * <span class="number">24</span>;</span><br><span class="line">    <span class="keyword">var</span> years = days * <span class="number">365</span>;</span><br><span class="line">    <span class="keyword">var</span> today = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">var</span> todayYear = today.getFullYear();</span><br><span class="line">    <span class="keyword">var</span> todayMonth = today.getMonth()+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">var</span> todayDate = today.getDate();</span><br><span class="line">    <span class="keyword">var</span> todayHour = today.getHours();</span><br><span class="line">    <span class="keyword">var</span> todayMinute = today.getMinutes();</span><br><span class="line">    <span class="keyword">var</span> todaySecond = today.getSeconds();</span><br><span class="line">    <span class="comment">/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)</span></span><br><span class="line"><span class="comment">    year - 作为date对象的年份，为4位年份值</span></span><br><span class="line"><span class="comment">    month - 0-11之间的整数，做为date对象的月份</span></span><br><span class="line"><span class="comment">    day - 1-31之间的整数，做为date对象的天数</span></span><br><span class="line"><span class="comment">    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数</span></span><br><span class="line"><span class="comment">    minutes - 0-59之间的整数，做为date对象的分钟数</span></span><br><span class="line"><span class="comment">    seconds - 0-59之间的整数，做为date对象的秒数</span></span><br><span class="line"><span class="comment">    microseconds - 0-999之间的整数，做为date对象的毫秒数 */</span></span><br><span class="line">    <span class="keyword">var</span> t1 = <span class="built_in">Date</span>.UTC(<span class="number">2019</span>,<span class="number">05</span>,<span class="number">14</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>); <span class="comment">//这里调整博客建站时间，时间：2019-05-14 00:00:00</span></span><br><span class="line">    <span class="keyword">var</span> t2 = <span class="built_in">Date</span>.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);</span><br><span class="line">    <span class="keyword">var</span> diff = t2-t1;</span><br><span class="line">    <span class="keyword">var</span> diffYears = <span class="built_in">Math</span>.floor(diff/years);</span><br><span class="line">    <span class="keyword">var</span> diffDays = <span class="built_in">Math</span>.floor((diff/days)-diffYears*<span class="number">365</span>);</span><br><span class="line">    <span class="keyword">var</span> diffHours = <span class="built_in">Math</span>.floor((diff-(diffYears*<span class="number">365</span>+diffDays)*days)/hours);</span><br><span class="line">    <span class="keyword">var</span> diffMinutes = <span class="built_in">Math</span>.floor((diff-(diffYears*<span class="number">365</span>+diffDays)*days-diffHours*hours)/minutes);</span><br><span class="line">    <span class="keyword">var</span> diffSeconds = <span class="built_in">Math</span>.floor((diff-(diffYears*<span class="number">365</span>+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"sitetime"</span>).innerHTML=<span class="string">" 已运行"</span>+<span class="comment">/*diffYears+" 年 "+*/</span>diffDays+<span class="string">" 天 "</span>+diffHours+<span class="string">" 小时 "</span>+diffMinutes+<span class="string">" 分钟 "</span>+diffSeconds+<span class="string">" 秒"</span>;</span><br><span class="line">  &#125;<span class="comment">/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/</span></span><br><span class="line">  siteTime();</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-<p><span id="sitetime"></span></p>
-<script language="javascript">
-  function siteTime(){
-    window.setTimeout("siteTime()", 1000);
-    var seconds = 1000;
-    var minutes = seconds * 60;
-    var hours = minutes * 60;
-    var days = hours * 24;
-    var years = days * 365;
-    var today = new Date();
-    var todayYear = today.getFullYear();
-    var todayMonth = today.getMonth()+1;
-    var todayDate = today.getDate();
-    var todayHour = today.getHours();
-    var todayMinute = today.getMinutes();
-    var todaySecond = today.getSeconds();
-    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
-    year - 作为date对象的年份，为4位年份值
-    month - 0-11之间的整数，做为date对象的月份
-    day - 1-31之间的整数，做为date对象的天数
-    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
-    minutes - 0-59之间的整数，做为date对象的分钟数
-    seconds - 0-59之间的整数，做为date对象的秒数
-    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
-    var t1 = Date.UTC(2019,05,14,00,00,00); //这里调整博客建站时间，时间：2019-05-14 00:00:00
-    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
-    var diff = t2-t1;
-    var diffYears = Math.floor(diff/years);
-    var diffDays = Math.floor((diff/days)-diffYears*365);
-    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
-    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
-    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
-    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
-  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
-  siteTime();
-</script>
-
 <blockquote>
 <p>3、结果显示</p>
 </blockquote>
