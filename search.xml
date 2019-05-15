@@ -14,7 +14,6 @@
     <content type="text"><![CDATA[前提条件（1）浏览器 chrome（2）python编辑器：pycharm使用说明1、 pycharm上安装pyperclip、webbrowserdownloader 2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件123456789101112131415#coding=utf-8import pyperclipimport webbrowsercopyBuff = ' 'num = 1#convinent to change numwhile num == 1: num = num + 1 copyedText = pyperclip.paste() if copyBuff != copyedText: copyBuff = copyedText normalizedText = copyBuff.replace('\n', ' ') url = 'https://translate.google.cn/#en/zh-CN/' + normalizedText webbrowser.open(url) 3、运行（1）在pdf上任意选择一个段落，复制 （2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译 注：在换行出现‘-’的情况下，可能没有处理，即如下情况：在di-rectly这里，google翻译中没有解决，不过不影响翻译 We present the first deep learning model to successfully learn control policies di-rectly from high-dimensional sensory input using reinforcement learning.]]></content>
       <categories>
         <category>随手笔记</category>
-        <category>Python</category>
       </categories>
       <tags>
         <tag>Python</tag>
