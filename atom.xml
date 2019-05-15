@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.github.com/"/>
-  <updated>2019-05-15T07:16:27.554Z</updated>
+  <updated>2019-05-15T07:21:43.050Z</updated>
   <id>http://www.github.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.github.com/2019/05/14/Hexo%E4%B9%8Btheme%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"/>
     <id>http://www.github.com/2019/05/14/Hexo之theme主题配置/</id>
     <published>2019-05-14T15:52:09.000Z</published>
-    <updated>2019-05-15T07:16:27.554Z</updated>
+    <updated>2019-05-15T07:21:43.050Z</updated>
     
     <summary type="html">
     
@@ -35,10 +35,6 @@
     
     </summary>
     
-      <category term="Hexo" scheme="http://www.github.com/categories/Hexo/"/>
-    
-    
-      <category term="NexT" scheme="http://www.github.com/tags/NexT/"/>
     
   </entry>
   
