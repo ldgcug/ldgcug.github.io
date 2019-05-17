@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="NexT,">
+  <meta name="keywords" content="Hexo,">
 
 
 
@@ -81,22 +81,43 @@
 
 
 
-<meta name="description" content="一、Hexo页脚增加网站运行时间统计解决方案 1、找到  \themes\next\layout\_partials\ 下的  footer.swig文件 2、在以下位置插入所示代码     123456789101112131415161718192021222324252627282930313233343536&amp;lt;span id=&quot;sitetime&quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;l">
-<meta name="keywords" content="NexT">
+<meta name="description" content="一、系统环境配置要使用Hexo，需要在系统中支持Nodejs以及Git1、安装Node.jsNode.js官网 ​        打开cmd命令行，输入node -v和npm -v，成功界面如下  2、安装GitGit官网 ​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）   二、Github配置前提条件：已经拥有一个github账号，并已成功登陆1、点击【">
+<meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不蒜子访客人数统计和博客运行时间显示">
-<meta property="og:url" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/index.html">
+<meta property="og:title" content="Hexo + Github创建博客过程中踩过的坑">
+<meta property="og:url" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/index.html">
 <meta property="og:site_name" content="ldg个人博客">
-<meta property="og:description" content="一、Hexo页脚增加网站运行时间统计解决方案 1、找到  \themes\next\layout\_partials\ 下的  footer.swig文件 2、在以下位置插入所示代码     123456789101112131415161718192021222324252627282930313233343536&amp;lt;span id=&quot;sitetime&quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;l">
+<meta property="og:description" content="一、系统环境配置要使用Hexo，需要在系统中支持Nodejs以及Git1、安装Node.jsNode.js官网 ​        打开cmd命令行，输入node -v和npm -v，成功界面如下  2、安装GitGit官网 ​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）   二、Github配置前提条件：已经拥有一个github账号，并已成功登陆1、点击【">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time.png">
-<meta property="og:image" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time_show.png">
-<meta property="og:image" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/count_visitor.png">
-<meta property="og:updated_time" content="2019-05-15T12:22:52.337Z">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Nodejs.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Git.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/new_repository.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Github_Pages.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/blog.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_version.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/npm_install.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_g.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_s.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_interface.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/git_set.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_keygen.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_key.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_sshkey.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_file.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/github_ssh.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_t.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/config_yaml.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/github_repo.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_chajian.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/new_blog.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Typora.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/deploy_bloh.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/blog_contents.png">
+<meta property="og:updated_time" content="2019-05-15T07:30:14.387Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不蒜子访客人数统计和博客运行时间显示">
-<meta name="twitter:description" content="一、Hexo页脚增加网站运行时间统计解决方案 1、找到  \themes\next\layout\_partials\ 下的  footer.swig文件 2、在以下位置插入所示代码     123456789101112131415161718192021222324252627282930313233343536&amp;lt;span id=&quot;sitetime&quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;l">
-<meta name="twitter:image" content="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time.png">
+<meta name="twitter:title" content="Hexo + Github创建博客过程中踩过的坑">
+<meta name="twitter:description" content="一、系统环境配置要使用Hexo，需要在系统中支持Nodejs以及Git1、安装Node.jsNode.js官网 ​        打开cmd命令行，输入node -v和npm -v，成功界面如下  2、安装GitGit官网 ​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）   二、Github配置前提条件：已经拥有一个github账号，并已成功登陆1、点击【">
+<meta name="twitter:image" content="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Nodejs.png">
 
 
 
@@ -126,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/">
+  <link rel="canonical" href="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/">
 
 
 
 
 
-  <title>不蒜子访客人数统计和博客运行时间显示 | ldg个人博客</title>
+  <title>Hexo + Github创建博客过程中踩过的坑 | ldg个人博客</title>
   
 
 
@@ -296,12 +317,12 @@
   
   
 
-  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/15/不蒜子访客人数统计和博客运行时间显示/">
+    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -318,7 +339,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">不蒜子访客人数统计和博客运行时间显示</h1>
+          <h1 class="post-title" itemprop="name headline">Hexo + Github创建博客过程中踩过的坑</h1>
         
 
         <div class="post-meta">
@@ -330,8 +351,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-15T19:13:11+08:00">
-                2019-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T09:58:45+08:00">
+                2019-05-14
               </time>
             
 
@@ -370,7 +391,7 @@
 
           
           
-             <span id="/2019/05/15/不蒜子访客人数统计和博客运行时间显示/" class="leancloud_visitors" data-flag-title="不蒜子访客人数统计和博客运行时间显示">
+             <span id="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/" class="leancloud_visitors" data-flag-title="Hexo + Github创建博客过程中踩过的坑">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -395,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  752
+                  891
                 </span>
               
 
@@ -432,36 +453,70 @@
       
 
       
-        <h1 id="一、Hexo页脚增加网站运行时间统计"><a href="#一、Hexo页脚增加网站运行时间统计" class="headerlink" title="一、Hexo页脚增加网站运行时间统计"></a>一、Hexo页脚增加网站运行时间统计</h1><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote>
-<p>1、找到  <font color="red">\themes\next\layout\_partials\ </font>下的  <font color="red">footer.swig</font>文件</p>
-<p>2、在以下位置插入所示代码  </p>
+        <h1 id="一、系统环境配置"><a href="#一、系统环境配置" class="headerlink" title="一、系统环境配置"></a>一、系统环境配置</h1><h2 id="要使用Hexo，需要在系统中支持Nodejs以及Git"><a href="#要使用Hexo，需要在系统中支持Nodejs以及Git" class="headerlink" title="要使用Hexo，需要在系统中支持Nodejs以及Git"></a>要使用Hexo，需要在系统中支持Nodejs以及Git</h2><h3 id="1、安装Node-js"><a href="#1、安装Node-js" class="headerlink" title="1、安装Node.js"></a>1、安装Node.js</h3><p><a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js官网</a></p>
+<p>​        打开cmd命令行，输入node -v和npm -v，成功界面如下</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Nodejs.png" alt="logo"></p>
+<h3 id="2、安装Git"><a href="#2、安装Git" class="headerlink" title="2、安装Git"></a>2、安装Git</h3><p><a href="https://git-scm.com/download/" target="_blank" rel="noopener">Git官网</a></p>
+<p>​        安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境）</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Git.png" alt="logo"></p>
+<h1 id><a href="#" class="headerlink" title=" "></a> </h1><h1 id="二、Github配置"><a href="#二、Github配置" class="headerlink" title="二、Github配置"></a>二、Github配置</h1><h2 id="前提条件：已经拥有一个github账号，并已成功登陆"><a href="#前提条件：已经拥有一个github账号，并已成功登陆" class="headerlink" title="前提条件：已经拥有一个github账号，并已成功登陆"></a>前提条件：已经拥有一个github账号，并已成功登陆</h2><h3 id="1、点击【New-repository】，创建一个版本仓库"><a href="#1、点击【New-repository】，创建一个版本仓库" class="headerlink" title="1、点击【New repository】，创建一个版本仓库"></a>1、点击【New repository】，创建一个版本仓库</h3><p>​        注：仓库名称必须为username.github.io，我这里的username为ldgcug</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/new_repository.png" alt="logo"></p>
+<h3 id="2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问"><a href="#2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问" class="headerlink" title="2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问"></a>2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问</h3><p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Github_Pages.png" alt="logo"></p>
+<h1 id="三、安装Hexo并配置"><a href="#三、安装Hexo并配置" class="headerlink" title="三、安装Hexo并配置"></a>三、安装Hexo并配置</h1><h3 id="安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"><a href="#安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面" class="headerlink" title="安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"></a>安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面</h3><p>​        输入  npm install hexo -g ，开始安装Hexo</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/blog.png" alt="logo"></p>
+<p>​        安装成功后，输入   hexo -v，能看到版本号</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_version.png" alt="logo"></p>
+<p>​        输入 hexo init，初始化该文件夹（此处不显示图片过程）</p>
+<p>​        输入  npm install ，安装所需要的组件</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/npm_install.png" alt="logo"></p>
+<p>​        输入  hexo g，体验Hexo</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_g.png" alt="logo"></p>
+<p>​        输入 hexo s，开启服务器，访问<a href="http://localhost:4000，正式体验Hexo" target="_blank" rel="noopener">http://localhost:4000，正式体验Hexo</a></p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_s.png" alt="logo"></p>
+<p>​        出现下图，则安装成功</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_interface.png" alt="logo"></p>
+<h1 id="四、Hexo与Github-Pages联系起来"><a href="#四、Hexo与Github-Pages联系起来" class="headerlink" title="四、Hexo与Github Pages联系起来"></a>四、Hexo与Github Pages联系起来</h1><blockquote>
+<p>说明：下面的所有操作都在博客根目录下执行，使用git bash窗口</p>
 </blockquote>
-<p><img src="/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time.png" alt></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=<span class="string">"sitetime"</span>&gt;&lt;/span&gt;</span><br><span class="line">&lt;script language=javascript&gt;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">siteTime</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.setTimeout(<span class="string">"siteTime()"</span>, <span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">var</span> seconds = <span class="number">1000</span>;</span><br><span class="line">    <span class="keyword">var</span> minutes = seconds * <span class="number">60</span>;</span><br><span class="line">    <span class="keyword">var</span> hours = minutes * <span class="number">60</span>;</span><br><span class="line">    <span class="keyword">var</span> days = hours * <span class="number">24</span>;</span><br><span class="line">    <span class="keyword">var</span> years = days * <span class="number">365</span>;</span><br><span class="line">    <span class="keyword">var</span> today = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">var</span> todayYear = today.getFullYear();</span><br><span class="line">    <span class="keyword">var</span> todayMonth = today.getMonth()+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">var</span> todayDate = today.getDate();</span><br><span class="line">    <span class="keyword">var</span> todayHour = today.getHours();</span><br><span class="line">    <span class="keyword">var</span> todayMinute = today.getMinutes();</span><br><span class="line">    <span class="keyword">var</span> todaySecond = today.getSeconds();</span><br><span class="line">    <span class="comment">/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)</span></span><br><span class="line"><span class="comment">    year - 作为date对象的年份，为4位年份值</span></span><br><span class="line"><span class="comment">    month - 0-11之间的整数，做为date对象的月份</span></span><br><span class="line"><span class="comment">    day - 1-31之间的整数，做为date对象的天数</span></span><br><span class="line"><span class="comment">    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数</span></span><br><span class="line"><span class="comment">    minutes - 0-59之间的整数，做为date对象的分钟数</span></span><br><span class="line"><span class="comment">    seconds - 0-59之间的整数，做为date对象的秒数</span></span><br><span class="line"><span class="comment">    microseconds - 0-999之间的整数，做为date对象的毫秒数 */</span></span><br><span class="line">    <span class="keyword">var</span> t1 = <span class="built_in">Date</span>.UTC(<span class="number">2019</span>,<span class="number">05</span>,<span class="number">14</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>); <span class="comment">//这里调整博客建站时间，时间：2019-05-14 00:00:00</span></span><br><span class="line">    <span class="keyword">var</span> t2 = <span class="built_in">Date</span>.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);</span><br><span class="line">    <span class="keyword">var</span> diff = t2-t1;</span><br><span class="line">    <span class="keyword">var</span> diffYears = <span class="built_in">Math</span>.floor(diff/years);</span><br><span class="line">    <span class="keyword">var</span> diffDays = <span class="built_in">Math</span>.floor((diff/days)-diffYears*<span class="number">365</span>);</span><br><span class="line">    <span class="keyword">var</span> diffHours = <span class="built_in">Math</span>.floor((diff-(diffYears*<span class="number">365</span>+diffDays)*days)/hours);</span><br><span class="line">    <span class="keyword">var</span> diffMinutes = <span class="built_in">Math</span>.floor((diff-(diffYears*<span class="number">365</span>+diffDays)*days-diffHours*hours)/minutes);</span><br><span class="line">    <span class="keyword">var</span> diffSeconds = <span class="built_in">Math</span>.floor((diff-(diffYears*<span class="number">365</span>+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"sitetime"</span>).innerHTML=<span class="string">" 已运行"</span>+<span class="comment">/*diffYears+" 年 "+*/</span>diffDays+<span class="string">" 天 "</span>+diffHours+<span class="string">" 小时 "</span>+diffMinutes+<span class="string">" 分钟 "</span>+diffSeconds+<span class="string">" 秒"</span>;</span><br><span class="line">  &#125;<span class="comment">/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/</span></span><br><span class="line">  siteTime();</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>3、结果显示</p>
+<h3 id="1、设置Git的user-name-和email（如果第一次配置）"><a href="#1、设置Git的user-name-和email（如果第一次配置）" class="headerlink" title="1、设置Git的user name 和email（如果第一次配置）"></a>1、设置Git的user name 和email（如果第一次配置）</h3><p>​        注：将用户名和邮箱换成自己的用户名和邮箱</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/git_set.png" alt="logo"></p>
+<h3 id="2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）"><a href="#2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）" class="headerlink" title="2、输入  ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）"></a>2、输入  ssh-keygen -t rsa -C “<a href="mailto:569167692@qq.com" target="_blank" rel="noopener">569167692@qq.com</a>”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）</h3><p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_keygen.png" alt="logo"></p>
+<p>​        输入   eval “$(ssh-agent -s)”  ，添加密钥到 ssh-agent</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_key.png" alt="logo"></p>
+<p>​        输入  ssh-add ~/.ssh/id_rsa  ，添加生成的SSH key 到 ssh-agent</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_sshkey.png" alt="logo"></p>
+<p>​        输入 cd ~/.ssh，检查是否有.ssh文件夹，若没有，则进入C:\Users\Administrator\.ssh</p>
+<p>​        输入 ls，查看.ssh文件夹下文件（第一次没有known_hosts文件）</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_file.png" alt="logo"></p>
+<p>​        进入./ssh文件夹下，打开   id_rsa.pub文件，将其中的内容复制到缓存中</p>
+<p>​        登陆Github，点击【头像】下的【setting】，点击左侧的【SSH  and GPG keys】，点击【New SSH key】，将刚才复制的 id_rsa.pub 文件复制到Key中，添加ssh</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/github_ssh.png" alt="logo"></p>
+<p>​        输入  ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>  ，测试添加ssh是否成功，如果看到Hi 后面是你的用户名，则添加成功</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_t.png" alt="logo"></p>
+<h3 id="3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）"><a href="#3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）" class="headerlink" title="3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）"></a>3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）</h3><blockquote>
+<p>下图中，需要将repository更改为你自己的github.io</p>
 </blockquote>
-<p><img src="/2019/05/15/不蒜子访客人数统计和博客运行时间显示/time_show.png" alt></p>
-<h2 id="转载：https-xian6ge-cn-posts-82ce1911"><a href="#转载：https-xian6ge-cn-posts-82ce1911" class="headerlink" title="转载：https://xian6ge.cn/posts/82ce1911/"></a>转载：<a href="https://xian6ge.cn/posts/82ce1911/" target="_blank" rel="noopener">https://xian6ge.cn/posts/82ce1911/</a></h2><h1 id="二、Hexo-页脚-不蒜子访客统计"><a href="#二、Hexo-页脚-不蒜子访客统计" class="headerlink" title="二、Hexo 页脚  不蒜子访客统计"></a>二、Hexo 页脚  不蒜子访客统计</h1><blockquote>
-<p>在百度和谷歌上搜索过太多的Hexo 访问统计，但很多博客都不能显示人数，终于不负有心人，找到了一个可以实现 Hexo 页脚访问统计的网址，<a href="https://hexo-guide.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">Hexo指南</a>网址提供的文档能访问</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/config_yaml.png" alt="logo"></p>
+<p>​        其中，repo的值在github项目里的ssh中（注意使用SSH，而不是HTTPS）</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/github_repo.png" alt="logo"></p>
+<p>​        注：在_config_yaml文件中，type、repo、branch文件后面有一个空格，即上图中添加的代码会变成绿色，最开始没有空格时，遇到了很多的坑</p>
+<h1 id="五、新建博客"><a href="#五、新建博客" class="headerlink" title="五、新建博客"></a>五、新建博客</h1><blockquote>
+<p>所有的命令操作都在博客根目录下执行</p>
 </blockquote>
-<h3 id="1、添加代码"><a href="#1、添加代码" class="headerlink" title="1、添加代码"></a>1、添加代码</h3><p>找到  <font color="red">\themes\next\layout\_partials\ </font>下的  <font color="red">footer.swig</font>文件，在如下位置插入代码</p>
-<p><img src="/2019/05/15/不蒜子访客人数统计和博客运行时间显示/count_visitor.png" alt></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span></span><br><span class="line">      本站总访问量<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>次</span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_uv"</span>&gt;</span></span><br><span class="line">      本站访客数<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_uv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>人次</span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="2、说明"><a href="#2、说明" class="headerlink" title="2、说明"></a>2、说明</h3><blockquote>
-<p>安装脚本</p>
+<h3 id="1、在cmd-命令种安装扩展"><a href="#1、在cmd-命令种安装扩展" class="headerlink" title="1、在cmd 命令种安装扩展"></a>1、在cmd 命令种安装扩展</h3><p>​        输入 ：  npm install hexo-deployer-git –save</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_chajian.png" alt="logo"></p>
+<h3 id="2、新建博客"><a href="#2、新建博客" class="headerlink" title="2、新建博客"></a>2、新建博客</h3><p>​        在git bash窗口中，执行命令：  hexo new post “博客名”</p>
+<p>​        会发现在soucrce\_posts 文件下，多出刚创建的博客.md</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/new_blog.png" alt="logo"></p>
+<h3 id="3、md编辑器（Typora编辑器）"><a href="#3、md编辑器（Typora编辑器）" class="headerlink" title="3、md编辑器（Typora编辑器）"></a>3、md编辑器（Typora编辑器）</h3><blockquote>
+<p>在<a href="https://typora.io/" target="_blank" rel="noopener">Typora官网</a>上下载Typora编辑器，使用Typora编辑器对md文件进行编辑  </p>
 </blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>显示站点总访问量</p>
-</blockquote>
-<p>（1）<code>pv</code>：单个用户连续点击<code>n</code>篇文章，记录<code>n</code>次访问量</p>
-<p>（2）<code>uv</code>：单个用户连续点击<code>n</code>篇文章，只记录<code>1</code>次访客数</p>
-<p><code>pv</code>方式加入</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span></span><br><span class="line">    本站总访问量<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>次</span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>nv</code>方式加入</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_uv"</span>&gt;</span></span><br><span class="line">    本站访客数<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_uv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>人次</span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="转载：https-hexo-guide-readthedocs-io-zh-CN-latest-third-service-E4-B8-8D-E8-92-9C-E5-AD-90-E8-AE-BF-E5-AE-A2-E4-BA-BA-E6-95-B0-html"><a href="#转载：https-hexo-guide-readthedocs-io-zh-CN-latest-third-service-E4-B8-8D-E8-92-9C-E5-AD-90-E8-AE-BF-E5-AE-A2-E4-BA-BA-E6-95-B0-html" class="headerlink" title="转载：https://hexo-guide.readthedocs.io/zh_CN/latest/third-service/[%E4%B8%8D%E8%92%9C%E5%AD%90]%E8%AE%BF%E5%AE%A2%E4%BA%BA%E6%95%B0.html"></a>转载：<a href="https://hexo-guide.readthedocs.io/zh_CN/latest/third-service/[不蒜子]访客人数.html" target="_blank" rel="noopener">https://hexo-guide.readthedocs.io/zh_CN/latest/third-service/[%E4%B8%8D%E8%92%9C%E5%AD%90]%E8%AE%BF%E5%AE%A2%E4%BA%BA%E6%95%B0.html</a></h2>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Typora.png" alt></p>
+<h3 id="4、部署发布"><a href="#4、部署发布" class="headerlink" title="4、部署发布"></a>4、部署发布</h3><p>​        使用编辑器编辑好文章后，使用命令： hexo d -g ，就可以生成和部署了</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/deploy_bloh.png" alt="logo"></p>
+<p>​        部署成功后，访问你的地址：http//用户名.github.io 。就能看到刚生成的文章。</p>
+<p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/blog_contents.png" alt="logo"></p>
+
       
     </div>
     
@@ -478,7 +533,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/NexT/" rel="tag"># NexT</a>
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
           
         </div>
       
@@ -491,8 +546,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/14/Hexo之theme主题配置/" rel="next" title="Hexo之theme主题配置">
-                <i class="fa fa-chevron-left"></i> Hexo之theme主题配置
+              <a href="/2019/05/13/Hexo/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
               </a>
             
           </div>
@@ -501,8 +556,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/15/网址收藏/" rel="prev" title="网址收藏">
-                网址收藏 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/14/Hexo/Hexo图片显示和Github上图片显示的解决办法/" rel="prev" title="Hexo图片显示和Github上图片显示的解决办法">
+                Hexo图片显示和Github上图片显示的解决办法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -582,7 +637,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -593,7 +648,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -604,7 +659,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -672,7 +727,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Hexo页脚增加网站运行时间统计"><span class="nav-text">一、Hexo页脚增加网站运行时间统计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转载：https-xian6ge-cn-posts-82ce1911"><span class="nav-text">转载：https://xian6ge.cn/posts/82ce1911/</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Hexo-页脚-不蒜子访客统计"><span class="nav-text">二、Hexo 页脚  不蒜子访客统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、添加代码"><span class="nav-text">1、添加代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、说明"><span class="nav-text">2、说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转载：https-hexo-guide-readthedocs-io-zh-CN-latest-third-service-E4-B8-8D-E8-92-9C-E5-AD-90-E8-AE-BF-E5-AE-A2-E4-BA-BA-E6-95-B0-html"><span class="nav-text">转载：https://hexo-guide.readthedocs.io/zh_CN/latest/third-service/[%E4%B8%8D%E8%92%9C%E5%AD%90]%E8%AE%BF%E5%AE%A2%E4%BA%BA%E6%95%B0.html</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、系统环境配置"><span class="nav-text">一、系统环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#要使用Hexo，需要在系统中支持Nodejs以及Git"><span class="nav-text">要使用Hexo，需要在系统中支持Nodejs以及Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装Node-js"><span class="nav-text">1、安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、安装Git"><span class="nav-text">2、安装Git</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-text"> </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Github配置"><span class="nav-text">二、Github配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前提条件：已经拥有一个github账号，并已成功登陆"><span class="nav-text">前提条件：已经拥有一个github账号，并已成功登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、点击【New-repository】，创建一个版本仓库"><span class="nav-text">1、点击【New repository】，创建一个版本仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub-Pages】位置，能在这里发现一个网址，并且可以通过外网访问"><span class="nav-text">2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、安装Hexo并配置"><span class="nav-text">三、安装Hexo并配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面"><span class="nav-text">安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Hexo与Github-Pages联系起来"><span class="nav-text">四、Hexo与Github Pages联系起来</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、设置Git的user-name-和email（如果第一次配置）"><span class="nav-text">1、设置Git的user name 和email（如果第一次配置）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）"><span class="nav-text">2、输入  ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）"><span class="nav-text">3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、新建博客"><span class="nav-text">五、新建博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、在cmd-命令种安装扩展"><span class="nav-text">1、在cmd 命令种安装扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、新建博客"><span class="nav-text">2、新建博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、md编辑器（Typora编辑器）"><span class="nav-text">3、md编辑器（Typora编辑器）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、部署发布"><span class="nav-text">4、部署发布</span></a></li></ol></li></div>
             
 
           </div>
@@ -1415,13 +1470,13 @@
       var articles = db.collection('articles')
 
       //https://hexo.io/zh-tw/docs/variables.html
-      var isPost = '不蒜子访客人数统计和博客运行时间显示'.length > 0
+      var isPost = 'Hexo + Github创建博客过程中踩过的坑'.length > 0
       var isArchive = '' === 'true'
       var isCategory = ''.length > 0
       var isTag = ''.length > 0
 
       if (isPost) { //is article page
-        var title = '不蒜子访客人数统计和博客运行时间显示'
+        var title = 'Hexo + Github创建博客过程中踩过的坑'
         var doc = articles.doc(title)
 
         getCount(doc, true).then(appendCountTo($('.post-meta')))

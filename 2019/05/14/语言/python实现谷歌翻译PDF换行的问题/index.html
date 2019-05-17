@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Python,">
 
 
 
@@ -81,17 +81,22 @@
 
 
 
-<meta name="description" content="关于博客 好记性不如烂笔头 我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识…… 本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……  致谢 本站基于Hexo，使用NexT主题  联系方式 QQ邮箱：569167692@qq.cm Gmail邮箱：ldg569167692@gma">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://www.github.com/about/index.html">
+<meta name="description" content="前提条件（1）浏览器 chrome（2）python编辑器：pycharm使用说明1、 pycharm上安装pyperclip、webbrowserdownloader 2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件123456789101112131415#coding=utf-8import pyperclipimport">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python实现谷歌翻译PDF换行的问题">
+<meta property="og:url" content="http://www.github.com/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/index.html">
 <meta property="og:site_name" content="ldg个人博客">
-<meta property="og:description" content="关于博客 好记性不如烂笔头 我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识…… 本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……  致谢 本站基于Hexo，使用NexT主题  联系方式 QQ邮箱：569167692@qq.cm Gmail邮箱：ldg569167692@gma">
+<meta property="og:description" content="前提条件（1）浏览器 chrome（2）python编辑器：pycharm使用说明1、 pycharm上安装pyperclip、webbrowserdownloader 2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件123456789101112131415#coding=utf-8import pyperclipimport">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-15T11:08:39.208Z">
+<meta property="og:image" content="http://www.github.com/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/pycharm.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/pdf.png">
+<meta property="og:image" content="http://www.github.com/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/google_trans.png">
+<meta property="og:updated_time" content="2019-05-17T13:29:14.131Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于">
-<meta name="twitter:description" content="关于博客 好记性不如烂笔头 我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识…… 本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……  致谢 本站基于Hexo，使用NexT主题  联系方式 QQ邮箱：569167692@qq.cm Gmail邮箱：ldg569167692@gma">
+<meta name="twitter:title" content="python实现谷歌翻译PDF换行的问题">
+<meta name="twitter:description" content="前提条件（1）浏览器 chrome（2）python编辑器：pycharm使用说明1、 pycharm上安装pyperclip、webbrowserdownloader 2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件123456789101112131415#coding=utf-8import pyperclipimport">
+<meta name="twitter:image" content="http://www.github.com/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/pycharm.png">
 
 
 
@@ -121,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.github.com/about/">
+  <link rel="canonical" href="http://www.github.com/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/">
 
 
 
 
 
-  <title>关于 | ldg个人博客</title>
+  <title>python实现谷歌翻译PDF换行的问题 | ldg个人博客</title>
   
 
 
@@ -284,48 +289,228 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">关于</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h1 id="关于博客"><a href="#关于博客" class="headerlink" title="关于博客"></a>关于博客</h1><blockquote>
-<p>好记性不如烂笔头</p>
-<p>我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识……</p>
-<p>本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……</p>
-</blockquote>
-<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><blockquote>
-<p>本站基于Hexo，使用NexT主题</p>
-</blockquote>
-<h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><blockquote>
-<p>QQ邮箱：<a href="mailto:569167692@qq.cm" target="_blank" rel="noopener">569167692@qq.cm</a></p>
-<p>Gmail邮箱：<a href="mailto:ldg569167692@gmail.com" target="_blank" rel="noopener">ldg569167692@gmail.com</a></p>
-</blockquote>
-<blockquote>
-<p>更新于2019年5月15日 19:05</p>
-</blockquote>
-
+          <h1 class="post-title" itemprop="name headline">python实现谷歌翻译PDF换行的问题</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T17:04:16+08:00">
+                2019-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/语言/" itemprop="url" rel="index">
+                    <span itemprop="name">语言</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/语言/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/" class="leancloud_visitors" data-flag-title="python实现谷歌翻译PDF换行的问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  201
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><h3 id="（1）浏览器-chrome"><a href="#（1）浏览器-chrome" class="headerlink" title="（1）浏览器 chrome"></a>（1）浏览器 chrome</h3><h3 id="（2）python编辑器：pycharm"><a href="#（2）python编辑器：pycharm" class="headerlink" title="（2）python编辑器：pycharm"></a>（2）python编辑器：pycharm</h3><h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><h3 id="1、-pycharm上安装pyperclip、webbrowserdownloader"><a href="#1、-pycharm上安装pyperclip、webbrowserdownloader" class="headerlink" title="1、 pycharm上安装pyperclip、webbrowserdownloader"></a>1、 pycharm上安装pyperclip、webbrowserdownloader</h3><p><img src="/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/pycharm.png" alt="logo"></p>
+<h3 id="2、创建google-translate-py文件，并将如下代码复制粘贴至google-translate-py文件"><a href="#2、创建google-translate-py文件，并将如下代码复制粘贴至google-translate-py文件" class="headerlink" title="2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件"></a>2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> pyperclip</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line">copyBuff = <span class="string">' '</span></span><br><span class="line">num = <span class="number">1</span></span><br><span class="line"><span class="comment">#convinent to change num</span></span><br><span class="line"><span class="keyword">while</span> num == <span class="number">1</span>:</span><br><span class="line">    num = num + <span class="number">1</span></span><br><span class="line">    copyedText = pyperclip.paste()</span><br><span class="line">    <span class="keyword">if</span> copyBuff != copyedText:</span><br><span class="line">        copyBuff = copyedText</span><br><span class="line">    normalizedText = copyBuff.replace(<span class="string">'\n'</span>, <span class="string">' '</span>)</span><br><span class="line">    url = <span class="string">'https://translate.google.cn/#en/zh-CN/'</span> + normalizedText</span><br><span class="line">    webbrowser.open(url)</span><br></pre></td></tr></table></figure>
+<h3 id="3、运行"><a href="#3、运行" class="headerlink" title="3、运行"></a>3、运行</h3><h4 id="（1）在pdf上任意选择一个段落，复制"><a href="#（1）在pdf上任意选择一个段落，复制" class="headerlink" title="（1）在pdf上任意选择一个段落，复制"></a>（1）在pdf上任意选择一个段落，复制</h4><p><img src="/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/pdf.png" alt="logo"></p>
+<h4 id="（2）运行google-translate-py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译"><a href="#（2）运行google-translate-py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译" class="headerlink" title="（2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译"></a>（2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译</h4><p><img src="/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/google_trans.png" alt="logo"></p>
+<h2 id="注：在换行出现‘-’的情况下，可能没有处理，即如下情况："><a href="#注：在换行出现‘-’的情况下，可能没有处理，即如下情况：" class="headerlink" title="注：在换行出现‘-’的情况下，可能没有处理，即如下情况："></a>注：在换行出现‘-’的情况下，可能没有处理，即如下情况：</h2><pre><code>在di-rectly这里，google翻译中没有解决，不过不影响翻译
+We present the first deep learning model to successfully learn control policies di-rectly from high-dimensional sensory input using reinforcement learning. 
+</code></pre>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/14/Hexo/Hexo图片显示和Github上图片显示的解决办法/" rel="next" title="Hexo图片显示和Github上图片显示的解决办法">
+                <i class="fa fa-chevron-left"></i> Hexo图片显示和Github上图片显示的解决办法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/Hexo/Hexo之theme主题配置/" rel="prev" title="Hexo之theme主题配置">
+                Hexo之theme主题配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -475,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于博客"><span class="nav-text">关于博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#致谢"><span class="nav-text">致谢</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联系方式"><span class="nav-text">联系方式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提条件"><span class="nav-text">前提条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）浏览器-chrome"><span class="nav-text">（1）浏览器 chrome</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）python编辑器：pycharm"><span class="nav-text">（2）python编辑器：pycharm</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#使用说明"><span class="nav-text">使用说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、-pycharm上安装pyperclip、webbrowserdownloader"><span class="nav-text">1、 pycharm上安装pyperclip、webbrowserdownloader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建google-translate-py文件，并将如下代码复制粘贴至google-translate-py文件"><span class="nav-text">2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、运行"><span class="nav-text">3、运行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）在pdf上任意选择一个段落，复制"><span class="nav-text">（1）在pdf上任意选择一个段落，复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）运行google-translate-py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译"><span class="nav-text">（2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注：在换行出现‘-’的情况下，可能没有处理，即如下情况："><span class="nav-text">注：在换行出现‘-’的情况下，可能没有处理，即如下情况：</span></a></li></div>
             
 
           </div>
@@ -1218,13 +1403,13 @@
       var articles = db.collection('articles')
 
       //https://hexo.io/zh-tw/docs/variables.html
-      var isPost = '关于'.length > 0
+      var isPost = 'python实现谷歌翻译PDF换行的问题'.length > 0
       var isArchive = '' === 'true'
       var isCategory = ''.length > 0
       var isTag = ''.length > 0
 
       if (isPost) { //is article page
-        var title = '关于'
+        var title = 'python实现谷歌翻译PDF换行的问题'
         var doc = articles.doc(title)
 
         getCount(doc, true).then(appendCountTo($('.post-meta')))
