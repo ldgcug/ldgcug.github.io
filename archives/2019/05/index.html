@@ -294,7 +294,7 @@
         
           
         
-        嗯..! 目前共计 10 篇日志。 继续努力。
+        嗯..! 目前共计 11 篇日志。 继续努力。
       </span>
 
       
@@ -308,6 +308,41 @@
           <div class="collection-title">
             <h1 class="archive-year" id="archive-year-2019">2019</h1>
           </div>
+        
+        
+
+        
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2019/05/18/Linux/ubuntu16下翻墙搭建/" itemprop="url">
+              
+                <span itemprop="name">ubuntu16下翻墙搭建</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-05-18T08:47:13+08:00" content="2019-05-18">
+          05-18
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+      
+
+        
+        
+        
+
         
         
 
@@ -619,41 +654,6 @@
 
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/13/Hexo/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-13T22:33:19+08:00" content="2019-05-13">
-          05-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
   </div>
   
@@ -661,6 +661,10 @@
   
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/archives/2019/05/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/05/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
 
@@ -707,7 +711,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1020,6 +1024,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz# your leancloud application appid',
+        appKey: 'hsB14uJ799Sp0Gm2VwjgU2Qa# your leancloud application appkey',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
@@ -1534,7 +1560,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("win7下局域网打印机共享");titles.push("Linux下 Python2 与 Python3 版本切换");titles.push("系统重装后必要软件安装介绍");titles.push("网址收藏");titles.push("不蒜子访客人数统计和博客运行时间显示");titles.push("Hexo之theme主题配置");titles.push("python实现谷歌翻译PDF换行的问题");titles.push("Hexo图片显示和Github上图片显示的解决办法");titles.push("Hexo + Github创建博客过程中踩过的坑");titles.push("Hello World");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("ubuntu16下翻墙搭建");titles.push("win7下局域网打印机共享");titles.push("Linux下 Python2 与 Python3 版本切换");titles.push("系统重装后必要软件安装介绍");titles.push("网址收藏");titles.push("不蒜子访客人数统计和博客运行时间显示");titles.push("Hexo之theme主题配置");titles.push("python实现谷歌翻译PDF换行的问题");titles.push("Hexo图片显示和Github上图片显示的解决办法");titles.push("Hexo + Github创建博客过程中踩过的坑");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {

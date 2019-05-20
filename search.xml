@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ubuntu16下翻墙搭建]]></title>
+    <url>%2F2019%2F05%2F18%2FLinux%2Fubuntu16%E4%B8%8B%E7%BF%BB%E5%A2%99%E6%90%AD%E5%BB%BA%2F</url>
+    <content type="text"><![CDATA[说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新 需要安装软件： chrome浏览器 shadowsocks-qt5 安装步骤：1、ubuntu16安装chrome浏览器1234$ sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/sources.list.d/$ wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -$ sudo apt-get update$ sudo apt-get install google-chrome-stable 2、安装shadowsocks-qt5123$ sudo add-apt-repository ppa:hzwhuang/ss-qt5$ sudo apt-get update$ sudo apt-get install shadowsocks-qt5sudo apt-get install shadowsocks-qt5 3、shadowscoks-qt5配置 打开shadowsocks-qt5 在如下界面，设置IP、端口、密码等等 如果没有设置服务器IP，需要先搭建一个服务器，然后设置对应的端口及密码等等……（这里不介绍如何搭建翻墙服务器） 4、添加插件 添加Proxy SwitchOmega.crx插件 插件下载地址：https://github.com/FelisCatus/SwitchyOmega/releases 说明：该插件下载地址还没有使用过，之前下载过该插件的其他地址，若这个不能使用，还是使用存在于硬盘的插件 将该插件直接拖曳到chrome的扩展中，若拖曳失败，不能正常拖曳，参考该网址：https://blog.csdn.net/qq_33033367/article/details/80952291 注意：要切换为开发模式，然后进行拖曳，注意图中红色框 5、switchomega配置 下图中的URL地址需要自己手动输入，直接复制下面代码即可 1https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt 最后点击Download ProfileNow 6、chrome浏览器访问google 首先需要打开shadowsocks-qt5，然后连接服务器 然后通过切换规则，切换为auto switch，就可以访问google了 打开浏览器，输入www.google.com，如果出现这种问题，修改为proxy即可]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[win7下局域网打印机共享]]></title>
     <url>%2F2019%2F05%2F17%2F%E7%B3%BB%E7%BB%9F%2Fwin7%E4%B8%8B%E5%B1%80%E5%9F%9F%E7%BD%91%E6%89%93%E5%8D%B0%E6%9C%BA%E5%85%B1%E4%BA%AB%2F</url>
     <content type="text"><![CDATA[说明：本方法只在Win7下运行成功，Win10下还未测试，不过Win10应该也能行 一、打印机所在电脑配置1、取消禁用Guest用户因为别人要访问安装打印机的这个电脑就是以guest账户访问的 点击【开始】按钮，选择【计算机】并右键，选择【管理】，如下图： 在弹出的【计算机管理】窗口中，找到【本地用户和组】，选择【用户】，双击【Guest】，打开【Guest属性】窗口，确保【账户已禁用】选项没有被勾选 2、设置共享目标打印机（1）共享打印机防火墙设置 在桌面选择【计算机】，右键【管理】 在弹出的【计算机管理】窗口中，选择【服务和应用程序】，接着选择【服务】，然后找到【Windows Firewall】这一项 在【Windows Firewall】选项上，右键，点击【属性】，在弹出的窗口中，【启动类型】设置为自动，点击【启动】，如下图所示： （2）设置共享目标打印机 点击【开始】按钮，选择【设备和打印机】 在弹出的窗口，找到想要共享的打印机（前提打印机已正确连接，驱动已正确安装） 若没有安装驱动程序，则参考如下： 在惠普官网上，下载对应打印机驱动（我的为HP LaserJet 1020）程序并安装即可，如下图 在打印机已正确连接，且驱动已正确安装后，选择共享打印机，在该打印机上右键，选择【打印机属性】，如下图： 在弹出的窗口中，切换到【共享】选项卡，勾选【共享这台打印机】，并设置一个共享名（请记住该共享名，后面可能会用到），如下图： （3）高级共享设置 打开【开始】按钮，点击【控制面板】，选择【网络和Internet】，选择【网络和共享中心】，在打开的窗口中，记所处的网络类型，选择【选择家庭组和共享选项】 在弹出的窗口中，单击【更改高级共享设置】，【保存修改】 在弹出的窗口中，注意红色方框标记的选择 二、局域网内其他电脑配置1、首先确保和打印机所在电脑在同一个局域网内2、在桌面打开【计算机】，单击【网络】，找到需要连接的机器 3、账户登录 找到需要连接的机器后，双击，在弹出的窗口中，输入用户名，密码为空 账户用户名，需要在打印机所在电脑查看用户名，具体操作如下： 在打印机所在电脑上，点击【开始】按钮，找到用户名，下图中红色方框标记 4、登录成功后，就能找到打印机 5、右键打印机（HP LaserJet 1020），选择【连接】，进行驱动安装三、打印机使用打印测试 新建空白word文档， 选择【文件】，【打印】，在打印机列表中，选择对应的打印机，即可完成打印]]></content>
@@ -21,8 +32,8 @@
         <category>python</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>Linux</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Python,Linux,">
+  <meta name="keywords" content="Linux,Python,">
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="说明：在Linux系统下，Python默认版本为2.7，但在使用过程中，可能经常需要使用Python3，因此，通过在网上的一系列搜索，找出了Python2与Python3的切换方法  一、添加软连接12$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100$ sudo update-alte">
-<meta name="keywords" content="Python,Linux">
+<meta name="keywords" content="Linux,Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux下 Python2 与 Python3 版本切换">
 <meta property="og:url" content="http://www.github.com/2019/05/17/Linux/Linux下-Python2-与-Python3-版本切换/index.html">
@@ -384,6 +384,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/17/Linux/Linux下-Python2-与-Python3-版本切换/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/17/Linux/Linux下-Python2-与-Python3-版本切换/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -476,9 +486,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
-          
             <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
@@ -533,6 +543,9 @@
           
 
   
+    <div class="comments" id="comments">
+    </div>
+  
 
 
 
@@ -582,7 +595,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -915,6 +928,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz# your leancloud application appid',
+        appKey: 'hsB14uJ799Sp0Gm2VwjgU2Qa# your leancloud application appkey',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 

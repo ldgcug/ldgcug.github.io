@@ -84,7 +84,7 @@
 <meta name="description" content="好记性不如烂笔头">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ldg个人博客">
-<meta property="og:url" content="http://www.github.com/categories/网址收藏/index.html">
+<meta property="og:url" content="http://www.github.com/archives/page/2/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="好记性不如烂笔头">
 <meta property="og:locale" content="zh-Hans">
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.github.com/categories/网址收藏/">
+  <link rel="canonical" href="http://www.github.com/archives/page/2/">
 
 
 
 
 
-  <title>分类: 网址收藏 | ldg个人博客</title>
+  <title>归档 | ldg个人博客</title>
   
 
 
@@ -145,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-archive">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -284,15 +284,33 @@
   
   
   
-  <div class="post-block category">
-
+  <div class="post-block archive">
     <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>网址收藏<small>分类</small>
-        </h1>
-      </div>
+      <span class="archive-move-on"></span>
+
+      <span class="archive-page-counter">
+        
+        
+        
+          
+        
+        嗯..! 目前共计 11 篇日志。 继续努力。
+      </span>
 
       
+
+        
+        
+        
+
+        
+          
+          <div class="collection-title">
+            <h1 class="archive-year" id="archive-year-2019">2019</h1>
+          </div>
+        
+        
+
         
 
   <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
@@ -300,17 +318,17 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/05/15/收藏网址/网址收藏/" itemprop="url">
+            <a class="post-title-link" href="/2019/05/13/Hexo/hello-world/" itemprop="url">
               
-                <span itemprop="name">网址收藏</span>
+                <span itemprop="name">Hello World</span>
               
             </a>
         
       </h2>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-15T19:58:43+08:00" content="2019-05-15">
-          05-15
+        <time class="post-time" itemprop="dateCreated" datetime="2019-05-13T22:33:19+08:00" content="2019-05-13">
+          05-13
         </time>
       </div>
 
@@ -318,15 +336,20 @@
   </article>
 
 
-      
-    </div>
 
+      
+
+    </div>
   </div>
   
   
   
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
 
@@ -1222,7 +1245,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("网址收藏");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("Hello World");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {

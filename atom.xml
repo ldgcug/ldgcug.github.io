@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.github.com/"/>
-  <updated>2019-05-17T14:44:02.335Z</updated>
+  <updated>2019-05-18T01:31:07.676Z</updated>
   <id>http://www.github.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ubuntu16下翻墙搭建</title>
+    <link href="http://www.github.com/2019/05/18/Linux/ubuntu16%E4%B8%8B%E7%BF%BB%E5%A2%99%E6%90%AD%E5%BB%BA/"/>
+    <id>http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/</id>
+    <published>2019-05-18T00:47:13.000Z</published>
+    <updated>2019-05-18T01:31:07.676Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;h3 id=&quot;说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新&quot;&gt;&lt;a href=&quot;#说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.github.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>win7下局域网打印机共享</title>
@@ -72,9 +99,9 @@
       <category term="python" scheme="http://www.github.com/categories/%E8%AF%AD%E8%A8%80/python/"/>
     
     
-      <category term="Python" scheme="http://www.github.com/tags/Python/"/>
-    
       <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+    
+      <category term="Python" scheme="http://www.github.com/tags/Python/"/>
     
   </entry>
   
