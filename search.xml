@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Youtube视频链接下载方法]]></title>
+    <url>%2F2019%2F05%2F21%2F%E7%94%9F%E6%B4%BB%2F%E8%A7%86%E9%A2%91%2FYoutube%E8%A7%86%E9%A2%91%E9%93%BE%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[在线下载Youtube视频链接网址：1https://www.vidpaw.com/cn]]></content>
+      <categories>
+        <category>生活</category>
+        <category>视频</category>
+      </categories>
+      <tags>
+        <tag>视频</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ubuntu16软件安装]]></title>
+    <url>%2F2019%2F05%2F21%2FLinux%2Fubuntu16%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[前言 仅用来在ubuntu上安装一些平时常用软件 1、Teamviewer安装 Teamviewer下载，Ubuntu系统下，文件默认下载到~/Downloads目录下 安装步骤 12$ cd ~/Downloads$ sudo dpkg -i *.deb 在执行上面的sudo dpkg -i步骤后，会出现一个Error报错，不用着急，执行下面命令处理依赖即可 1$ sudo apt-get install –f 说明：有时候会遇到Teamviewer无法打开，即双击Teamviewer无法显示，此时只需要命令启动即可 123$ teamviewer --daemon stop$ teamviewer --daemon start 2、搜狗输入法安装 下载地址，Ubuntu系统下，文件默认下载到~/Downloads目录下 安装步骤 12$ cd ~/Downloads$ sudo dpkg -i *.deb 在执行上面的sudo dpkg -i步骤后，会出现一个Error报错，不用着急，执行下面命令处理依赖即可 1$ sudo apt-get install –f 输入法配置 （1）安装完成后，在电脑设置里面找到Language Support （2）键盘输入方式选择：fctix （3）若没有fctix，在终端输入命令进行安装 1$ sudo apt-get install fcitx （4）注销退出，重新登录进去 如果还不能切换中文输入法，参考该网址 若出现中文输入乱码情况，解决方法如下： 12$ cd ~/.config$ rm -rf SogouPY* sogou* 执行完后，重启电脑即可 3、Vscode安装1234$ sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make$ sudo apt-get update$ sudo apt-get install ubuntu-make$ sudo umake ide visual-studio-code 安装完成后，log out，然后在打开，就能在应用里看到Vscode 4、sublime text3安装123$ sudo add-apt-repository ppa:webupd8team/sublime-text-3$ sudo apt-get update$ sudo apt-get install sublime-text-installer 5、pycharm命令行安装 添加源 1$ sudo add-apt-repository ppa:mystic-mirage/pycharm 安装免费社区版 12$ sudo apt update$ sudo apt install pycharm-community 以前在u14上安装pycharm的另一个方法笔记（感觉还是上面一个好一点，上面是最新的笔记） 1234$ sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make$ sudo apt-get update$ sudo apt-get install ubuntu-make$ umake ide pycharm]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[(转)自己手动搭建翻墙服务器]]></title>
+    <url>%2F2019%2F05%2F21%2F%E6%94%B6%E8%97%8F%E7%BD%91%E5%9D%80%2F%E8%BD%AC-%E8%87%AA%E5%B7%B1%E6%89%8B%E5%8A%A8%E6%90%AD%E5%BB%BA%E7%BF%BB%E5%A2%99%E6%9C%8D%E5%8A%A1%E5%99%A8%2F</url>
+    <content type="text"><![CDATA[原文网址：https://github.com/XX-net/XX-Net/issues/6506 说明：（1）创建服务器是，地区选择美国 （2）选择每月3.5$ 的价格 （3）其他的照着原网址就可以了]]></content>
+      <categories>
+        <category>网址收藏</category>
+      </categories>
+      <tags>
+        <tag>网址收藏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[GPU Tensorflow 安装]]></title>
     <url>%2F2019%2F05%2F21%2FLinux%2FGPU-Tensorflow-%E5%AE%89%E8%A3%85%2F</url>
     <content type="text"><![CDATA[此安装过程仅在Ubuntu16下安装测试 1、安装nvidia显卡驱动1$ sudo add-apt-repository ppa:graphics-drivers/ppa 2、查看可安装的驱动版本1$ ubuntu-drivers devices 3、选择推荐版本号进行安装1$ sudo apt-get install nvidia-390 nvidia-settings nvidia-prime 说明：我在安装的电脑上推荐的版本是390，因此使用的是390安装 但上图推荐的是430，在安装过程中需要更改为430，如：nvidia-430 123$ sudo apt-get install mesa-common-dev$ sudo apt-get install freeglut3-dev$ sudo reboot 4、安装cuda 从cuda官网下载run文件，下载完后，执行下面代码命令 12$ cd Downloads$ sudo sh cuda_9.0.176_384.81_linux.run 5、下载cudnn及安装cudnn cudnn官网下载，下载7.5版本，对应CUDA9.0 百度云盘下载： 链接: https://pan.baidu.com/s/1cFoaZj_FRmQGXFneg9NL2A 提取码: 2a1v 我这里是从云盘上下载，官网下载也差不多执行下面步骤 下载完后解压，并进到该解压文件所在目录 123$ sudo cp cuda/include/cudnn.h /usr/local/cuda/include$ sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64$ sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn* 6、配置cuda环境12345$ sudo gedit ~/.bashrc在最后添加如下两行代码$ export PATH=/usr/local/cuda-9.0/bin:$PATH$ export LD_LIBRARY_PATH=/usr/local/cuda-$9.0/lib64:$LD_LIBRARY_PATH$ source ~/.bashrc ~/.bashrc相关的配置如下图 7、安装gpu-tensorflow1$ pip install tensorflow-gpu==1.6 说明：当安装1.6版本的tensorflow时，如果报错，可以尝试将版本降低，如改为 tensorflow-gpu==1.5 或 tensorflow-gpu==1.3 8、测试tensorflow安装成功与否1在python环境下输入import tensorflow，不报错，即安装成功 其他可能帮助信息cuda、cudnn版本对应关系https://www.tensorflow.org/install/source#tested_source_configurations 查看GPU显卡型号和驱动版本123$ lspci | grep -i nvidia$ sudo dpkg --list | grep nvidia-*网址：https://www.nvidia.cn/Download/driverResults.aspx/137427/cn 在服务器上安装时需要注意的事项 参考网址：https://blog.csdn.net/QLULIBIN/article/details/78714596 （1）在安装cuda时，需要关闭图形化界面（ctrl+alt+F2键） （2）在出现的选项里，关于opengl的选择选择no，其他的选accept或yes。 （3）如果在重启之后，可能在登陆界面一直循环往复，可能也需要到命令界面，切换为intel显卡]]></content>
@@ -93,7 +127,7 @@
   </entry>
   <entry>
     <title><![CDATA[python实现谷歌翻译PDF换行的问题]]></title>
-    <url>%2F2019%2F05%2F14%2F%E8%AF%AD%E8%A8%80%2Fpython%E5%AE%9E%E7%8E%B0%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91PDF%E6%8D%A2%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
+    <url>%2F2019%2F05%2F14%2F%E8%AF%AD%E8%A8%80%2FPython%2Fpython%E5%AE%9E%E7%8E%B0%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91PDF%E6%8D%A2%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[前提条件（1）浏览器 chrome（2）python编辑器：pycharm使用说明1、 pycharm上安装pyperclip、webbrowserdownloader 2、创建google_translate.py文件，并将如下代码复制粘贴至google_translate.py文件123456789101112131415#coding=utf-8import pyperclipimport webbrowsercopyBuff = ' 'num = 1#convinent to change numwhile num == 1: num = num + 1 copyedText = pyperclip.paste() if copyBuff != copyedText: copyBuff = copyedText normalizedText = copyBuff.replace('\n', ' ') url = 'https://translate.google.cn/#en/zh-CN/' + normalizedText webbrowser.open(url) 3、运行（1）在pdf上任意选择一个段落，复制 （2）运行google_translate.py程序，chrome浏览器会自动弹出一个google翻译界面，刚才复制的内容就会直接翻译 注：在换行出现‘-’的情况下，可能没有处理，即如下情况：在di-rectly这里，google翻译中没有解决，不过不影响翻译 We present the first deep learning model to successfully learn control policies di-rectly from high-dimensional sensory input using reinforcement learning.]]></content>
       <categories>
         <category>语言</category>
