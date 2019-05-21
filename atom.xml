@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.github.com/"/>
-  <updated>2019-05-18T01:31:07.676Z</updated>
+  <updated>2019-05-21T04:06:41.484Z</updated>
   <id>http://www.github.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GPU Tensorflow 安装</title>
+    <link href="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-%E5%AE%89%E8%A3%85/"/>
+    <id>http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/</id>
+    <published>2019-05-21T03:32:35.000Z</published>
+    <updated>2019-05-21T04:06:41.484Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;此安装过程仅在Ubuntu16下安装测试&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;1、安装nvidia显卡驱动&quot;&gt;&lt;a href=&quot;#1、安装nvidia显卡驱动&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.github.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>ubuntu16下翻墙搭建</title>

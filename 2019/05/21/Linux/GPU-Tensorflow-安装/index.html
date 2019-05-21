@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Linux,">
 
 
 
@@ -81,16 +81,22 @@
 
 
 
-<meta name="description" content="好记性不如烂笔头">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ldg个人博客">
-<meta property="og:url" content="http://www.github.com/categories/语言/python/index.html">
+<meta name="description" content="此安装过程仅在Ubuntu16下安装测试  1、安装nvidia显卡驱动1$ sudo add-apt-repository ppa:graphics-drivers/ppa 2、查看可安装的驱动版本1$ ubuntu-drivers devices  3、选择推荐版本号进行安装1$ sudo apt-get install nvidia-390 nvidia-settings nvidia-p">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPU Tensorflow 安装">
+<meta property="og:url" content="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/index.html">
 <meta property="og:site_name" content="ldg个人博客">
-<meta property="og:description" content="好记性不如烂笔头">
+<meta property="og:description" content="此安装过程仅在Ubuntu16下安装测试  1、安装nvidia显卡驱动1$ sudo add-apt-repository ppa:graphics-drivers/ppa 2、查看可安装的驱动版本1$ ubuntu-drivers devices  3、选择推荐版本号进行安装1$ sudo apt-get install nvidia-390 nvidia-settings nvidia-p">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/drivers.png">
+<meta property="og:image" content="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/cuda.png">
+<meta property="og:image" content="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/source.png">
+<meta property="og:updated_time" content="2019-05-21T04:06:41.484Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ldg个人博客">
-<meta name="twitter:description" content="好记性不如烂笔头">
+<meta name="twitter:title" content="GPU Tensorflow 安装">
+<meta name="twitter:description" content="此安装过程仅在Ubuntu16下安装测试  1、安装nvidia显卡驱动1$ sudo add-apt-repository ppa:graphics-drivers/ppa 2、查看可安装的驱动版本1$ ubuntu-drivers devices  3、选择推荐版本号进行安装1$ sudo apt-get install nvidia-390 nvidia-settings nvidia-p">
+<meta name="twitter:image" content="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/drivers.png">
 
 
 
@@ -120,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.github.com/categories/语言/python/">
+  <link rel="canonical" href="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/">
 
 
 
 
 
-  <title>分类: python | ldg个人博客</title>
+  <title>GPU Tensorflow 安装 | ldg个人博客</title>
   
 
 
@@ -145,7 +151,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,79 +287,257 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>python<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/05/17/Linux/Linux下-Python2-与-Python3-版本切换/" itemprop="url">
-              
-                <span itemprop="name">Linux下 Python2 与 Python3 版本切换</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">GPU Tensorflow 安装</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-17T19:22:01+08:00" content="2019-05-17">
-          05-17
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-21T11:32:35+08:00">
+                2019-05-21
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/21/Linux/GPU-Tensorflow-安装/" class="leancloud_visitors" data-flag-title="GPU Tensorflow 安装">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  545
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/14/语言/python实现谷歌翻译PDF换行的问题/" itemprop="url">
-              
-                <span itemprop="name">python实现谷歌翻译PDF换行的问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-14T17:04:16+08:00" content="2019-05-14">
-          05-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <blockquote>
+<p>此安装过程仅在Ubuntu16下安装测试</p>
+</blockquote>
+<h2 id="1、安装nvidia显卡驱动"><a href="#1、安装nvidia显卡驱动" class="headerlink" title="1、安装nvidia显卡驱动"></a>1、安装nvidia显卡驱动</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo add-apt-repository ppa:graphics-drivers/ppa</span><br></pre></td></tr></table></figure>
+<h2 id="2、查看可安装的驱动版本"><a href="#2、查看可安装的驱动版本" class="headerlink" title="2、查看可安装的驱动版本"></a>2、查看可安装的驱动版本</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ubuntu-drivers devices</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/21/Linux/GPU-Tensorflow-安装/drivers.png" alt></p>
+<h2 id="3、选择推荐版本号进行安装"><a href="#3、选择推荐版本号进行安装" class="headerlink" title="3、选择推荐版本号进行安装"></a>3、选择推荐版本号进行安装</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nvidia<span class="number">-390</span> nvidia-settings nvidia-prime</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：我在安装的电脑上推荐的版本是390，因此使用的是390安装</p>
+<p>但上图推荐的是430，在安装过程中需要更改为430，如：nvidia-430</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mesa-common-dev</span><br><span class="line">$ sudo apt-get install freeglut3-dev</span><br><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
+<h2 id="4、安装cuda"><a href="#4、安装cuda" class="headerlink" title="4、安装cuda"></a>4、安装cuda</h2><blockquote>
+<p>从<a href="https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=Ubuntu&amp;target_version=1604&amp;target_type=runfilelocal" target="_blank" rel="noopener">cuda官网</a>下载run文件，下载完后，执行下面代码命令</p>
+</blockquote>
+<p><img src="/2019/05/21/Linux/GPU-Tensorflow-安装/cuda.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd Downloads</span><br><span class="line">$ sudo sh cuda_9<span class="number">.0</span><span class="number">.176</span>_384<span class="number">.81</span>_linux.run</span><br></pre></td></tr></table></figure>
+<h2 id="5、下载cudnn及安装cudnn"><a href="#5、下载cudnn及安装cudnn" class="headerlink" title="5、下载cudnn及安装cudnn"></a>5、下载cudnn及安装cudnn</h2><blockquote>
+<p><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cudnn官网</a>下载，下载9.0版本</p>
+</blockquote>
+<blockquote>
+<p>百度云盘下载：</p>
+<p>链接: <a href="https://pan.baidu.com/s/1cFoaZj_FRmQGXFneg9NL2A" target="_blank" rel="noopener">https://pan.baidu.com/s/1cFoaZj_FRmQGXFneg9NL2A</a> 提取码: 2a1v </p>
+</blockquote>
+<p>我这里是从云盘上下载，官网下载也差不多执行下面步骤</p>
+<blockquote>
+<p>下载完后解压，并进到该解压文件所在目录</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp cuda/include/cudnn.h /usr/local/cuda/include</span><br><span class="line">$ sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64</span><br><span class="line">$ sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
+<h2 id="6、配置cuda环境"><a href="#6、配置cuda环境" class="headerlink" title="6、配置cuda环境"></a>6、配置cuda环境</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gedit ~/.bashrc</span><br><span class="line">在最后添加如下两行代码</span><br><span class="line">$ export PATH=/usr/local/cuda<span class="number">-9.0</span>/bin:$PATH</span><br><span class="line">$ export LD_LIBRARY_PATH=/usr/local/cuda-$<span class="number">9.0</span>/lib64:$LD_LIBRARY_PATH</span><br><span class="line">$ source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>~/.bashrc相关的配置如下图</p>
+<p><img src="/2019/05/21/Linux/GPU-Tensorflow-安装/source.png" alt></p>
+<h2 id="7、安装gpu-tensorflow"><a href="#7、安装gpu-tensorflow" class="headerlink" title="7、安装gpu-tensorflow"></a>7、安装gpu-tensorflow</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install tensorflow-gpu==<span class="number">1.6</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：当安装1.6版本的tensorflow时，如果报错，可以尝试将版本降低，如改为 tensorflow-gpu==1.5 或 tensorflow-gpu==1.3</p>
+</blockquote>
+<h2 id="8、测试tensorflow安装成功与否"><a href="#8、测试tensorflow安装成功与否" class="headerlink" title="8、测试tensorflow安装成功与否"></a>8、测试tensorflow安装成功与否</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在python环境下输入import tensorflow，不报错，即安装成功</span><br></pre></td></tr></table></figure>
+<h2 id="其他可能帮助信息"><a href="#其他可能帮助信息" class="headerlink" title="其他可能帮助信息"></a>其他可能帮助信息</h2><h3 id="查看GPU显卡型号和驱动版本"><a href="#查看GPU显卡型号和驱动版本" class="headerlink" title="查看GPU显卡型号和驱动版本"></a>查看GPU显卡型号和驱动版本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lspci | grep -i nvidia</span><br><span class="line">$ sudo dpkg --list | grep nvidia-*</span><br><span class="line">网址：https://www.nvidia.cn/Download/driverResults.aspx/<span class="number">137427</span>/cn</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在服务器上安装时需要注意的事项</p>
+</blockquote>
+<blockquote>
+<p>参考网址：<a href="https://blog.csdn.net/QLULIBIN/article/details/78714596" target="_blank" rel="noopener">https://blog.csdn.net/QLULIBIN/article/details/78714596</a></p>
+<p>（1）在安装cuda时，需要关闭图形化界面（ctrl+alt+F2键）</p>
+<p>（2）在出现的选项里，关于opengl的选择选择no，其他的选accept或yes。</p>
+<p>（3）如果在重启之后，可能在登陆界面一直循环往复，可能也需要到命令界面，切换为intel显卡</p>
+</blockquote>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/18/Linux/ubuntu16下翻墙搭建/" rel="next" title="ubuntu16下翻墙搭建">
+                <i class="fa fa-chevron-left"></i> ubuntu16下翻墙搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -361,6 +545,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -381,8 +574,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -479,6 +681,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、安装nvidia显卡驱动"><span class="nav-text">1、安装nvidia显卡驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、查看可安装的驱动版本"><span class="nav-text">2、查看可安装的驱动版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、选择推荐版本号进行安装"><span class="nav-text">3、选择推荐版本号进行安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、安装cuda"><span class="nav-text">4、安装cuda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、下载cudnn及安装cudnn"><span class="nav-text">5、下载cudnn及安装cudnn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、配置cuda环境"><span class="nav-text">6、配置cuda环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、安装gpu-tensorflow"><span class="nav-text">7、安装gpu-tensorflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、测试tensorflow安装成功与否"><span class="nav-text">8、测试tensorflow安装成功与否</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他可能帮助信息"><span class="nav-text">其他可能帮助信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看GPU显卡型号和驱动版本"><span class="nav-text">查看GPU显卡型号和驱动版本</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -674,6 +892,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -702,6 +924,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1212,13 +1445,13 @@
       var articles = db.collection('articles')
 
       //https://hexo.io/zh-tw/docs/variables.html
-      var isPost = ''.length > 0
+      var isPost = 'GPU Tensorflow 安装'.length > 0
       var isArchive = '' === 'true'
       var isCategory = ''.length > 0
       var isTag = ''.length > 0
 
       if (isPost) { //is article page
-        var title = ''
+        var title = 'GPU Tensorflow 安装'
         var doc = articles.doc(title)
 
         getCount(doc, true).then(appendCountTo($('.post-meta')))
@@ -1226,7 +1459,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("Linux下 Python2 与 Python3 版本切换");titles.push("python实现谷歌翻译PDF换行的问题");' //if you have a better way to get titles of posts, please change it
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
