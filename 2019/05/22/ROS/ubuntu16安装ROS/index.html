@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Linux,ROS,">
 
 
 
@@ -81,17 +81,20 @@
 
 
 
-<meta name="description" content="关于博客 好记性不如烂笔头 我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识…… 本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……  致谢 本站基于Hexo，使用NexT主题  联系方式 QQ邮箱：569167692@qq.cm Gmail邮箱：ldg569167692@gma">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://www.github.com/about/index.html">
+<meta name="description" content="ubuntu与ros对应版本关系（我目前更多的用的是ubuntu16）    ubuntu16下ros安装步骤  123456789$ sudo sh -c &apos;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &amp;gt; /etc/apt/sources.list.d/ros-latest.list&apos;$ su">
+<meta name="keywords" content="Linux,ROS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu16安装ROS">
+<meta property="og:url" content="http://www.github.com/2019/05/22/ROS/ubuntu16安装ROS/index.html">
 <meta property="og:site_name" content="ldg个人博客">
-<meta property="og:description" content="关于博客 好记性不如烂笔头 我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识…… 本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……  致谢 本站基于Hexo，使用NexT主题  联系方式 QQ邮箱：569167692@qq.cm Gmail邮箱：ldg569167692@gma">
+<meta property="og:description" content="ubuntu与ros对应版本关系（我目前更多的用的是ubuntu16）    ubuntu16下ros安装步骤  123456789$ sudo sh -c &apos;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &amp;gt; /etc/apt/sources.list.d/ros-latest.list&apos;$ su">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-15T11:08:39.208Z">
+<meta property="og:image" content="http://www.github.com/2019/05/22/ROS/ubuntu16安装ROS/ubuntu_ros.png">
+<meta property="og:updated_time" content="2019-05-23T02:31:40.531Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于">
-<meta name="twitter:description" content="关于博客 好记性不如烂笔头 我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识…… 本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……  致谢 本站基于Hexo，使用NexT主题  联系方式 QQ邮箱：569167692@qq.cm Gmail邮箱：ldg569167692@gma">
+<meta name="twitter:title" content="ubuntu16安装ROS">
+<meta name="twitter:description" content="ubuntu与ros对应版本关系（我目前更多的用的是ubuntu16）    ubuntu16下ros安装步骤  123456789$ sudo sh -c &apos;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &amp;gt; /etc/apt/sources.list.d/ros-latest.list&apos;$ su">
+<meta name="twitter:image" content="http://www.github.com/2019/05/22/ROS/ubuntu16安装ROS/ubuntu_ros.png">
 
 
 
@@ -121,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.github.com/about/">
+  <link rel="canonical" href="http://www.github.com/2019/05/22/ROS/ubuntu16安装ROS/">
 
 
 
 
 
-  <title>关于 | ldg个人博客</title>
+  <title>ubuntu16安装ROS | ldg个人博客</title>
   
 
 
@@ -284,48 +287,226 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/22/ROS/ubuntu16安装ROS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">关于</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h1 id="关于博客"><a href="#关于博客" class="headerlink" title="关于博客"></a>关于博客</h1><blockquote>
-<p>好记性不如烂笔头</p>
-<p>我即将在这里分享我的生活，记录我看过的好书、看过的好电影、听过的好音乐、学习到的新知识……</p>
-<p>本博客是从2019年5月14日凌晨开始，经过两天的搭建，博客于2019年5月15日初步搭建完成，但学习的路还很长，后面会继续更新……</p>
+          <h1 class="post-title" itemprop="name headline">ubuntu16安装ROS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T14:16:55+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/22/ROS/ubuntu16安装ROS/" class="leancloud_visitors" data-flag-title="ubuntu16安装ROS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  207
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>ubuntu与ros对应版本关系（我目前更多的用的是ubuntu16）</p>
 </blockquote>
-<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><blockquote>
-<p>本站基于Hexo，使用NexT主题</p>
-</blockquote>
-<h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><blockquote>
-<p>QQ邮箱：<a href="mailto:569167692@qq.cm" target="_blank" rel="noopener">569167692@qq.cm</a></p>
-<p>Gmail邮箱：<a href="mailto:ldg569167692@gmail.com" target="_blank" rel="noopener">ldg569167692@gmail.com</a></p>
-</blockquote>
+<p><img src="/2019/05/22/ROS/ubuntu16安装ROS/ubuntu_ros.png" alt></p>
 <blockquote>
-<p>更新于2019年5月15日 19:05</p>
+<p>ubuntu16下ros安装步骤</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sh -c <span class="string">'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'</span></span><br><span class="line">$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:<span class="number">80</span> --recv-key <span class="number">421</span>C365BD9FF1F717815A3895523BAEEB01FA116</span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install ros-kinetic-desktop-full</span><br><span class="line">$ sudo rosdep init</span><br><span class="line">$ rosdep update</span><br><span class="line">$ echo <span class="string">"source /opt/ros/kinetic/setup.bash"</span> &gt;&gt; ~/.bashrc</span><br><span class="line">$ source ~/.bashrc</span><br><span class="line">$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential</span><br></pre></td></tr></table></figure>
+<p>安装完成后，在终端输入roscore，若最后出现roscore，则说明安装成功</p>
+<p>原文：ros<a href="http://wiki.ros.org/kinetic/Installation/Ubuntu" target="_blank" rel="noopener">官网</a></p>
+<blockquote>
+<p>总结：上面安装步骤安装的是ros kinetic 桌面完全版，并且安装完后，默认安装了gazebo7。但在终端输入gazebo，并不会出现gazebo界面，原因是缺少gazebo的两个最基本模型文件（sun和ground_plane）。gazebo_models文件下载，点击<a href="https://bitbucket.org/osrf/gazebo_models/src/default/" target="_blank" rel="noopener">此处</a>。</p>
 </blockquote>
 
-        
-      </div>
-      
-      
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/ROS/" rel="tag"># ROS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/21/生活/视频/Youtube视频链接下载方法/" rel="next" title="Youtube视频链接下载方法">
+                <i class="fa fa-chevron-left"></i> Youtube视频链接下载方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/22/ROS/卸载原版gazebo并安装新版gazebo/" rel="prev" title="卸载原版gazebo并安装新版gazebo">
+                卸载原版gazebo并安装新版gazebo <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -363,17 +544,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -470,22 +642,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于博客"><span class="nav-text">关于博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#致谢"><span class="nav-text">致谢</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联系方式"><span class="nav-text">联系方式</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -1234,13 +1390,13 @@
       var articles = db.collection('articles')
 
       //https://hexo.io/zh-tw/docs/variables.html
-      var isPost = '关于'.length > 0
+      var isPost = 'ubuntu16安装ROS'.length > 0
       var isArchive = '' === 'true'
       var isCategory = ''.length > 0
       var isTag = ''.length > 0
 
       if (isPost) { //is article page
-        var title = '关于'
+        var title = 'ubuntu16安装ROS'
         var doc = articles.doc(title)
 
         getCount(doc, true).then(appendCountTo($('.post-meta')))
