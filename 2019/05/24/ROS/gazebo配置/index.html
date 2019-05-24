@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,">
+  <meta name="keywords" content="ROS,Gazebo,">
 
 
 
@@ -81,27 +81,22 @@
 
 
 
-<meta name="description" content="说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新  需要安装软件：  chrome浏览器 shadowsocks-qt5   安装步骤：1、ubuntu16安装chrome浏览器1234$ sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/s">
-<meta name="keywords" content="Linux">
+<meta name="description" content="前言 记录的是研究生阶段以来使用gazebo过程中遇到过的一些坑，以及一些相关的gazebo配置  1、gazebo模型文件说明 如果不是安装的gazebo8，如默认安装的ros kinetic版本对应的gazebo7和ros indigo版本对应的gazebo2的话，在终端输入gazebo的时候，会卡着，gazebo界面出不来。其原因是因为没有下载gazebo的模型，下载完后将模型拷贝到~/.g">
+<meta name="keywords" content="ROS,Gazebo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu16下翻墙搭建">
-<meta property="og:url" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/index.html">
+<meta property="og:title" content="gazebo配置">
+<meta property="og:url" content="http://www.github.com/2019/05/24/ROS/gazebo配置/index.html">
 <meta property="og:site_name" content="ldg个人博客">
-<meta property="og:description" content="说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新  需要安装软件：  chrome浏览器 shadowsocks-qt5   安装步骤：1、ubuntu16安装chrome浏览器1234$ sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/s">
+<meta property="og:description" content="前言 记录的是研究生阶段以来使用gazebo过程中遇到过的一些坑，以及一些相关的gazebo配置  1、gazebo模型文件说明 如果不是安装的gazebo8，如默认安装的ros kinetic版本对应的gazebo7和ros indigo版本对应的gazebo2的话，在终端输入gazebo的时候，会卡着，gazebo界面出不来。其原因是因为没有下载gazebo的模型，下载完后将模型拷贝到~/.g">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/add_manually.png">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/ip_config.png">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/proxy_switch_download.png">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/proxy.png">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/proxy_server.png">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/auto_switch.png">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/google.png">
-<meta property="og:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/add_condition.png">
-<meta property="og:updated_time" content="2019-05-18T01:31:07.676Z">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gazebo_model_path.png">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gazebo_models.png">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/launch.png">
+<meta property="og:updated_time" content="2019-05-24T16:19:27.214Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu16下翻墙搭建">
-<meta name="twitter:description" content="说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新  需要安装软件：  chrome浏览器 shadowsocks-qt5   安装步骤：1、ubuntu16安装chrome浏览器1234$ sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/s">
-<meta name="twitter:image" content="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/add_manually.png">
+<meta name="twitter:title" content="gazebo配置">
+<meta name="twitter:description" content="前言 记录的是研究生阶段以来使用gazebo过程中遇到过的一些坑，以及一些相关的gazebo配置  1、gazebo模型文件说明 如果不是安装的gazebo8，如默认安装的ros kinetic版本对应的gazebo7和ros indigo版本对应的gazebo2的话，在终端输入gazebo的时候，会卡着，gazebo界面出不来。其原因是因为没有下载gazebo的模型，下载完后将模型拷贝到~/.g">
+<meta name="twitter:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gazebo_model_path.png">
 
 
 
@@ -131,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/">
+  <link rel="canonical" href="http://www.github.com/2019/05/24/ROS/gazebo配置/">
 
 
 
 
 
-  <title>ubuntu16下翻墙搭建 | ldg个人博客</title>
+  <title>gazebo配置 | ldg个人博客</title>
   
 
 
@@ -306,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/">
+    <link itemprop="mainEntityOfPage" href="http://www.github.com/2019/05/24/ROS/gazebo配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -323,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ubuntu16下翻墙搭建</h1>
+          <h1 class="post-title" itemprop="name headline">gazebo配置</h1>
         
 
         <div class="post-meta">
@@ -335,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-18T08:47:13+08:00">
-                2019-05-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-24T23:16:55+08:00">
+                2019-05-24
               </time>
             
 
@@ -358,8 +353,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
                   </a>
                 </span>
 
@@ -375,7 +370,7 @@
 
           
           
-             <span id="/2019/05/18/Linux/ubuntu16下翻墙搭建/" class="leancloud_visitors" data-flag-title="ubuntu16下翻墙搭建">
+             <span id="/2019/05/24/ROS/gazebo配置/" class="leancloud_visitors" data-flag-title="gazebo配置">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -400,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  448
+                  289
                 </span>
               
 
@@ -437,57 +432,23 @@
       
 
       
-        <blockquote>
-<h3 id="说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新"><a href="#说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新" class="headerlink" title="说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新"></a>说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新</h3></blockquote>
-<blockquote>
-<p>需要安装软件：</p>
-<ul>
-<li>chrome浏览器</li>
-<li>shadowsocks-qt5</li>
-</ul>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>记录的是研究生阶段以来使用gazebo过程中遇到过的一些坑，以及一些相关的gazebo配置</p>
 </blockquote>
-<h1 id="安装步骤："><a href="#安装步骤：" class="headerlink" title="安装步骤："></a>安装步骤：</h1><h2 id="1、ubuntu16安装chrome浏览器"><a href="#1、ubuntu16安装chrome浏览器" class="headerlink" title="1、ubuntu16安装chrome浏览器"></a>1、ubuntu16安装chrome浏览器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/sources.list.d/</span><br><span class="line">$ wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -</span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install google-chrome-stable</span><br></pre></td></tr></table></figure>
-<h2 id="2、安装shadowsocks-qt5"><a href="#2、安装shadowsocks-qt5" class="headerlink" title="2、安装shadowsocks-qt5"></a>2、安装shadowsocks-qt5</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo add-apt-repository ppa:hzwhuang/ss-qt5</span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install shadowsocks-qt5sudo apt-get install shadowsocks-qt5</span><br></pre></td></tr></table></figure>
-<h2 id="3、shadowscoks-qt5配置"><a href="#3、shadowscoks-qt5配置" class="headerlink" title="3、shadowscoks-qt5配置"></a>3、shadowscoks-qt5配置</h2><blockquote>
-<p>打开<code>shadowsocks-qt5</code></p>
+<h2 id="1、gazebo模型文件说明"><a href="#1、gazebo模型文件说明" class="headerlink" title="1、gazebo模型文件说明"></a>1、gazebo模型文件说明</h2><blockquote>
+<p>如果不是安装的gazebo8，如默认安装的ros kinetic版本对应的gazebo7和ros indigo版本对应的gazebo2的话，在终端输入gazebo的时候，会卡着，gazebo界面出不来。其原因是因为没有下载gazebo的模型，下载完后将模型拷贝到~/.gazebo/models/文件夹即可。</p>
+<p>值得注意的是：~/.gazebo/models/文件夹下只需要有sun模型文件和ground_plane模型文件就能正常打卡gazebo界面</p>
 </blockquote>
-<p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/add_manually.png" alt></p>
-<blockquote>
-<p>在如下界面，设置IP、端口、密码等等</p>
-<p>如果没有设置服务器IP，需要先搭建一个服务器，然后设置对应的端口及密码等等……（这里不介绍如何搭建翻墙服务器）</p>
+<h2 id="2、gazebo-model-path配置"><a href="#2、gazebo-model-path配置" class="headerlink" title="2、gazebo_model_path配置"></a>2、gazebo_model_path配置</h2><blockquote>
+<p>针对以往的总是要将gazebo model文件放在~/.gazebo/models文件，而不能存放在自己下载的ros程序包下的model文件夹下，主要是因为环境变量没有配置，配置好后就可以将所有的模型文件放在自己想放的位置。</p>
 </blockquote>
-<p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/ip_config.png" alt></p>
-<h2 id="4、添加插件"><a href="#4、添加插件" class="headerlink" title="4、添加插件"></a>4、添加插件</h2><blockquote>
-<p>添加Proxy SwitchOmega.crx插件</p>
-</blockquote>
-<p>插件下载地址：<a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="noopener">https://github.com/FelisCatus/SwitchyOmega/releases</a></p>
-<p>说明：该插件下载地址还没有使用过，之前下载过该插件的其他地址，若这个不能使用，还是使用存在于硬盘的插件</p>
-<p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/proxy_switch_download.png" alt></p>
-<blockquote>
-<p>将该插件直接拖曳到chrome的扩展中，若拖曳失败，不能正常拖曳，参考该网址：<a href="https://blog.csdn.net/qq_33033367/article/details/80952291" target="_blank" rel="noopener">https://blog.csdn.net/qq_33033367/article/details/80952291</a></p>
-</blockquote>
-<p>注意：要切换为开发模式，然后进行拖曳，注意图中红色框</p>
-<p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/proxy.png" alt></p>
-<h2 id="5、switchomega配置"><a href="#5、switchomega配置" class="headerlink" title="5、switchomega配置"></a>5、switchomega配置</h2><p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/proxy_server.png" alt></p>
-<blockquote>
-<p> 下图中的URL地址需要自己手动输入，直接复制下面代码即可</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/auto_switch.png" alt></p>
-<blockquote>
-<p>最后点击Download ProfileNow</p>
-</blockquote>
-<h2 id="6、chrome浏览器访问google"><a href="#6、chrome浏览器访问google" class="headerlink" title="6、chrome浏览器访问google"></a>6、chrome浏览器访问google</h2><blockquote>
-<p>首先需要打开shadowsocks-qt5，然后连接服务器</p>
-</blockquote>
-<blockquote>
-<p>然后通过切换规则，切换为auto switch，就可以访问google了</p>
-</blockquote>
-<p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/google.png" alt></p>
-<blockquote>
-<p>打开浏览器，输入<a href="http://www.google.com" target="_blank" rel="noopener">www.google.com</a>，如果出现这种问题，修改为proxy即可</p>
-</blockquote>
-<p><img src="/2019/05/18/Linux/ubuntu16下翻墙搭建/add_condition.png" alt></p>
+<p>（1）首先在~/.bashrc最后一行添加gazebo_model_path路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export GAZEBO_MODEL_PATH=<span class="string">"/home/cugrobot/catkin_ws/src/ardrone_simulator_gazebo7/cvg_sim_gazebo/models"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/24/ROS/gazebo配置/gazebo_model_path.png" alt></p>
+<p>其对应的模型文件夹如下：</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/gazebo_models.png" alt></p>
+<p>（2）然后，在launch启动文件夹下，添加env代码，如下</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/launch.png" alt></p>
 
       
     </div>
@@ -505,7 +466,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/ROS/" rel="tag"># ROS</a>
+          
+            <a href="/tags/Gazebo/" rel="tag"># Gazebo</a>
           
         </div>
       
@@ -518,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/17/系统/win7下局域网打印机共享/" rel="next" title="win7下局域网打印机共享">
-                <i class="fa fa-chevron-left"></i> win7下局域网打印机共享
+              <a href="/2019/05/22/ROS/卸载原版gazebo并安装新版gazebo/" rel="next" title="卸载原版gazebo并安装新版gazebo">
+                <i class="fa fa-chevron-left"></i> 卸载原版gazebo并安装新版gazebo
               </a>
             
           </div>
@@ -527,10 +490,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/21/Linux/GPU-Tensorflow-安装/" rel="prev" title="GPU Tensorflow 安装">
-                GPU Tensorflow 安装 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -704,7 +663,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新"><span class="nav-text">说明：此教程为ubuntu下如何翻墙教程，相对来说步骤比较繁琐，可能有更简单的方法，以后用到会继续更新</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤："><span class="nav-text">安装步骤：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、ubuntu16安装chrome浏览器"><span class="nav-text">1、ubuntu16安装chrome浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、安装shadowsocks-qt5"><span class="nav-text">2、安装shadowsocks-qt5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、shadowscoks-qt5配置"><span class="nav-text">3、shadowscoks-qt5配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、添加插件"><span class="nav-text">4、添加插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、switchomega配置"><span class="nav-text">5、switchomega配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、chrome浏览器访问google"><span class="nav-text">6、chrome浏览器访问google</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、gazebo模型文件说明"><span class="nav-text">1、gazebo模型文件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、gazebo-model-path配置"><span class="nav-text">2、gazebo_model_path配置</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1458,13 +1417,13 @@
       var articles = db.collection('articles')
 
       //https://hexo.io/zh-tw/docs/variables.html
-      var isPost = 'ubuntu16下翻墙搭建'.length > 0
+      var isPost = 'gazebo配置'.length > 0
       var isArchive = '' === 'true'
       var isCategory = ''.length > 0
       var isTag = ''.length > 0
 
       if (isPost) { //is article page
-        var title = 'ubuntu16下翻墙搭建'
+        var title = 'gazebo配置'
         var doc = articles.doc(title)
 
         getCount(doc, true).then(appendCountTo($('.post-meta')))

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[gazebo配置]]></title>
+    <url>%2F2019%2F05%2F24%2FROS%2Fgazebo%E9%85%8D%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[前言 记录的是研究生阶段以来使用gazebo过程中遇到过的一些坑，以及一些相关的gazebo配置 1、gazebo模型文件说明 如果不是安装的gazebo8，如默认安装的ros kinetic版本对应的gazebo7和ros indigo版本对应的gazebo2的话，在终端输入gazebo的时候，会卡着，gazebo界面出不来。其原因是因为没有下载gazebo的模型，下载完后将模型拷贝到~/.gazebo/models/文件夹即可。 值得注意的是：~/.gazebo/models/文件夹下只需要有sun模型文件和ground_plane模型文件就能正常打卡gazebo界面 2、gazebo_model_path配置 针对以往的总是要将gazebo model文件放在~/.gazebo/models文件，而不能存放在自己下载的ros程序包下的model文件夹下，主要是因为环境变量没有配置，配置好后就可以将所有的模型文件放在自己想放的位置。 （1）首先在~/.bashrc最后一行添加gazebo_model_path路径 1export GAZEBO_MODEL_PATH="/home/cugrobot/catkin_ws/src/ardrone_simulator_gazebo7/cvg_sim_gazebo/models" 其对应的模型文件夹如下： （2）然后，在launch启动文件夹下，添加env代码，如下]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+        <tag>Gazebo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[卸载原版gazebo并安装新版gazebo]]></title>
     <url>%2F2019%2F05%2F22%2FROS%2F%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo%2F</url>
     <content type="text"><![CDATA[前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8 卸载gazebo2.2安装gazebo7网址：https://blog.csdn.net/tust123qht/article/details/78796617 卸载gazebo7安装gazebo8步骤如下： （1）卸载ros-kinetic-desktop-full 1$ sudo apt-get remove ros-kinetic-desktop-full （2）卸载gazebo7 1$ sudo apt-get remove gazebo* （3）安装gazebo8 12345$ sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" &gt; /etc/apt/sources.list.d/gazebo-stable.list'$ wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -$ sudo apt-get update$ sudo apt-get install gazebo8$ sudo apt-get install libgazebo8-dev 说明：第一步就卸载了ros-kinetic-desktop-full，因此需要重新安装ros-kinetic-desktop。 特别注意：此次安装没有full，有full的则会默认安装 （4）安装ros-kinetic-desktop 123456789$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116$ sudo apt-get update$ sudo apt-get install ros-kinetic-desktop$ sudo rosdep init$ rosdep update$ echo "source /opt/ros/kinetic/setup.bash" &gt;&gt; ~/.bashrc$ source ~/.bashrc$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential （5）安装一些必要ros包 123456$ sudo apt-get install ros-kinetic-gazebo8-msgs$ sudo apt-get install ros-kinetic-gazebo8-ros-control$ sudo apt-get install ros-kinetic-gazebo8-plugins$ sudo apt-get install ros-kinetic-gazebo8-ros-pkgs$ sudo apt-get install ros-kinetic-gazebo8-ros$ sudo apt-get install ros-kinetic-image-view]]></content>
@@ -100,8 +112,8 @@
         <category>python</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>Linux</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
