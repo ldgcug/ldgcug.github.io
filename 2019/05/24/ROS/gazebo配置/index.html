@@ -92,7 +92,13 @@
 <meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gazebo_model_path.png">
 <meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gazebo_models.png">
 <meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/launch.png">
-<meta property="og:updated_time" content="2019-05-24T16:19:27.214Z">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/reset_pose.png">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gazebo_properties.png">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gate.png">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/collada.png">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/model.png">
+<meta property="og:image" content="http://www.github.com/2019/05/24/ROS/gazebo配置/gazebo_show.png">
+<meta property="og:updated_time" content="2019-05-25T09:06:57.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gazebo配置">
 <meta name="twitter:description" content="前言 记录的是研究生阶段以来使用gazebo过程中遇到过的一些坑，以及一些相关的gazebo配置  1、gazebo模型文件说明 如果不是安装的gazebo8，如默认安装的ros kinetic版本对应的gazebo7和ros indigo版本对应的gazebo2的话，在终端输入gazebo的时候，会卡着，gazebo界面出不来。其原因是因为没有下载gazebo的模型，下载完后将模型拷贝到~/.g">
@@ -395,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  289
+                  1.8k
                 </span>
               
 
@@ -411,7 +417,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  8
                 </span>
               
             </div>
@@ -437,7 +443,7 @@
 </blockquote>
 <h2 id="1、gazebo模型文件说明"><a href="#1、gazebo模型文件说明" class="headerlink" title="1、gazebo模型文件说明"></a>1、gazebo模型文件说明</h2><blockquote>
 <p>如果不是安装的gazebo8，如默认安装的ros kinetic版本对应的gazebo7和ros indigo版本对应的gazebo2的话，在终端输入gazebo的时候，会卡着，gazebo界面出不来。其原因是因为没有下载gazebo的模型，下载完后将模型拷贝到~/.gazebo/models/文件夹即可。</p>
-<p>值得注意的是：~/.gazebo/models/文件夹下只需要有sun模型文件和ground_plane模型文件就能正常打卡gazebo界面</p>
+<p>值得注意的是：~/.gazebo/models/文件夹下只需要有sun模型文件和ground_plane模型文件就能正常打开gazebo界面</p>
 </blockquote>
 <h2 id="2、gazebo-model-path配置"><a href="#2、gazebo-model-path配置" class="headerlink" title="2、gazebo_model_path配置"></a>2、gazebo_model_path配置</h2><blockquote>
 <p>针对以往的总是要将gazebo model文件放在~/.gazebo/models文件，而不能存放在自己下载的ros程序包下的model文件夹下，主要是因为环境变量没有配置，配置好后就可以将所有的模型文件放在自己想放的位置。</p>
@@ -449,6 +455,62 @@
 <p><img src="/2019/05/24/ROS/gazebo配置/gazebo_models.png" alt></p>
 <p>（2）然后，在launch启动文件夹下，添加env代码，如下</p>
 <p><img src="/2019/05/24/ROS/gazebo配置/launch.png" alt></p>
+<h2 id="3、gazebo关闭client界面"><a href="#3、gazebo关闭client界面" class="headerlink" title="3、gazebo关闭client界面"></a>3、gazebo关闭client界面</h2><blockquote>
+<p>在做强化学习训练时，打开gazebo界面可能会使训练比较耗时，因此关闭client界面也许是一种比较好的方法。</p>
+</blockquote>
+<p>gazebo平台第三视角关闭方法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ roscd gazebo_ros</span><br><span class="line">$ cd launch</span><br><span class="line">$ sudo gedit empty_world.launch</span><br></pre></td></tr></table></figure>
+<p>在打开的界面中修改两处地方，第一处在第7行，将<arg name="gui" default="true">其中的true改为false；第二处在第41行，有一个  <!-- start gazebo client   -->的注释，将注释范围扩大，将42-44行全部注释掉，即该后面的整个group注释。</arg></p>
+<blockquote>
+<p>若上面方法还不能关闭界面，在launch启动文件里面，找到所有相关联的启动文件，将上面的修改方法在launch里面也执行一遍。</p>
+</blockquote>
+<h2 id="4、gazebo仿真世界中模型位置修改"><a href="#4、gazebo仿真世界中模型位置修改" class="headerlink" title="4、gazebo仿真世界中模型位置修改"></a>4、gazebo仿真世界中模型位置修改</h2><blockquote>
+<p>我们能在终端通过调用 /gazebo/set_model_state服务来重置pose和twist</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosservice call /gazebo/set_model_state &apos;&#123;model_state: &#123; model_name: quadrotor, pose: &#123; position: &#123; x: 5, y: 0 ,z: 1 &#125;, orientation: &#123;x: 0, y: 0.491983115673, z: 0, w: 0.870604813099 &#125; &#125;, twist: &#123; linear: &#123;x: 0.0 , y: 0 ,z: 0 &#125; , angular: &#123; x: 0.0 , y: 0 , z: 0.0 &#125; &#125; , reference_frame: world &#125; &#125;&apos;</span><br></pre></td></tr></table></figure>
+<p>其中，需要说明的是quadrotor是你要修改的模型名称</p>
+<p>参考网址：<a href="http://wiki.ros.org/simulator_gazebo/Tutorials/Gazebo_ROS_API" target="_blank" rel="noopener">http://wiki.ros.org/simulator_gazebo/Tutorials/Gazebo_ROS_API</a></p>
+<blockquote>
+<p>如果要在python程序中调用上面的重置命令，则需要使用os.system（）函数来实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.system(&apos;&apos;&apos;rosservice call /gazebo/set_model_state &quot;[quadrotor, [[5, 0, 0], [0.0, 0.0, 0.0, 0.0]], [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], &apos;&apos;]&quot;&apos;&apos;&apos;</span><br></pre></td></tr></table></figure>
+<p>如果写成动态加载代码的话，可以如下图所示：</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/reset_pose.png" alt></p>
+<p>参考网址：<a href="https://blog.csdn.net/lordofrobots/article/details/78088517?utm_source=debugrun&amp;utm_medium=referral" target="_blank" rel="noopener">https://blog.csdn.net/lordofrobots/article/details/78088517?utm_source=debugrun&amp;utm_medium=referral</a></p>
+<h2 id="5、gazebo仿真时间加速"><a href="#5、gazebo仿真时间加速" class="headerlink" title="5、gazebo仿真时间加速"></a>5、gazebo仿真时间加速</h2><blockquote>
+<p>主要遇到的问题是在进行DQN训练时，由于机器性能及每步飞行时间等原因，训练时长较久，因此能够在仿真中修改一些配置，使得仿真的时间比现实时间更快。</p>
+</blockquote>
+<p>主要是通过修改world文件里面的一些物理属性，来实现仿真时间加速的效果，若需要加速时，还是在重新测试比较好，我修改为如下代码后，较之前能有3倍左右的提升速度，并且没有使用rospy.sleep(2)函数，而是使用的rospy.Rate(0.46).sleep()来代替。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;physics name=&apos;default_physics&apos; default=&apos;0&apos; type=&apos;ode&apos;&gt;</span><br><span class="line">  &lt;real_time_update_rate&gt;0&lt;/real_time_update_rate&gt;</span><br><span class="line">  &lt;max_step_size&gt;0.002&lt;/max_step_size&gt;</span><br><span class="line">  &lt;real_time_factor&gt;1&lt;/real_time_factor&gt;</span><br><span class="line">&lt;/physics&gt;</span><br></pre></td></tr></table></figure>
+<p>通过修改max_step_size的值能对gazebo进行加速，一般修改的时候real_time_update_rate设置为0。</p>
+<p>Max_step_size:0.001（默认值）</p>
+<p>Real_time_update_rate:1（默认值）</p>
+<p>Real_time_update_rate:1000（默认值）</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/gazebo_properties.png" alt></p>
+<p>参考网址：<a href="http://gazebosim.org/tutorials?tut=modifying_world&amp;cat=build_world" target="_blank" rel="noopener">http://gazebosim.org/tutorials?tut=modifying_world&amp;cat=build_world</a></p>
+<h2 id="6、gazebo添加定制模型"><a href="#6、gazebo添加定制模型" class="headerlink" title="6、gazebo添加定制模型"></a>6、gazebo添加定制模型</h2><blockquote>
+<p>以前都是自己制作的一些简单模型导入到gazebo仿真世界中，但想加载一些特定的模型时，不一定能自己制作出来，这时可以下载<a href="https://3dwarehouse.sketchup.com/" target="_blank" rel="noopener">3D Warehouse</a>网站上做好的模型，导入到gazebo仿真直接中即可</p>
+</blockquote>
+<p>例如，这样的模型则不一定能自己制作出来</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/gate.png" alt></p>
+<p>因此，我们可以在<a href="https://3dwarehouse.sketchup.com/" target="_blank" rel="noopener">3D Warehouse</a>上搜索关键词，然后找到想要的模型，点击进去后，以Collada File文件形式下载即可。</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/collada.png" alt></p>
+<p>（1）下载完后，解压，解压后更改dae的名字。然后在gazebo_model_path的文件夹目录下创建相对应的模型文件，主要包括model.config、model.sdf文件和mesh文件夹（文件夹下只有dae文件）</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/model.png" alt></p>
+<p>其中，model.sdf文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; ?&gt;</span><br><span class="line">&lt;sdf version=&quot;1.4&quot;&gt;</span><br><span class="line">  &lt;model name=&quot;Arc&quot;&gt;</span><br><span class="line">    &lt;pose&gt;0 5 0 0 0 0&lt;/pose&gt;</span><br><span class="line">    &lt;static&gt;true&lt;/static&gt;</span><br><span class="line">    &lt;link name=&quot;link&quot;&gt;</span><br><span class="line">      &lt;inertial&gt;</span><br><span class="line">        &lt;mass&gt;0.1&lt;/mass&gt;</span><br><span class="line">      &lt;/inertial&gt;</span><br><span class="line">      &lt;collision name=&quot;collision&quot;&gt;</span><br><span class="line">        &lt;geometry&gt;</span><br><span class="line">          &lt;box&gt;</span><br><span class="line">            &lt;size&gt;10 10 0.2&lt;/size&gt;</span><br><span class="line">          &lt;/box&gt;</span><br><span class="line">        &lt;/geometry&gt;</span><br><span class="line">      &lt;/collision&gt;</span><br><span class="line">   </span><br><span class="line">      &lt;visual name=&quot;visual&quot;&gt;</span><br><span class="line">        &lt;geometry&gt;</span><br><span class="line">          &lt;mesh&gt;</span><br><span class="line">            &lt;!--uri&gt;model://marker/meshes/artag_01.dae&lt;/uri--&gt;</span><br><span class="line">            &lt;uri&gt;model://arc/meshes/arc.dae&lt;/uri&gt;</span><br><span class="line">            &lt;!-- &lt;scale&gt; 0.01 0.01 0.01 &lt;/scale&gt;--&gt;</span><br><span class="line">          &lt;/mesh&gt;</span><br><span class="line">        &lt;/geometry&gt;</span><br><span class="line">      &lt;/visual&gt;</span><br><span class="line">    &lt;/link&gt;</span><br><span class="line">  &lt;/model&gt;</span><br><span class="line">&lt;/sdf&gt;</span><br></pre></td></tr></table></figure>
+<p>（2）测试</p>
+<p>创建arc.world文件，并将如下内容拷贝进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;sdf version=&quot;1.4&quot;&gt;</span><br><span class="line">  &lt;world name=&quot;default&quot;&gt;</span><br><span class="line">    &lt;include&gt;</span><br><span class="line">      &lt;uri&gt;model://ground_plane&lt;/uri&gt;</span><br><span class="line">    &lt;/include&gt;</span><br><span class="line">    &lt;include&gt;</span><br><span class="line">      &lt;uri&gt;model://sun&lt;/uri&gt;</span><br><span class="line">    &lt;/include&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">    &lt;model name=&quot;arc&quot;&gt;</span><br><span class="line">      &lt;pose&gt;0 0 0  0 0 0&lt;/pose&gt;</span><br><span class="line">      &lt;static&gt;true&lt;/static&gt;</span><br><span class="line">      &lt;link name=&quot;body&quot;&gt;</span><br><span class="line">        &lt;visual name=&quot;visual&quot;&gt;</span><br><span class="line">          &lt;geometry&gt;</span><br><span class="line">            &lt;mesh&gt;</span><br><span class="line">              &lt;uri&gt;file://arc.dae&lt;/uri&gt;</span><br><span class="line">              &lt;scale&gt; 0.03 0.03 0.03&lt;/scale&gt;</span><br><span class="line">            &lt;/mesh&gt;</span><br><span class="line"></span><br><span class="line">          &lt;/geometry&gt;</span><br><span class="line">        &lt;/visual&gt;</span><br><span class="line">      &lt;/link&gt;</span><br><span class="line">    &lt;/model&gt;</span><br><span class="line">--&gt;</span><br><span class="line">    &lt;model name=&apos;arc&apos;&gt;</span><br><span class="line">      &lt;static&gt;1&lt;/static&gt;</span><br><span class="line">      &lt;link name=&apos;arc_link&apos;&gt;</span><br><span class="line">        &lt;pose frame=&apos;&apos;&gt;0 0 0 0 -0 0&lt;/pose&gt;</span><br><span class="line">        &lt;collision name=&apos;collision&apos;&gt;</span><br><span class="line">          &lt;geometry&gt;</span><br><span class="line">            &lt;mesh&gt;</span><br><span class="line">              &lt;uri&gt;model://arc/meshes/arc.dae&lt;/uri&gt;</span><br><span class="line">              &lt;scale&gt;0.03 0.03 0.03&lt;/scale&gt;</span><br><span class="line">            &lt;/mesh&gt;</span><br><span class="line">          &lt;/geometry&gt;</span><br><span class="line">          </span><br><span class="line">        &lt;/collision&gt;</span><br><span class="line">        &lt;visual name=&apos;visual&apos;&gt;</span><br><span class="line">          &lt;geometry&gt;</span><br><span class="line">            &lt;mesh&gt;</span><br><span class="line">              &lt;uri&gt;model://arc/meshes/arc.dae&lt;/uri&gt;</span><br><span class="line">              &lt;scale&gt;0.03 0.03 0.03&lt;/scale&gt;</span><br><span class="line">            &lt;/mesh&gt;</span><br><span class="line">          &lt;/geometry&gt;</span><br><span class="line">        &lt;/visual&gt;</span><br><span class="line">        &lt;gravity&gt;1&lt;/gravity&gt;</span><br><span class="line">      &lt;/link&gt;</span><br><span class="line">      &lt;pose frame=&apos;&apos;&gt;0 0 0.05 0 0 0&lt;/pose&gt;</span><br><span class="line">    &lt;/model&gt;</span><br><span class="line">  &lt;/world&gt;</span><br><span class="line">&lt;/sdf&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：上面代码中注销掉的部分如 <uri>file://arc.dae</uri>是以文件形式导入，而后面<uri>model://arc/meshes/arc.dae</uri>是以sdf形式导入。</p>
+<p>需要注意的是：需要使用<scale>0.03 0.03 0.03</scale>来对模型进行调节大小</p>
+</blockquote>
+<p>（3）显示</p>
+<p>运行gazebo arc.world</p>
+<p><img src="/2019/05/24/ROS/gazebo配置/gazebo_show.png" alt></p>
+<p>参考网址：<a href="http://gazebosim.org/tutorials?tut=import_mesh#PreparetheMesh" target="_blank" rel="noopener">http://gazebosim.org/tutorials?tut=import_mesh#PreparetheMesh</a></p>
+<p><a href="https://answers.ros.org/question/42529/how-to-import-collada-dae-files-into-gazebo-rosfuerte/" target="_blank" rel="noopener">https://answers.ros.org/question/42529/how-to-import-collada-dae-files-into-gazebo-rosfuerte/</a></p>
 
       
     </div>
@@ -490,6 +552,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/25/ROS/ROS-Gazebo-Ardroneg关系及基本知识学习/" rel="prev" title="ROS+Gazebo+Ardroneg关系及基本知识学习">
+                ROS+Gazebo+Ardroneg关系及基本知识学习 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -573,7 +639,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -663,7 +729,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、gazebo模型文件说明"><span class="nav-text">1、gazebo模型文件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、gazebo-model-path配置"><span class="nav-text">2、gazebo_model_path配置</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、gazebo模型文件说明"><span class="nav-text">1、gazebo模型文件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、gazebo-model-path配置"><span class="nav-text">2、gazebo_model_path配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、gazebo关闭client界面"><span class="nav-text">3、gazebo关闭client界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、gazebo仿真世界中模型位置修改"><span class="nav-text">4、gazebo仿真世界中模型位置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、gazebo仿真时间加速"><span class="nav-text">5、gazebo仿真时间加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、gazebo添加定制模型"><span class="nav-text">6、gazebo添加定制模型</span></a></li></ol></li></ol></div>
             
 
           </div>
