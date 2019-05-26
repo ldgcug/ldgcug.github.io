@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[python多个csv文件合并成一个csv]]></title>
+    <url>%2F2019%2F05%2F26%2F%E8%AF%AD%E8%A8%80%2FPython%2Fpython%E5%A4%9A%E4%B8%AAcsv%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6%E6%88%90%E4%B8%80%E4%B8%AAcsv%2F</url>
+    <content type="text"><![CDATA[前言 在训练过程中，会产生多个txt转的csv文件，最后需要合并成一个完整的csv。 12345678910111213141516# -*- coding:utf8 -*-import globimport timecsvx_list = glob.glob(&apos;*.csv&apos;)print(&apos;总共发现%s个CSV文件&apos;% len(csvx_list))time.sleep(2)print(&apos;正在处理............&apos;)for i in csvx_list: fr = open(i,&apos;r&apos;).read() with open(&apos;csv_to_csv.csv&apos;,&apos;a&apos;) as f: f.write(fr) print(&apos;写入成功！&apos;)print(&apos;写入完毕！&apos;)print(&apos;10秒钟自动关闭程序！&apos;)time.sleep(10)]]></content>
+      <categories>
+        <category>语言</category>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ros在多台计算机之间的通信]]></title>
+    <url>%2F2019%2F05%2F26%2FROS%2Fros%E5%9C%A8%E5%A4%9A%E5%8F%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%2F</url>
+    <content type="text"><![CDATA[前言 利用ROS的性能，能实现两台机器之间的网络通信，并且具有跨系统性（可以在不同的ros版本版本之间通信） 需要两台机器在同一个局域网内 这里默认已经装好ROS（可以为不同版本） 一、两台电脑通信前的准备工作1、查看两台电脑各自的用户名和IP信息 在终端输入who能查看用户名，输入ifconfig能查看IP信息 如：我这里的两台服务器的用户名和IP分别是 cug_local，192.168.1.57 cug_master，192.168.1.58 2、修改/etc文件夹下的hosts文件 修改的目的是将两台电脑的ip和用户名绑定，这样在ping对方用户名时，可以解析成功 （1）修改权限 1sudo chmod a+w /etc/hosts （2）在/etc/hosts最后两行添加代码 1sudo gedit /etc/hosts 添加的第一行是本机的IP和用户名 添加的第二行是另一台机器的IP和用户名 （3）重启网络 1sudo /etc/init.d/networking restart 如果无法重启网络，可以参考该网址 两台电脑都做上面三个步骤操作 二、两台电脑间通信测试1、安装chrony 两台电脑上都安装chrony包，用于实现同步 1sudo apt-get install chrony 2、安装ssh服务端 两台电脑上都安装ssh服务端（默认ubuntu系统自带ssh客户端） 1sudo apt-get install openssh-server 服务端启动测试 1ps -e |grep ssh 如果看到了sshd，说明ssh-server已经启动成功 3、ping测试（1）cug_local机器ping 机器cug_master 12ssh cug_localping cug_master 如果出现如下信息，则通信正常 （2）反向测试，cug_master机器ping机器cug_local 12ssh cug_masterping cug_local 三、~/.bashrc配置 说明：假设将cug_master机器当做主机master （1）在cug_local机器的~/.bashrc文件中添加如下两行代码 12export ROS_HOSTNAME=cug_localexport ROS_MASTER_URI=http://cug_master:11311 添加完后，需要source一下 1source ~/.bashrc （2）在cug_master机器的~/.bashrc文件中添加如下两行代码 12export ROS_HOSTNAME=cug_masterexport ROS_MASTER_URI=http://cug_master:11311 添加完后，需要source一下 1source ~/.bashrc 四、ros通信 说明：假设将cug_master机器当做主机master 1、在cug_master机器上执行如下命令（1）打开一个新终端，输入roscore （2）打开另一个新终端，输入如下命令 1rosrun rospy_tutorials listener.py 2、在cug_local机器上执行如下命令打开一个新终端，输入如下命令 1rosrun rospy_tutorials talker.py 3、结果显示（1）cug_master机器上显示（rosrun的终端上） （2）cug_local机器上显示（rosrun的终端上） 如上两图显示，则整个配置成功 五、架构图 参考网址 网址1 网址2]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ROS+Gazebo+Ardrone关系及基本知识学习]]></title>
     <url>%2F2019%2F05%2F25%2FROS%2FROS-Gazebo-Ardrone%E5%85%B3%E7%B3%BB%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0%2F</url>
     <content type="text"><![CDATA[前言 主要记录ros的一些基本指令和gazebo及ardrone的一些名词解释和相互关系 1、名词解释 ROS：ROS(Robot Operating System, 机器人操作系统)是一个适用于机器人的开源的元操作系统。它提供了操作系统应有的服务：如硬件抽象、设备驱动、函数库、可视化工具、消息传递和软件包管理等诸多功能。 Gazebo：可以主要用来进行机器人动力学的仿真。 Ardrone：四轴飞行器，支持ROS系统。 2、相互关系 3、Gazebo基本组成部分 4、ROS基本概念 节点（node）：一个节点即为一个可执行文件，它可以通过ROS与其他节点进行通信 例子：咱们有一个机器人，和一个遥控器，那么这个机器人和遥控器开始工作后，就是两个节点。遥控器起到了下达指 令的作用；机器人负责监听遥控器下达的指令，完成相应动作。从这里我们可以看出，节点是一个能执行特定工作任 务的工作单元，并且能够相互通信，从而实现一个机器人系统整体的功能。在这里我们把遥控器和机器人简单定义为两个节点，实际上在机器人中根据控制器、传感器、执行机构等不同组成模块，还可以将其进一步细分为更多的节点，这个是根据用户编写的程序来定义的。 消息（message）：消息是一种ROS数据类型，用于订阅或发布到一个话题。 消息是一种数据结构，支持多种数据类型（整形、浮点、布尔型、数组等），同时也支持消息的嵌套定义。ROS提供了大量的系统默认消息供用户使用，如geometry_msgs、sensor_msgs等，同时也支持用户定义专属数据结构的消息类型。 话题（Topic）：节点可以发布消息到话题，也可以订阅话题以接收消息。 话题是消息的载体，作用是用不同的名称区分不同消息。 话题与消息是紧密联系在一起的。话题就像公交车，消息是公交车里装的人。公交车里可以没有人（话题上没有有效消息），但能装什么人一定会预先指定（话题一定有类型）。整个公交网络中线路名称不能重复（话题名称不能重复），要是真有两个话题名称相同类型也相同，ROS不会对其中的数据做区分，这种冲突是没有提示的。 订阅/发布话题是不同步的，发布的人只管说话，订阅的人只管偷听，发布的人连续说了100句话，这100句话会排成一个队列，偷听的人要一句一句听，哦，对了，偷听的人可能不止一个 服务（service）：服务是应答响应模式下的信息交互方式。这种方式是基于客户端/服务器模型的。 与话题不同的是，当服务端收到服务请求后，会对请求做出响应，将数据的处理结果返回给客户端。这种模式更适用于双向同步的信息传输，在同一个ROS网络中节点指定服务名称时不能重名。当节点A找节点B借钱时，整个网络里只有一个B，谁要是冒充B借了钱，那他就是2B。 master：节点管理器，ROS名称服务 (比如帮助节点找到彼此)。 master是整个ROS运行的核心，它主要的功能就是登记注册节点、服务和话题的名称，并维护一个参数服务器。没有它你就甭想启动任何一个节点，roscore就是用来启动master的。 参考网址：ROS官网、转载 5、ROS Ardrone常用命令 起飞： 1rostopic pub -1 /ardrone/takeoff std_msgs/Empty 降落 1rostopic pub -1 /ardrone/land std_msgs/Empty 切换相机 1rosservice call /ardrone/togglecam 获取前置相机图像 1rosrun image_view image_view image:=/ardrone/front/image_raw 获取下置相机图像 1rosrun image_view image_view image:=/ardrone/bottom/image_raw 6、ROS常用信息显示（1）rostopic list ：显示所有的话题信息 （2）rostopic echo [topic] ：显示发布的话题的数据信息 如：rostopic echo /ardrone/navdata （3）rostopic type [topic]：返回发布的话题的消息类型 （4）rostopic show ardrone_autonomy/Navdata：显示ardrone_autonomy/Navdata 参考网址：ros官网]]></content>
@@ -43,8 +66,8 @@
         <category>ROS</category>
       </categories>
       <tags>
-        <tag>ROS</tag>
         <tag>Linux</tag>
+        <tag>ROS</tag>
       </tags>
   </entry>
   <entry>
