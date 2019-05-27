@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.github.com/"/>
+  <link href="http://ldgyyf.cn/"/>
   <updated>2019-05-26T15:24:13.238Z</updated>
-  <id>http://www.github.com/</id>
+  <id>http://ldgyyf.cn/</id>
   
   <author>
     <name>ldg</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>python多个csv文件合并成一个csv</title>
-    <link href="http://www.github.com/2019/05/26/%E8%AF%AD%E8%A8%80/Python/python%E5%A4%9A%E4%B8%AAcsv%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6%E6%88%90%E4%B8%80%E4%B8%AAcsv/"/>
-    <id>http://www.github.com/2019/05/26/语言/Python/python多个csv文件合并成一个csv/</id>
+    <link href="http://ldgyyf.cn/2019/05/26/%E8%AF%AD%E8%A8%80/Python/python%E5%A4%9A%E4%B8%AAcsv%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6%E6%88%90%E4%B8%80%E4%B8%AAcsv/"/>
+    <id>http://ldgyyf.cn/2019/05/26/语言/Python/python多个csv文件合并成一个csv/</id>
     <published>2019-05-26T15:20:52.000Z</published>
     <updated>2019-05-26T15:24:13.238Z</updated>
     
@@ -35,19 +35,19 @@
     
     </summary>
     
-      <category term="语言" scheme="http://www.github.com/categories/%E8%AF%AD%E8%A8%80/"/>
+      <category term="语言" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/"/>
     
-      <category term="python" scheme="http://www.github.com/categories/%E8%AF%AD%E8%A8%80/python/"/>
+      <category term="python" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/python/"/>
     
     
-      <category term="Python" scheme="http://www.github.com/tags/Python/"/>
+      <category term="Python" scheme="http://ldgyyf.cn/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>ros在多台计算机之间的通信</title>
-    <link href="http://www.github.com/2019/05/26/ROS/ros%E5%9C%A8%E5%A4%9A%E5%8F%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/"/>
-    <id>http://www.github.com/2019/05/26/ROS/ros在多台计算机之间的通信/</id>
+    <link href="http://ldgyyf.cn/2019/05/26/ROS/ros%E5%9C%A8%E5%A4%9A%E5%8F%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/"/>
+    <id>http://ldgyyf.cn/2019/05/26/ROS/ros在多台计算机之间的通信/</id>
     <published>2019-05-26T03:14:30.000Z</published>
     <updated>2019-05-26T08:26:04.462Z</updated>
     
@@ -63,17 +63,17 @@
     
     </summary>
     
-      <category term="ROS" scheme="http://www.github.com/categories/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
     
     
-      <category term="ROS" scheme="http://www.github.com/tags/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
   </entry>
   
   <entry>
     <title>ROS+Gazebo+Ardrone关系及基本知识学习</title>
-    <link href="http://www.github.com/2019/05/25/ROS/ROS-Gazebo-Ardrone%E5%85%B3%E7%B3%BB%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://www.github.com/2019/05/25/ROS/ROS-Gazebo-Ardrone关系及基本知识学习/</id>
+    <link href="http://ldgyyf.cn/2019/05/25/ROS/ROS-Gazebo-Ardrone%E5%85%B3%E7%B3%BB%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://ldgyyf.cn/2019/05/25/ROS/ROS-Gazebo-Ardrone关系及基本知识学习/</id>
     <published>2019-05-25T12:52:40.000Z</published>
     <updated>2019-05-25T16:08:52.024Z</updated>
     
@@ -89,19 +89,19 @@
     
     </summary>
     
-      <category term="ROS" scheme="http://www.github.com/categories/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
     
     
-      <category term="ROS" scheme="http://www.github.com/tags/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
-      <category term="Gazebo" scheme="http://www.github.com/tags/Gazebo/"/>
+      <category term="Gazebo" scheme="http://ldgyyf.cn/tags/Gazebo/"/>
     
   </entry>
   
   <entry>
     <title>gazebo配置</title>
-    <link href="http://www.github.com/2019/05/24/ROS/gazebo%E9%85%8D%E7%BD%AE/"/>
-    <id>http://www.github.com/2019/05/24/ROS/gazebo配置/</id>
+    <link href="http://ldgyyf.cn/2019/05/24/ROS/gazebo%E9%85%8D%E7%BD%AE/"/>
+    <id>http://ldgyyf.cn/2019/05/24/ROS/gazebo配置/</id>
     <published>2019-05-24T15:16:55.000Z</published>
     <updated>2019-05-25T09:06:57.412Z</updated>
     
@@ -117,19 +117,19 @@
     
     </summary>
     
-      <category term="ROS" scheme="http://www.github.com/categories/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
     
     
-      <category term="ROS" scheme="http://www.github.com/tags/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
-      <category term="Gazebo" scheme="http://www.github.com/tags/Gazebo/"/>
+      <category term="Gazebo" scheme="http://ldgyyf.cn/tags/Gazebo/"/>
     
   </entry>
   
   <entry>
     <title>卸载原版gazebo并安装新版gazebo</title>
-    <link href="http://www.github.com/2019/05/22/ROS/%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo/"/>
-    <id>http://www.github.com/2019/05/22/ROS/卸载原版gazebo并安装新版gazebo/</id>
+    <link href="http://ldgyyf.cn/2019/05/22/ROS/%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo/"/>
+    <id>http://ldgyyf.cn/2019/05/22/ROS/卸载原版gazebo并安装新版gazebo/</id>
     <published>2019-05-22T07:25:46.000Z</published>
     <updated>2019-05-23T02:23:15.438Z</updated>
     
@@ -146,17 +146,17 @@
     
     </summary>
     
-      <category term="ROS" scheme="http://www.github.com/categories/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
     
     
-      <category term="ROS" scheme="http://www.github.com/tags/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu16安装ROS</title>
-    <link href="http://www.github.com/2019/05/22/ROS/ubuntu16%E5%AE%89%E8%A3%85ROS/"/>
-    <id>http://www.github.com/2019/05/22/ROS/ubuntu16安装ROS/</id>
+    <link href="http://ldgyyf.cn/2019/05/22/ROS/ubuntu16%E5%AE%89%E8%A3%85ROS/"/>
+    <id>http://ldgyyf.cn/2019/05/22/ROS/ubuntu16安装ROS/</id>
     <published>2019-05-22T06:16:55.000Z</published>
     <updated>2019-05-23T02:31:40.531Z</updated>
     
@@ -175,19 +175,19 @@
     
     </summary>
     
-      <category term="ROS" scheme="http://www.github.com/categories/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
     
     
-      <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
-      <category term="ROS" scheme="http://www.github.com/tags/ROS/"/>
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
   </entry>
   
   <entry>
     <title>Youtube视频链接下载方法</title>
-    <link href="http://www.github.com/2019/05/21/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/Youtube%E8%A7%86%E9%A2%91%E9%93%BE%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%B3%95/"/>
-    <id>http://www.github.com/2019/05/21/生活/视频/Youtube视频链接下载方法/</id>
+    <link href="http://ldgyyf.cn/2019/05/21/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/Youtube%E8%A7%86%E9%A2%91%E9%93%BE%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%B3%95/"/>
+    <id>http://ldgyyf.cn/2019/05/21/生活/视频/Youtube视频链接下载方法/</id>
     <published>2019-05-21T09:10:50.000Z</published>
     <updated>2019-05-21T09:15:59.118Z</updated>
     
@@ -203,19 +203,19 @@
     
     </summary>
     
-      <category term="生活" scheme="http://www.github.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://ldgyyf.cn/categories/%E7%94%9F%E6%B4%BB/"/>
     
-      <category term="视频" scheme="http://www.github.com/categories/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/"/>
+      <category term="视频" scheme="http://ldgyyf.cn/categories/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/"/>
     
     
-      <category term="视频" scheme="http://www.github.com/tags/%E8%A7%86%E9%A2%91/"/>
+      <category term="视频" scheme="http://ldgyyf.cn/tags/%E8%A7%86%E9%A2%91/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu16软件安装</title>
-    <link href="http://www.github.com/2019/05/21/Linux/ubuntu16%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
-    <id>http://www.github.com/2019/05/21/Linux/ubuntu16软件安装/</id>
+    <link href="http://ldgyyf.cn/2019/05/21/Linux/ubuntu16%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
+    <id>http://ldgyyf.cn/2019/05/21/Linux/ubuntu16软件安装/</id>
     <published>2019-05-21T08:40:39.000Z</published>
     <updated>2019-05-21T09:04:36.093Z</updated>
     
@@ -234,17 +234,17 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://www.github.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>(转)自己手动搭建翻墙服务器</title>
-    <link href="http://www.github.com/2019/05/21/%E6%94%B6%E8%97%8F%E7%BD%91%E5%9D%80/%E8%BD%AC-%E8%87%AA%E5%B7%B1%E6%89%8B%E5%8A%A8%E6%90%AD%E5%BB%BA%E7%BF%BB%E5%A2%99%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    <id>http://www.github.com/2019/05/21/收藏网址/转-自己手动搭建翻墙服务器/</id>
+    <link href="http://ldgyyf.cn/2019/05/21/%E6%94%B6%E8%97%8F%E7%BD%91%E5%9D%80/%E8%BD%AC-%E8%87%AA%E5%B7%B1%E6%89%8B%E5%8A%A8%E6%90%AD%E5%BB%BA%E7%BF%BB%E5%A2%99%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://ldgyyf.cn/2019/05/21/收藏网址/转-自己手动搭建翻墙服务器/</id>
     <published>2019-05-21T08:33:20.000Z</published>
     <updated>2019-05-21T08:40:21.485Z</updated>
     
@@ -261,17 +261,17 @@
     
     </summary>
     
-      <category term="网址收藏" scheme="http://www.github.com/categories/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
+      <category term="网址收藏" scheme="http://ldgyyf.cn/categories/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
     
     
-      <category term="网址收藏" scheme="http://www.github.com/tags/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
+      <category term="网址收藏" scheme="http://ldgyyf.cn/tags/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
     
   </entry>
   
   <entry>
     <title>GPU Tensorflow 安装</title>
-    <link href="http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-%E5%AE%89%E8%A3%85/"/>
-    <id>http://www.github.com/2019/05/21/Linux/GPU-Tensorflow-安装/</id>
+    <link href="http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-%E5%AE%89%E8%A3%85/"/>
+    <id>http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-安装/</id>
     <published>2019-05-21T03:32:35.000Z</published>
     <updated>2019-05-21T07:20:44.020Z</updated>
     
@@ -290,17 +290,17 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://www.github.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>ubuntu16下翻墙搭建</title>
-    <link href="http://www.github.com/2019/05/18/Linux/ubuntu16%E4%B8%8B%E7%BF%BB%E5%A2%99%E6%90%AD%E5%BB%BA/"/>
-    <id>http://www.github.com/2019/05/18/Linux/ubuntu16下翻墙搭建/</id>
+    <link href="http://ldgyyf.cn/2019/05/18/Linux/ubuntu16%E4%B8%8B%E7%BF%BB%E5%A2%99%E6%90%AD%E5%BB%BA/"/>
+    <id>http://ldgyyf.cn/2019/05/18/Linux/ubuntu16下翻墙搭建/</id>
     <published>2019-05-18T00:47:13.000Z</published>
     <updated>2019-05-18T01:31:07.676Z</updated>
     
@@ -317,17 +317,17 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://www.github.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>win7下局域网打印机共享</title>
-    <link href="http://www.github.com/2019/05/17/%E7%B3%BB%E7%BB%9F/win7%E4%B8%8B%E5%B1%80%E5%9F%9F%E7%BD%91%E6%89%93%E5%8D%B0%E6%9C%BA%E5%85%B1%E4%BA%AB/"/>
-    <id>http://www.github.com/2019/05/17/系统/win7下局域网打印机共享/</id>
+    <link href="http://ldgyyf.cn/2019/05/17/%E7%B3%BB%E7%BB%9F/win7%E4%B8%8B%E5%B1%80%E5%9F%9F%E7%BD%91%E6%89%93%E5%8D%B0%E6%9C%BA%E5%85%B1%E4%BA%AB/"/>
+    <id>http://ldgyyf.cn/2019/05/17/系统/win7下局域网打印机共享/</id>
     <published>2019-05-17T14:00:58.000Z</published>
     <updated>2019-05-17T14:44:02.335Z</updated>
     
@@ -344,17 +344,17 @@
     
     </summary>
     
-      <category term="系统" scheme="http://www.github.com/categories/%E7%B3%BB%E7%BB%9F/"/>
+      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
     
     
-      <category term="系统" scheme="http://www.github.com/tags/%E7%B3%BB%E7%BB%9F/"/>
+      <category term="系统" scheme="http://ldgyyf.cn/tags/%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>Linux下 Python2 与 Python3 版本切换</title>
-    <link href="http://www.github.com/2019/05/17/Linux/Linux%E4%B8%8B-Python2-%E4%B8%8E-Python3-%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2/"/>
-    <id>http://www.github.com/2019/05/17/Linux/Linux下-Python2-与-Python3-版本切换/</id>
+    <link href="http://ldgyyf.cn/2019/05/17/Linux/Linux%E4%B8%8B-Python2-%E4%B8%8E-Python3-%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2/"/>
+    <id>http://ldgyyf.cn/2019/05/17/Linux/Linux下-Python2-与-Python3-版本切换/</id>
     <published>2019-05-17T11:22:01.000Z</published>
     <updated>2019-05-17T13:55:54.590Z</updated>
     
@@ -373,23 +373,23 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://www.github.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
-      <category term="语言" scheme="http://www.github.com/categories/%E8%AF%AD%E8%A8%80/"/>
+      <category term="语言" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/"/>
     
-      <category term="python" scheme="http://www.github.com/categories/%E8%AF%AD%E8%A8%80/python/"/>
+      <category term="python" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/python/"/>
     
     
-      <category term="Linux" scheme="http://www.github.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
-      <category term="Python" scheme="http://www.github.com/tags/Python/"/>
+      <category term="Python" scheme="http://ldgyyf.cn/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>系统重装后必要软件安装介绍</title>
-    <link href="http://www.github.com/2019/05/16/%E7%B3%BB%E7%BB%9F/%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%90%8E%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://www.github.com/2019/05/16/系统/系统重装后必要软件安装介绍/</id>
+    <link href="http://ldgyyf.cn/2019/05/16/%E7%B3%BB%E7%BB%9F/%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E5%90%8E%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://ldgyyf.cn/2019/05/16/系统/系统重装后必要软件安装介绍/</id>
     <published>2019-05-16T03:26:53.000Z</published>
     <updated>2019-05-16T11:07:09.232Z</updated>
     
@@ -405,17 +405,17 @@
     
     </summary>
     
-      <category term="系统" scheme="http://www.github.com/categories/%E7%B3%BB%E7%BB%9F/"/>
+      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
     
     
-      <category term="系统" scheme="http://www.github.com/tags/%E7%B3%BB%E7%BB%9F/"/>
+      <category term="系统" scheme="http://ldgyyf.cn/tags/%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>网址收藏</title>
-    <link href="http://www.github.com/2019/05/15/%E6%94%B6%E8%97%8F%E7%BD%91%E5%9D%80/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
-    <id>http://www.github.com/2019/05/15/收藏网址/网址收藏/</id>
+    <link href="http://ldgyyf.cn/2019/05/15/%E6%94%B6%E8%97%8F%E7%BD%91%E5%9D%80/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
+    <id>http://ldgyyf.cn/2019/05/15/收藏网址/网址收藏/</id>
     <published>2019-05-15T11:58:43.000Z</published>
     <updated>2019-05-15T12:17:05.726Z</updated>
     
@@ -431,17 +431,17 @@
     
     </summary>
     
-      <category term="网址收藏" scheme="http://www.github.com/categories/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
+      <category term="网址收藏" scheme="http://ldgyyf.cn/categories/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
     
     
-      <category term="网址收藏" scheme="http://www.github.com/tags/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
+      <category term="网址收藏" scheme="http://ldgyyf.cn/tags/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
     
   </entry>
   
   <entry>
     <title>不蒜子访客人数统计和博客运行时间显示</title>
-    <link href="http://www.github.com/2019/05/15/Hexo/%E4%B8%8D%E8%92%9C%E5%AD%90%E8%AE%BF%E5%AE%A2%E4%BA%BA%E6%95%B0%E7%BB%9F%E8%AE%A1%E5%92%8C%E5%8D%9A%E5%AE%A2%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4%E6%98%BE%E7%A4%BA/"/>
-    <id>http://www.github.com/2019/05/15/Hexo/不蒜子访客人数统计和博客运行时间显示/</id>
+    <link href="http://ldgyyf.cn/2019/05/15/Hexo/%E4%B8%8D%E8%92%9C%E5%AD%90%E8%AE%BF%E5%AE%A2%E4%BA%BA%E6%95%B0%E7%BB%9F%E8%AE%A1%E5%92%8C%E5%8D%9A%E5%AE%A2%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4%E6%98%BE%E7%A4%BA/"/>
+    <id>http://ldgyyf.cn/2019/05/15/Hexo/不蒜子访客人数统计和博客运行时间显示/</id>
     <published>2019-05-15T11:13:11.000Z</published>
     <updated>2019-05-15T12:22:52.337Z</updated>
     
@@ -457,17 +457,17 @@
     
     </summary>
     
-      <category term="Hexo" scheme="http://www.github.com/categories/Hexo/"/>
+      <category term="Hexo" scheme="http://ldgyyf.cn/categories/Hexo/"/>
     
     
-      <category term="NexT" scheme="http://www.github.com/tags/NexT/"/>
+      <category term="NexT" scheme="http://ldgyyf.cn/tags/NexT/"/>
     
   </entry>
   
   <entry>
     <title>Hexo之theme主题配置</title>
-    <link href="http://www.github.com/2019/05/14/Hexo/Hexo%E4%B9%8Btheme%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"/>
-    <id>http://www.github.com/2019/05/14/Hexo/Hexo之theme主题配置/</id>
+    <link href="http://ldgyyf.cn/2019/05/14/Hexo/Hexo%E4%B9%8Btheme%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"/>
+    <id>http://ldgyyf.cn/2019/05/14/Hexo/Hexo之theme主题配置/</id>
     <published>2019-05-14T15:52:09.000Z</published>
     <updated>2019-05-15T07:25:48.843Z</updated>
     
@@ -483,17 +483,17 @@
     
     </summary>
     
-      <category term="Hexo" scheme="http://www.github.com/categories/Hexo/"/>
+      <category term="Hexo" scheme="http://ldgyyf.cn/categories/Hexo/"/>
     
     
-      <category term="NexT" scheme="http://www.github.com/tags/NexT/"/>
+      <category term="NexT" scheme="http://ldgyyf.cn/tags/NexT/"/>
     
   </entry>
   
   <entry>
     <title>python实现谷歌翻译PDF换行的问题</title>
-    <link href="http://www.github.com/2019/05/14/%E8%AF%AD%E8%A8%80/Python/python%E5%AE%9E%E7%8E%B0%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91PDF%E6%8D%A2%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://www.github.com/2019/05/14/语言/Python/python实现谷歌翻译PDF换行的问题/</id>
+    <link href="http://ldgyyf.cn/2019/05/14/%E8%AF%AD%E8%A8%80/Python/python%E5%AE%9E%E7%8E%B0%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91PDF%E6%8D%A2%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://ldgyyf.cn/2019/05/14/语言/Python/python实现谷歌翻译PDF换行的问题/</id>
     <published>2019-05-14T09:04:16.000Z</published>
     <updated>2019-05-17T13:29:14.131Z</updated>
     
@@ -509,19 +509,19 @@
     
     </summary>
     
-      <category term="语言" scheme="http://www.github.com/categories/%E8%AF%AD%E8%A8%80/"/>
+      <category term="语言" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/"/>
     
-      <category term="python" scheme="http://www.github.com/categories/%E8%AF%AD%E8%A8%80/python/"/>
+      <category term="python" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/python/"/>
     
     
-      <category term="Python" scheme="http://www.github.com/tags/Python/"/>
+      <category term="Python" scheme="http://ldgyyf.cn/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>Hexo图片显示和Github上图片显示的解决办法</title>
-    <link href="http://www.github.com/2019/05/14/Hexo/Hexo%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E5%92%8CGithub%E4%B8%8A%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
-    <id>http://www.github.com/2019/05/14/Hexo/Hexo图片显示和Github上图片显示的解决办法/</id>
+    <link href="http://ldgyyf.cn/2019/05/14/Hexo/Hexo%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E5%92%8CGithub%E4%B8%8A%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>http://ldgyyf.cn/2019/05/14/Hexo/Hexo图片显示和Github上图片显示的解决办法/</id>
     <published>2019-05-14T07:56:32.000Z</published>
     <updated>2019-05-15T07:30:20.465Z</updated>
     
@@ -537,17 +537,17 @@
     
     </summary>
     
-      <category term="Hexo" scheme="http://www.github.com/categories/Hexo/"/>
+      <category term="Hexo" scheme="http://ldgyyf.cn/categories/Hexo/"/>
     
     
-      <category term="Hexo" scheme="http://www.github.com/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://ldgyyf.cn/tags/Hexo/"/>
     
   </entry>
   
   <entry>
     <title>Hexo + Github创建博客过程中踩过的坑</title>
-    <link href="http://www.github.com/2019/05/14/Hexo/Hexo-Github%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/"/>
-    <id>http://www.github.com/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/</id>
+    <link href="http://ldgyyf.cn/2019/05/14/Hexo/Hexo-Github%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/"/>
+    <id>http://ldgyyf.cn/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/</id>
     <published>2019-05-14T01:58:45.000Z</published>
     <updated>2019-05-15T07:30:14.387Z</updated>
     
@@ -563,10 +563,10 @@
     
     </summary>
     
-      <category term="Hexo" scheme="http://www.github.com/categories/Hexo/"/>
+      <category term="Hexo" scheme="http://ldgyyf.cn/categories/Hexo/"/>
     
     
-      <category term="Hexo" scheme="http://www.github.com/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://ldgyyf.cn/tags/Hexo/"/>
     
   </entry>
   
