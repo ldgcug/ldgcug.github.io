@@ -49,7 +49,7 @@
     <link href="http://ldgyyf.cn/2019/05/28/ROS/erle-copter%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0/"/>
     <id>http://ldgyyf.cn/2019/05/28/ROS/erle-copter仿真安装笔记/</id>
     <published>2019-05-28T15:08:42.000Z</published>
-    <updated>2019-05-28T15:48:52.595Z</updated>
+    <updated>2019-05-28T15:51:44.972Z</updated>
     
     <summary type="html">
     
@@ -436,9 +436,9 @@
       <category term="python" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/python/"/>
     
     
-      <category term="Python" scheme="http://ldgyyf.cn/tags/Python/"/>
-    
       <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
+    
+      <category term="Python" scheme="http://ldgyyf.cn/tags/Python/"/>
     
   </entry>
   
