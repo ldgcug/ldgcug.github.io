@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ldgyyf.cn/2019/05/30/Linux/Tensorflow%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%92%8C%E9%85%8D%E7%BD%AE%E9%9B%86%E9%94%A6/</loc>
+    
+    <lastmod>2019-05-30T15:53:37.101Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-%E5%AE%89%E8%A3%85/</loc>
+    
+    <lastmod>2019-05-30T15:47:36.603Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ldgyyf.cn/2019/05/24/ROS/gazebo%E9%85%8D%E7%BD%AE/</loc>
+    
+    <lastmod>2019-05-30T15:46:49.256Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ldgyyf.cn/2019/05/29/%E7%94%9F%E6%B4%BB/%E7%94%9F%E7%90%86/19%E5%B9%B4%E4%B8%8A%E5%8D%8A%E5%B9%B4%E6%A0%A1%E5%8C%BB%E9%99%A2%E4%BD%93%E6%A3%80/</loc>
     
     <lastmod>2019-05-29T15:57:04.864Z</lastmod>
@@ -44,13 +65,6 @@
   </url>
   
   <url>
-    <loc>http://ldgyyf.cn/2019/05/24/ROS/gazebo%E9%85%8D%E7%BD%AE/</loc>
-    
-    <lastmod>2019-05-25T09:06:57.412Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ldgyyf.cn/2019/05/22/ROS/ubuntu16%E5%AE%89%E8%A3%85ROS/</loc>
     
     <lastmod>2019-05-23T02:31:40.531Z</lastmod>
@@ -82,13 +96,6 @@
     <loc>http://ldgyyf.cn/2019/05/21/%E6%94%B6%E8%97%8F%E7%BD%91%E5%9D%80/%E8%BD%AC-%E8%87%AA%E5%B7%B1%E6%89%8B%E5%8A%A8%E6%90%AD%E5%BB%BA%E7%BF%BB%E5%A2%99%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
     
     <lastmod>2019-05-21T08:40:21.485Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-%E5%AE%89%E8%A3%85/</loc>
-    
-    <lastmod>2019-05-21T07:20:44.020Z</lastmod>
     
   </url>
   

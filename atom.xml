@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-05-29T15:57:04.864Z</updated>
+  <updated>2019-05-30T15:53:37.101Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tensorflow相关问题和配置集锦</title>
+    <link href="http://ldgyyf.cn/2019/05/30/Linux/Tensorflow%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%92%8C%E9%85%8D%E7%BD%AE%E9%9B%86%E9%94%A6/"/>
+    <id>http://ldgyyf.cn/2019/05/30/Linux/Tensorflow相关问题和配置集锦/</id>
+    <published>2019-05-30T15:49:12.000Z</published>
+    <updated>2019-05-30T15:53:37.101Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
+    
+    
+      <category term="Tensorflow" scheme="http://ldgyyf.cn/tags/Tensorflow/"/>
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>19年上半年校医院体检</title>
@@ -187,7 +215,7 @@
     <link href="http://ldgyyf.cn/2019/05/24/ROS/gazebo%E9%85%8D%E7%BD%AE/"/>
     <id>http://ldgyyf.cn/2019/05/24/ROS/gazebo配置/</id>
     <published>2019-05-24T15:16:55.000Z</published>
-    <updated>2019-05-25T09:06:57.412Z</updated>
+    <updated>2019-05-30T15:46:49.256Z</updated>
     
     <summary type="html">
     
@@ -262,9 +290,9 @@
       <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
     
     
-      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
-    
       <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
+    
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
   </entry>
   
@@ -357,7 +385,7 @@
     <link href="http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-%E5%AE%89%E8%A3%85/"/>
     <id>http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-安装/</id>
     <published>2019-05-21T03:32:35.000Z</published>
-    <updated>2019-05-21T07:20:44.020Z</updated>
+    <updated>2019-05-30T15:47:36.603Z</updated>
     
     <summary type="html">
     
@@ -376,6 +404,8 @@
     
       <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
+    
+      <category term="Tensorflow" scheme="http://ldgyyf.cn/tags/Tensorflow/"/>
     
       <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
@@ -536,32 +566,6 @@
         
         
           &lt;h1 id=&quot;一、Hexo页脚增加网站运行时间统计&quot;&gt;&lt;a href=&quot;#一、Hexo页脚增加网站运行时间统计&quot; class=&quot;headerlink&quot; title=&quot;一、Hexo页脚增加网站运行时间统计&quot;&gt;&lt;/a&gt;一、Hexo页脚增加网站运行时间统计&lt;/h1&gt;&lt;h2
-        
-      
-    
-    </summary>
-    
-      <category term="Hexo" scheme="http://ldgyyf.cn/categories/Hexo/"/>
-    
-    
-      <category term="NexT" scheme="http://ldgyyf.cn/tags/NexT/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo之theme主题配置</title>
-    <link href="http://ldgyyf.cn/2019/05/14/Hexo/Hexo%E4%B9%8Btheme%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"/>
-    <id>http://ldgyyf.cn/2019/05/14/Hexo/Hexo之theme主题配置/</id>
-    <published>2019-05-14T15:52:09.000Z</published>
-    <updated>2019-05-15T07:25:48.843Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;说明：每一个大标题结尾都有一个参考链接，出现问题时，请参考其参考链接&quot;&gt;&lt;a href=&quot;#说明：每一个大标题结尾都有一个参考链接，出现问题时，请参考其参考链接&quot; class=&quot;headerlink&quot;
         
       
     
