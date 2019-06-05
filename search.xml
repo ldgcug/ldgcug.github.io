@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[新电脑上测试]]></title>
+    <url>%2F2019%2F06%2F05%2F%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E6%B5%8B%E8%AF%95%2F</url>
+    <content type="text"><![CDATA[随便写写 之前是在Thinkpad上面写的博客，现在是在自己的电脑上写的，于是在新的电脑上进行测试一下]]></content>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F06%2F05%2FHexo%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Tensorflow相关问题和配置集锦]]></title>
     <url>%2F2019%2F05%2F30%2FLinux%2FTensorflow%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%92%8C%E9%85%8D%E7%BD%AE%E9%9B%86%E9%94%A6%2F</url>
     <content type="text"><![CDATA[前言 在做人工智能相关的训练方面，离不开Tensorflow，但是在安装或配置过程中都会遇到过一些问题，并且在做某一些特定的事也会有些小问题 一、配置方面1、Tensorflow指定CPU训练 在机器上进行训练时，有时候可能出现多个python程序在训练的情况，并且其他人使用的是GPU训练，而这时我在使用GPU训练会报错误，此时，可以在程序中添加代码以指定CPU进行训练，添加代码如下： 123import osos.environ[&quot;CUDA_DEVICE_ORDER&quot;] = &quot;PCI_BUS_ID&quot; os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = &quot;-1&quot; 参考网址：网址1 未完待续]]></content>
@@ -98,7 +117,7 @@
   <entry>
     <title><![CDATA[卸载原版gazebo并安装新版gazebo]]></title>
     <url>%2F2019%2F05%2F22%2FROS%2F%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo%2F</url>
-    <content type="text"><![CDATA[前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8 卸载gazebo2.2安装gazebo7网址：https://blog.csdn.net/tust123qht/article/details/78796617 卸载gazebo7安装gazebo8步骤如下： （1）卸载ros-kinetic-desktop-full 1$ sudo apt-get remove ros-kinetic-desktop-full （2）卸载gazebo7 1$ sudo apt-get remove gazebo* （3）安装gazebo8 12345$ sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" &gt; /etc/apt/sources.list.d/gazebo-stable.list'$ wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -$ sudo apt-get update$ sudo apt-get install gazebo8$ sudo apt-get install libgazebo8-dev 说明：第一步就卸载了ros-kinetic-desktop-full，因此需要重新安装ros-kinetic-desktop。 特别注意：此次安装没有full，有full的则会默认安装 （4）安装ros-kinetic-desktop 123456789$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116$ sudo apt-get update$ sudo apt-get install ros-kinetic-desktop$ sudo rosdep init$ rosdep update$ echo "source /opt/ros/kinetic/setup.bash" &gt;&gt; ~/.bashrc$ source ~/.bashrc$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential （5）安装一些必要ros包 123456$ sudo apt-get install ros-kinetic-gazebo8-msgs$ sudo apt-get install ros-kinetic-gazebo8-ros-control$ sudo apt-get install ros-kinetic-gazebo8-plugins$ sudo apt-get install ros-kinetic-gazebo8-ros-pkgs$ sudo apt-get install ros-kinetic-gazebo8-ros$ sudo apt-get install ros-kinetic-image-view]]></content>
+    <content type="text"><![CDATA[前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8 卸载gazebo2.2安装gazebo7网址：点击此处 卸载gazebo7安装gazebo8步骤如下： （1）卸载ros-kinetic-desktop-full 1$ sudo apt-get remove ros-kinetic-desktop-full （2）卸载gazebo7 1$ sudo apt-get remove gazebo-* （3）安装gazebo8 12345$ sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" &gt; /etc/apt/sources.list.d/gazebo-stable.list'$ wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -$ sudo apt-get update$ sudo apt-get install gazebo8$ sudo apt-get install libgazebo8-dev 说明：第一步就卸载了ros-kinetic-desktop-full，因此需要重新安装ros-kinetic-desktop。 特别注意：此次安装没有full，有full的则会默认安装 （4）安装ros-kinetic-desktop 123456789$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116$ sudo apt-get update$ sudo apt-get install ros-kinetic-desktop$ sudo rosdep init$ rosdep update$ echo "source /opt/ros/kinetic/setup.bash" &gt;&gt; ~/.bashrc$ source ~/.bashrc$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential （5）安装一些必要ros包 123456$ sudo apt-get install ros-kinetic-gazebo8-msgs$ sudo apt-get install ros-kinetic-gazebo8-ros-control$ sudo apt-get install ros-kinetic-gazebo8-plugins$ sudo apt-get install ros-kinetic-gazebo8-ros-pkgs$ sudo apt-get install ros-kinetic-gazebo8-ros$ sudo apt-get install ros-kinetic-image-view 其他可能帮助信息 如果需要卸载ros的话，参考如下命令： 123$ sudo apt-get purge ros-*$ sudo rm -rf /etc/ros$ gedit ~/.bashrc 找到：带有kinetic的那一行删除，保存，然后： 1$ source ~/.bashrc 如果不删掉这一行或者在他之前多余的命令，那么你会在打开终端后发现第一行永远是个报错信息，虽然有时候没有什么影响。 参考网址：网址1]]></content>
       <categories>
         <category>ROS</category>
       </categories>
@@ -271,17 +290,6 @@
     <title><![CDATA[Hexo + Github创建博客过程中踩过的坑]]></title>
     <url>%2F2019%2F05%2F14%2FHexo%2FHexo-Github%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%BF%87%E7%A8%8B%E4%B8%AD%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%2F</url>
     <content type="text"><![CDATA[一、系统环境配置要使用Hexo，需要在系统中支持Nodejs以及Git1、安装Node.jsNode.js官网 ​ 打开cmd命令行，输入node -v和npm -v，成功界面如下 2、安装GitGit官网 ​ 安装成功后，在电脑桌面任意空白位置，右键，出现以下界面（自行配置环境） 二、Github配置前提条件：已经拥有一个github账号，并已成功登陆1、点击【New repository】，创建一个版本仓库​ 注：仓库名称必须为username.github.io，我这里的username为ldgcug 2、创建完成后，在项目右侧，有个【Settings按钮】，点击【Settings按钮】，向下滑到【GitHub Pages】位置，能在这里发现一个网址，并且可以通过外网访问 三、安装Hexo并配置安装Hexo，在自己认为合适的地方创建文件夹，如：我是在D盘创建了一个blog文件夹，然后通过cmd命令行进入到该文件夹里面​ 输入 npm install hexo -g ，开始安装Hexo ​ 安装成功后，输入 hexo -v，能看到版本号 ​ 输入 hexo init，初始化该文件夹（此处不显示图片过程） ​ 输入 npm install ，安装所需要的组件 ​ 输入 hexo g，体验Hexo ​ 输入 hexo s，开启服务器，访问http://localhost:4000，正式体验Hexo ​ 出现下图，则安装成功 四、Hexo与Github Pages联系起来 说明：下面的所有操作都在博客根目录下执行，使用git bash窗口 1、设置Git的user name 和email（如果第一次配置）​ 注：将用户名和邮箱换成自己的用户名和邮箱 2、输入 ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh） ​ 输入 eval “$(ssh-agent -s)” ，添加密钥到 ssh-agent ​ 输入 ssh-add ~/.ssh/id_rsa ，添加生成的SSH key 到 ssh-agent ​ 输入 cd ~/.ssh，检查是否有.ssh文件夹，若没有，则进入C:\Users\Administrator\.ssh ​ 输入 ls，查看.ssh文件夹下文件（第一次没有known_hosts文件） ​ 进入./ssh文件夹下，打开 id_rsa.pub文件，将其中的内容复制到缓存中 ​ 登陆Github，点击【头像】下的【setting】，点击左侧的【SSH and GPG keys】，点击【New SSH key】，将刚才复制的 id_rsa.pub 文件复制到Key中，添加ssh ​ 输入 ssh -T git@github.com ，测试添加ssh是否成功，如果看到Hi 后面是你的用户名，则添加成功 3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾） 下图中，需要将repository更改为你自己的github.io ​ 其中，repo的值在github项目里的ssh中（注意使用SSH，而不是HTTPS） ​ 注：在_config_yaml文件中，type、repo、branch文件后面有一个空格，即上图中添加的代码会变成绿色，最开始没有空格时，遇到了很多的坑 五、新建博客 所有的命令操作都在博客根目录下执行 1、在cmd 命令种安装扩展​ 输入 ： npm install hexo-deployer-git –save 2、新建博客​ 在git bash窗口中，执行命令： hexo new post “博客名” ​ 会发现在soucrce\_posts 文件下，多出刚创建的博客.md 3、md编辑器（Typora编辑器） 在Typora官网上下载Typora编辑器，使用Typora编辑器对md文件进行编辑 4、部署发布​ 使用编辑器编辑好文章后，使用命令： hexo d -g ，就可以生成和部署了 ​ 部署成功后，访问你的地址：http//用户名.github.io 。就能看到刚生成的文章。]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F05%2F13%2FHexo%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
       <categories>
         <category>Hexo</category>
       </categories>

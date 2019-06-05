@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8    卸载gazebo2.2安装gazebo7网址：https://blog.csdn">
+<meta name="description" content="前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8    卸载gazebo2.2安装gazebo7网址：点击此处   卸载gazebo7安">
 <meta name="keywords" content="ROS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="卸载原版gazebo并安装新版gazebo">
 <meta property="og:url" content="http://ldgyyf.cn/2019/05/22/ROS/卸载原版gazebo并安装新版gazebo/index.html">
 <meta property="og:site_name" content="ldg个人博客">
-<meta property="og:description" content="前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8    卸载gazebo2.2安装gazebo7网址：https://blog.csdn">
+<meta property="og:description" content="前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8    卸载gazebo2.2安装gazebo7网址：点击此处   卸载gazebo7安">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-23T02:23:15.438Z">
+<meta property="og:updated_time" content="2019-05-31T02:32:56.209Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卸载原版gazebo并安装新版gazebo">
-<meta name="twitter:description" content="前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8    卸载gazebo2.2安装gazebo7网址：https://blog.csdn">
+<meta name="twitter:description" content="前言 从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8    卸载gazebo2.2安装gazebo7网址：点击此处   卸载gazebo7安">
 
 
 
@@ -391,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  372
+                  482
                 </span>
               
 
@@ -407,7 +407,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -432,7 +432,7 @@
 <p>从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros kinetic版本，中间遇到过需要安装新版本gazebo的问题，如u14上安装ros后，默认安装gazebo2，可能需要改成gazebo7；u16上安装ros后，默认安装gazebo7，可能需要改成gazebo8</p>
 </blockquote>
 <blockquote>
-<p> 卸载<code>gazebo2.2</code>安装<code>gazebo7</code>网址：<a href="https://blog.csdn.net/tust123qht/article/details/78796617" target="_blank" rel="noopener">https://blog.csdn.net/tust123qht/article/details/78796617</a></p>
+<p> 卸载<code>gazebo2.2</code>安装<code>gazebo7</code>网址：点击<a href="https://blog.csdn.net/tust123qht/article/details/78796617" target="_blank" rel="noopener">此处</a></p>
 </blockquote>
 <blockquote>
 <p>卸载<code>gazebo7</code>安装<code>gazebo8</code>步骤如下：</p>
@@ -440,7 +440,7 @@
 <p>（1）卸载ros-kinetic-desktop-full</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get remove ros-kinetic-desktop-full</span><br></pre></td></tr></table></figure>
 <p>（2）卸载gazebo7</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get remove gazebo*</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get remove gazebo-*</span><br></pre></td></tr></table></figure>
 <p>（3）安装gazebo8</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sh -c <span class="string">'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" &gt; /etc/apt/sources.list.d/gazebo-stable.list'</span></span><br><span class="line">$ wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -</span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install gazebo8</span><br><span class="line">$ sudo apt-get install libgazebo8-dev</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -451,6 +451,15 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sh -c <span class="string">'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'</span></span><br><span class="line">$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:<span class="number">80</span> --recv-key <span class="number">421</span>C365BD9FF1F717815A3895523BAEEB01FA116</span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install ros-kinetic-desktop</span><br><span class="line">$ sudo rosdep init</span><br><span class="line">$ rosdep update</span><br><span class="line">$ echo <span class="string">"source /opt/ros/kinetic/setup.bash"</span> &gt;&gt; ~/.bashrc</span><br><span class="line">$ source ~/.bashrc</span><br><span class="line">$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential</span><br></pre></td></tr></table></figure>
 <p>（5）安装一些必要ros包</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ros-kinetic-gazebo8-msgs</span><br><span class="line">$ sudo apt-get install ros-kinetic-gazebo8-ros-control</span><br><span class="line">$ sudo apt-get install ros-kinetic-gazebo8-plugins</span><br><span class="line">$ sudo apt-get install ros-kinetic-gazebo8-ros-pkgs</span><br><span class="line">$ sudo apt-get install ros-kinetic-gazebo8-ros</span><br><span class="line">$ sudo apt-get install ros-kinetic-image-view</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其他可能帮助信息</p>
+</blockquote>
+<p>如果需要卸载ros的话，参考如下命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get purge ros-*</span><br><span class="line">$ sudo rm -rf /etc/ros</span><br><span class="line">$ gedit ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>找到：带有kinetic的那一行删除，保存，然后：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>如果不删掉这一行或者在他之前多余的命令，那么你会在打开终端后发现第一行永远是个报错信息，虽然有时候没有什么影响。 </p>
+<p>参考网址：<a href="https://blog.csdn.net/qq_41058594/article/details/81079259" target="_blank" rel="noopener">网址1</a></p>
 
       
     </div>
@@ -577,7 +586,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -599,7 +608,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

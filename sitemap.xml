@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ldgyyf.cn/2019/06/05/%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E6%B5%8B%E8%AF%95/</loc>
+    
+    <lastmod>2019-06-05T08:23:50.574Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ldgyyf.cn/2019/05/22/ROS/%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo/</loc>
+    
+    <lastmod>2019-05-31T02:32:56.209Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ldgyyf.cn/2019/05/30/Linux/Tensorflow%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%92%8C%E9%85%8D%E7%BD%AE%E9%9B%86%E9%94%A6/</loc>
     
     <lastmod>2019-05-30T15:53:37.101Z</lastmod>
@@ -68,13 +82,6 @@
     <loc>http://ldgyyf.cn/2019/05/22/ROS/ubuntu16%E5%AE%89%E8%A3%85ROS/</loc>
     
     <lastmod>2019-05-23T02:31:40.531Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ldgyyf.cn/2019/05/22/ROS/%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo/</loc>
-    
-    <lastmod>2019-05-23T02:23:15.438Z</lastmod>
     
   </url>
   
@@ -170,7 +177,7 @@
   </url>
   
   <url>
-    <loc>http://ldgyyf.cn/2019/05/13/Hexo/hello-world/</loc>
+    <loc>http://ldgyyf.cn/2019/06/05/Hexo/hello-world/</loc>
     
     <lastmod>2019-05-15T07:30:31.032Z</lastmod>
     

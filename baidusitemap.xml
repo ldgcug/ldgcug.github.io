@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://ldgyyf.cn/2019/06/05/%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E6%B5%8B%E8%AF%95/</loc>
+    <lastmod>2019-06-05</lastmod>
+  </url>  <url>
+    <loc>http://ldgyyf.cn/2019/05/22/ROS/%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo/</loc>
+    <lastmod>2019-05-31</lastmod>
+  </url>  <url>
     <loc>http://ldgyyf.cn/2019/05/30/Linux/Tensorflow%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%92%8C%E9%85%8D%E7%BD%AE%E9%9B%86%E9%94%A6/</loc>
     <lastmod>2019-05-30</lastmod>
   </url>  <url>
@@ -29,9 +35,6 @@
     <lastmod>2019-05-25</lastmod>
   </url>  <url>
     <loc>http://ldgyyf.cn/2019/05/22/ROS/ubuntu16%E5%AE%89%E8%A3%85ROS/</loc>
-    <lastmod>2019-05-23</lastmod>
-  </url>  <url>
-    <loc>http://ldgyyf.cn/2019/05/22/ROS/%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo/</loc>
     <lastmod>2019-05-23</lastmod>
   </url>  <url>
     <loc>http://ldgyyf.cn/2019/05/21/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/Youtube%E8%A7%86%E9%A2%91%E9%93%BE%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%B3%95/</loc>
@@ -64,7 +67,7 @@
     <loc>http://ldgyyf.cn/2019/05/15/%E6%94%B6%E8%97%8F%E7%BD%91%E5%9D%80/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/</loc>
     <lastmod>2019-05-15</lastmod>
   </url>  <url>
-    <loc>http://ldgyyf.cn/2019/05/13/Hexo/hello-world/</loc>
+    <loc>http://ldgyyf.cn/2019/06/05/Hexo/hello-world/</loc>
     <lastmod>2019-05-15</lastmod>
   </url>  <url>
     <loc>http://ldgyyf.cn/2019/05/14/Hexo/Hexo%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E5%92%8CGithub%E4%B8%8A%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</loc>
