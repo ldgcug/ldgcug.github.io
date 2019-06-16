@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Airsim,Unreal Engine,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 基于Airsim，搭建一个更逼真的仿真环境，比原有的Gazebo效果更好  一、相关概念介绍 Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unreal Engine）上的无人机以及其它自主移动设备的模拟器。 它支持硬件在循环与流行的飞行控制器的物理和视觉逼真模拟。它被开发为一个虚幻的插件，可以简单地放到任何你想要的虚幻环境中。 该模拟器创造了一个高还原的逼真虚拟环境">
+<meta name="keywords" content="Airsim,Unreal Engine">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识Airsim（一）之Airsim平台搭建">
+<meta property="og:url" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 基于Airsim，搭建一个更逼真的仿真环境，比原有的Gazebo效果更好  一、相关概念介绍 Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unreal Engine）上的无人机以及其它自主移动设备的模拟器。 它支持硬件在循环与流行的飞行控制器的物理和视觉逼真模拟。它被开发为一个虚幻的插件，可以简单地放到任何你想要的虚幻环境中。 该模拟器创造了一个高还原的逼真虚拟环境">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/VS2017.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/VS%20and%20Windows%20SDK.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/single_zujian.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Unreal%20Engine.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/VS2017-x64png.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/half-h.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/hald-h-error.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/high-poly-car.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/build_success.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Unreal%20Engine4.18.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/c++%20project.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/copy_file.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Debug.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Rolling.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/gamemode.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/quadrotor_show1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/quadrotor_show2.png">
+<meta property="og:updated_time" content="2019-06-16T15:38:37.202Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识Airsim（一）之Airsim平台搭建">
+<meta name="twitter:description" content="前言 基于Airsim，搭建一个更逼真的仿真环境，比原有的Gazebo效果更好  一、相关概念介绍 Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unreal Engine）上的无人机以及其它自主移动设备的模拟器。 它支持硬件在循环与流行的飞行控制器的物理和视觉逼真模拟。它被开发为一个虚幻的插件，可以简单地放到任何你想要的虚幻环境中。 该模拟器创造了一个高还原的逼真虚拟环境">
+<meta name="twitter:image" content="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/VS2017.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/">
+
+
+
+
+
+  <title>初识Airsim（一）之Airsim平台搭建 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初识Airsim（一）之Airsim平台搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-16T21:54:08+08:00">
+                2019-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Airsim/" itemprop="url" rel="index">
+                    <span itemprop="name">Airsim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/" class="leancloud_visitors" data-flag-title="初识Airsim（一）之Airsim平台搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>基于Airsim，搭建一个更逼真的仿真环境，比原有的Gazebo效果更好</p>
+</blockquote>
+<h2 id="一、相关概念介绍"><a href="#一、相关概念介绍" class="headerlink" title="一、相关概念介绍"></a>一、相关概念介绍</h2><ul>
+<li><p>Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unreal Engine）上的无人机以及其它自主移动设备的模拟器。 它支持硬件在循环与流行的飞行控制器的物理和视觉逼真模拟。它被开发为一个虚幻的插件，可以简单地放到任何你想要的虚幻环境中。</p>
+<p>该模拟器创造了一个高还原的逼真虚拟环境，模拟了阴影、反射等其它现实世界中容易干扰的环境，让无人机不用经历真实世界的风险就能进行训练。</p>
+<p>AirSim 的目标是作为AI研究的平台，以测试深度学习、计算机视觉和自主车辆的增强学习算法。为此， AirSim 还公开了 API，以平台独立的方式检索数据和控制车辆。</p>
+<p>Airsim官方Github：<a href="https://github.com/Microsoft/AirSim" target="_blank" rel="noopener">https://github.com/Microsoft/AirSim</a> </p>
+</li>
+<li><p>Unreal Engine：Unreal是UNREAL ENGINE（虚幻引擎）的简写，由Epic开发，是目前世界知名授权最广的游戏引擎之一，占有全球商用游戏引擎80%的市场份额。</p>
+<p>“Unreal Engine 3”3D引擎采用了目前最新的即时光迹追踪、HDR光照技术、虚拟位移…等新技术，而且能够每秒钟实时运算两亿个多边形运算，效能是目前“Unreal Engine”的100倍，而通过nVIDIA的GeForce 6800显示卡与“Unreal Engine 3”3D引擎的搭配，可以实时运算出电影CG等级的画面，效能非常非常恐怖。</p>
+<p>基于它开发的大作无数，除《虚幻竞技场3》外，还包括《战争机器》、《质量效应》、《生化奇兵》等等。在美国和欧洲，虚幻引擎主要用于主机游戏的开发，在亚洲，中韩众多知名游戏开发商购买该引擎主要用于次世代网游的开发，如《剑灵》、《TERA》、《战地之王》、《一舞成名》等。 iPhone上的游戏有《无尽之剑》（1、2、3）、《蝙蝠侠》等</p>
+</li>
+</ul>
+<h2 id="二、版本说明"><a href="#二、版本说明" class="headerlink" title="二、版本说明"></a>二、版本说明</h2><blockquote>
+<p><strong>AirSim最新版本已支持Visual Studio 2017与Unreal Engine 4.18</strong></p>
+</blockquote>
+<ul>
+<li><p>Windows10</p>
+</li>
+<li><p>Visual Studio 2017（需要安装VC++ 和Windows SDK8.1）</p>
+</li>
+<li><p>Unreal Engine 4.18（通过Epic Games Launcher安装）</p>
+</li>
+<li><p>Git（下载Airsim1.2源码，不要用VS2017 URL链接下载）</p>
+</li>
+<li><p>Airsim1.2</p>
+</li>
+</ul>
+<h2 id="三、软件安装"><a href="#三、软件安装" class="headerlink" title="三、软件安装"></a>三、软件安装</h2><h3 id="3-1-Visual-Studio2017安装"><a href="#3-1-Visual-Studio2017安装" class="headerlink" title="3.1 Visual Studio2017安装"></a>3.1 <strong>Visual Studio2017安装</strong></h3><p>（1）点击<a href="https://my.visualstudio.com/Downloads?q=visual%20studio%202017&amp;wt.mc_id=o~msft~vscom~older-downloads" target="_blank" rel="noopener">下载</a>，下载VS2017社区版</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/VS2017.png" alt></p>
+<p>（2）安装VS2017</p>
+<p>安装过程中请确保安装VC++ 和Windows SDK8.1（或Windows SDK10）的安装</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/VS and Windows SDK.png" alt></p>
+<p>此外，我还安装了单个组件中的游戏和图形的部分组件</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/single_zujian.png" alt></p>
+<blockquote>
+<p>总安装大小6个多G，耗时有点长</p>
+</blockquote>
+<h3 id="3-2-虚幻引擎（Unreal-Engine）的安装"><a href="#3-2-虚幻引擎（Unreal-Engine）的安装" class="headerlink" title="3.2 虚幻引擎（Unreal Engine）的安装"></a>3.2 <strong>虚幻引擎（Unreal Engine）的安装</strong></h3><p>（1）点击<a href="https://www.unrealengine.com/zh-CN/download" target="_blank" rel="noopener">下载</a>，下载<code>Epic Games Launcher</code></p>
+<p>下载过程中，若没有注册过Epic账号的，需要先注册，然后在登录下载</p>
+<p>（2）运行<code>Epic Games Launcher</code>，在弹出的界面中，选择<code>Library</code>，点击<code>+</code>号，选择<code>4.18</code>版本进行安装</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Unreal Engine.png" alt></p>
+<blockquote>
+<p>注意一定要下载4.18版本，下载了多个版本也没有关系，最后需要启动4.18版本</p>
+</blockquote>
+<h3 id="3-3-Git安装"><a href="#3-3-Git安装" class="headerlink" title="3.3 Git安装"></a>3.3 Git安装</h3><p>（1）点击<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">下载</a>，下载Git</p>
+<p>（2）默认安装即可</p>
+<h2 id="四、搭建Airsim环境并配置"><a href="#四、搭建Airsim环境并配置" class="headerlink" title="四、搭建Airsim环境并配置"></a>四、<strong>搭建Airsim环境并配置</strong></h2><h3 id="4-1-下载Airsim源码"><a href="#4-1-下载Airsim源码" class="headerlink" title="4.1 下载Airsim源码"></a>4.1 下载Airsim源码</h3><p>（1）在git bash窗口输入如下命令，下载airsim源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/microsoft/AirSim.git</span><br></pre></td></tr></table></figure>
+<p>下载完后，将Airsim文件存放到其他位置，如我的存放在D盘目录下的自定义新文件夹下</p>
+<h3 id="4-2-编译"><a href="#4-2-编译" class="headerlink" title="4.2 编译"></a>4.2 编译</h3><p>（1）打开window菜单，找到Visual Studio 2017，并双击打开VS2017的x64本机命令提示</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/VS2017-x64png.png" alt></p>
+<p>在打开的窗口中，进入到Airsim所在目录</p>
+<p>（2）编译</p>
+<blockquote>
+<p>首先，找到<strong>\AirSim\AirLib\deps\eigen3\Eigen\src\Core\arch\CUDA\Half.h</strong>文件，修改Half.h文件的“AS ls”的引号即可。如图所示</p>
+</blockquote>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/half-h.png" alt></p>
+<blockquote>
+<p>之所以修改该 <code>“”</code>，是因为如果不修改，会在后面的编译过程中，碰到如下错误</p>
+</blockquote>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/hald-h-error.png" alt></p>
+<blockquote>
+<p> 然后，进入Airsim目录后，执行如下命令：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build.cmd --no-full-poly-car</span><br></pre></td></tr></table></figure>
+<p>其实也可以只执行build.cmd ，也不用添加后面的 –no-full-poly-car，之所以这样做是为了在编译过程中能节省很大的时间，在下面这一步，耗时较长，我这里大概要花20分钟</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/high-poly-car.png" alt></p>
+<blockquote>
+<p>最后，编译成功后的界面显示如下图</p>
+</blockquote>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/build_success.png" alt></p>
+<h2 id="五、UE4与Airsim联系起来"><a href="#五、UE4与Airsim联系起来" class="headerlink" title="五、UE4与Airsim联系起来"></a>五、<strong>UE4与Airsim联系起来</strong></h2><h3 id="5-1-启动Unreal-Enigen-4-18"><a href="#5-1-启动Unreal-Enigen-4-18" class="headerlink" title="5.1 启动Unreal Enigen 4.18"></a>5.1 启动Unreal Enigen 4.18</h3><p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Unreal Engine4.18.png" alt></p>
+<h3 id="5-2-新建工程（c-项目），如Rolling"><a href="#5-2-新建工程（c-项目），如Rolling" class="headerlink" title="5.2 新建工程（c++项目），如Rolling"></a>5.2 新建工程（c++项目），如Rolling</h3><p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/c++ project.png" alt></p>
+<p>注意：名称一定要写成英文，不能用中文</p>
+<h3 id="5-3-复制文件"><a href="#5-3-复制文件" class="headerlink" title="5.3 复制文件"></a>5.3 复制文件</h3><p>复制AirSim\Unreal\Plugins文件夹 到 Rolling目录下；</p>
+<p>复制AirSim\Unreal\Environments\Blocks文件夹下的clean.bat和GenerateProjectFiles.bat 文件到 Rolling目录下；</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/copy_file.png" alt></p>
+<blockquote>
+<p>在这个过程中，可能会重新编译C++类，会在UE工程下生成Rollings.sln</p>
+</blockquote>
+<h3 id="5-4-运行Rolling工程"><a href="#5-4-运行Rolling工程" class="headerlink" title="5.4 运行Rolling工程"></a>5.4 运行Rolling工程</h3><p>在Rolling目录下，双击Rolling.sln在VS2017中打开该工程</p>
+<p>首先修改配置：DebugGame Editor + win64</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Debug.png" alt></p>
+<p>然后点击【生成】-【重新生成解决方案】</p>
+<p>最后，按F5键，运行工程项目</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/Rolling.png" alt></p>
+<h3 id="5-5-添加Quadrotor"><a href="#5-5-添加Quadrotor" class="headerlink" title="5.5 添加Quadrotor"></a>5.5 添加Quadrotor</h3><p>进入  <code>【设置】</code>-<code>【世界设置】</code>，修改其中的Game mode，修改为AirSimGameMode</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/gamemode.png" alt></p>
+<p>点击<code>【播放】</code>按钮，在弹出的框中选择<code>【不】</code>，即可</p>
+<p>第一次加载界面如下图，右下角还在编译着色器，稍微等一会就好</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/quadrotor_show1.png" alt></p>
+<p>等一会后，无人机就加载出来了</p>
+<p><img src="/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/quadrotor_show2.png" alt></p>
+<h2 id="六、参考链接"><a href="#六、参考链接" class="headerlink" title="六、参考链接"></a>六、参考链接</h2><h3 id="6-1-安装文档参考"><a href="#6-1-安装文档参考" class="headerlink" title="6.1 安装文档参考"></a>6.1 安装文档参考</h3><ul>
+<li><p><a href="https://microsoft.github.io/AirSim/docs/build_windows/" target="_blank" rel="noopener">Airsim官网</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/52665325?utm_source=qq&amp;utm_medium=social&amp;utm_oi=60530387582976" target="_blank" rel="noopener">知乎文档</a></p>
+</li>
+</ul>
+<h3 id="6-2-相关概念参考"><a href="#6-2-相关概念参考" class="headerlink" title="6.2 相关概念参考"></a>6.2 相关概念参考</h3><ul>
+<li><p><a href="https://blog.csdn.net/hhlenergystory/article/details/80275617" target="_blank" rel="noopener">Unreal Engine</a></p>
+</li>
+<li><p><a href="https://www.oschina.net/news/89300/airsim-1-1-1" target="_blank" rel="noopener">Airsim</a></p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>至此，Airsim在Windows平台下的搭建已经基本成功，后面会继续添加新的场景，如城市场景；也会自己在去编写一些程序代码进行控制</p>
+</blockquote>
+<blockquote>
+<p>我搭建的电脑机器配置如下：</p>
+<p><strong>i7处理器，8G RAM，GT730显卡，128G SSD</strong></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Airsim/" rel="tag"># Airsim</a>
+          
+            <a href="/tags/Unreal-Engine/" rel="tag"># Unreal Engine</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/09/Hexo/新电脑上移植旧电脑上博客笔记/" rel="next" title="新电脑上移植旧电脑上博客笔记">
+                <i class="fa fa-chevron-left"></i> 新电脑上移植旧电脑上博客笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、相关概念介绍"><span class="nav-text">一、相关概念介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、版本说明"><span class="nav-text">二、版本说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、软件安装"><span class="nav-text">三、软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Visual-Studio2017安装"><span class="nav-text">3.1 Visual Studio2017安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-虚幻引擎（Unreal-Engine）的安装"><span class="nav-text">3.2 虚幻引擎（Unreal Engine）的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Git安装"><span class="nav-text">3.3 Git安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、搭建Airsim环境并配置"><span class="nav-text">四、搭建Airsim环境并配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-下载Airsim源码"><span class="nav-text">4.1 下载Airsim源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-编译"><span class="nav-text">4.2 编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、UE4与Airsim联系起来"><span class="nav-text">五、UE4与Airsim联系起来</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-启动Unreal-Enigen-4-18"><span class="nav-text">5.1 启动Unreal Enigen 4.18</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-新建工程（c-项目），如Rolling"><span class="nav-text">5.2 新建工程（c++项目），如Rolling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-复制文件"><span class="nav-text">5.3 复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-运行Rolling工程"><span class="nav-text">5.4 运行Rolling工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-添加Quadrotor"><span class="nav-text">5.5 添加Quadrotor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、参考链接"><span class="nav-text">六、参考链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-安装文档参考"><span class="nav-text">6.1 安装文档参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-相关概念参考"><span class="nav-text">6.2 相关概念参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '初识Airsim（一）之Airsim平台搭建'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '初识Airsim（一）之Airsim平台搭建'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
