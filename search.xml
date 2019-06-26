@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[VS2017配置（二）之GDAL配置]]></title>
+    <url>%2F2019%2F06%2F26%2F%E7%B3%BB%E7%BB%9F%2FVS2017%E9%85%8D%E7%BD%AE%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BGDAL%E9%85%8D%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[前言 暂时还不太清楚GDAL是用来干啥的，总之需要用，于是参照网上教程，在VS2017上配置了GDAL，后面再去了解这个的相关作用 一、GDAL下载 点击官网，下载gdal，我这里下载的是2.3.3版本 二、文件解压并解压到特定路径 我这里是在D盘的Program Files文件夹下，创建了GDAL文件夹，也将解压文件存放在GDAL文件夹下 三、GDAL编译安装3.1 修改源代码 找到解压地址 D:\Program Files\GDAL\gdal-2.3.3文件夹下的nmake.opt文件，打开，对文件进行修改，保存 （1）修改第41行的代码为：MSVC_VER=1910 （2）修改第57行的代码为：GDAL_HOME = “D:\Program Files\GDAL\gdal-2.3.3” 注意：这里的地址要根据自己的实际地址设置 （3）修改第184行的代码为：#WIN64=YES 原来的可能中间有空格，原来可能是这样的# WIN64=YES 3.2 编译 首先，打开适用于VS2017的X64的本级工具命令提示 在该窗口，进入到gdal 2.3.3目录下 1cd D:\Program Files\GDAL\gdal-2.3.3 然后执行下面代码进行编译 1nmake /f makefile.vc MSVC_VER=1910 WIN64=yes 说明：在编译过程中，比较耗时，但是编译过程没有问题 3.3 安装GDAL12nmake /f makefile.vc install MSVC_VER=1910 WIN64=yesnmake /f makefile.vc devinstall MSVC_VER=1910 WIN64=yes 四、VS2017配置GDAL4.1 打开VS2017，新建一个C++空项目4.2 点击 菜单栏-&gt;视图-&gt;其他窗口-&gt;属性管理器4.3 找到 Debug|x64 ，右键 Microsoft.CPP.x64.user，点击属性4.4 在Microsoft.CPP.x64.user属性页中，添加包含目录、库目录 添加包含目录 添加库目录 在所有需要点确定的地方，点击确定以保存 4.5 在Microsoft.CPP.x64.user属性页中，添加附加依赖项 手动输入：gdal_i.lib，最后记得确定保存 五、设置系统变量 右键此电脑，点击属性，在弹出的界面框中，点击高级系统设置，然后选择环境变量，最终出现如下界面 选择系统变量Path，点击编辑 保险起见，将电脑重启，确保环境变量生效 六、测试6.1 新建main.cpp 6.2 拷贝代码123456789101112131415161718#include "gdal_priv.h"#include&lt;iostream&gt; using namespace std;int main()&#123; const char* pszFile; GDALAllRegister(); pszFile = "C:\\Users\\Administrator\\Desktop\\1.jpg"; GDALDataset *poDataset = (GDALDataset*)GDALOpen(pszFile, GA_ReadOnly); GDALRasterBand *poBand = poDataset-&gt;GetRasterBand(1); int xsize = poBand-&gt;GetXSize(); int ysize = poBand-&gt;GetYSize(); cout &lt;&lt; xsize &lt;&lt; endl; cout &lt;&lt; ysize &lt;&lt; endl; system("pause"); return 0;&#125; 6.3 解决方案配置 这一步很重要 6.4 编译 菜单栏 生成-&gt;重新生成解决方案 6.5 运行 按F5键运行，此时报如下错误：gdal203.dll 等相关的错误 解决方法： 将D:\Program Files\GDAL\gdal-2.3.3目录下的gdal203.dll拷贝到C:\Windows\System32文件夹下 重新编译运行，成功输出图片大小，则配置成功，此时运行成功后的界面如下： 参考链接 GDAL编译链接参考（前三步）：csdn博客 GDAL在VS2017的配置参考（四五六步）：csdn博客 gdal203.dll错误解决参考：csdn博客 总结 相比于opencv，这个稍微复杂了一点，参照的文档多一些忙不过好在还是配置成功]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>VS2017</tag>
+        <tag>GDAL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[VS2017配置（一）之opencv配置]]></title>
+    <url>%2F2019%2F06%2F26%2F%E7%B3%BB%E7%BB%9F%2FVS2017%E9%85%8D%E7%BD%AE%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8Bopencv%E9%85%8D%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[前言 帮朋友搭建配置的，因为配置过程稍微有些复杂，因此还是做个笔记记录一下，说不定以后就会涉及相关的事情 一、Opencv下载 点击官网，下载Opencv，我这里下载的是4.1.0版本 二、文件解压并解压到自定义路径位置 双击exe文件，进行解压，我解压放在D盘自定义的文件夹下 解压完成后，文件内容如下： 三、系统变量配置 我下面的界面显示是在Win10系统下，如果是Win7，某些界面会有所区别 右键此电脑，点击属性，在弹出的界面框中，点击高级系统设置，然后选择环境变量，最终出现如下界面 找到系统变量中的Path，点击编辑，添加opencv相应目录路径，如下图： 要添加的路径，就是opencv之前所解压的位置，具体到哪一级目录，看下图中的添加示例 最后，在所有需要点击确定的地方，点击确定以保存 四、相关文件配置 将第三步添加的bin目录下的两个文件（opencv_world410.dll、opencv_world410d.dll）拷贝到C:\Windows\SysWOW64文件夹下 将bin目录下的opencv_ffmpeg410_64.dll拷贝到C:\Windows\System32文件夹下 如果版本不一致，则添加对应的dll文件即可 五、VS2017配置5.1 ，打开VS2017，新建一个c++空项目 5.2 打开属性管理器 5.3 配置Debug|x64找到Debug|x64，右键Microsoft.CPP.x64.user，点击属性 5.4 添加包含目录和库目录 添加包含目录 添加库目录 在所有需要点击确定的地方，点击确定以保存 5.5 添加附加依赖项 在所有需要点击确定的地方，点击确定以保存 5.6 解决方案配置 在解决方案这里，选择Debug、X64配置 六、测试6.1 打开Project1.sln 右键源文件，点击添加，选择新建项，创建main.cpp文件 6.2 拷贝代码 将下面代码拷贝到main.cpp中，需要注意的是，载入图像这里要自己保存一张图片，并能够读取 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091#include &lt;opencv2/core/core.hpp&gt;#include &lt;opencv2/imgproc/imgproc.hpp&gt; #include &lt;opencv2/imgproc/types_c.h&gt;#include &lt;opencv2/highgui/highgui.hpp&gt;#include &lt;opencv2/highgui/highgui_c.h&gt;#include &lt;iostream&gt;using namespace cv;using namespace std;Vec3b RandomColor(int value); //生成随机颜色函数 int main()&#123; Mat image = imread("20.jpg"); //载入图像 imshow("Source Image", image); //灰度化，滤波，Canny边缘检测 Mat imageGray; cvtColor(image, imageGray, CV_RGB2GRAY);//灰度转换 GaussianBlur(imageGray, imageGray, Size(5, 5), 2); //高斯滤波 imshow("Gray Image", imageGray); Canny(imageGray, imageGray, 80, 150); imshow("Canny Image", imageGray); //查找轮廓 vector&lt;vector&lt;Point&gt;&gt; contours; vector&lt;Vec4i&gt; hierarchy; findContours(imageGray, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE, Point()); Mat imageContours = Mat::zeros(image.size(), CV_8UC1); //轮廓 Mat marks(image.size(), CV_32S); //Opencv分水岭第二个矩阵参数 marks = Scalar::all(0); int index = 0; int compCount = 0; for (; index &gt;= 0; index = hierarchy[index][0], compCount++) &#123; //对marks进行标记，对不同区域的轮廓进行编号，相当于设置注水点，有多少轮廓，就有多少注水点 drawContours(marks, contours, index, Scalar::all(compCount + 1), 1, 8, hierarchy); drawContours(imageContours, contours, index, Scalar(255), 1, 8, hierarchy); &#125; //我们来看一下传入的矩阵marks里是什么东西 Mat marksShows; convertScaleAbs(marks, marksShows); imshow("marksShow", marksShows); imshow("轮廓", imageContours); watershed(image, marks); //我们再来看一下分水岭算法之后的矩阵marks里是什么东西 Mat afterWatershed; convertScaleAbs(marks, afterWatershed); imshow("After Watershed", afterWatershed); //对每一个区域进行颜色填充 Mat PerspectiveImage = Mat::zeros(image.size(), CV_8UC3); for (int i = 0; i &lt; marks.rows; i++) &#123; for (int j = 0; j &lt; marks.cols; j++) &#123; int index = marks.at&lt;int&gt;(i, j); if (marks.at&lt;int&gt;(i, j) == -1) &#123; PerspectiveImage.at&lt;Vec3b&gt;(i, j) = Vec3b(255, 255, 255); &#125; else &#123; PerspectiveImage.at&lt;Vec3b&gt;(i, j) = RandomColor(index); &#125; &#125; &#125; imshow("After ColorFill", PerspectiveImage); //分割并填充颜色的结果跟原始图像融合 Mat wshed; addWeighted(image, 0.4, PerspectiveImage, 0.6, 0, wshed); imshow("AddWeighted Image", wshed); waitKey();&#125;Vec3b RandomColor(int value) //生成随机颜色函数&#123; value = value % 255; //生成0~255的随机数 RNG rng; int aa = rng.uniform(0, value); int bb = rng.uniform(0, value); int cc = rng.uniform(0, value); return Vec3b(aa, bb, cc);&#125; 6.3 编译 确保下面编译成功才进行后续的操作，解决方案配置一定要设置为Debug x64 6.4 运行 按F5键运行，最终出现下图则全部配置完成 为了保证代码完整性，也就是在前面的代码中没有进行删除，否则可以删除部分代码，进行简单一点的测试 参考链接：csdn博客 总结通过上面的参考链接，没有遇到什么错误的完成了opencv在VS2017上面的配置，感谢别人的付出]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>VS2017</tag>
+        <tag>Opencv</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[初识Airsim（一）之Airsim平台搭建]]></title>
     <url>%2F2019%2F06%2F16%2FAirsim%2F%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%2F</url>
     <content type="text"><![CDATA[前言 基于Airsim，搭建一个更逼真的仿真环境，比原有的Gazebo效果更好 一、相关概念介绍 Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unreal Engine）上的无人机以及其它自主移动设备的模拟器。 它支持硬件在循环与流行的飞行控制器的物理和视觉逼真模拟。它被开发为一个虚幻的插件，可以简单地放到任何你想要的虚幻环境中。 该模拟器创造了一个高还原的逼真虚拟环境，模拟了阴影、反射等其它现实世界中容易干扰的环境，让无人机不用经历真实世界的风险就能进行训练。 AirSim 的目标是作为AI研究的平台，以测试深度学习、计算机视觉和自主车辆的增强学习算法。为此， AirSim 还公开了 API，以平台独立的方式检索数据和控制车辆。 Airsim官方Github：https://github.com/Microsoft/AirSim Unreal Engine：Unreal是UNREAL ENGINE（虚幻引擎）的简写，由Epic开发，是目前世界知名授权最广的游戏引擎之一，占有全球商用游戏引擎80%的市场份额。 “Unreal Engine 3”3D引擎采用了目前最新的即时光迹追踪、HDR光照技术、虚拟位移…等新技术，而且能够每秒钟实时运算两亿个多边形运算，效能是目前“Unreal Engine”的100倍，而通过nVIDIA的GeForce 6800显示卡与“Unreal Engine 3”3D引擎的搭配，可以实时运算出电影CG等级的画面，效能非常非常恐怖。 基于它开发的大作无数，除《虚幻竞技场3》外，还包括《战争机器》、《质量效应》、《生化奇兵》等等。在美国和欧洲，虚幻引擎主要用于主机游戏的开发，在亚洲，中韩众多知名游戏开发商购买该引擎主要用于次世代网游的开发，如《剑灵》、《TERA》、《战地之王》、《一舞成名》等。 iPhone上的游戏有《无尽之剑》（1、2、3）、《蝙蝠侠》等 二、版本说明 AirSim最新版本已支持Visual Studio 2017与Unreal Engine 4.18 Windows10 Visual Studio 2017（需要安装VC++ 和Windows SDK8.1） Unreal Engine 4.18（通过Epic Games Launcher安装） Git（下载Airsim1.2源码，不要用VS2017 URL链接下载） Airsim1.2 三、软件安装3.1 Visual Studio2017安装（1）点击下载，下载VS2017社区版 （2）安装VS2017 安装过程中请确保安装VC++ 和Windows SDK8.1（或Windows SDK10）的安装 此外，我还安装了单个组件中的游戏和图形的部分组件 总安装大小6个多G，耗时有点长 3.2 虚幻引擎（Unreal Engine）的安装（1）点击下载，下载Epic Games Launcher 下载过程中，若没有注册过Epic账号的，需要先注册，然后在登录下载 （2）运行Epic Games Launcher，在弹出的界面中，选择Library，点击+号，选择4.18版本进行安装 注意一定要下载4.18版本，下载了多个版本也没有关系，最后需要启动4.18版本 3.3 Git安装（1）点击下载，下载Git （2）默认安装即可 四、搭建Airsim环境并配置4.1 下载Airsim源码（1）在git bash窗口输入如下命令，下载airsim源码 1git clone https://github.com/microsoft/AirSim.git 下载完后，将Airsim文件存放到其他位置，如我的存放在D盘目录下的自定义新文件夹下 4.2 编译（1）打开window菜单，找到Visual Studio 2017，并双击打开VS2017的x64本机命令提示 在打开的窗口中，进入到Airsim所在目录 （2）编译 首先，找到\AirSim\AirLib\deps\eigen3\Eigen\src\Core\arch\CUDA\Half.h文件，修改Half.h文件的“AS ls”的引号即可。如图所示 之所以修改该 “”，是因为如果不修改，会在后面的编译过程中，碰到如下错误 然后，进入Airsim目录后，执行如下命令： 1build.cmd --no-full-poly-car 其实也可以只执行build.cmd ，也不用添加后面的 –no-full-poly-car，之所以这样做是为了在编译过程中能节省很大的时间，在下面这一步，耗时较长，我这里大概要花20分钟 最后，编译成功后的界面显示如下图 五、UE4与Airsim联系起来5.1 启动Unreal Enigen 4.18 5.2 新建工程（c++项目），如Rolling 注意：名称一定要写成英文，不能用中文 5.3 复制文件复制AirSim\Unreal\Plugins文件夹 到 Rolling目录下； 复制AirSim\Unreal\Environments\Blocks文件夹下的clean.bat和GenerateProjectFiles.bat 文件到 Rolling目录下； 在这个过程中，可能会重新编译C++类，会在UE工程下生成Rollings.sln 5.4 运行Rolling工程在Rolling目录下，双击Rolling.sln在VS2017中打开该工程 首先修改配置：DebugGame Editor + win64 然后点击【生成】-【重新生成解决方案】 最后，按F5键，运行工程项目 5.5 添加Quadrotor进入 【设置】-【世界设置】，修改其中的Game mode，修改为AirSimGameMode 点击【播放】按钮，在弹出的框中选择【不】，即可 第一次加载界面如下图，右下角还在编译着色器，稍微等一会就好 等一会后，无人机就加载出来了 六、参考链接6.1 安装文档参考 Airsim官网 知乎文档 6.2 相关概念参考 Unreal Engine Airsim 总结 至此，Airsim在Windows平台下的搭建已经基本成功，后面会继续添加新的场景，如城市场景；也会自己在去编写一些程序代码进行控制 我搭建的电脑机器配置如下： i7处理器，8G RAM，GT730显卡，128G SSD]]></content>
@@ -42,8 +66,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>Tensorflow</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -194,8 +218,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>Tensorflow</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -230,8 +254,8 @@
         <category>python</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>Linux</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>

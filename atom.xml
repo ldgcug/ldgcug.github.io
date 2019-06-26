@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-06-16T15:38:37.202Z</updated>
+  <updated>2019-06-26T09:37:59.876Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -17,11 +17,67 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>VS2017配置（二）之GDAL配置</title>
+    <link href="http://ldgyyf.cn/2019/06/26/%E7%B3%BB%E7%BB%9F/VS2017%E9%85%8D%E7%BD%AE%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BGDAL%E9%85%8D%E7%BD%AE/"/>
+    <id>http://ldgyyf.cn/2019/06/26/系统/VS2017配置（二）之GDAL配置/</id>
+    <published>2019-06-26T06:40:07.000Z</published>
+    <updated>2019-06-26T09:37:59.876Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="VS2017" scheme="http://ldgyyf.cn/tags/VS2017/"/>
+    
+      <category term="GDAL" scheme="http://ldgyyf.cn/tags/GDAL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VS2017配置（一）之opencv配置</title>
+    <link href="http://ldgyyf.cn/2019/06/26/%E7%B3%BB%E7%BB%9F/VS2017%E9%85%8D%E7%BD%AE%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8Bopencv%E9%85%8D%E7%BD%AE/"/>
+    <id>http://ldgyyf.cn/2019/06/26/系统/VS2017配置（一）之opencv配置/</id>
+    <published>2019-06-26T03:35:46.000Z</published>
+    <updated>2019-06-26T08:55:40.146Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="VS2017" scheme="http://ldgyyf.cn/tags/VS2017/"/>
+    
+      <category term="Opencv" scheme="http://ldgyyf.cn/tags/Opencv/"/>
+    
+  </entry>
+  
+  <entry>
     <title>初识Airsim（一）之Airsim平台搭建</title>
     <link href="http://ldgyyf.cn/2019/06/16/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/"/>
     <id>http://ldgyyf.cn/2019/06/16/Airsim/初识Airsim（一）之Airsim平台搭建/</id>
     <published>2019-06-16T13:54:08.000Z</published>
-    <updated>2019-06-16T15:38:37.202Z</updated>
+    <updated>2019-06-24T02:48:21.563Z</updated>
     
     <summary type="html">
     
@@ -118,9 +174,9 @@
       <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
-    
       <category term="Tensorflow" scheme="http://ldgyyf.cn/tags/Tensorflow/"/>
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
   </entry>
   
@@ -485,9 +541,9 @@
       <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
-    
       <category term="Tensorflow" scheme="http://ldgyyf.cn/tags/Tensorflow/"/>
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
   </entry>
   
@@ -513,68 +569,6 @@
     
       <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
     
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>win7下局域网打印机共享</title>
-    <link href="http://ldgyyf.cn/2019/05/17/%E7%B3%BB%E7%BB%9F/win7%E4%B8%8B%E5%B1%80%E5%9F%9F%E7%BD%91%E6%89%93%E5%8D%B0%E6%9C%BA%E5%85%B1%E4%BA%AB/"/>
-    <id>http://ldgyyf.cn/2019/05/17/系统/win7下局域网打印机共享/</id>
-    <published>2019-05-17T14:00:58.000Z</published>
-    <updated>2019-05-17T14:44:02.335Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;blockquote&gt;
-&lt;h1 id=&quot;说明：本方法只在Win7下运行成功，Win10下还未测试，不过Win10应该也能行&quot;&gt;&lt;a href=&quot;#说明：本方法只在Win7下运行成功，Win10下还未测试，不过Win10应该也能行&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="系统" scheme="http://ldgyyf.cn/tags/%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下 Python2 与 Python3 版本切换</title>
-    <link href="http://ldgyyf.cn/2019/05/17/Linux/Linux%E4%B8%8B-Python2-%E4%B8%8E-Python3-%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2/"/>
-    <id>http://ldgyyf.cn/2019/05/17/Linux/Linux下-Python2-与-Python3-版本切换/</id>
-    <published>2019-05-17T11:22:01.000Z</published>
-    <updated>2019-05-17T13:55:54.590Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;blockquote&gt;
-&lt;p&gt;说明：在Linux系统下，Python默认版本为2.7，但在使用过程中，可能经常需要使用Python3，因此，通过在网上的一系列搜索，找出了Python2与Python3的切换方法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1
-        
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
-    
-      <category term="语言" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/"/>
-    
-      <category term="python" scheme="http://ldgyyf.cn/categories/%E8%AF%AD%E8%A8%80/python/"/>
-    
-    
-      <category term="Python" scheme="http://ldgyyf.cn/tags/Python/"/>
     
       <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
