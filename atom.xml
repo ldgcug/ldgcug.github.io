@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-06-27T07:14:07.322Z</updated>
+  <updated>2019-06-27T08:11:15.128Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ubuntu下科学上网</title>
+    <link href="http://ldgyyf.cn/2019/06/27/Linux/ubuntu%E4%B8%8B%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
+    <id>http://ldgyyf.cn/2019/06/27/Linux/ubuntu下科学上网/</id>
+    <published>2019-06-27T07:27:10.000Z</published>
+    <updated>2019-06-27T08:11:15.128Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;其实这一个笔记和前面的笔记（&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>初识Airsim（二）之Windows下ROS安装配置</title>
@@ -541,37 +568,6 @@
     
     
       <category term="网址收藏" scheme="http://ldgyyf.cn/tags/%E7%BD%91%E5%9D%80%E6%94%B6%E8%97%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GPU Tensorflow 安装</title>
-    <link href="http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-%E5%AE%89%E8%A3%85/"/>
-    <id>http://ldgyyf.cn/2019/05/21/Linux/GPU-Tensorflow-安装/</id>
-    <published>2019-05-21T03:32:35.000Z</published>
-    <updated>2019-05-30T15:47:36.603Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;blockquote&gt;
-&lt;p&gt;此安装过程仅在Ubuntu16下安装测试&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;1、安装nvidia显卡驱动&quot;&gt;&lt;a href=&quot;#1、安装nvidia显卡驱动&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
-    
-    
-      <category term="Tensorflow" scheme="http://ldgyyf.cn/tags/Tensorflow/"/>
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
   </entry>
   
