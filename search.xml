@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[(转)双系统之Win重装后linux引导损坏]]></title>
+    <url>%2F2019%2F07%2F01%2FLinux%2F%E8%BD%AC-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E4%B9%8BWin%E9%87%8D%E8%A3%85%E5%90%8Elinux%E5%BC%95%E5%AF%BC%E6%8D%9F%E5%9D%8F%2F</url>
+    <content type="text"><![CDATA[前言 由于一些需求，有时需要重装电脑，而本来是双系统的电脑，重装后，Linux的引导修复可能缺失，即在启动的过程中只有windows的界面，而没有win与linux的选择界面，因此，在网上找了几篇博客，几经对比后，还是这一片写的比较好（对我而言），并且已经测试成功 原文网址原文 安装步骤（1）首先，得制作一个ubuntu系统启动盘（不论14、16、18这样），制作方法这里不做说明（2）开机，从U盘进入（不同的电脑按键不一样，大部分是F12），选择try install ubuntu，不要选择安装ubuntu（3）进到ubuntu试用版后，连接wifi，打开终端（ctrl+alt+t）（4）在终端输入如下命令 添加源，更新 12sudo add-apt-repository ppa:yannubuntu/boot-repairsudo apt-get update 安装boot-repair 1sudo apt-get install -y boot-repair 安装成功后，在终端输入boot-repair，启动工具，在弹出的界面框中选择recommended repair，稍等一会，进行修复 修复完成后，重启电脑，此时重启过程中就能看到ubuntu的选项了 我这里的选择项有点奇怪，但是暂时也不去管它了，倒数第二个是windows的启动项 总结 我按照上面的方法就完成了linux 的grup引导修复，在修复过程中没有出现原文中所遇到的windows引导损坏的问题，但还是在这里记录一下windows引导损坏的解决方法，如下 在linux的终端窗口中，输入 1sudo update-grub 然后重启，就会出现双系统的选择界面了，这个还没有尝试，不过应该问题不大]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>系统</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ubuntu下科学上网]]></title>
     <url>%2F2019%2F06%2F27%2FLinux%2Fubuntu%E4%B8%8B%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%2F</url>
     <content type="text"><![CDATA[前言 其实这一个笔记和前面的笔记（ubuntu16下翻墙搭建）差不多，但是之前的笔记只记载了chrome浏览器下，网页端科学上网的方法，关于终端下如何科学上网，并没有记载，因此这篇笔记，更多的是说明如何在终端上科学上网，当然也能在firefox上，chrome浏览器上还没有测试 一、安装chrome浏览器 安装chrome浏览器，只是习惯用chrome，还有就是chrome浏览器的默认下载是在~/Downloads下，而firefox的默认下载是在一个tmp文件夹下，也懒得去修改，所以还是先安装了chrome浏览器，为后面的文件下载做铺垫 1234$ sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/sources.list.d/$ wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -$ sudo apt-get update$ sudo apt-get install google-chrome-stable 二、安装qt5并进行配置2.1 安装shadowsocks-qt5 添加源 12sudo add-apt-repository ppa:hzwhuang/ss-qt5sudo apt-get update 安装qt5 1sudo apt-get install shadowsocks-qt5 安装完成后，在菜单栏搜索shadows，找到shadowsocks-qt5，打开并进行配置 2.2 shadowsocks-qt5配置（1）添加连接 点击 Connection -&gt; Add -&gt; Manually （2）设置IP、Port、加密方式 ip 和port设置为自己的vpn账号和端口 （3）VPN连接 三、Proxychains安装病配置 下载文件时，使用chrome浏览器打开链接进行下载 3.1 下载zip文件：github网址 3.2 解压12cd ~/Downloadsunzip pro*.zip 3.3 安装proxychains12345cd ~/Downloadscd proxychains-ng-master/./configuresudo make &amp;&amp; sudo make installsudo cp ./src/proxychains.conf /etc/proxychains.conf 3.4 编辑proxychains配置 打开./conf文件进行配置 1sudo gedit /etc/proxychains.conf 将最后一行的 socks4 127.0.0.1 9050修改为socks5 127.0.0.1 1080，最终如下图 四、科学上网测试4.1 测试 需要先安装curl 12sudo apt-get install curlproxychains4 curl www.google.com 出现下图，则配置成功 4.2 终端上网 输入下面命令 1proxychains4 sudo apt-get update 或者 1sudo proxychains4 apt-get update 出现下图信息，则成功，下图对应第一条命令 4.3 firefox科学上网 在终端输入如下命令 1proxychains4 firefox 接着会弹出一个firefox的界面，在url地址栏输入www.google.com即能google了 4.4 流量损耗 在能够科学上网后，也能看到shadowsocks5 里面的流量损耗 参考链接： proxychains配置 proxychains使用方法 ping 不同google说明 总结 暂时还没有找到如何通过proxychains4 让chrome浏览器科学上网的方法，但是目前的设置，能够在firefox进行相应的搜索，但需要执行一次proxychains4的命令，另外终端执行命令前加上proxychains也能科学上网]]></content>
@@ -195,8 +207,8 @@
         <category>ROS</category>
       </categories>
       <tags>
-        <tag>ROS</tag>
         <tag>Linux</tag>
+        <tag>ROS</tag>
       </tags>
   </entry>
   <entry>
