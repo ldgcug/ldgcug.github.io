@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[初识Airsim（三）之Ubuntu下Airsim平台搭建]]></title>
+    <url>%2F2019%2F07%2F02%2FAirsim%2F%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BUbuntu%E4%B8%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%2F</url>
+    <content type="text"><![CDATA[前言 微软推出的airsim对windows的支持更好，但是也能在Ubuntu下进行安装，由于本人习惯在ubuntu下进行开发，因此，参考了airsim的官方文档和网上的一些文章，在ubuntu下搭建成功 版本说明 Ubuntu16.04 Unreal Engine 4.18 Airsim 1.2 一、安装Chrome浏览器 不是必须的，只是习惯用chrome浏览器而已 1234sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/sources.list.d/wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -sudo apt-get updatesudo apt-get install google-chrome-stable 二、安装qt5 配置终端翻墙 需要有自己的vpn账号才行，配置这个，是为了终端翻墙，在下载一些文件的时候能够快速下载 123sudo add-apt-repository ppa:hzwhuang/ss-qt5sudo apt-get updatesudo apt-get install shadowsocks-qt5 ubuntu下，实现终端翻墙，请参考该网址，进行相关配置 三、Unreal Engine 4.18下载配置3.1 安装git这里添加了proxychains4 是已经配置好第二步，即能实现终端翻墙后添加的翻墙操作 1sudo proxychains4 apt-get install git 3.2 下载UE4（1）如果没有UE4的账号，先去官网，注册一个账号，然后进行登录 （2）绑定github账号，在用户-&gt;个人-&gt;链接的账户中，与自己的github账号绑定，绑定之后，会发邮箱，然后确认即可 （3）如果是第一次下载需要先安装一些软件包 1sudo apt-get install build-essential mono-mcs mono-devel mono-xbuild mono-dmcs mono-reference-assemblies-4.0 libmono-system-data-datasetextensions4.0-cil libmono-system-web-extensions4.0-cil libmono-system-management4.0-cil libmono-system-xml-linq4.0-cil cmake dos2unix clang-5.0 libfreetype6-dev libgtk-3-dev libmono-microsoft-build-tasks-v4.0-4.0-cil xdg-user-dirs 然后输入以下命令 123sudo ln -s /usr/bin/clang-5.0 /usr/bin/clangsudo ln -s /usr/bin/clang++-5.0 /usr/bin/clang++clang -v 为了，防止后面编译出现下面的错误 （4）下载UE4.18源码 在git的过程中，需要输入之前绑定的github的用户名和密码 1git clone -b 4.18 https://github.com/EpicGames/UnrealEngine.git 3.3 编译UE41234cd UnrealEngine./Setup.sh./GenerateProjectFiles.shmake 编译成功后，界面如下： 四、Airsim配置4.1 下载Airsim1git clone https://github.com/Microsoft/AirSim.git 4.2 编译 有的命令前，加上proxychains4，可能会更快，如：proxychains4 ./setup.sh 123cd AirSim./setup.sh./build.sh ./setup.sh成功后界面如下 ./build.sh成功后界面如下 五、Airsim 使用方法 在Unreal Engine/Engine/Binaries/Linux/文件夹下，搜索UE4Editor，然后双击打开 5.1 创建工程选择新建项目，C++，名称注意写英文，不要写中文 5.2 打开工程项目创建完成后，在刚才创建的目录下，双击打开Rolling.uproject 5.3 界面显示打开后，会成功加载除UE4的场景界面，但是此时还没有无人机或车辆 5.4 加载无人机或小车在5.3的窗口框中，选择 文件 -&gt; 打开项目，在弹出的框中选择浏览，找到 AirSim/Unreal/Environments/Blocks 文件下的.uproject文件 然后，点击打开，弹出提示需要转换副本时，选择打开一个副本 稍等一会，加载出来后，就能在UE4界面看到无人机了，当然需要设置 选择 设置-&gt;世界设置，在右侧栏GameMode这里选择AirsimGameMode 点击播放，在弹出的框中选择不，则能看到无人机加载出来 加载成功后，也能在Documents文件夹下多出一个Airsim文件夹，这个里面是settions.json文件，里面是它的配置信息 将其中的SimMode设为Car，则会加载出小车，设为Multirotor，则会是无人机，默认是Multirotor 5.5 重新打开UE4，并带有无人机 关掉之前打开的UE4界面，重新在Unreal Engine/Engine/Binaries/Linux下双击UE4Editor 在弹出的项目中，选择我们之前加载的插件Blocks，打开 然后点击播放，就能看见小车出来，并且能够手动控制，这里出现小车，是因为我在settiong.json中将SimMode设置为了Car，而且小车是能在界面上进行控制的，无人机不行 参考网址 csdn博客，Ubuntu下安装Airsim，传送门 Airsim官方文档，传送门 总结 ubuntu下的Airsim配置还是Windows下的配置有些不一样，如Windows下需要安装VS2017，在VS2017中打开sln文件等，以及windows下有Epic Game Launch网上商店，而ubuntu下没有，如果要在ubuntu下加载网上商店上的一些场景，需要先在windows下进行下载才行]]></content>
+      <categories>
+        <category>Airsim</category>
+      </categories>
+      <tags>
+        <tag>Airsim</tag>
+        <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[(转)双系统之Win重装后linux引导损坏]]></title>
     <url>%2F2019%2F07%2F01%2FLinux%2F%E8%BD%AC-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E4%B9%8BWin%E9%87%8D%E8%A3%85%E5%90%8Elinux%E5%BC%95%E5%AF%BC%E6%8D%9F%E5%9D%8F%2F</url>
-    <content type="text"><![CDATA[前言 由于一些需求，有时需要重装电脑，而本来是双系统的电脑，重装后，Linux的引导修复可能缺失，即在启动的过程中只有windows的界面，而没有win与linux的选择界面，因此，在网上找了几篇博客，几经对比后，还是这一片写的比较好（对我而言），并且已经测试成功 原文网址原文 安装步骤（1）首先，得制作一个ubuntu系统启动盘（不论14、16、18这样），制作方法这里不做说明（2）开机，从U盘进入（不同的电脑按键不一样，大部分是F12），选择try install ubuntu，不要选择安装ubuntu（3）进到ubuntu试用版后，连接wifi，打开终端（ctrl+alt+t）（4）在终端输入如下命令 添加源，更新 12sudo add-apt-repository ppa:yannubuntu/boot-repairsudo apt-get update 安装boot-repair 1sudo apt-get install -y boot-repair 安装成功后，在终端输入boot-repair，启动工具，在弹出的界面框中选择recommended repair，稍等一会，进行修复 修复完成后，重启电脑，此时重启过程中就能看到ubuntu的选项了 我这里的选择项有点奇怪，但是暂时也不去管它了，倒数第二个是windows的启动项 总结 我按照上面的方法就完成了linux 的grup引导修复，在修复过程中没有出现原文中所遇到的windows引导损坏的问题，但还是在这里记录一下windows引导损坏的解决方法，如下 在linux的终端窗口中，输入 1sudo update-grub 然后重启，就会出现双系统的选择界面了，这个还没有尝试，不过应该问题不大]]></content>
+    <content type="text"><![CDATA[前言 由于一些需求，有时需要重装电脑，而本来是双系统的电脑，重装后，Linux的引导修复可能缺失，即在启动的过程中只有windows的界面，而没有win与linux的选择界面，因此，在网上找了几篇博客，几经对比后，还是这一片写的比较好（对我而言），并且已经测试成功 原文网址原文 安装步骤（1）首先，得制作一个ubuntu系统启动盘（不论14、16、18这样），制作方法这里不做说明（2）开机，从U盘进入（不同的电脑按键不一样，大部分是F12），选择try install ubuntu，不要选择安装ubuntu（3）进到ubuntu试用版后，连接wifi，打开终端（ctrl+alt+t）（4）在终端输入如下命令 添加源，更新 12sudo add-apt-repository ppa:yannubuntu/boot-repairsudo apt-get update 安装boot-repair 1sudo apt-get install -y boot-repair 安装成功后，在终端输入boot-repair，启动工具，在弹出的界面框中选择recommended repair，稍等一会，进行修复 修复完成后，重启电脑，此时重启过程中就能看到ubuntu的选项了 我这里的选择项有点奇怪，但是暂时也不去管它了，倒数第二个是windows的启动项 总结 我按照上面的方法就完成了linux 的grub引导修复，在修复过程中没有出现原文中所遇到的windows引导损坏的问题，但还是在这里记录一下windows引导损坏的解决方法，如下 在linux的终端窗口中，输入 1sudo update-grub 然后重启，就会出现双系统的选择界面了，这个还没有尝试，不过应该问题不大]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -207,8 +219,8 @@
         <category>ROS</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>ROS</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
