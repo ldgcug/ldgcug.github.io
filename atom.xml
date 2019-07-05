@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-07-02T14:32:50.810Z</updated>
+  <updated>2019-07-05T07:27:20.567Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu16下GPU Tensorflow安装详细步骤</title>
+    <link href="http://ldgyyf.cn/2019/07/05/Linux/Ubuntu16%E4%B8%8BGPU-Tensorflow%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/"/>
+    <id>http://ldgyyf.cn/2019/07/05/Linux/Ubuntu16下GPU-Tensorflow安装详细步骤/</id>
+    <published>2019-07-05T03:33:32.000Z</published>
+    <updated>2019-07-05T07:27:20.567Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;以往的GPU
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
+    
+    
+      <category term="Tensorflow" scheme="http://ldgyyf.cn/tags/Tensorflow/"/>
+    
+      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
+    
+      <category term="CUDA" scheme="http://ldgyyf.cn/tags/CUDA/"/>
+    
+      <category term="CUDNN" scheme="http://ldgyyf.cn/tags/CUDNN/"/>
+    
+  </entry>
   
   <entry>
     <title>初识Airsim（三）之Ubuntu下Airsim平台搭建</title>
@@ -540,34 +573,6 @@
       <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
       <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Youtube视频链接下载方法</title>
-    <link href="http://ldgyyf.cn/2019/05/21/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/Youtube%E8%A7%86%E9%A2%91%E9%93%BE%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%96%B9%E6%B3%95/"/>
-    <id>http://ldgyyf.cn/2019/05/21/生活/视频/Youtube视频链接下载方法/</id>
-    <published>2019-05-21T09:10:50.000Z</published>
-    <updated>2019-05-21T09:15:59.118Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;在线下载Youtube视频链接网址：&quot;&gt;&lt;a href=&quot;#在线下载Youtube视频链接网址：&quot; class=&quot;headerlink&quot; title=&quot;在线下载Youtube视频链接网址：&quot;&gt;&lt;/a&gt;在线下载Youtube视频链接网址：&lt;/h3&gt;&lt;figure
-        
-      
-    
-    </summary>
-    
-      <category term="生活" scheme="http://ldgyyf.cn/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-      <category term="视频" scheme="http://ldgyyf.cn/categories/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/"/>
-    
-    
-      <category term="视频" scheme="http://ldgyyf.cn/tags/%E8%A7%86%E9%A2%91/"/>
     
   </entry>
   
