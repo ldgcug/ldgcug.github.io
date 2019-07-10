@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-07-05T07:27:20.567Z</updated>
+  <updated>2019-07-10T06:43:18.473Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -17,11 +17,67 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>初识Airsim（四）之QGC、SITL、户外UE4场景配置</title>
+    <link href="http://ldgyyf.cn/2019/07/10/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BQGC%E3%80%81SITL%E3%80%81%E6%88%B7%E5%A4%96UE4%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE/"/>
+    <id>http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/</id>
+    <published>2019-07-10T05:20:06.000Z</published>
+    <updated>2019-07-10T06:43:18.473Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="http://ldgyyf.cn/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
+    
+      <category term="ubuntu" scheme="http://ldgyyf.cn/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows下sublime相关配置</title>
+    <link href="http://ldgyyf.cn/2019/07/10/%E7%B3%BB%E7%BB%9F/Windows%E4%B8%8Bsublime%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/"/>
+    <id>http://ldgyyf.cn/2019/07/10/系统/Windows下sublime相关配置/</id>
+    <published>2019-07-10T03:19:07.000Z</published>
+    <updated>2019-07-10T05:12:31.020Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="Windows" scheme="http://ldgyyf.cn/tags/Windows/"/>
+    
+      <category term="Sublime" scheme="http://ldgyyf.cn/tags/Sublime/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Ubuntu16下GPU Tensorflow安装详细步骤</title>
     <link href="http://ldgyyf.cn/2019/07/05/Linux/Ubuntu16%E4%B8%8BGPU-Tensorflow%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/"/>
     <id>http://ldgyyf.cn/2019/07/05/Linux/Ubuntu16下GPU-Tensorflow安装详细步骤/</id>
     <published>2019-07-05T03:33:32.000Z</published>
-    <updated>2019-07-05T07:27:20.567Z</updated>
+    <updated>2019-07-05T08:37:34.853Z</updated>
     
     <summary type="html">
     
@@ -515,64 +571,6 @@
       <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
     
       <category term="Gazebo" scheme="http://ldgyyf.cn/tags/Gazebo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>卸载原版gazebo并安装新版gazebo</title>
-    <link href="http://ldgyyf.cn/2019/05/22/ROS/%E5%8D%B8%E8%BD%BD%E5%8E%9F%E7%89%88gazebo%E5%B9%B6%E5%AE%89%E8%A3%85%E6%96%B0%E7%89%88gazebo/"/>
-    <id>http://ldgyyf.cn/2019/05/22/ROS/卸载原版gazebo并安装新版gazebo/</id>
-    <published>2019-05-22T07:25:46.000Z</published>
-    <updated>2019-05-31T02:32:56.209Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;从最初始在ubuntu14上安装ros indigo版本，到后面在ubuntu16安装ros
-        
-      
-    
-    </summary>
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
-    
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ubuntu16安装ROS</title>
-    <link href="http://ldgyyf.cn/2019/05/22/ROS/ubuntu16%E5%AE%89%E8%A3%85ROS/"/>
-    <id>http://ldgyyf.cn/2019/05/22/ROS/ubuntu16安装ROS/</id>
-    <published>2019-05-22T06:16:55.000Z</published>
-    <updated>2019-05-23T02:31:40.531Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;blockquote&gt;
-&lt;p&gt;ubuntu与ros对应版本关系（我目前更多的用的是ubuntu16）&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;/2019/05/22/ROS/ubuntu16安装ROS/ubuntu_ros.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
-    
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
     
   </entry>
   
