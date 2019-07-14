@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-07-10T06:43:18.473Z</updated>
+  <updated>2019-07-14T03:52:34.715Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ros自定义msg消息类型及roslaunch启动多节点</title>
+    <link href="http://ldgyyf.cn/2019/07/13/ROS/ros%E8%87%AA%E5%AE%9A%E4%B9%89msg%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B%E5%8F%8Aroslaunch%E5%90%AF%E5%8A%A8%E5%A4%9A%E8%8A%82%E7%82%B9/"/>
+    <id>http://ldgyyf.cn/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/</id>
+    <published>2019-07-13T12:15:35.000Z</published>
+    <updated>2019-07-14T03:52:34.715Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
+    
+    
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
+    
+  </entry>
   
   <entry>
     <title>初识Airsim（四）之QGC、SITL、户外UE4场景配置</title>
@@ -524,34 +550,6 @@
     <id>http://ldgyyf.cn/2019/05/25/ROS/ROS-Gazebo-Ardrone关系及基本知识学习/</id>
     <published>2019-05-25T12:52:40.000Z</published>
     <updated>2019-05-25T16:08:52.024Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
-    
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
-    
-      <category term="Gazebo" scheme="http://ldgyyf.cn/tags/Gazebo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>gazebo配置</title>
-    <link href="http://ldgyyf.cn/2019/05/24/ROS/gazebo%E9%85%8D%E7%BD%AE/"/>
-    <id>http://ldgyyf.cn/2019/05/24/ROS/gazebo配置/</id>
-    <published>2019-05-24T15:16:55.000Z</published>
-    <updated>2019-05-30T15:46:49.256Z</updated>
     
     <summary type="html">
     
