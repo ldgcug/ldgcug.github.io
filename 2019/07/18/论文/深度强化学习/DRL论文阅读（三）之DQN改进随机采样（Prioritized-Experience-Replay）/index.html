@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DRL,DQN,Prioritized Experience Replay,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 上一篇介绍了Double DQN对DQN的目标Q值优化，这篇将介绍在DDQN的基础上，对经验回放池的优化  一、论文题目 PRIORITIZED EXPERIENCE REPLAY   二、研究目标 在DDQN基础上，改进经验回放池的均匀随机采样算法，使得学习更高效  三、问题定义 DDQN的均匀随机采样问题  以往的DQN或DDQN的做法是从buffer中均匀随机采样，这样会导致一些有用的">
+<meta name="keywords" content="DRL,DQN,Prioritized Experience Replay">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）">
+<meta property="og:url" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 上一篇介绍了Double DQN对DQN的目标Q值优化，这篇将介绍在DDQN的基础上，对经验回放池的优化  一、论文题目 PRIORITIZED EXPERIENCE REPLAY   二、研究目标 在DDQN基础上，改进经验回放池的均匀随机采样算法，使得学习更高效  三、问题定义 DDQN的均匀随机采样问题  以往的DQN或DDQN的做法是从buffer中均匀随机采样，这样会导致一些有用的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/2.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/3.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/11.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/4.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/5.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/6.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/8.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/7.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/9.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/10.png">
+<meta property="og:updated_time" content="2019-07-18T10:30:39.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）">
+<meta name="twitter:description" content="前言 上一篇介绍了Double DQN对DQN的目标Q值优化，这篇将介绍在DDQN的基础上，对经验回放池的优化  一、论文题目 PRIORITIZED EXPERIENCE REPLAY   二、研究目标 在DDQN基础上，改进经验回放池的均匀随机采样算法，使得学习更高效  三、问题定义 DDQN的均匀随机采样问题  以往的DQN或DDQN的做法是从buffer中均匀随机采样，这样会导致一些有用的">
+<meta name="twitter:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/">
+
+
+
+
+
+  <title>DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay） | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T16:19:07+08:00">
+                2019-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/深度强化学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度强化学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/" class="leancloud_visitors" data-flag-title="DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>上一篇介绍了Double DQN对DQN的目标Q值优化，这篇将介绍在DDQN的基础上，对经验回放池的优化</p>
+</blockquote>
+<h2 id="一、论文题目"><a href="#一、论文题目" class="headerlink" title="一、论文题目"></a>一、论文题目</h2><blockquote>
+<p><strong>PRIORITIZED EXPERIENCE REPLAY</strong> </p>
+</blockquote>
+<h2 id="二、研究目标"><a href="#二、研究目标" class="headerlink" title="二、研究目标"></a>二、研究目标</h2><blockquote>
+<p>在DDQN基础上，改进经验回放池的均匀随机采样算法，使得学习更高效</p>
+</blockquote>
+<h2 id="三、问题定义"><a href="#三、问题定义" class="headerlink" title="三、问题定义"></a>三、问题定义</h2><blockquote>
+<p>DDQN的均匀随机采样问题</p>
+</blockquote>
+<p>以往的DQN或DDQN的做法是从buffer中均匀随机采样，这样会导致一些有用的样本可能被抽到的次数少，并且存储数据的空间有限，当空间存满之后，每次放入一个experience就要丢弃先前的一个experience。那么就要思考下面两个问题</p>
+<ul>
+<li><strong>选择那些experience保存</strong></li>
+<li><strong>选择那些experience被回放</strong></li>
+</ul>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/1.png" alt></p>
+<h2 id="四、PRIORITIZED-REPLAY-方法介绍"><a href="#四、PRIORITIZED-REPLAY-方法介绍" class="headerlink" title="四、PRIORITIZED REPLAY 方法介绍"></a>四、PRIORITIZED REPLAY 方法介绍</h2><blockquote>
+<p>作者针对上面的两个问题，着重解决的是第二个问题，即选择那些experience被回放</p>
+</blockquote>
+<h3 id="4-1-举例说明"><a href="#4-1-举例说明" class="headerlink" title="4.1 举例说明"></a>4.1 举例说明</h3><p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/2.png" alt></p>
+<blockquote>
+<p>如上图所示，本文给出了一个例子来充分的说明优先的潜在好处。引入了称为“Blind Cliffwalk”的环境，来示例说明当奖赏非常 rare的时候，探索所遇到的挑战。假设仅有 n 个状态，这个环境就要求足够的随机步骤直到得到第一个非零奖励；确切的讲，随机的选择动作序列就会有 2^（-n）的概率才能得到第一个非零奖赏。此外，最相关的 experience却藏在大量的失败的尝试当中。</p>
+</blockquote>
+<p>本文利用这个例子来显示了两个agents的学习次数的不同。可以看到这两个agent都从同一个经验回放池中去获取Q-learning的更新，第一个agent随机均匀采样experience，第二个agent唤醒一个oracle来进行优先级experience采样。这个oracle贪婪的选择使得在当前状态下最大化降低全局损失的experience。</p>
+<p>从上图右侧，也能看出，按照一定优化序列得到的experience比均匀随机采样要花费很少的尝试步骤，这明显的提升了训练速度。</p>
+<p><strong>注：</strong>这里的oracle可以理解为上帝，文中的意思指的是实验跑完了，回过来看如何如何做最好，相当于一种离线学习，即oracle采样的数据是最好的一组batch</p>
+<h3 id="4-2-Prioritizing-with-TD-Error"><a href="#4-2-Prioritizing-with-TD-Error" class="headerlink" title="4.2 Prioritizing with TD-Error"></a>4.2 Prioritizing with TD-Error</h3><blockquote>
+<p><strong>Temporal-difference（TD）error</strong>表示一个experience的惊奇度或出乎意料的程度</p>
+</blockquote>
+<p><strong>引入TD-Error：</strong>引入TD-Error的目的是给每一个experience添加一个TD-Error标准，在每次进行更新时，从buffer中选择绝对值对打的TD-Error的样例进行回放。然后对该样例进行Q-learning的更新，更新Q值和TD-Error的权重。新的experience到来之后，没有已知的 TD-error，所以我们将其放到最大优先级的行列，确保所有的 experience 至少回放一次。</p>
+<p>TD-Error公式如下：</p>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/3.png" alt></p>
+<p><strong>引入TD-Error后的好处：</strong></p>
+<p>oracle的做法可以极大的降低无用的尝试，加速了算法的执行速度</p>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/11.png" alt></p>
+<h3 id="4-3-Stochastic-Priorization"><a href="#4-3-Stochastic-Priorization" class="headerlink" title="4.3 Stochastic Priorization"></a>4.3 Stochastic Priorization</h3><blockquote>
+<p>引入 Stochastic Priorization的目的是为了缓解多样性的损失</p>
+</blockquote>
+<p>在上一步引入TD-Error后会产生两个问题：</p>
+<ul>
+<li><p>为了避免消耗太多资源遍历整个memory，我们只为那些被replay的experience更新TD-error；如果一开始就被赋予一个很低的TD-error，在很长一段时间内可能都不会被replay</p>
+</li>
+<li><p>贪婪优先集中于一个小的经验子集，误差收缩的很慢，特别是使用函数估计的时候，意味着初始的高误差转移被经常回放。缺乏多样性使得该系统倾向于 over-fitting</p>
+<p>（为什么丧失多样性造成过拟合：对于DQN，回放就是把经验池中取出的experience中的s状态输入到Q-network中，next state 输入到target Q-network中，然后进行一系列计算loss，反向传播更新网络参数，如果一直重复这一条信息输入，那么我对于训练网络过程来说精度会很高，而当测试的时候，输入别的状态就会使测试精度降低，即过拟合）</p>
+</li>
+<li><p>对 noise spikes 非常敏感，bootstrapping 会加剧该现象，估计误差又会成为另一个噪声的来源</p>
+</li>
+</ul>
+<p>为了解决上述问题，我们引入了一个<strong>随机采样</strong>的方法，该方法结合了 <strong>纯粹的贪婪优先</strong> 和 <strong>均匀随机采样</strong>。我们确保被采样的概率在experience优先级上是单调的，与此同时，确保最低优先级的experience的概率也是非零的。具体的，我们定义采样experience  i 的概率为：</p>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/4.png" alt></p>
+<p>其中，pi 是experience i 的优先级。指数 α 决定了使用多少优先级，当 α 等于 0 的时候是均匀的情况</p>
+<p>pi有以下两种变体：</p>
+<ul>
+<li><p>直接的、成比例优先（<strong>Proportional Variant</strong>）：</p>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/5.png" alt></p>
+<p>这里的<br>$$<br>\epsilon<br>$$<br>是一个很小的数字，这样就保证了有些TD-Error为0的特殊边缘例子也能够被采样到</p>
+</li>
+<li><p>间接的、基于排行的优先（<strong>Rank-based Variant</strong>）：</p>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/6.png" alt></p>
+<p>rank（i）是根据<br>$$<br>|\delta|<br>$$<br>排序后，i 的排名</p>
+</li>
+</ul>
+<p>两个分布都是随着误差单调的，但是后者更鲁棒，因为其对离群点不敏感。两个变体相对均匀的baseline来讲都是有很大优势</p>
+<h4 id="4-3-1-Proportional-Variant"><a href="#4-3-1-Proportional-Variant" class="headerlink" title="4.3.1 Proportional Variant"></a>4.3.1 Proportional Variant</h4><blockquote>
+<p>本文提出的Sum Tree，Sum Tree是一种树形结构，每片树叶存储每个样本的优先级 <code>p</code>, 每个树枝节点只有两个分叉, 节点的值是两个分叉的合, 所以 SumTree 的顶端就是所有 <code>p</code> 的合. 正如下面<a href="https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/" target="_blank" rel="noopener">图片(来自Jaromír Janisch)</a>, 最下面一层树叶存储样本的 <code>p</code>, 叶子上一层最左边的 13 = 3 + 10, 按这个规律相加, 顶层的 root 就是全部 <code>p</code> 的合了.</p>
+</blockquote>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/8.png" alt></p>
+<p>抽样时, 我们会将 <code>p</code> 的总合 除以 batch size, 分成 batch size 那么多区间, (n=sum(p)/batch_size). 如果将所有 node 的 priority 加起来是42的话, 我们如果抽6个样本, 这时的区间拥有的 priority 可能是这样.</p>
+<p>[0-7], [7-14], [14-21], [21-28], [28-35], [35-42]</p>
+<p>然后在每个区间里随机选取一个数. 比如在第区间 <code>[21-28]</code> 里选到了24, 就按照这个 24 从最顶上的42开始向下搜索. 首先看到最顶上 <code>42</code> 下面有两个 child nodes, 拿着手中的24对比左边的 child <code>29</code>, 如果 左边的 child 比自己手中的值大, 那我们就走左边这条路, 接着再对比 <code>29</code> 下面的左边那个点 <code>13</code>, 这时, 手中的 24 比 <code>13</code> 大, 那我们就走右边的路, 并且将手中的值根据 <code>13</code> 修改一下, 变成 24-13 = 11. 接着拿着 11 和 <code>13</code>左下角的 <code>12</code> 比, 结果 <code>12</code> 比 11 大, 那我们就选 12 当做这次选到的 priority, 并且也选择 12 对应的数据.</p>
+<p><strong>注</strong>：上面的说明是参照的网上教程写的，这里在写一下自己的理解</p>
+<p><strong>个人理解：</strong>图片中的所有叶子节点（3、10、12、4、1、2、8、2）对应于每一个experience的TD-Error，然后两个两个组合，构成哈夫曼树，即会生成顶层的根root，并且其值为42。然后在进行分区，分区后再每个区间进行抽值，如抽到的为n。抽值后，从根节点开始找（从上至下，从左至右），如果遇见其子节点m比n大，则走该子节点的路，如果遇见子节点m比n小，则走另一个子节点路，并且n=n-m.，直到找到叶子节点，选择叶子节点中那个比当前n值大的experience。</p>
+<h4 id="4-3-2-Rank-based-Variant"><a href="#4-3-2-Rank-based-Variant" class="headerlink" title="4.3.2 Rank-based Variant"></a>4.3.2 Rank-based Variant</h4><blockquote>
+<p>将buffer分为k个等概率的分段，从每一个分段中进行贪婪优先采样</p>
+</blockquote>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/7.png" alt></p>
+<h3 id="4-4-Annealing-the-bias"><a href="#4-4-Annealing-the-bias" class="headerlink" title="4.4  Annealing the bias"></a>4.4  Annealing the bias</h3><blockquote>
+<p>利用随机更新得来的期望值的预测依赖于这些更新，对应其期望的同样的分布。优先回放引入了误差，因为它以一种不受控的形式改变了分布，从而改变了预测会收敛到的 solution（即使 policy 和 状态分布都固定）。我们可以用下面的重要性采样权重（importance-sample weights）来修正该误差：</p>
+</blockquote>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/9.png" alt></p>
+<p><strong>Importance sampling的影响：</strong></p>
+<p>在典型的强化学习场景中，更新的无偏性在训练结束接近收敛时是最重要的，因为由于策略、状态分布和引导目标的改变，有bias会高度不稳定，与未修正的优先重放相比，Importance sampling使学习变得不那么具有侵略性，一方面导致了较慢的初始学习，另一方面又降低了过早收敛的风险，有时甚至是更好的最终结果。与uniform重放相比，修正的优先级排序平均表现更好。</p>
+<h3 id="4-4-本文采用方法"><a href="#4-4-本文采用方法" class="headerlink" title="4.4 本文采用方法"></a>4.4 本文采用方法</h3><blockquote>
+<p>本文将优先回放和 Double Q-learning 相结合，就是将 均匀随机采样 替换为 本文提出的 随机优先和重要性采样方法，具体算法见下图</p>
+</blockquote>
+<p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/10.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>Prioritized Replay DQN和DDQN相比，收敛速度有了很大的提高，避免了一些没有价值的迭代，因此是一个不错的优化点。同时它也可以直接集成DDQN算法，所以是一个比较常用的DQN算法。</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><p>论文理解1：<a href="https://www.cnblogs.com/wangxiaocvpr/p/5660232.html" target="_blank" rel="noopener">传送门</a></p>
+</li>
+<li><p>论文理解2：<a href="https://zhuanlan.zhihu.com/p/38358183" target="_blank" rel="noopener">传送门</a></p>
+</li>
+<li><p>代码样例：<a href="https://www.cnblogs.com/pinard/p/9797695.html" target="_blank" rel="noopener">传送门</a></p>
+</li>
+<li><p>莫烦大神：<a href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-6-prioritized-replay/" target="_blank" rel="noopener">传送门</a></p>
+</li>
+<li><p>很不错的网址：<a href="https://www.echenshe.com/class/rl/4-6-prioritized-replay.html" target="_blank" rel="noopener">传送门</a></p>
+</li>
+<li><p>4.3.1里面的图片来源：<a href="https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/" target="_blank" rel="noopener">传送门</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DRL/" rel="tag"># DRL</a>
+          
+            <a href="/tags/DQN/" rel="tag"># DQN</a>
+          
+            <a href="/tags/Prioritized-Experience-Replay/" rel="tag"># Prioritized Experience Replay</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/" rel="next" title="DRL论文阅读（二）之DQN改进目标Q值计算（Double DQN）">
+                <i class="fa fa-chevron-left"></i> DRL论文阅读（二）之DQN改进目标Q值计算（Double DQN）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/" rel="prev" title="DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）">
+                DRL论文阅读（四）之DQN改进网络结构（Dueling DQN） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、论文题目"><span class="nav-text">一、论文题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、研究目标"><span class="nav-text">二、研究目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、问题定义"><span class="nav-text">三、问题定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、PRIORITIZED-REPLAY-方法介绍"><span class="nav-text">四、PRIORITIZED REPLAY 方法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-举例说明"><span class="nav-text">4.1 举例说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Prioritizing-with-TD-Error"><span class="nav-text">4.2 Prioritizing with TD-Error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Stochastic-Priorization"><span class="nav-text">4.3 Stochastic Priorization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-Proportional-Variant"><span class="nav-text">4.3.1 Proportional Variant</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-Rank-based-Variant"><span class="nav-text">4.3.2 Rank-based Variant</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Annealing-the-bias"><span class="nav-text">4.4  Annealing the bias</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-本文采用方法"><span class="nav-text">4.4 本文采用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

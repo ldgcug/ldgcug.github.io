@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）]]></title>
+    <url>%2F2019%2F07%2F19%2F%E8%AE%BA%E6%96%87%2F%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%2FDRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%EF%BC%88Dueling-DQN%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[前言 DDQN对DQN的目标Q值进行优化，去除max操作来减少过度估计的问题，Prioritized Replay DQN对DQN的经验回访池进行优化，给每个experience一个权重值，并按权重采样来优化算法提高训练速度，而这篇博客即将介绍的是Dueling DQN，对DQN的神经网络结构进行优化 一、论文题目 Dueling Network Architectures for Deep Reinforcement Learning 二、研究目标 改进DQN的神经网络结构来加快学习速率 三、问题定义 DQN的神经网络结构优化问题 以往的DQN网络最后的输出为每个action的Q-values值（在某个确定的状态下）。但是对于许多状态，根本没有必要去预测每个action对应的Q-value值 四、Dueling DQN方法介绍 Dueling DQN将Q网络分成两部分: 第一部分仅仅与状态S有关，与具体要采用的动作A无关，这部分称为状态价值函数部分，记$$V(s;\theta,\beta)$$第二部分同时与状态S和动作A有关，这部分称为动作优势函数，记$$A(s,a;\theta,\alpha)$$其中，theta是卷积层参数，alpha和beta分别是两只路的全连接层参数 4.1 Dueling DQN网络结构 Dueling DQN的网络结构如下图第二个网络结构 如上图所示，第一个网络结构是一般的DQN网络模型(输入层-&gt;三个卷积层-&gt;两个全连接层-&gt;输出每个动作的Q值) 而第二个网络结构则是本文即将介绍的Dueling DQN网络模型，Dueling DQN将卷积层提取的抽象特征分流到两个支路中。其中上路代表的是状态价值函数V（s），表示静态的状态环境下本身具有的价值，它表明了状态的好坏程度；下路代表的是依赖状态的动作优势函数A（s，a），表示在某个状态下，选择某个action额外带来的价值，它表明了在这个状态下各个动作的相对好坏程度。最后这两路聚合在一起得到每个动作的Q值。 最终Dueling DQN可以如下图： 注： V（s）：V（s）表示状态本身的好坏，一般为一个值（标量） A（s，a）：A（s，a）表示当前状态下采取的行动的好坏，一般为n个值，因此A（s，a）决定了策略 4.2 Dueling DQN的Q值 由前面可知，Q值由V(s) 和A(s，a)合并得到，其Q值的公式如下 其中，theta是卷积层参数，beta是V(s)的全连接层参数，alpha是A(s，a)的全连接参数 但是上面的公式也存在一些问题，效果并不好，因为它不具备可辨识性：通过Q值无法反过来确定V和A。 因此，可以强制令所选择的贪婪动作优势函数为0： 这样我们就能得到唯一的值函数： 其中，a*如下： 说明：在公式（8）中减去了一个最优的a所对应A值，这样A-A就为0了，A本身就是要寻找到最合适的a，然后确定A值，这样Q值就等于V值，并且V网络给出了最优V-值的估计，那么相应的A网络也给出了A的估计 但是在实际操作中，我们采用的方法是减去A的平均，本文的Dueling DQN方法就是采用的这种方式，因此，公式（8）修改为公式（9）： 虽然这样得到的V和A不在是具有真实意义的V和A，但是能增加稳定性（因为采用 -max会在更新时损害最优A的值），并且通过减去A的平均能有以下三个优点： 平均值和最大值的测试结果非常类似，但是平均值公式比较简洁 没有改变A(s,a)的相对顺序，保证了该状态下各个动作的优势函数相对顺序不变，保留了Dueling DQN的Q值的所有性质 能够去除多余的自由度，提高算法的稳定性 4.3 举例说明 Dueling DQN能学习到在没有动作的影响下环境状态的价值V(s)。如下图 下图中的左右两列分别表示V(s)和A(s,a)，图中的红色区域表示V(s)和A(s,a)所关注的地方 在训练过程中，V(s)关注地平线上是否有车辆出现（此时动作的选择影响不大）以及分数，如下图第一行；而A(s,a)则更关心会立即造成碰撞的车辆，此时动作的选择很重要，如下图第二行 五、实验5.2 实验方法 采用方法：Dueling DQN + DDQN + Prioritized Replay DQN MDP： 状态集：70（水平50，两垂直各10） 行为集：5（上、下、左、右、无操作） 转换函数：model free 奖励函数：红点获得正面奖励 起始状态：左下角 结束状态：右下角 5.2 实验结果 当行为越多时，dueling DQN的性能就更好 其中，5,10,20的含义是：5个行为时表示上下左右、无操作共五个，而10和20则分别是在5个行为的基础之上添加了5个和15个无操作行为。SE表示平方误差 六、结论 Dueling DQN的优势部分在于其有效学习状态值函数的能力 V函数可以得到更多的学习机会，因为以往一次只更新一个动作对应的Q值 V函数的泛化性更好，当动作越多时，优势越明显。直观上看，当有新动作加入时，它并不需要从零开始学习 因为Q函数在动作和状态的维度上的绝对值往往差很多，这会引起噪声和贪婪策略的突变，使用Dueling DQN可以改善这个问题 总结 到目前为止，关于DQN的方法和有关DQN的优化方面，算是已经全部阅读完了，后续要在开始看其他的DRL论文，后面要加强的是这几种方法的一些小训练测试 参考链接 Dueling DQN论文理解： 博文1 博文2 博文3 博文4 DQN代码（还没有测试过）：博文1]]></content>
+      <categories>
+        <category>论文</category>
+        <category>深度强化学习</category>
+      </categories>
+      <tags>
+        <tag>DRL</tag>
+        <tag>DQN</tag>
+        <tag>DDueling DQN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）]]></title>
+    <url>%2F2019%2F07%2F18%2F%E8%AE%BA%E6%96%87%2F%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%2FDRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7%EF%BC%88Prioritized-Experience-Replay%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[前言 上一篇介绍了Double DQN对DQN的目标Q值优化，这篇将介绍在DDQN的基础上，对经验回放池的优化 一、论文题目 PRIORITIZED EXPERIENCE REPLAY 二、研究目标 在DDQN基础上，改进经验回放池的均匀随机采样算法，使得学习更高效 三、问题定义 DDQN的均匀随机采样问题 以往的DQN或DDQN的做法是从buffer中均匀随机采样，这样会导致一些有用的样本可能被抽到的次数少，并且存储数据的空间有限，当空间存满之后，每次放入一个experience就要丢弃先前的一个experience。那么就要思考下面两个问题 选择那些experience保存 选择那些experience被回放 四、PRIORITIZED REPLAY 方法介绍 作者针对上面的两个问题，着重解决的是第二个问题，即选择那些experience被回放 4.1 举例说明 如上图所示，本文给出了一个例子来充分的说明优先的潜在好处。引入了称为“Blind Cliffwalk”的环境，来示例说明当奖赏非常 rare的时候，探索所遇到的挑战。假设仅有 n 个状态，这个环境就要求足够的随机步骤直到得到第一个非零奖励；确切的讲，随机的选择动作序列就会有 2^（-n）的概率才能得到第一个非零奖赏。此外，最相关的 experience却藏在大量的失败的尝试当中。 本文利用这个例子来显示了两个agents的学习次数的不同。可以看到这两个agent都从同一个经验回放池中去获取Q-learning的更新，第一个agent随机均匀采样experience，第二个agent唤醒一个oracle来进行优先级experience采样。这个oracle贪婪的选择使得在当前状态下最大化降低全局损失的experience。 从上图右侧，也能看出，按照一定优化序列得到的experience比均匀随机采样要花费很少的尝试步骤，这明显的提升了训练速度。 注：这里的oracle可以理解为上帝，文中的意思指的是实验跑完了，回过来看如何如何做最好，相当于一种离线学习，即oracle采样的数据是最好的一组batch 4.2 Prioritizing with TD-Error Temporal-difference（TD）error表示一个experience的惊奇度或出乎意料的程度 引入TD-Error：引入TD-Error的目的是给每一个experience添加一个TD-Error标准，在每次进行更新时，从buffer中选择绝对值对打的TD-Error的样例进行回放。然后对该样例进行Q-learning的更新，更新Q值和TD-Error的权重。新的experience到来之后，没有已知的 TD-error，所以我们将其放到最大优先级的行列，确保所有的 experience 至少回放一次。 TD-Error公式如下： 引入TD-Error后的好处： oracle的做法可以极大的降低无用的尝试，加速了算法的执行速度 4.3 Stochastic Priorization 引入 Stochastic Priorization的目的是为了缓解多样性的损失 在上一步引入TD-Error后会产生两个问题： 为了避免消耗太多资源遍历整个memory，我们只为那些被replay的experience更新TD-error；如果一开始就被赋予一个很低的TD-error，在很长一段时间内可能都不会被replay 贪婪优先集中于一个小的经验子集，误差收缩的很慢，特别是使用函数估计的时候，意味着初始的高误差转移被经常回放。缺乏多样性使得该系统倾向于 over-fitting （为什么丧失多样性造成过拟合：对于DQN，回放就是把经验池中取出的experience中的s状态输入到Q-network中，next state 输入到target Q-network中，然后进行一系列计算loss，反向传播更新网络参数，如果一直重复这一条信息输入，那么我对于训练网络过程来说精度会很高，而当测试的时候，输入别的状态就会使测试精度降低，即过拟合） 对 noise spikes 非常敏感，bootstrapping 会加剧该现象，估计误差又会成为另一个噪声的来源 为了解决上述问题，我们引入了一个随机采样的方法，该方法结合了 纯粹的贪婪优先 和 均匀随机采样。我们确保被采样的概率在experience优先级上是单调的，与此同时，确保最低优先级的experience的概率也是非零的。具体的，我们定义采样experience i 的概率为： 其中，pi 是experience i 的优先级。指数 α 决定了使用多少优先级，当 α 等于 0 的时候是均匀的情况 pi有以下两种变体： 直接的、成比例优先（Proportional Variant）： 这里的$$\epsilon$$是一个很小的数字，这样就保证了有些TD-Error为0的特殊边缘例子也能够被采样到 间接的、基于排行的优先（Rank-based Variant）： rank（i）是根据$$|\delta|$$排序后，i 的排名 两个分布都是随着误差单调的，但是后者更鲁棒，因为其对离群点不敏感。两个变体相对均匀的baseline来讲都是有很大优势 4.3.1 Proportional Variant 本文提出的Sum Tree，Sum Tree是一种树形结构，每片树叶存储每个样本的优先级 p, 每个树枝节点只有两个分叉, 节点的值是两个分叉的合, 所以 SumTree 的顶端就是所有 p 的合. 正如下面图片(来自Jaromír Janisch), 最下面一层树叶存储样本的 p, 叶子上一层最左边的 13 = 3 + 10, 按这个规律相加, 顶层的 root 就是全部 p 的合了. 抽样时, 我们会将 p 的总合 除以 batch size, 分成 batch size 那么多区间, (n=sum(p)/batch_size). 如果将所有 node 的 priority 加起来是42的话, 我们如果抽6个样本, 这时的区间拥有的 priority 可能是这样. [0-7], [7-14], [14-21], [21-28], [28-35], [35-42] 然后在每个区间里随机选取一个数. 比如在第区间 [21-28] 里选到了24, 就按照这个 24 从最顶上的42开始向下搜索. 首先看到最顶上 42 下面有两个 child nodes, 拿着手中的24对比左边的 child 29, 如果 左边的 child 比自己手中的值大, 那我们就走左边这条路, 接着再对比 29 下面的左边那个点 13, 这时, 手中的 24 比 13 大, 那我们就走右边的路, 并且将手中的值根据 13 修改一下, 变成 24-13 = 11. 接着拿着 11 和 13左下角的 12 比, 结果 12 比 11 大, 那我们就选 12 当做这次选到的 priority, 并且也选择 12 对应的数据. 注：上面的说明是参照的网上教程写的，这里在写一下自己的理解 个人理解：图片中的所有叶子节点（3、10、12、4、1、2、8、2）对应于每一个experience的TD-Error，然后两个两个组合，构成哈夫曼树，即会生成顶层的根root，并且其值为42。然后在进行分区，分区后再每个区间进行抽值，如抽到的为n。抽值后，从根节点开始找（从上至下，从左至右），如果遇见其子节点m比n大，则走该子节点的路，如果遇见子节点m比n小，则走另一个子节点路，并且n=n-m.，直到找到叶子节点，选择叶子节点中那个比当前n值大的experience。 4.3.2 Rank-based Variant 将buffer分为k个等概率的分段，从每一个分段中进行贪婪优先采样 4.4 Annealing the bias 利用随机更新得来的期望值的预测依赖于这些更新，对应其期望的同样的分布。优先回放引入了误差，因为它以一种不受控的形式改变了分布，从而改变了预测会收敛到的 solution（即使 policy 和 状态分布都固定）。我们可以用下面的重要性采样权重（importance-sample weights）来修正该误差： Importance sampling的影响： 在典型的强化学习场景中，更新的无偏性在训练结束接近收敛时是最重要的，因为由于策略、状态分布和引导目标的改变，有bias会高度不稳定，与未修正的优先重放相比，Importance sampling使学习变得不那么具有侵略性，一方面导致了较慢的初始学习，另一方面又降低了过早收敛的风险，有时甚至是更好的最终结果。与uniform重放相比，修正的优先级排序平均表现更好。 4.4 本文采用方法 本文将优先回放和 Double Q-learning 相结合，就是将 均匀随机采样 替换为 本文提出的 随机优先和重要性采样方法，具体算法见下图 总结 Prioritized Replay DQN和DDQN相比，收敛速度有了很大的提高，避免了一些没有价值的迭代，因此是一个不错的优化点。同时它也可以直接集成DDQN算法，所以是一个比较常用的DQN算法。 参考链接 论文理解1：传送门 论文理解2：传送门 代码样例：传送门 莫烦大神：传送门 很不错的网址：传送门 4.3.1里面的图片来源：传送门]]></content>
+      <categories>
+        <category>论文</category>
+        <category>深度强化学习</category>
+      </categories>
+      <tags>
+        <tag>DRL</tag>
+        <tag>DQN</tag>
+        <tag>Prioritized Experience Replay</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[DRL论文阅读（二）之DQN改进目标Q值计算（Double DQN）]]></title>
+    <url>%2F2019%2F07%2F18%2F%E8%AE%BA%E6%96%87%2F%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%2FDRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%9B%AE%E6%A0%87Q%E5%80%BC%E8%AE%A1%E7%AE%97%EF%BC%88Double-DQN%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[前言 在DDQN之前，基本所有的目标Q值都是通过贪婪法直接得到，无论是Q-learning还是DQN（Nature）。虽然DQN中用了两个Q网络并使用目标Q网络计算Q值，但是在得到a的过程中，还是使用的贪婪法计算得到。 使用max虽然可以让Q值向可能的优化目标靠拢，但是很容易过犹不及，导致过度估计，过度估计即最使得估计得值函数比值函数的真实值大，从而可能会影响最终的策略决策，导致最终的策略并非最优，而是次优 一、论文题目 Deep Reinforcement Learning with Double Q-learning 二、研究目标 改进目标Q网络算法解决DQN存在的过度估计问题 三、问题定义 DQN的过度估计问题 如果过度估计确实存在，是否会对实践中的表现产生负面影响 四、DDQN介绍4.1 Q-learning参数更新 Q-learning在参数更新过程中，用于计算动作值函数的Yt Q网络的参数与值函数的Q网络参数相同，这样在数据样本和网络训练之间存在相关性 计算时，公式（2）里面是计算出最大的Q值（找出每个a对应的Q值，并求出最大值） 4.2 Deep Q Network参数更新 DQN在Q-learning的基础之上引入了目标Q网络和经验回放，在进行参数更新的过程中，使用Target Q来计算动作值函数，Target Q网络和值函数的Q网络结构相同，并且初始参数相同，在固定的step下，将值函数的Q网络参数传递给Target Q网络参数，进行更新，打破了数据样本和网络训练之间的相关性 4.3 Double DQN 参数更新4.3.1 Double Q思想 在Q-learning和DQN中动作值函数都采用了max操作，可能会导致动作值函数的过度估计。为了防止这种情况，Double Q-leaning通过解耦目标Q值动作的选择与目标Q值的计算这两步，来消除过度估计得问题 可以将公式（2）修改为下图，在计算时，首先求出使得Q值最大的行为a，然后将该a作为当前状态的输入行为，求出Q值 4.3.2 Double Q-learning 使用Q网络参数，估计贪婪政策的价值，并用Target Q网络的参数来公平的评估该策略的价值 4.3.3 Double DQN 五、实验5.1 Q-learning过度估计 Q-learning的过度估计随着action的增加而增加，而Double Q-learning则是无偏的 5.2 真实action下的过度统计 过度估计可能会阻碍学习到最优策略，而使用Double Q-learning减少过度估计，策略会得到改善 5.3 DQN的过度估计分析 Double DQN在值函数的准确性和策略质量方面都优于DQN 六、讨论6.1 误差来源 环境噪声 函数近似 非平稳性 6.2 贡献 证明了Q学习在大规模问题中为什么会出现过度估计的情况 通过分析Atari游戏里的价值估计，发现这些过度估计在实践中比以前承认的更为普遍与严重 证明Double Q-learning可以大规模使用，能成功减少这种过度估计，是学习更加稳定可靠 提出了Douuble DQN算法 证明了Double DQN能找到更好测策略 总结 Q-learning和DQN中的max操作使得估计得值函数比值函数的真实值大。 如果值函数每一点的值都被过估计了相同的幅度，即过估计量是均匀的，那么由于最优策略是贪婪策略，即找到最大的值函数所对应的动作，这时候最优策略是保持不变的。也就是说，在这种情况下，即使值函数被过估计了，也不影响最优的策略。强化学习的目标是找到最优的策略，而不是要得到值函数，所以这时候就算是值函数被过估计了，最终也不影响我们解决问题。然而，在实际情况中，过估计量并非是均匀的，因此值函数的过估计会影响最终的策略决策，从而导致最终的策略并非最优，而只是次优。 为了解决值函数过估计的问题，Double Q-learning 将动作的选择和动作的评估分别用不同的值函数实现 参考链接 Double DQN理解：传送门 Double DQN和DQN讨论：传送门 代码参考：传送门]]></content>
+      <categories>
+        <category>论文</category>
+        <category>深度强化学习</category>
+      </categories>
+      <tags>
+        <tag>DRL</tag>
+        <tag>DQN</tag>
+        <tag>Double DQN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[DRL论文阅读（一）之DQN方法]]></title>
+    <url>%2F2019%2F07%2F17%2F%E8%AE%BA%E6%96%87%2F%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%2FDRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BDQN%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[前言 以往的Q-learning算法只适合解决小问题，如果问题太大，则无法分别学习到所有状态下的所有动作值，因此提出了DQN。DQN的本质上仍然是Q-learning，只是利用了神经网络表示动作值函数，并利用了经验回放和单独设立目标网络这两个技巧，但是DQN本身是无法克服Q-learning本身锁固有的缺点-过估计。过估计是指估计的值函数比真实值函数要大。之所以存在过估计的问题，根源在于Q-learning中的最大化操作 一、论文题目 Autonomous Quadrotor Landing using Deep Reinforcement Learning 二、研究目标 在仿真中使用DRL方法实现无人机在标记logo上的自主降落 三、问题定义 地标着陆问题：使无人机精准降落在地标上 标记检测：无人机固定高度，只在xy方向上移动，最终到达标记点正上方 垂直下降：在标记点正上方，慢慢下降，减少无人机与地标的距离 降落：降落在标记点上 四、研究方法介绍 DRL：DQN方法 4.1 马尔科夫决策过程 目标：训练一个无人机agent，它从环境中得到状态和奖励，然后选取一个行为，作用于环境 MDP定义： 状态集：一般为xy坐标或者图片的集合（本文中为图片集合） 行为集：agent可能采取的动作的集合（本文中一般为前后左右） 转换函数：状态s在行为a下转移到s’的概率（本文中为mode free） 奖励函数：不同的任务一般奖励不同（本文正面奖励：+1，负面奖励：-1，生活成本：-0.01） 起始状态：每次训练之前的agent位置（本文中为固定区域内的随机方向和随机位置） 结束状态：训练完成后的agent位置（本文中为降落到标记点上） ​ 结束条件：当前episode达到最大步数或者强制截止（超出边界） 4.2 CNN网络 对于相对较大较复杂的环境，一般Q表无法存储，此时，使用CNN进行函数值逼近 输入：灰度图像（4张） 输出：行为集 4.3 DQN（标记检测） 主要包含：经验池、CNN Network、CNN Target Netword 其中target网络和cnn网络局哟相同的网络结构 4.3.1 DQN之经验回放 训练DQN网络之前，先要进行随机行为选取，然后将agent执行随机行为产生的数据存储到经验池中，经验池中的数据为（s,a,s’,r,done）：当前状态、当前状态采取的动作，执行完动作后的下一个状态，执行完动作后的奖励、执行完动作后当前episode是否结束 在训练的过程中，需要将经验池中的（s,a）作为输入，输入到CNN网络中，每次选取经验池中的一批数据进行输入，然后CNN网络训练参数，最终agent从环境中获取s，输入到训练好的CNN网络中，CNN返回最大概率的行为给agent，agent执行该动作，作用于环境 4.3.2 DQN调参 在DQN的两个网络中，target网络和cnn网络具有相同的网络结构，并且初始网络参数相同 训练过程中，cnn网络的参数一直在更新，当执行到一定的步数之后，将cnn网络的参数赋给target网络参数，保持两个网络参数相同，然后在进行cnn网络参数更新，以此往复 4.3.3 DQN网络测试 训练好DQN网络之后，agent首先感知环境，从环境中获取状态s，并把状态s作为输入，输入到DQN网络，DQN网络返回动作a给agent，agent执行该动作a作用于环境，环境发生变化，agent会获得新的状态s，以此往复，就能利用DQN网络进行测试了 4.4 Double DQN + 优先级经验回放：垂直下降 在垂直下降部分，使用的Double DQN方法和优先级经验回放 4.5 DQN 与Double DQN比较 只是目标Q网络稍有不同，其他一样 五、实验环境 仿真平台：Gazebo7 ROS版本：ros kinetic 无人机：Parrot AR Drone2 纹理：自定义的一些纹理图 训练硬件（训练5.2天完成）： 处理器：i7 8核 RAM：32G 显卡：NVIDIA Quadro K2200 六、实验结果6.1 标记检测 标记检测部分，训练的agent能超过人类水平 6.2 垂直下降 垂直下降部分，训练的agent能接近人类水平 七、未来展望 未来的工作将会关注仿真和现实中的一些差距方面 总结 DQN方法的创新点（相比于Q-learning） 加入神经网络：DQN利用深度卷积神经网络逼近值函数 DQN的行为值函数用神经网络逼近，属于非线性逼近。 加入经验回放：DQN利用经验回放训练强化学习过程 在训练神经网络时，存在的假设是训练数据是独立同分布的，但是通过强化学习采集的数据之间存在关联性，利用这些数据进行顺序训练，神经网络不稳定。经验回放可以打破数据间的关联。 在强化学习训练过程中，智能体将数据存储到一个经验回放池中，在利用均匀随机采样的方法从经验池中抽取数据，然后利用抽取的数据训练神经网络，这样就打破了数据之间的关联性 加入目标网络：DQN利用目标网络降低当前Q值和目标Q值间的关联性 在利用神经网络逼近值函数时，计算TD目标的动作值函数所用的网络参数$$\Theta$$与梯度计算中要逼近的值函数所用的网络参数相同，这样就存在关联性（数据样本和网络训练之间的相关性） 为了解决该问题，加入了目标网络，计算值函数逼近的网络表示为 $$\Theta$$ 用于动作值函数逼近的网络表示为$$\Theta’$$而该动作值函数网络在固定的步数更新一次 参考链接 DQN与Double DQN讨论：DQN方法创新 ​ ​]]></content>
+      <categories>
+        <category>论文</category>
+        <category>深度强化学习</category>
+      </categories>
+      <tags>
+        <tag>DRL</tag>
+        <tag>DQN</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ros自定义msg消息类型及roslaunch启动多节点]]></title>
     <url>%2F2019%2F07%2F13%2FROS%2Fros%E8%87%AA%E5%AE%9A%E4%B9%89msg%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B%E5%8F%8Aroslaunch%E5%90%AF%E5%8A%A8%E5%A4%9A%E8%8A%82%E7%82%B9%2F</url>
     <content type="text"><![CDATA[前言 有时候需要自己定制一些特定的msg消息类型，而原有的就不一定能满足，这时候就需要自己进行一些相关的设置了 对于自定义的ros节点，也能通过roslaunch启动节点（py程序） rosmsg相关设置默认msg消息类型 官网 如geometry_msgs：msg API 一、创建工作空间 我这里采用的编译方式是catkin build，而不是catkin_make，是因为一些需要，如mavros和mavlink的编译方式为catkin build，如果不需要下载这两个包，则采用哪一种编译方式都不影响 1234mkdir -p catkin_ws/srccd catkin_wscatkin buildsource devel/setup.bash 下图是我已经全部创建好后的所有ros包，也正是有mavlink和mavros，所有才采用catkin build编译 二、在工作空间创建新的ros消息包123456cd ~/catkin_ws/srccatkin_create_pkg ldg_msgs rospy std_msgs roscppcd ldg_msgsmkdir msgcd msgtouch Velocity.msg 然后打开Velocity.msg 1gedit Velocity.msg 将如下代码复制粘贴进去 1234float32 vxfloat32 vyfloat32 vzint32 t 文件结构如下图 三、修改package.xml 因为需要message_generation生成C++或Python能使用的代码，所以向package.xml文件中添加如下两行： 12&lt;build_depend&gt;message_generation&lt;/build_depend&gt;&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt; 在如下位置进行添加 四、修改CMakeLists.txt CMakeLists.txt中有四个地方需要修改： 4.1 添加message_generation 向find_package()中添加message_generation 123456find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation) 在如下位置进行修改为上面的代码 4.2 添加Velocity.msg 向add_message_files()中添加Velocity.msg 1234add_message_files( FILES Velocity.msg) 在如下位置进行修改为上面的代码 4.3 去掉generate_message（）注释 4.4 添加message_runtime 向catkin_package()添加message_runtime 123catkin_package( CATKIN_DEPENDS roscpp rospy std_msgs message_runtime) 在如下位置进行修改为上面的代码 五、编译123cd ~/catkin_wscatkin buildsource devel/setup.bash 六、测试 首先，要启动roscore 然后，在另一个新终端，执行如下命令 123cd ~/catkin_wssource devel/setup.bashrosmsg show ldg_msgs/Velocity 出现如下信息，则说明配置成功 python代码测试 创建test.py程序，拷贝如下代码，不报错即可 1234567891011121314151617181920#!/usr/bin/env python# -*-coding:utf-8 -*-import rospyimport timefrom ldg_msgs.msg import Velocitymsg = Nonedef receiveVel(data): #vel = Velocity() msg = data print('data',data)test = rospy.Subscriber("/test",Velocity,receiveVel)rospy.init_node('test')while not rospy.is_shutdown(): print('msg',msg) time.sleep(0.1) 七、添加多个自定义msg消息类型7.1 创建多个msg文件 ldg_msgs文件夹下中添加VelocityZ.msg、Imu.msg、Position.msg等文件 ldg_msgs/msg文件目录结构 msg消息类型 7.2 CMakeLists.txt添加msg 7.3 编译123cd ~/catkin_wscatkin buildsource devel/setup.bash 已经定义过msg消息类型后，在此基础之上，只需要照着第七步就可以完成后面的多个msg消息类型的定制化了，同样的，也能参照第六步进行相关测试 roslaunch相关设置 已经通过多个py程序定义了多个ros节点 一、文件结构 工作空间名：catkin_ws 编译方式：catkin build 自定义msg包名：ldg_msgs ros控制程序包名：ros_controller roslaunch启动文件：ros_airsim.launch ros节点对应驱动py：*_driver.py ros控制程序py：ros_controller.py 二、roslaunch文件编写 在catkin_ws/src文件夹下创建一个和include、src同级的launch文件夹，并在launch文件夹下创建.luanch文件，.launch文件内容如下 1234567891011121314&lt;launch&gt; &lt;group ns = "Drone1"&gt; &lt;node pkg="ros_controller" name="drone1_takeoff_driver" type="drone1_takeoff_driver.py" /&gt; &lt;node pkg="ros_controller" name="drone1_camera_driver" type="drone1_camera_driver.py" /&gt; &lt;/group&gt; &lt;group ns = "Drone2"&gt; &lt;node pkg="ros_controller" name="drone2_takeoff_driver" type="drone2_takeoff_driver.py" /&gt; &lt;node pkg="ros_controller" name="drone2_camera_driver" type="drone2_camera_driver.py" output = "screen" /&gt; &lt;/group&gt;&lt;/launch&gt; pkg是ros的程序包名，name是对节点重新进行命名，type是对应相应节点的py程序 三、roslaunch启动多节点123cd catkin_wssource devel/setup.bashroslaunch ros_controller ros_airsim.launch 启动launch文件后，终端输出信息如下： 利用rostopic list查看信息，这里自定义的节点订阅和发布的topic就都显示出来了 参考文献 rosmsg相关设置：rosmsg roslaunch相关设置：roslaunch 总结 因为控制代码使用python语言写的，因此在利用roslaunch启动ros的多个节点时，并不需要在CMakeLists.list和package.xml里面进行相关的配置，但是自定义msg消息类型则是需要进行配置的，至此，就能全部通过ros来控制了，最开始我通过shell命令来启动多个python文件从而来启动多个节点，这种方式不如roslaunch好]]></content>
@@ -43,8 +98,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Tensorflow</tag>
         <tag>Linux</tag>
+        <tag>Tensorflow</tag>
         <tag>CUDA</tag>
         <tag>CUDNN</tag>
       </tags>
@@ -162,8 +217,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Tensorflow</tag>
         <tag>Linux</tag>
+        <tag>Tensorflow</tag>
       </tags>
   </entry>
   <entry>
@@ -314,8 +369,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Tensorflow</tag>
         <tag>Linux</tag>
+        <tag>Tensorflow</tag>
       </tags>
   </entry>
   <entry>
@@ -350,8 +405,8 @@
         <category>python</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>Python</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
