@@ -300,32 +300,6 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/" itemprop="url">
-              
-                <span itemprop="name">DRL论文阅读（五）之Policy Gradient理解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-23T15:36:26+08:00" content="2019-07-23">
-          07-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
             <a class="post-title-link" href="/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/" itemprop="url">
               
                 <span itemprop="name">DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）</span>
@@ -476,7 +450,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -498,7 +472,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1303,7 +1277,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("DRL论文阅读（五）之Policy Gradient理解");titles.push("DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）");titles.push("DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）");titles.push("DRL论文阅读（二）之DQN改进目标Q值计算（Double DQN）");titles.push("DRL论文阅读（一）之DQN方法");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）");titles.push("DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）");titles.push("DRL论文阅读（二）之DQN改进目标Q值计算（Double DQN）");titles.push("DRL论文阅读（一）之DQN方法");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
@@ -1328,6 +1302,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

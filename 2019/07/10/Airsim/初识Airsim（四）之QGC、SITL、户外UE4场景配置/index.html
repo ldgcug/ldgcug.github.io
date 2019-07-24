@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ubuntu,Airsim,">
+  <meta name="keywords" content="Airsim,ubuntu,">
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
-<meta name="keywords" content="ubuntu,Airsim">
+<meta name="keywords" content="Airsim,ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
 <meta property="og:url" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/index.html">
@@ -497,6 +497,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
 <h2 id="三、测试"><a href="#三、测试" class="headerlink" title="三、测试"></a>三、测试</h2><blockquote>
 <font color="red">首先，将前面所打开的所有UE4界面和终端窗口全部关掉</font>
+
 </blockquote>
 <h3 id="3-1-settions-json配置"><a href="#3-1-settions-json配置" class="headerlink" title="3.1 settions.json配置"></a>3.1 settions.json配置</h3><blockquote>
 <p>需要将settion.json里面的配置修改为PX4配置</p>
@@ -553,9 +554,8 @@
 <p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/10.png" alt></p>
 <h2 id="四、添加城市道路场景"><a href="#四、添加城市道路场景" class="headerlink" title="四、添加城市道路场景"></a>四、添加城市道路场景</h2><blockquote>
 <p>Airsim有一些关于UE4的城市道路场景，但是在linux下我成功加载的目前只有两个，总共没测试过几个，能成功加载的是Africa、和Neighborhood，其中有加载过关于City的，但是这是两个zip.001这样的文件组成的，目前还没有解压成功（Linux下），在windows下应该能成功解压</p>
-</blockquote>
-<blockquote>
 <font color="red">在打开下载的这些场景时，setting.json的配置信息不能修改为SITL的配置，为最初始的默认配置即可</font>
+
 </blockquote>
 <p>（1）下载场景</p>
 <blockquote>
@@ -603,9 +603,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
-          
             <a href="/tags/Airsim/" rel="tag"># Airsim</a>
+          
+            <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
           
         </div>
       
@@ -714,7 +714,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -736,7 +736,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1597,6 +1597,8 @@
   
 
   
+  
+
 
   
 

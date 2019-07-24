@@ -508,11 +508,15 @@
 <ul>
 <li><p>直接的、成比例优先（<strong>Proportional Variant</strong>）：</p>
 <p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/5.png" alt></p>
-<p>这里的<br>$$<br>\epsilon<br>$$<br>是一个很小的数字，这样就保证了有些TD-Error为0的特殊边缘例子也能够被采样到</p>
+<p>这里的</p>
+<script type="math/tex; mode=display">
+\epsilon</script><p>是一个很小的数字，这样就保证了有些TD-Error为0的特殊边缘例子也能够被采样到</p>
 </li>
 <li><p>间接的、基于排行的优先（<strong>Rank-based Variant</strong>）：</p>
 <p><img src="/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/6.png" alt></p>
-<p>rank（i）是根据<br>$$<br>|\delta|<br>$$<br>排序后，i 的排名</p>
+<p>rank（i）是根据</p>
+<script type="math/tex; mode=display">
+|\delta|</script><p>排序后，i 的排名</p>
 </li>
 </ul>
 <p>两个分布都是随着误差单调的，但是后者更鲁棒，因为其对离群点不敏感。两个变体相对均匀的baseline来讲都是有很大优势</p>
@@ -686,7 +690,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -708,7 +712,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1569,6 +1573,8 @@
   
 
   
+  
+
 
   
 

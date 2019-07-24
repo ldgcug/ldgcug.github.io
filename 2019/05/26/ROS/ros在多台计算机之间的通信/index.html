@@ -467,6 +467,7 @@
 <p>如果无法重启网络，可以参考该<a href="http://note.youdao.com/noteshare?id=fafc2918f2d674a47aeea10a8c58af88&amp;sub=2464807983794E51824D606CCA01AEA7" target="_blank" rel="noopener">网址</a></p>
 <blockquote>
 <font color="red">两台电脑都做上面三个步骤操作</font>
+
 </blockquote>
 <h1 id="二、两台电脑间通信测试"><a href="#二、两台电脑间通信测试" class="headerlink" title="二、两台电脑间通信测试"></a>二、两台电脑间通信测试</h1><h2 id="1、安装chrony"><a href="#1、安装chrony" class="headerlink" title="1、安装chrony"></a>1、安装chrony</h2><blockquote>
 <p>两台电脑上都安装chrony包，用于实现同步</p>
@@ -490,8 +491,6 @@
 <p><img src="/2019/05/26/ROS/ros在多台计算机之间的通信/B_ping_A.png" alt></p>
 <h1 id="三、-bashrc配置"><a href="#三、-bashrc配置" class="headerlink" title="三、~/.bashrc配置"></a>三、~/.bashrc配置</h1><blockquote>
 <p>说明：假设将cug_master机器当做主机master</p>
-</blockquote>
-<blockquote>
 <p>（1）在cug_local机器的~/.bashrc文件中添加如下两行代码</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export ROS_HOSTNAME=cug_local</span><br><span class="line">export ROS_MASTER_URI=http://cug_master:11311</span><br></pre></td></tr></table></figure>
@@ -649,7 +648,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -671,7 +670,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1532,6 +1531,8 @@
   
 
   
+  
+
 
   
 

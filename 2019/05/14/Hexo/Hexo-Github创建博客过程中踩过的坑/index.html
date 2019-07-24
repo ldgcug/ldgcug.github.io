@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  891
+                  893
                 </span>
               
 
@@ -480,7 +480,7 @@
 </blockquote>
 <h3 id="1、设置Git的user-name-和email（如果第一次配置）"><a href="#1、设置Git的user-name-和email（如果第一次配置）" class="headerlink" title="1、设置Git的user name 和email（如果第一次配置）"></a>1、设置Git的user name 和email（如果第一次配置）</h3><p>​        注：将用户名和邮箱换成自己的用户名和邮箱</p>
 <p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/git_set.png" alt="logo"></p>
-<h3 id="2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）"><a href="#2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）" class="headerlink" title="2、输入  ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）"></a>2、输入  ssh-keygen -t rsa -C “<a href="mailto:569167692@qq.com" target="_blank" rel="noopener">569167692@qq.com</a>”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）</h3><p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_keygen.png" alt="logo"></p>
+<h3 id="2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）"><a href="#2、输入-ssh-keygen-t-rsa-C-“569167692-qq-com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C-Users-Administrator-ssh）" class="headerlink" title="2、输入  ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）"></a>2、输入  ssh-keygen -t rsa -C “569167692@qq.com”，连续三个回车，生成密钥，查看自己的文件存储路径（默认路径为：C:\Users\Administrator\.ssh）</h3><p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_keygen.png" alt="logo"></p>
 <p>​        输入   eval “$(ssh-agent -s)”  ，添加密钥到 ssh-agent</p>
 <p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_key.png" alt="logo"></p>
 <p>​        输入  ssh-add ~/.ssh/id_rsa  ，添加生成的SSH key 到 ssh-agent</p>
@@ -491,7 +491,7 @@
 <p>​        进入./ssh文件夹下，打开   id_rsa.pub文件，将其中的内容复制到缓存中</p>
 <p>​        登陆Github，点击【头像】下的【setting】，点击左侧的【SSH  and GPG keys】，点击【New SSH key】，将刚才复制的 id_rsa.pub 文件复制到Key中，添加ssh</p>
 <p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/github_ssh.png" alt="logo"></p>
-<p>​        输入  ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>  ，测试添加ssh是否成功，如果看到Hi 后面是你的用户名，则添加成功</p>
+<p>​        输入  ssh -T git@github.com  ，测试添加ssh是否成功，如果看到Hi 后面是你的用户名，则添加成功</p>
 <p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/ssh_t.png" alt="logo"></p>
 <h3 id="3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）"><a href="#3、配置Deployment，在blog文件夹中，找到-config-yml文件，修改repo值（在文件末尾）" class="headerlink" title="3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）"></a>3、配置Deployment，在blog文件夹中，找到_config.yml文件，修改repo值（在文件末尾）</h3><blockquote>
 <p>下图中，需要将repository更改为你自己的github.io</p>
@@ -503,12 +503,13 @@
 <h1 id="五、新建博客"><a href="#五、新建博客" class="headerlink" title="五、新建博客"></a>五、新建博客</h1><blockquote>
 <p>所有的命令操作都在博客根目录下执行</p>
 </blockquote>
-<h3 id="1、在cmd-命令种安装扩展"><a href="#1、在cmd-命令种安装扩展" class="headerlink" title="1、在cmd 命令种安装扩展"></a>1、在cmd 命令种安装扩展</h3><p>​        输入 ：  npm install hexo-deployer-git –save</p>
+<h3 id="1、在cmd-命令种安装扩展"><a href="#1、在cmd-命令种安装扩展" class="headerlink" title="1、在cmd 命令种安装扩展"></a>1、在cmd 命令种安装扩展</h3><p>​        输入 ：  npm install hexo-deployer-git —save</p>
 <p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/hexo_chajian.png" alt="logo"></p>
 <h3 id="2、新建博客"><a href="#2、新建博客" class="headerlink" title="2、新建博客"></a>2、新建博客</h3><p>​        在git bash窗口中，执行命令：  hexo new post “博客名”</p>
 <p>​        会发现在soucrce\_posts 文件下，多出刚创建的博客.md</p>
 <p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/new_blog.png" alt="logo"></p>
-<h3 id="3、md编辑器（Typora编辑器）"><a href="#3、md编辑器（Typora编辑器）" class="headerlink" title="3、md编辑器（Typora编辑器）"></a>3、md编辑器（Typora编辑器）</h3><blockquote>
+<h3 id="3、md编辑器（Typora编辑器）"><a href="#3、md编辑器（Typora编辑器）" class="headerlink" title="3、md编辑器（Typora编辑器）"></a>3、md编辑器（Typora编辑器）</h3><p>&gt;<br>&gt;</p>
+<blockquote>
 <p>在<a href="https://typora.io/" target="_blank" rel="noopener">Typora官网</a>上下载Typora编辑器，使用Typora编辑器对md文件进行编辑  </p>
 </blockquote>
 <p><img src="/2019/05/14/Hexo/Hexo-Github创建博客过程中踩过的坑/Typora.png" alt></p>
@@ -638,7 +639,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -660,7 +661,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1521,6 +1522,8 @@
   
 
   
+  
+
 
   
 
