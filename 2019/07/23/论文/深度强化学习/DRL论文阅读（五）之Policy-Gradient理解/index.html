@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/2.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/3.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/4.png">
-<meta property="og:updated_time" content="2019-07-24T03:21:23.221Z">
+<meta property="og:updated_time" content="2019-07-24T03:31:45.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（五）之Policy Gradient理解">
 <meta name="twitter:description" content="前言 在前面的四篇DQN强化学习算法中，主要是对价值函数进行了近似表示，这是只一种基于价值函数（Value Based）的方法，是基于状态价值函数V(s)或者动作价值函数Q(s,a)的控制问题解法。在确定性的环境中，当我们知道了每个状态价值函数V(s)的数值之后，策略就可以选择使得下一个状态期望状态价值函数最大的行动a。但是在随机的环境中状态价值函数V(s)就不太好用了，因为它不能直接指导我们进行">
@@ -407,7 +407,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.3k
+                  3.4k
                 </span>
               
 
@@ -458,6 +458,17 @@
 <li>首先，它面向的是确定性策略，而最优策略通常是随机的</li>
 <li>其次，DQN系列方法对连续动作的处理能力不足。如果在一个连续空间内挑选动作，则Q值将会在无穷多的动作中计算价值，从而选择行为，这可吃不消</li>
 <li>最后，算法收敛障碍。一个行动的估计值的任意小的变化可以导致它被选择或不被选择，这种不连续变化是算法保证收敛的一个关键障碍</li>
+</ul>
+<h3 id="3-2-Policy-Based方法的优缺点"><a href="#3-2-Policy-Based方法的优缺点" class="headerlink" title="3.2 Policy Based方法的优缺点"></a>3.2 Policy Based方法的优缺点</h3><p><strong>优点：</strong></p>
+<ul>
+<li>连续的动作空间（高维空间）中更加高效</li>
+<li>可以实现随机化的策略</li>
+<li>某种情况下，价值函数可能比较难以计算，而策略函数比较容易</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>通常收敛到局部最优而非全局最后</li>
+<li>评估一个策略通常低效（这个过程可能慢，但是具有更高的可变性，其中也会出现很多并不有效的尝试，且方差高）</li>
 </ul>
 <h2 id="四、Policy-Gradient算法介绍"><a href="#四、Policy-Gradient算法介绍" class="headerlink" title="四、Policy Gradient算法介绍"></a>四、Policy Gradient算法介绍</h2><h3 id="4-1-Value-Based网络"><a href="#4-1-Value-Based网络" class="headerlink" title="4.1 Value Based网络"></a>4.1 Value Based网络</h3><blockquote>
 <p>在Value Based强化学习方法中，我们对价值函数进行了近似表示，引入了一个动作价值函数Q，这个函数由参数w描述，并接受状态s与动作a的输入，计算后得到近似的动作价值，即：</p>
@@ -759,7 +770,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、论文题目"><span class="nav-text">一、论文题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、研究目标"><span class="nav-text">二、研究目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、问题定义"><span class="nav-text">三、问题定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Value-Based方法的局限性"><span class="nav-text">3.1 Value Based方法的局限性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Policy-Gradient算法介绍"><span class="nav-text">四、Policy Gradient算法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Value-Based网络"><span class="nav-text">4.1 Value Based网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Policy-Network"><span class="nav-text">4.2 Policy Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-更新Policy-Network"><span class="nav-text">4.3 更新Policy Network</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-策略梯度的目标函数"><span class="nav-text">4.3.1 策略梯度的目标函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-策略梯度定理（The-policy-gradient-theorem）"><span class="nav-text">4.3.2 策略梯度定理（The policy gradient theorem）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-策略函数的设计"><span class="nav-text">4.3.3 策略函数的设计</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-蒙特卡洛策略梯度reinforce算法-不带基数"><span class="nav-text">4.4 蒙特卡洛策略梯度reinforce算法(不带基数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-蒙特卡洛策略梯度reinforce算法（带基数）"><span class="nav-text">4.5 蒙特卡洛策略梯度reinforce算法（带基数）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、论文题目"><span class="nav-text">一、论文题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、研究目标"><span class="nav-text">二、研究目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、问题定义"><span class="nav-text">三、问题定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Value-Based方法的局限性"><span class="nav-text">3.1 Value Based方法的局限性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Policy-Based方法的优缺点"><span class="nav-text">3.2 Policy Based方法的优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Policy-Gradient算法介绍"><span class="nav-text">四、Policy Gradient算法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Value-Based网络"><span class="nav-text">4.1 Value Based网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Policy-Network"><span class="nav-text">4.2 Policy Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-更新Policy-Network"><span class="nav-text">4.3 更新Policy Network</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-策略梯度的目标函数"><span class="nav-text">4.3.1 策略梯度的目标函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-策略梯度定理（The-policy-gradient-theorem）"><span class="nav-text">4.3.2 策略梯度定理（The policy gradient theorem）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-策略函数的设计"><span class="nav-text">4.3.3 策略函数的设计</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-蒙特卡洛策略梯度reinforce算法-不带基数"><span class="nav-text">4.4 蒙特卡洛策略梯度reinforce算法(不带基数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-蒙特卡洛策略梯度reinforce算法（带基数）"><span class="nav-text">4.5 蒙特卡洛策略梯度reinforce算法（带基数）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
