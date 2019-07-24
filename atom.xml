@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-07-19T03:28:47.975Z</updated>
+  <updated>2019-07-24T05:33:12.675Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DRL论文阅读（五）之Policy Gradient理解</title>
+    <link href="http://ldgyyf.cn/2019/07/23/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient%E7%90%86%E8%A7%A3/"/>
+    <id>http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/</id>
+    <published>2019-07-23T07:36:26.000Z</published>
+    <updated>2019-07-24T05:33:12.675Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="论文" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/"/>
+    
+      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="Policy Gradient" scheme="http://ldgyyf.cn/tags/Policy-Gradient/"/>
+    
+  </entry>
   
   <entry>
     <title>DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）</title>
@@ -559,34 +589,6 @@
     
     
       <category term="生理" scheme="http://ldgyyf.cn/tags/%E7%94%9F%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>erle_copter仿真安装笔记之has_binary_operator.hpp</title>
-    <link href="http://ldgyyf.cn/2019/05/28/ROS/erle-copter%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0%E4%B9%8Bhas-binary-operator-hpp/"/>
-    <id>http://ldgyyf.cn/2019/05/28/ROS/erle-copter仿真安装笔记之has-binary-operator-hpp/</id>
-    <published>2019-05-28T15:29:07.000Z</published>
-    <updated>2019-05-28T15:32:25.902Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
-    
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
-    
-      <category term="Gazebo" scheme="http://ldgyyf.cn/tags/Gazebo/"/>
     
   </entry>
   
