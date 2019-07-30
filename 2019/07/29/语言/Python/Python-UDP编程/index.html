@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 在机器人的运动控制过程中，关于多机通信控制，除了用ros外，还可以进行网络编程，这里就用的是UDP编程实现两台电脑间的通信  两台电脑信息 A电脑用于服务端，B电脑用于客户端   A电脑：10.10.100.56 B电脑：10.10.100.54  注：两台电脑必须在同一个局域网内 一、UDP简单样例1.1 本地测试（服务端单向接收客户端数据） server.py  服务端，用于接收客户端传">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python UDP编程">
+<meta property="og:url" content="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 在机器人的运动控制过程中，关于多机通信控制，除了用ros外，还可以进行网络编程，这里就用的是UDP编程实现两台电脑间的通信  两台电脑信息 A电脑用于服务端，B电脑用于客户端   A电脑：10.10.100.56 B电脑：10.10.100.54  注：两台电脑必须在同一个局域网内 一、UDP简单样例1.1 本地测试（服务端单向接收客户端数据） server.py  服务端，用于接收客户端传">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/2.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/3.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/4.png">
+<meta property="og:updated_time" content="2019-07-30T01:28:19.034Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python UDP编程">
+<meta name="twitter:description" content="前言 在机器人的运动控制过程中，关于多机通信控制，除了用ros外，还可以进行网络编程，这里就用的是UDP编程实现两台电脑间的通信  两台电脑信息 A电脑用于服务端，B电脑用于客户端   A电脑：10.10.100.56 B电脑：10.10.100.54  注：两台电脑必须在同一个局域网内 一、UDP简单样例1.1 本地测试（服务端单向接收客户端数据） server.py  服务端，用于接收客户端传">
+<meta name="twitter:image" content="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/">
+
+
+
+
+
+  <title>Python UDP编程 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/07/29/语言/Python/Python-UDP编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python UDP编程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-29T16:01:37+08:00">
+                2019-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/语言/" itemprop="url" rel="index">
+                    <span itemprop="name">语言</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/语言/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/29/语言/Python/Python-UDP编程/" class="leancloud_visitors" data-flag-title="Python UDP编程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>在机器人的运动控制过程中，关于多机通信控制，除了用ros外，还可以进行网络编程，这里就用的是UDP编程实现两台电脑间的通信</p>
+</blockquote>
+<h2 id="两台电脑信息"><a href="#两台电脑信息" class="headerlink" title="两台电脑信息"></a>两台电脑信息</h2><blockquote>
+<p>A电脑用于服务端，B电脑用于客户端</p>
+</blockquote>
+<ul>
+<li>A电脑：10.10.100.56</li>
+<li>B电脑：10.10.100.54</li>
+</ul>
+<p><strong>注：两台电脑必须在同一个局域网内</strong></p>
+<h2 id="一、UDP简单样例"><a href="#一、UDP简单样例" class="headerlink" title="一、UDP简单样例"></a>一、UDP简单样例</h2><h3 id="1-1-本地测试（服务端单向接收客户端数据）"><a href="#1-1-本地测试（服务端单向接收客户端数据）" class="headerlink" title="1.1 本地测试（服务端单向接收客户端数据）"></a>1.1 本地测试（服务端单向接收客户端数据）</h3><ul>
+<li><p>server.py</p>
+<blockquote>
+<p>服务端，用于接收客户端传来的数据</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">udp_server = socket(AF_INET, SOCK_DGRAM) <span class="comment"># 创建UDP套接字(SOCK_DGRAM为UDP)</span></span><br><span class="line">local_addr = (<span class="string">'127.0.0.1'</span>, <span class="number">9999</span>) <span class="comment">#由于是本地，ip可以设置为127.0.0.1，并且自定义设置端口</span></span><br><span class="line">udp_server.bind(local_addr)	<span class="comment"># 绑定ip和端口</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	client_data,addr = udp_server.recvfrom(<span class="number">1024</span>) <span class="comment">#1024表示本次接收的最大字节数</span></span><br><span class="line">	client_data = client_data.decode(<span class="string">'utf-8'</span>) <span class="comment">#对client传过来的数据进行解码</span></span><br><span class="line">	print(client_data) <span class="comment">#client_data 为client传过来的数据信息</span></span><br><span class="line">	print(addr) <span class="comment">#addr为client的ip和端口</span></span><br><span class="line">    </span><br><span class="line">	<span class="keyword">if</span> client_data == <span class="string">"stop"</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">udp_server.close() <span class="comment">#关闭套接字</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>client.py</p>
+<blockquote>
+<p>客户端，用于发送数据给服务端</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">udp_client = socket(AF_INET, SOCK_DGRAM) <span class="comment"># 创建udp套接字(SOCK_DGRAM为UDP)</span></span><br><span class="line"><span class="comment">#设置服务端的IP地址和端口</span></span><br><span class="line">dest_addr = (<span class="string">'127.0.0.1'</span>, <span class="number">9999</span>)  <span class="comment"># 注意 是元组，ip是字符串，端口是数字</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	send_data = input(<span class="string">"&gt;&gt;"</span>) <span class="comment">#待发送的数据，从键盘获取</span></span><br><span class="line">	udp_client.sendto(send_data.encode(<span class="string">'utf-8'</span>), dest_addr) <span class="comment"># 发送数据到指定的电脑上的指定程序中</span></span><br><span class="line">	<span class="keyword">if</span> send_data == <span class="string">"stop"</span>: </span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">udp_client.close() <span class="comment">#关闭套接字</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1-2-两台电脑间通信（同时发送与接收）"><a href="#1-2-两台电脑间通信（同时发送与接收）" class="headerlink" title="1.2 两台电脑间通信（同时发送与接收）"></a>1.2 两台电脑间通信（同时发送与接收）</h3><ul>
+<li><p>server.py</p>
+<blockquote>
+<p>使用A电脑作为服务端，服务端ip为10.10.100.56</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">udp_server = socket(AF_INET, SOCK_DGRAM)</span><br><span class="line">local_addr = (<span class="string">'10.10.100.56'</span>, <span class="number">7996</span>)</span><br><span class="line">udp_server.bind(local_addr)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	client_data,addr = udp_server.recvfrom(<span class="number">1024</span>) <span class="comment">#接收来自client的数据</span></span><br><span class="line">	client_data = client_data.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">	print(client_data)</span><br><span class="line">	print(addr) </span><br><span class="line">    </span><br><span class="line">    udp_server.sendto(client_data,addr) <span class="comment">#数据原样返回给客户端</span></span><br><span class="line">	<span class="keyword">if</span> recv_result == <span class="string">"stop"</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">udp_server.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>client.py</p>
+<blockquote>
+<p>B电脑作为客户端，客户端ip地址为10.10.100.54</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">udp_client = socket(AF_INET, SOCK_DGRAM) </span><br><span class="line">dest_addr = (<span class="string">'10.10.100.56'</span>, <span class="number">7996</span>)  <span class="comment">#这里的ip和端口要保持和server一致</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	send_data = input(<span class="string">"&gt;&gt;"</span>) </span><br><span class="line">	udp_client.sendto(send_data.encode(<span class="string">'utf-8'</span>), dest_addr) <span class="comment">#发送数据到服务端</span></span><br><span class="line">    server_data,addr = udp_client.recvfrom(<span class="number">1024</span>)<span class="comment"># 接收服务端数据</span></span><br><span class="line">    server_data = server_data.decode(<span class="string">"utf-8"</span>)</span><br><span class="line">    print(<span class="string">'server data'</span>,server_data)</span><br><span class="line">	<span class="keyword">if</span> send_data == <span class="string">"stop"</span>: </span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">udp_client.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>运行结果显示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;state</span><br><span class="line">server data state</span><br><span class="line">&gt;&gt;takeoff</span><br><span class="line">server data takeoff</span><br><span class="line">&gt;&gt;move</span><br><span class="line">server data move</span><br><span class="line">&gt;&gt;state</span><br><span class="line">server data state</span><br><span class="line">&gt;&gt;land</span><br><span class="line">server data land</span><br><span class="line">&gt;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="二、UDP发送列表数据（json）"><a href="#二、UDP发送列表数据（json）" class="headerlink" title="二、UDP发送列表数据（json）"></a>二、UDP发送列表数据（json）</h2><blockquote>
+<p>在第一步的样例中，UDP发送和接收的都是一串字符串数据，而有时候服务端返回的数据是一个列表信息，如坐标（x,y,z），此时用字符串信息返回就比较麻烦，需要在客户端和服务端都做一些相应的转化。因此，为了解决该问题，可以使用python的json库</p>
+</blockquote>
+<h3 id="2-1-python对象转换为json字符串（json-dumps函数）"><a href="#2-1-python对象转换为json字符串（json-dumps函数）" class="headerlink" title="2.1 python对象转换为json字符串（json.dumps函数）"></a>2.1 python对象转换为json字符串（json.dumps函数）</h3><blockquote>
+<p>下面的是自己的电脑与B电脑进行通信测试的，不是A与B之间的通信</p>
+</blockquote>
+<p>将B电脑作为服务端：10.10.100.54，进行测试</p>
+<ul>
+<li>server.py</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">udp_server = socket(AF_INET, SOCK_DGRAM)</span><br><span class="line">local_addr = (<span class="string">'10.10.100.54'</span>, <span class="number">7996</span>) </span><br><span class="line">udp_server.bind(local_addr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	client_data,addr = udp_server.recvfrom(<span class="number">1024</span>) </span><br><span class="line">	client_data = client_data.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">	print(client_data)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># json样例测试</span></span><br><span class="line">	mylist = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">	json_string = json.dumps(mylist)</span><br><span class="line">	udp_server.sendto(json_string,addr)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> recv_result == <span class="string">"stop"</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">udp_socket.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>client.py不变</li>
+</ul>
+<p>结果显示</p>
+<p><img src="/2019/07/29/语言/Python/Python-UDP编程/1.png" alt></p>
+<h3 id="2-2-json字符串转换为python对象（json-loads函数）"><a href="#2-2-json字符串转换为python对象（json-loads函数）" class="headerlink" title="2.2 json字符串转换为python对象（json.loads函数）"></a>2.2 json字符串转换为python对象（json.loads函数）</h3><blockquote>
+<p>这里将只给出核心部分</p>
+<p>为什么要做json字符串转python对象？因为有时候从客户端发送过去的数据也是一个列表信息，如发送xyz的速度控制，要根据xyz值的不同进行相应的操作，此时就最好是传输python对象比较好</p>
+</blockquote>
+<ul>
+<li><p>server.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	client_data,addr = udp_server.recvfrom(<span class="number">1024</span>) </span><br><span class="line">	client_data = client_data.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    client_data = json.loads(client_data)</span><br><span class="line">    print(<span class="string">'client_message'</span>,client_data)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> client_data[<span class="number">0</span>] == <span class="string">'state'</span>:</span><br><span class="line">        quad_pos = ...</span><br><span class="line">        print(<span class="string">'quad_pos'</span>,quad_pos)</span><br><span class="line">    	json_string = json.dumps(quad_pos) <span class="comment">#python对象转json字符串</span></span><br><span class="line">        udp_server.sendto(json_string,addr)</span><br><span class="line">    <span class="keyword">elif</span> client_data[<span class="number">0</span>] == <span class="string">'takeoff'</span>:</span><br><span class="line">        ...</span><br><span class="line">    <span class="keyword">elif</span> client_data[<span class="number">0</span>] == <span class="string">'move'</span> <span class="keyword">and</span> len(client_data) == <span class="number">5</span>:</span><br><span class="line">        vx,vy,vz,t = int(client_data[<span class="number">1</span>]),int(client_data[<span class="number">2</span>]),int(client_data[<span class="number">3</span>]),int(client_data[<span class="number">4</span>])</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>client.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	send_data = input(<span class="string">"&gt;&gt;"</span>)</span><br><span class="line">	msg = send_data.split(<span class="string">' '</span>)</span><br><span class="line">	print(<span class="string">'msg'</span>,msg)</span><br><span class="line">	json_string = json.dumps(msg) <span class="comment">#转换成json字符串</span></span><br><span class="line">	udp_client.sendto(json_string, dest_addr)</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">if</span> send_data == <span class="string">'state'</span>:</span><br><span class="line">		server_data,addr = udp_client.recvfrom(<span class="number">1024</span>)</span><br><span class="line">		server_data = server_data.decode(<span class="string">"utf-8"</span>)</span><br><span class="line">		print(<span class="string">'server data'</span>,server_data)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> send_data == <span class="string">"stop"</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>结果显示：</p>
+<ul>
+<li><p>客户端的输入输出显示</p>
+<p><img src="/2019/07/29/语言/Python/Python-UDP编程/2.png" alt></p>
+</li>
+<li><p>服务端的输出显示</p>
+<p><img src="/2019/07/29/语言/Python/Python-UDP编程/3.png" alt></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、UDP传输图像"><a href="#三、UDP传输图像" class="headerlink" title="三、UDP传输图像"></a>三、UDP传输图像</h2><blockquote>
+<p>用opencv来读取和显示，因此需要先安装opencv</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo proxychains4 pip install opencv-python</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-Python获取本地摄像头并显示"><a href="#3-1-Python获取本地摄像头并显示" class="headerlink" title="3.1 Python获取本地摄像头并显示"></a>3.1 Python获取本地摄像头并显示</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">cap = cv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">	<span class="keyword">if</span> cap.isOpened():</span><br><span class="line">	    <span class="comment"># get a frame</span></span><br><span class="line">	    ret, frame = cap.read()</span><br><span class="line">	    <span class="comment"># show a frame</span></span><br><span class="line">	    cv2.imshow(<span class="string">"capture"</span>, frame)</span><br><span class="line">	    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>) &amp; <span class="number">0xFF</span> == ord(<span class="string">'q'</span>):</span><br><span class="line">	        <span class="keyword">break</span></span><br><span class="line">cap.release()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-UDP传输图片并显示（小尺寸图片）"><a href="#3-2-UDP传输图片并显示（小尺寸图片）" class="headerlink" title="3.2 UDP传输图片并显示（小尺寸图片）"></a>3.2 UDP传输图片并显示（小尺寸图片）</h3><blockquote>
+<p>如果图片太大，则下面的代码将会报错</p>
+</blockquote>
+<ul>
+<li><p>server.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定端口:</span></span><br><span class="line">s.bind((<span class="string">'10.10.100.54'</span>, <span class="number">9999</span>))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Bind UDP on 9999...'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 接收数据:</span></span><br><span class="line">    data, addr = s.recvfrom(<span class="number">400000</span>)</span><br><span class="line">    print(<span class="string">'Received from %s:%s.'</span> % addr)</span><br><span class="line">    <span class="comment">#解码</span></span><br><span class="line">    nparr = np.fromstring(data, np.uint8)</span><br><span class="line">    <span class="comment">#解码成图片numpy</span></span><br><span class="line">    img_decode = cv2.imdecode(nparr, cv2.IMREAD_COLOR)</span><br><span class="line">    cv2.imshow(<span class="string">'result'</span>,img_decode)</span><br><span class="line">    cv2.waitKey()</span><br><span class="line">    reply = <span class="string">"get message!!!"</span></span><br><span class="line">    s.sendto(reply.encode(<span class="string">'utf-8'</span>), addr)</span><br><span class="line">    cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>client.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'view.jpg'</span>)</span><br><span class="line">img_encode = cv2.imencode(<span class="string">'.jpg'</span>, img)[<span class="number">1</span>]</span><br><span class="line">data_encode = np.array(img_encode)</span><br><span class="line">data = data_encode.tostring()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发送数据:</span></span><br><span class="line">s.sendto(data, (<span class="string">'10.10.100.54'</span>, <span class="number">9999</span>))</span><br><span class="line"><span class="comment"># 接收数据:</span></span><br><span class="line">print(s.recv(<span class="number">1024</span>).decode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-3-UDP传输视频流信息"><a href="#3-3-UDP传输视频流信息" class="headerlink" title="3.3 UDP传输视频流信息"></a>3.3 UDP传输视频流信息</h3><ul>
+<li><p>server.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"></span><br><span class="line">HOST=<span class="string">'10.10.100.54'</span></span><br><span class="line">PORT=<span class="number">9999</span></span><br><span class="line">buffSize=<span class="number">65535</span></span><br><span class="line"></span><br><span class="line">server=socket.socket(socket.AF_INET,socket.SOCK_DGRAM) <span class="comment">#创建socket对象</span></span><br><span class="line">server.bind((HOST,PORT))</span><br><span class="line">print(<span class="string">'now waiting for frames...'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    data,address=server.recvfrom(buffSize) <span class="comment">#先接收的是字节长度</span></span><br><span class="line">    <span class="keyword">if</span> len(data)==<span class="number">1</span> <span class="keyword">and</span> data[<span class="number">0</span>]==<span class="number">1</span>: <span class="comment">#如果收到关闭消息则停止程序</span></span><br><span class="line">        server.close()</span><br><span class="line">        cv2.destroyAllWindows()</span><br><span class="line">        exit()</span><br><span class="line">    <span class="keyword">if</span> len(data)!=<span class="number">4</span>: <span class="comment">#进行简单的校验，长度值是int类型，占四个字节</span></span><br><span class="line">        length=<span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        length=struct.unpack(<span class="string">'i'</span>,data)[<span class="number">0</span>] <span class="comment">#长度值</span></span><br><span class="line">    data,address=server.recvfrom(buffSize) <span class="comment">#接收编码图像数据</span></span><br><span class="line">    <span class="keyword">if</span> length!=len(data): <span class="comment">#进行简单的校验</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    data=numpy.array(bytearray(data)) <span class="comment">#格式转换</span></span><br><span class="line">    imgdecode=cv2.imdecode(data,<span class="number">1</span>) <span class="comment">#解码</span></span><br><span class="line">    print(<span class="string">'have received one frame'</span>)</span><br><span class="line">    cv2.imshow(<span class="string">'frames'</span>,imgdecode) <span class="comment">#窗口显示</span></span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>)==<span class="number">27</span>: <span class="comment">#按下“ESC”退出</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">server.close()</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>client.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"></span><br><span class="line">HOST=<span class="string">'10.10.100.54'</span></span><br><span class="line">PORT=<span class="number">9999</span></span><br><span class="line"></span><br><span class="line">server=socket.socket(socket.AF_INET,socket.SOCK_DGRAM) <span class="comment">#socket对象</span></span><br><span class="line">server.connect((HOST,PORT))</span><br><span class="line">print(<span class="string">'now starting to send frames...'</span>)</span><br><span class="line">capture=cv2.VideoCapture(<span class="number">0</span>) <span class="comment">#VideoCapture对象，可获取摄像头设备的数据</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		<span class="keyword">if</span> capture.isOpened():</span><br><span class="line">			success,frame=capture.read()</span><br><span class="line">            <span class="comment">#frame = cv2.imread('normal.jpg) 以图片形式发送</span></span><br><span class="line">			result,imgencode=cv2.imencode(<span class="string">'.jpg'</span>,frame,[cv2.IMWRITE_JPEG_QUALITY,<span class="number">50</span>])  <span class="comment">#编码</span></span><br><span class="line">			server.sendall(struct.pack(<span class="string">'i'</span>,imgencode.shape[<span class="number">0</span>])) <span class="comment">#发送编码后的字节长度，这个值不是固定的</span></span><br><span class="line">			server.sendall(imgencode) <span class="comment">#发送视频帧数据</span></span><br><span class="line">			print(<span class="string">'have sent one frame'</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">	print(e)</span><br><span class="line">	server.sendall(struct.pack(<span class="string">'c'</span>,<span class="number">1</span>)) <span class="comment">#发送关闭消息</span></span><br><span class="line">	capture.release()</span><br><span class="line">	server.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="四、Arisim的UDP通信代码实例"><a href="#四、Arisim的UDP通信代码实例" class="headerlink" title="四、Arisim的UDP通信代码实例"></a>四、Arisim的UDP通信代码实例</h2><h3 id="4-1-服务端"><a href="#4-1-服务端" class="headerlink" title="4.1 服务端"></a>4.1 服务端</h3><ul>
+<li><p>connect_simulator.py</p>
+<blockquote>
+<p>用于连接Airsim</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> airsim</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Connect</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.client = airsim.MultirotorClient()</span><br><span class="line">		self.client.confirmConnection()</span><br><span class="line">		self.client.enableApiControl(<span class="literal">True</span>)</span><br><span class="line">		self.client.armDisarm(<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>msg_server.py</p>
+<blockquote>
+<p>接收client传来的特定的消息，并根据适当的消息返回姿态数据和图像数据</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># python library</span></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="comment"># airsim</span></span><br><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect </span><br><span class="line"><span class="keyword">import</span> airsim</span><br><span class="line"></span><br><span class="line"><span class="comment"># udp</span></span><br><span class="line">dest_ip = <span class="string">'10.10.100.56'</span></span><br><span class="line">msg_port = <span class="number">9999</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># connect the airsim simulator</span></span><br><span class="line">client = Connect().client</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># image transform</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform_input</span><span class="params">(responses, img_height, img_width)</span>:</span></span><br><span class="line">	img1d = np.array(responses[<span class="number">0</span>].image_data_float, dtype=np.float)</span><br><span class="line">	img1d = np.array(np.clip(<span class="number">255</span> * <span class="number">3</span> * img1d, <span class="number">0</span>, <span class="number">255</span>), dtype=np.uint8)</span><br><span class="line">	img2d = np.reshape(img1d, (responses[<span class="number">0</span>].height, responses[<span class="number">0</span>].width))</span><br><span class="line">	image = Image.fromarray(img2d)</span><br><span class="line">	image = np.array(image.resize((img_width, img_height)).convert(<span class="string">'L'</span>))</span><br><span class="line">	<span class="comment">#cv2.imwrite('b.png', image)</span></span><br><span class="line">	<span class="comment"># image = np.float32(image.reshape(1, img_height, img_width, 1))</span></span><br><span class="line">	<span class="comment"># image /= 255.0</span></span><br><span class="line">	<span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">receive_msg</span><span class="params">(recv_msg)</span>:</span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		client_data,addr = recv_msg.recvfrom(<span class="number">1024</span>)</span><br><span class="line">		client_data = client_data.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">		client_data = json.loads(client_data)</span><br><span class="line">		print(<span class="string">'client_message'</span>,client_data)</span><br><span class="line">		<span class="keyword">if</span> client_data[<span class="number">0</span>] == <span class="string">'state'</span>:</span><br><span class="line">			quad_pos = client.getMultirotorState().kinematics_estimated.position</span><br><span class="line">			quad_pos = [quad_pos.x_val,quad_pos.y_val,quad_pos.z_val]</span><br><span class="line">			print(<span class="string">'quad_pos'</span>,quad_pos)</span><br><span class="line">			json_string = json.dumps(quad_pos)</span><br><span class="line">			recv_msg.sendto(json_string,addr)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">elif</span> client_data[<span class="number">0</span>] == <span class="string">'takeoff'</span>:</span><br><span class="line">			client.takeoffAsync().join()</span><br><span class="line"></span><br><span class="line">		<span class="keyword">elif</span> client_data[<span class="number">0</span>] == <span class="string">'land'</span>:</span><br><span class="line">			client.landAsync().join()</span><br><span class="line"></span><br><span class="line">		<span class="keyword">elif</span> client_data[<span class="number">0</span>] == <span class="string">'move'</span> <span class="keyword">and</span> len(client_data) == <span class="number">5</span>:</span><br><span class="line">			vx,vy,vz,t = int(client_data[<span class="number">1</span>]),int(client_data[<span class="number">2</span>]),int(client_data[<span class="number">3</span>]),int(client_data[<span class="number">4</span>])</span><br><span class="line">			<span class="comment">#client.moveByVelocityAsync(1,0,0,1).join()</span></span><br><span class="line">			client.moveByVelocityAsync(vx,vy,vz,t).join()</span><br><span class="line">			client.moveByVelocityAsync(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.1</span>).join()</span><br><span class="line"></span><br><span class="line">		<span class="keyword">elif</span> client_data[<span class="number">0</span>] == <span class="string">'image'</span>:</span><br><span class="line">			responses = client.simGetImages([airsim.ImageRequest(<span class="number">1</span>,airsim.ImageType.DepthVis,<span class="literal">True</span>)]) <span class="comment">#image</span></span><br><span class="line">			observation = transform_input(responses,<span class="number">144</span>,<span class="number">256</span>)</span><br><span class="line">			img = observation</span><br><span class="line">			img_encode = cv2.imencode(<span class="string">'.jpg'</span>, img)[<span class="number">1</span>]</span><br><span class="line">			data_encode = np.array(img_encode)</span><br><span class="line">			data = data_encode.tostring()</span><br><span class="line">			recv_msg.sendto(data,addr)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">elif</span> client_data[<span class="number">0</span>] == <span class="string">'stop'</span>:</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">	recv_msg.close()	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	recv_msg = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">	recv_msg.bind((dest_ip,msg_port))</span><br><span class="line">	receive_msg(recv_msg)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>img_server.py</p>
+<blockquote>
+<p>启动这个py，在客户端启动相应的py，则可以观看Airsim的图像流信息</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># python library</span></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="comment"># airsim</span></span><br><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect </span><br><span class="line"><span class="keyword">import</span> airsim</span><br><span class="line"></span><br><span class="line"><span class="comment"># udp</span></span><br><span class="line">dest_ip = <span class="string">'10.10.100.56'</span></span><br><span class="line">img_port = <span class="number">7996</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># connect the airsim simulator</span></span><br><span class="line">client = Connect().client</span><br><span class="line"></span><br><span class="line"><span class="comment"># image transform</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform_input</span><span class="params">(responses, img_height, img_width)</span>:</span></span><br><span class="line">	img1d = np.array(responses[<span class="number">0</span>].image_data_float, dtype=np.float)</span><br><span class="line">	img1d = np.array(np.clip(<span class="number">255</span> * <span class="number">3</span> * img1d, <span class="number">0</span>, <span class="number">255</span>), dtype=np.uint8)</span><br><span class="line">	img2d = np.reshape(img1d, (responses[<span class="number">0</span>].height, responses[<span class="number">0</span>].width))</span><br><span class="line">	image = Image.fromarray(img2d)</span><br><span class="line">	image = np.array(image.resize((img_width, img_height)).convert(<span class="string">'L'</span>))</span><br><span class="line">	<span class="comment">#cv2.imwrite('b.png', image)</span></span><br><span class="line">	<span class="comment"># image = np.float32(image.reshape(1, img_height, img_width, 1))</span></span><br><span class="line">	<span class="comment"># image /= 255.0</span></span><br><span class="line">	<span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_img</span><span class="params">(recv_img)</span>:</span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		client_data,addr = recv_img.recvfrom(<span class="number">1024</span>)</span><br><span class="line">		client_data = client_data.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">		responses = client.simGetImages([airsim.ImageRequest(<span class="number">1</span>,airsim.ImageType.DepthVis,<span class="literal">True</span>)]) <span class="comment">#image</span></span><br><span class="line">		observation = transform_input(responses,<span class="number">144</span>,<span class="number">256</span>)</span><br><span class="line">		img = observation</span><br><span class="line">		img_encode = cv2.imencode(<span class="string">'.jpg'</span>, img)[<span class="number">1</span>]</span><br><span class="line">		data_encode = np.array(img_encode)</span><br><span class="line">		data = data_encode.tostring()</span><br><span class="line">		recv_img.sendto(data,addr)</span><br><span class="line">	recv_img.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	recv_img = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">	recv_img.bind((dest_ip,img_port))</span><br><span class="line">	send_img(recv_img)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-2-客户端"><a href="#4-2-客户端" class="headerlink" title="4.2 客户端"></a>4.2 客户端</h3><ul>
+<li><p>client.py</p>
+<blockquote>
+<p>在这个py程序中，输入相应的指令，然后服务端相应，目前是手动的，后面会改成自动的</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> recv_img <span class="keyword">import</span> Img</span><br><span class="line"></span><br><span class="line">udp_client = socket(AF_INET, SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line">dest_addr = (<span class="string">'10.10.100.56'</span>, <span class="number">9999</span>)  </span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	send_data = raw_input(<span class="string">"&gt;&gt;"</span>)</span><br><span class="line">	msg = send_data.split(<span class="string">' '</span>)</span><br><span class="line">	print(<span class="string">'msg'</span>,msg)</span><br><span class="line">	json_string = json.dumps(msg)</span><br><span class="line"></span><br><span class="line">	<span class="comment">#udp_client.sendto(send_data.encode('utf-8'), dest_addr)</span></span><br><span class="line">	udp_client.sendto(json_string, dest_addr)</span><br><span class="line">	<span class="keyword">if</span> send_data == <span class="string">'state'</span>:</span><br><span class="line">		server_data,addr = udp_client.recvfrom(<span class="number">1024</span>)</span><br><span class="line">		server_data = server_data.decode(<span class="string">"utf-8"</span>)</span><br><span class="line">		print(<span class="string">'server data'</span>,server_data)</span><br><span class="line">	<span class="keyword">if</span> send_data == <span class="string">'image'</span>:</span><br><span class="line">		data, addr = udp_client.recvfrom(<span class="number">400000</span>)</span><br><span class="line">		<span class="comment">#解码</span></span><br><span class="line">		nparr = np.fromstring(data, np.uint8)</span><br><span class="line">		<span class="comment">#解码成图片numpy</span></span><br><span class="line">		img_decode = cv2.imdecode(nparr, cv2.IMREAD_COLOR)</span><br><span class="line">		print(<span class="string">'img'</span>,img_decode)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> send_data == <span class="string">"stop"</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">udp_client.close()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>recv_img.py</p>
+<blockquote>
+<p>启动该py程序，并在服务端启动了对应的py程序后，则能看到窗口</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">udp_client = socket(AF_INET, SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line">dest_addr = (<span class="string">'10.10.100.56'</span>, <span class="number">7996</span>) </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Img</span><span class="params">()</span>:</span></span><br><span class="line">    img = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    img = Img().img</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        udp_client.sendto(<span class="string">'image'</span>.encode(<span class="string">'utf-8'</span>), dest_addr)</span><br><span class="line">        data, addr = udp_client.recvfrom(<span class="number">400000</span>)</span><br><span class="line">        <span class="comment">#解码</span></span><br><span class="line">        nparr = np.fromstring(data, np.uint8)</span><br><span class="line">        <span class="comment">#解码成图片numpy</span></span><br><span class="line">        img_decode = cv2.imdecode(nparr, cv2.IMREAD_COLOR)</span><br><span class="line">        img = img_decode</span><br><span class="line">        print(<span class="string">'img'</span>,img)</span><br><span class="line">        img_decode = cv2.resize(img_decode,(<span class="number">640</span>,<span class="number">480</span>),interpolation=cv2.INTER_CUBIC)</span><br><span class="line">        cv2.imshow(<span class="string">'result'</span>,img_decode)</span><br><span class="line">        cv2.waitKey(<span class="number">1</span>)</span><br><span class="line">        <span class="comment">#cv2.destroyAllWindows()</span></span><br><span class="line"></span><br><span class="line">    udp_client.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-3-结果显示"><a href="#4-3-结果显示" class="headerlink" title="4.3 结果显示"></a>4.3 结果显示</h3><p><img src="/2019/07/29/语言/Python/Python-UDP编程/4.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>基于UDP传输的基本样例，并且用到的暂时只有这么多，在机器人控制中，服务端主要返回机器人的图像信息和姿态信息，而客户端要发送的主要是机器人的控制信息，如何控制等等，但是我在测试的过程中，如果要在客户端时刻显示机器人的相机信息，则需要新建一个server.py程序，设置一个端口，然后在客户端也新建一个client.py信息，通过这个client来时刻显示视频。当然，如果不需要显示画面的话，则不需要新建</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><p>python对象转换为json字符串：<a href="https://zhidao.baidu.com/question/1047863020856370819.html" target="_blank" rel="noopener">python socket编程传输列表数据</a></p>
+</li>
+<li><p>json字符串转换为python对象：<a href="https://blog.csdn.net/tterminator/article/details/63289400" target="_blank" rel="noopener">python对象和json互相转换</a></p>
+</li>
+<li><a href="https://blog.csdn.net/qq_36852276/article/details/90761122" target="_blank" rel="noopener">UDP传输图片并显示</a></li>
+<li><a href="https://www.twblogs.net/a/5b805dee2b71772165a73660/zh-cn" target="_blank" rel="noopener">UDP传输视频流信息</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/25/Carla/初始Carla（一）之Carla预编译版安装使用/" rel="next" title="初始Carla（一）之Carla预编译版安装使用">
+                <i class="fa fa-chevron-left"></i> 初始Carla（一）之Carla预编译版安装使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/" rel="prev" title="DRL（六）之Actor-Critic算法介绍">
+                DRL（六）之Actor-Critic算法介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两台电脑信息"><span class="nav-text">两台电脑信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、UDP简单样例"><span class="nav-text">一、UDP简单样例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-本地测试（服务端单向接收客户端数据）"><span class="nav-text">1.1 本地测试（服务端单向接收客户端数据）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-两台电脑间通信（同时发送与接收）"><span class="nav-text">1.2 两台电脑间通信（同时发送与接收）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、UDP发送列表数据（json）"><span class="nav-text">二、UDP发送列表数据（json）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-python对象转换为json字符串（json-dumps函数）"><span class="nav-text">2.1 python对象转换为json字符串（json.dumps函数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-json字符串转换为python对象（json-loads函数）"><span class="nav-text">2.2 json字符串转换为python对象（json.loads函数）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、UDP传输图像"><span class="nav-text">三、UDP传输图像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Python获取本地摄像头并显示"><span class="nav-text">3.1 Python获取本地摄像头并显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-UDP传输图片并显示（小尺寸图片）"><span class="nav-text">3.2 UDP传输图片并显示（小尺寸图片）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-UDP传输视频流信息"><span class="nav-text">3.3 UDP传输视频流信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Arisim的UDP通信代码实例"><span class="nav-text">四、Arisim的UDP通信代码实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-服务端"><span class="nav-text">4.1 服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-客户端"><span class="nav-text">4.2 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-结果显示"><span class="nav-text">4.3 结果显示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'Python UDP编程'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'Python UDP编程'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/2.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/3.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/4.png">
-<meta property="og:updated_time" content="2019-07-24T05:48:11.531Z">
+<meta property="og:updated_time" content="2019-07-30T07:43:32.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（五）之Policy Gradient理解">
 <meta name="twitter:description" content="前言 在前面的四篇DQN强化学习算法中，主要是对价值函数进行了近似表示，这是只一种基于价值函数（Value Based）的方法，是基于状态价值函数V(s)或者动作价值函数Q(s,a)的控制问题解法。在确定性的环境中，当我们知道了每个状态价值函数V(s)的数值之后，策略就可以选择使得下一个状态期望状态价值函数最大的行动a。但是在随机的环境中状态价值函数V(s)就不太好用了，因为它不能直接指导我们进行">
@@ -506,9 +506,7 @@ J(\theta) = E{(r_1 + \gamma*r_2 + \gamma^2 * r_3 +...|\pi_\theta)}</script><h4 i
 <script type="math/tex; mode=display">
 J_1(\theta) = V_{\pi\theta}(s1) = E_{\pi\theta}[v1]</script><p>（2）有的问题没有明确的初始状态，那么我们的目标函数可以定义为平均价值，即</p>
 <script type="math/tex; mode=display">
-J_{av}V(\theta) = \sum{_s}d^{\pi\theta}V^{\pi\theta}(s)</script><p>其中，</p>
-<script type="math/tex; mode=display">
-d_{\pi\theta}(s)</script><p>是基于策略πθ生成的马尔科夫链关于状态的静态分布</p>
+J_{av}V(\theta) = \sum_s d^{\pi\theta}(s)V^{\pi\theta}(s)</script><p>其中，$d^{\pi\theta}(s)$是基于策略πθ生成的马尔科夫链关于状态的静态分布</p>
 <p>（3）使用每次time-step的平均奖励：</p>
 <script type="math/tex; mode=display">
 J_{av}R(\theta) = \sum{_s}d^{\pi\theta}(s)\sum{_a}\pi_{\theta}(s,a)R^a_s</script><p>为了改进策略，我们希望能够按照<code>J(θ)</code>的正梯度方向对π函数进行更新。假设θ是策略函数π的参数，本文的<strong>第一个基本结论</strong>为，无论上面哪种形式的<code>J(θ)</code>，其梯度都可以被表示为（后面会稍微证明一下）:</p>
@@ -558,12 +556,12 @@ J(\theta) = \sum_{s\epsilon S}d(s) \sum_{a \epsilon A } \pi_\theta(s,a) R(s,a)</
 <script type="math/tex; mode=display">
 \phi (s,a)</script><p>与参数θ的线性组合来权衡一个行为发生的几率，即：</p>
 <script type="math/tex; mode=display">
-\pi_{\theta} (s,a) = \frac{e^{\theta^T  \phi_{sa}}}{\sum_b e^{\theta^T \phi_{sb}} }</script><p>其中，</p>
+\pi_\theta(s,a) = \frac{e^{\phi(s,a)^T \theta}}{ \sum_{b} e^{\phi(s,b)^T \theta}}</script><p>其中，</p>
 <script type="math/tex; mode=display">
 \phi_{sa}</script><p>表示状态-动作对的L维特征向量</p>
 <p>所以，其分值函数为：</p>
 <script type="math/tex; mode=display">
-\nabla_\theta log \pi_\theta(s,a) = \phi(s,a) - E_{\pi\theta}[\phi(s,.)]</script></li>
+\nabla_\theta log\pi_\theta(s,a) = \phi(s,a) - E_{\pi\theta}[\phi(s,\cdot)]</script></li>
 <li><p><strong>高斯策略函数：</strong>应用于<strong>连续行为空间</strong>的一种常用策略，通常对于均值有一个参数化的表示，同样也可以是一些特征的线性代数和：</p>
 <script type="math/tex; mode=display">
 \mu(s) = \theta^T \phi(s)</script><p>方差可以是固定值，也可以用参数化表示</p>
@@ -742,7 +740,7 @@ a \sim N(\mu(s),\sigma^2)</script><p>对应的分值函数是：</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -764,7 +762,7 @@ a \sim N(\mu(s),\sigma^2)</script><p>对应的分值函数是：</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
