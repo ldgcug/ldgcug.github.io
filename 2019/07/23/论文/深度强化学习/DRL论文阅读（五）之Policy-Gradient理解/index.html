@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/2.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/3.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/4.png">
-<meta property="og:updated_time" content="2019-07-30T07:43:32.691Z">
+<meta property="og:updated_time" content="2019-07-31T04:38:26.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（五）之Policy Gradient理解">
 <meta name="twitter:description" content="前言 在前面的四篇DQN强化学习算法中，主要是对价值函数进行了近似表示，这是只一种基于价值函数（Value Based）的方法，是基于状态价值函数V(s)或者动作价值函数Q(s,a)的控制问题解法。在确定性的环境中，当我们知道了每个状态价值函数V(s)的数值之后，策略就可以选择使得下一个状态期望状态价值函数最大的行动a。但是在随机的环境中状态价值函数V(s)就不太好用了，因为它不能直接指导我们进行">
@@ -564,7 +564,7 @@ J(\theta) = \sum_{s\epsilon S}d(s) \sum_{a \epsilon A } \pi_\theta(s,a) R(s,a)</
 \nabla_\theta log\pi_\theta(s,a) = \phi(s,a) - E_{\pi\theta}[\phi(s,\cdot)]</script></li>
 <li><p><strong>高斯策略函数：</strong>应用于<strong>连续行为空间</strong>的一种常用策略，通常对于均值有一个参数化的表示，同样也可以是一些特征的线性代数和：</p>
 <script type="math/tex; mode=display">
-\mu(s) = \theta^T \phi(s)</script><p>方差可以是固定值，也可以用参数化表示</p>
+\mu(s) = \phi(s)^T \theta</script><p>方差可以是固定值，也可以用参数化表示</p>
 <p>行为对应于一个具体的数值，该数值以从</p>
 <script type="math/tex; mode=display">
 \mu(s)</script><p>为均值，</p>
@@ -740,7 +740,7 @@ a \sim N(\mu(s),\sigma^2)</script><p>对应的分值函数是：</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -762,7 +762,7 @@ a \sim N(\mu(s),\sigma^2)</script><p>对应的分值函数是：</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

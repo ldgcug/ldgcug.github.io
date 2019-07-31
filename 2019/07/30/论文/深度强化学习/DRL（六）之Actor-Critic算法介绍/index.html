@@ -90,10 +90,11 @@
 <meta property="og:description" content="前言 在上一节中，讲到了基于Policy Based的强化学习方法，最后也涉及到了模特卡洛策略梯度reinforce算法，但是在计算之前，需要提前知道完整的状态序列，同时还需要单独对策略函数进行迭代更新，不太容易收敛，并且方差较大。 因此本篇笔记将讨论策略（Policy Based）和价值（Value Based）相结合的方法：Actor-Critic算法  一、Policy Gradient回顾">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/5.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/2.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/3.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/4.png">
-<meta property="og:updated_time" content="2019-07-30T09:57:17.291Z">
+<meta property="og:updated_time" content="2019-07-31T06:29:56.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL（六）之Actor-Critic算法介绍">
 <meta name="twitter:description" content="前言 在上一节中，讲到了基于Policy Based的强化学习方法，最后也涉及到了模特卡洛策略梯度reinforce算法，但是在计算之前，需要提前知道完整的状态序列，同时还需要单独对策略函数进行迭代更新，不太容易收敛，并且方差较大。 因此本篇笔记将讨论策略（Policy Based）和价值（Value Based）相结合的方法：Actor-Critic算法  一、Policy Gradient回顾">
@@ -407,7 +408,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3k
+                  3.9k
                 </span>
               
 
@@ -423,7 +424,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  12
+                  16
                 </span>
               
             </div>
@@ -449,7 +450,7 @@
 <p>因此本篇笔记将讨论策略（Policy Based）和价值（Value Based）相结合的方法：Actor-Critic算法</p>
 </blockquote>
 <h2 id="一、Policy-Gradient回顾"><a href="#一、Policy-Gradient回顾" class="headerlink" title="一、Policy Gradient回顾"></a>一、Policy Gradient回顾</h2><blockquote>
-<p>基于策略梯度的强化学习方法的基本思路是直接更新策略，即直接将参数策略化，并对策略进行近似表示。用公式表示为$\pi_\theta (s,a)= P(a|s,\theta)\approx \pi(a|s)$。利用参数化的线性、非线性函数表示策略，寻找最后策略，而这个最优策略的搜索即是要将某个目标函数最大化</p>
+<p>基于策略梯度的强化学习方法的基本思路是直接更新策略，即直接将参数策略化，并对策略进行近似表示。用公式表示为$\pi_\theta (s,a)= P(a|s,\theta)\approx \pi(a|s)$。利用参数化的线性、非线性函数表示策略，寻找最优策略，而这个最优策略的搜索即是要将某个目标函数最大化</p>
 </blockquote>
 <h3 id="1-1-策略目标函数"><a href="#1-1-策略目标函数" class="headerlink" title="1.1 策略目标函数"></a>1.1 策略目标函数</h3><blockquote>
 <p>策略梯度的目标函数主要有以下三种方式</p>
@@ -486,10 +487,10 @@ J(\theta) = E_{\pi \theta}[r] = \sum_{s \epsilon S}d(s) \sum_{a \epsilon A}\pi_\
 <p><img src="/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/1.png" alt></p>
 <p><strong>算法描述：</strong>先随机初始化策略函数的参数$\theta$，对当前策略下的一个Episode：</p>
 <script type="math/tex; mode=display">
-{(s_1,a_1,r_2,...,s_{T-1},a_{T-1},r_T) \sim \pi_\theta}</script><p>从 t = 1 到 t =T-1的每一时刻，计算个体获得的奖励v(t)，然后更新参数$\theta$。如此重复每一个Epsidoe，直到结束。</p>
+{(s_1,a_1,r_2,...,s_{T-1},a_{T-1},r_T) \sim \pi_\theta}</script><p>从 t = 1 到 t =T-1的每一时刻，计算个体获得的奖励v(t)，然后更新参数$\theta$。如此重复每一个Episode，直到结束。</p>
 <p>其中的策略梯度可以表示为：</p>
 <script type="math/tex; mode=display">
-\Delta \theta_t = \alpha \nabla_\theta log \pi_\theta (s_t,a_t) v_t</script><p>参数使用梯度上法更新：</p>
+\Delta \theta_t = \alpha \nabla_\theta log \pi_\theta (s_t,a_t) v_t</script><p>参数使用梯度上升法更新：</p>
 <script type="math/tex; mode=display">
 \theta_{t+1} = \theta +\alpha \nabla_\theta log \pi_\theta (s_t,a_t) v_t</script><h2 id="二、Actor-Critic"><a href="#二、Actor-Critic" class="headerlink" title="二、Actor-Critic"></a>二、Actor-Critic</h2><blockquote>
 <p>蒙特卡洛策略梯度方法有着很高的方差，所以用一个Critic来估计行为价值函数</p>
@@ -514,8 +515,45 @@ J(\theta) = E_{\pi \theta}[r] = \sum_{s \epsilon S}d(s) \sum_{a \epsilon A}\pi_\
 <li>actor-critic：整合了上诉两个方法的有点。<font color="red">低方差，连续action </font>。critic对当前的state以及cation的表现进行估计，得到value function，用来给actor更新梯度。<font color="red">低方差的代价实在学习开始时，由于critic的估计不够准确而使算法具有较大的偏差 </font>。policy-gradient占了该算法的绝大部分，其中可以分为两种standard gradient以及natural gradient，另一部分更新actor。</li>
 </ul>
 <h3 id="2-3-Actor-Critic策略梯度"><a href="#2-3-Actor-Critic策略梯度" class="headerlink" title="2.3 Actor Critic策略梯度"></a>2.3 Actor Critic策略梯度</h3><blockquote>
-<p>加了Actor Critic的策略梯度公式变为</p>
+<p>因为蒙特卡洛策略梯度方法有着很高的方差，因此用一个Critic来估计行为价值函数$Q_w(s,a) \approx Q^{\pi_\theta}(s,a)$</p>
 </blockquote>
+<p>Critic要做的事情其实我们已经见过：策略评估，他要告诉个体，在由参数$\theta$确定的策略$\pi _\theta$到底表现的怎么样。所以Actor_Critic算法包含两种参数：</p>
+<ul>
+<li>Critic：更新行为价值函数的参数w</li>
+<li>Actor：更新策略的参数$\theta$，更新过程会受到Critic的价值函数的引导</li>
+</ul>
+<p>（1）一个简单的actor-critic算法可以使用基于行为价值的critic，它使用一个<strong>线性价值函数</strong>来近似状态行为价值函数：</p>
+<p>​        $Q_w(s,a) = \phi(s,a)^Tw$</p>
+<p>​        这里的$\phi(s,a)$是描述状态和行为的特征（L维向量），个人理解：一般可以看作为输入（即图像），然后进行矩阵转置，乘以参数$w$就表示为线性价值函数了。其中Critic通过线性近似的TD（0）更新$w$，Actor通过策略梯度更新$\theta$。</p>
+<p>算法流程如下：</p>
+<p><img src="/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/5.png" alt></p>
+<p>注：该算法仅是基于线性价值函数的近似的Actor-Critic算法。这是一个在线实时算法，针对每一步进行更新，不需要等到Episode结束。</p>
+<p>用特征的线性组合来近似$Q_w(s,a)$进而求解策略梯度的方法引入了偏倚，一个偏倚的价值下得到的策略梯度不一定能最后找到较好的解决方案，例如当近似价值函数的$Q_w(s,a)$ 使用可能会引起状态重名的特征时，就不一定能解决问题了。不过幸运的是，如果我们小心设计近似的 $Q_w(s,a)$函数，是可以避免引入偏倚的，这样我们相当于遵循了准确的策略梯度。</p>
+<p>（2） <strong>兼容近似函数Compatible Function Approximation</strong></p>
+<p>那怎么样才算是小心涉及的$Q_w(s,a)$呢？需要满足下面两个条件：</p>
+<ul>
+<li><p>近似价值函数的梯度完全等同于策略函数对数的梯度，即不存在重名（兼容）情况:</p>
+<script type="math/tex; mode=display">
+\nabla_wQ_w(s,a) = \nabla_\theta log \pi_\theta(s,a)</script></li>
+<li><p>价值函数参数$w$使得均方差最小        </p>
+<script type="math/tex; mode=display">
+\varepsilon = E_{\pi \theta} [(Q^{\pi_\theta}(s,a) - Q_w(s,a))^2]</script><p>符合这两个条件，则认为策略梯度是准确的，此时：</p>
+<script type="math/tex; mode=display">
+\nabla_\theta J(\theta) \approx E_{\pi\theta}[\nabla_\theta log\pi_\theta (s,a)Q_w(s,a)]</script><p><strong>证明过程</strong>：</p>
+<p>​    由于要估计Critic，即需要最小化均方差，如果要用参数$w$来使得均方差最小，则$w$一定为0 ，因此：</p>
+<script type="math/tex; mode=display">
+\nabla_w \varepsilon = 0</script><p>​    </p>
+<script type="math/tex; mode=display">
+\therefore \nabla_w \varepsilon = \nabla_w E_{\pi \theta}(s,a) [(Q^{\pi_\theta} - Q_w(s,a))^2] = E_{\pi \theta} [(Q^{\pi_\theta}(s,a) - Q_w(s,a))\nabla_wQ_w(s,a)] = 0</script><p>​    </p>
+<script type="math/tex; mode=display">
+此时，如果  \nabla_wQ_w(s,a) = \nabla_\theta log \pi_\theta(s,a)</script><p>​    </p>
+<script type="math/tex; mode=display">
+\therefore E_{\pi \theta} [(Q^{\pi_\theta}(s,a) - Q_w(s,a))\nabla_\theta log \pi_\theta(s,a)] = 0</script><script type="math/tex; mode=display">
+\therefore E_{\pi \theta}[Q^{\pi_\theta}(s,a) \nabla_\theta log \pi_\theta(s,a)] = E_{\pi \theta}[Q_w(s,a) \nabla_\theta log \pi_\theta(s,a)]</script><p>因此，就会认为策略梯度是准确的。但是如果两个条件都满足的话，整个算法相当于不需要使用critic，也就变成了传统的REINFORCE算法。所以在实践中，一般放宽条件2，更有利于通过时间差分学习到更有效的评估函数。所以策略评估通常使用蒙特卡洛策略评估、TD学习以及TD$(\lambda) $等，当然也可以使用最小方差法。具体见2.5节。</p>
+</li>
+</ul>
+<p>（3）<strong>总结</strong></p>
+<p>加了Actor Critic的策略梯度公式变为</p>
 <script type="math/tex; mode=display">
 \nabla_\theta J(\theta) \approx E_{\pi\theta}[\nabla_\theta log\pi_\theta (s,a)Q_w(s,a)]</script><p>梯度更新公式为：</p>
 <script type="math/tex; mode=display">
@@ -544,8 +582,8 @@ J(\theta) = E_{\pi \theta}[r] = \sum_{s \epsilon S}d(s) \sum_{a \epsilon A}\pi_\
 <script type="math/tex; mode=display">
 \theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t)A(S,A,w,\beta)</script><p>（5）基于TD($\lambda$)误差：一般都是基于后向TD($\lambda $)误差，是TD误差和效用迹E的乘积，这时Actor的策略函数参数更新的法公式是：</p>
 <script type="math/tex; mode=display">
-\theta = \theta + \alpha \delta(t)E(t)</script><p>​    其中，$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$，$E(t) = \gamma \lambda E_{t-1} + \alpha \nabla_\theta log \pi_\theta (s_t,a_t)$</p>
-<p>​    当$\lambda = 0$时，就是第（2）步的普通TD方法</p>
+\theta = \theta + \alpha \delta(t)E(t)</script><p>​        其中，$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$，$E(t) = \gamma \lambda E_{t-1} + \alpha \nabla_\theta log \pi_\theta (s_t,a_t)$</p>
+<p>​        当$\lambda = 0$时，就是第（2）步的普通TD方法</p>
 <p>对于Critic本身的模型参数w，一般都是使用均方误差损失函数来做迭代更新，类似于之前DQN中所讲到的迭代方法。如果我们使用的是最简单的线性Q函数，比如$Q(s,a,w) = \phi(s,a)^T w$，则Critic本身的模型参数w的更新公式可以表示为：</p>
 <script type="math/tex; mode=display">
 \delta(t) = R_{t+1} + \gamma Q(S_{t+1} ,A_{t+1})-Q(S_t,A_t)</script><script type="math/tex; mode=display">
@@ -557,7 +595,7 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
 <p><img src="/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/3.png" alt></p>
 <p>而这个是刘建平博客里的算法流程介绍：</p>
 <p><img src="/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/4.png" alt></p>
-<p>算法流程这一块，暂时也不好理解，也确实没有搜到到底哪一个才是真正的算法流程，后面再开代码去加深理解吧</p>
+<p>算法流程这一块，暂时也不好理解，也确实没有搜到到底哪一个才是真正的算法流程，后面再看代码去加深理解吧</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
 <p>首先，在网上找的关于Actor-Critic的论文阅读，阅读过程一脸懵逼，没办法，后来又在网上找了很多的博客，通过浏览别人的博客进行理解。</p>
 <p>阅读的原论文题目是：<strong>Actor-Critic Algorithms</strong> ，然后网上又有好多的论文笔记是关于这一篇的：<strong>Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor</strong> 具体的，我也不知道是看哪一篇，只知道前一篇Actor-Critic Algorithms的引用次数多。因此阅读的前一篇，后面的一片soft的暂时还没有阅读。</p>
@@ -577,6 +615,8 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
 <li><p><a href="https://blog.csdn.net/qq_30615903/article/details/80774384" target="_blank" rel="noopener">强化学习 Actor-Critic算法详解</a></p>
 </li>
 <li><p><a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/pg.pdf" target="_blank" rel="noopener">UCL的强化学习第7讲</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/28348110" target="_blank" rel="noopener">强化学习第七讲策略梯度</a></p>
 </li>
 </ul>
 <p>相关笔记：</p>
@@ -629,6 +669,10 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/" rel="prev" title="DRL论文阅读（七）之DPG方法">
+                DRL论文阅读（七）之DPG方法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -712,7 +756,7 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -734,7 +778,7 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

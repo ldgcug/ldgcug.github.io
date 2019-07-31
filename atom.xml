@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-07-30T09:57:17.291Z</updated>
+  <updated>2019-07-31T09:09:35.102Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -17,11 +17,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>DRL论文阅读（七）之DPG方法</title>
+    <link href="http://ldgyyf.cn/2019/07/31/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%83%EF%BC%89%E4%B9%8BDPG%E6%96%B9%E6%B3%95/"/>
+    <id>http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/</id>
+    <published>2019-07-31T05:26:56.000Z</published>
+    <updated>2019-07-31T09:09:35.102Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;为什么需要引入确定性策略梯度？&lt;/p&gt;
+&lt;p&gt;传统的策略梯度算法以概率形式$\pi_\theta(a|s) =
+        
+      
+    
+    </summary>
+    
+      <category term="论文" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/"/>
+    
+      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="DPG" scheme="http://ldgyyf.cn/tags/DPG/"/>
+    
+  </entry>
+  
+  <entry>
     <title>DRL（六）之Actor-Critic算法介绍</title>
     <link href="http://ldgyyf.cn/2019/07/30/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BActor-Critic%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/"/>
     <id>http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/</id>
     <published>2019-07-30T03:36:09.000Z</published>
-    <updated>2019-07-30T09:57:17.291Z</updated>
+    <updated>2019-07-31T06:29:56.671Z</updated>
     
     <summary type="html">
     
@@ -108,7 +140,7 @@
     <link href="http://ldgyyf.cn/2019/07/23/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient%E7%90%86%E8%A7%A3/"/>
     <id>http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/</id>
     <published>2019-07-23T07:36:26.000Z</published>
-    <updated>2019-07-30T07:43:32.691Z</updated>
+    <updated>2019-07-31T04:38:26.096Z</updated>
     
     <summary type="html">
     
@@ -568,32 +600,6 @@
       <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
     
       <category term="Unreal Engine" scheme="http://ldgyyf.cn/tags/Unreal-Engine/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>新电脑上移植旧电脑上博客笔记</title>
-    <link href="http://ldgyyf.cn/2019/06/09/Hexo/%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E7%A7%BB%E6%A4%8D%E6%97%A7%E7%94%B5%E8%84%91%E4%B8%8A%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/"/>
-    <id>http://ldgyyf.cn/2019/06/09/Hexo/新电脑上移植旧电脑上博客笔记/</id>
-    <published>2019-06-09T14:34:43.000Z</published>
-    <updated>2019-06-09T15:18:24.837Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;在新的电脑上移植旧电脑博客&quot;&gt;&lt;a href=&quot;#在新的电脑上移植旧电脑博客&quot; class=&quot;headerlink&quot; title=&quot;在新的电脑上移植旧电脑博客&quot;&gt;&lt;/a&gt;在新的电脑上移植旧电脑博客&lt;/h1&gt;&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Hexo" scheme="http://ldgyyf.cn/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="http://ldgyyf.cn/tags/Hexo/"/>
     
   </entry>
   
