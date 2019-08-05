@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-08-04T10:35:32.820Z</updated>
+  <updated>2019-08-05T05:54:26.829Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -17,11 +17,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>DRL论文阅读（九）之A3C算法</title>
+    <link href="http://ldgyyf.cn/2019/08/05/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BA3C%E7%AE%97%E6%B3%95/"/>
+    <id>http://ldgyyf.cn/2019/08/05/论文/深度强化学习/DRL论文阅读（九）之A3C算法/</id>
+    <published>2019-08-05T01:12:57.000Z</published>
+    <updated>2019-08-05T05:54:26.829Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;针对普通AC算法中比较难收敛的问题，DeepMind在&lt;em&gt;Asynchronous Methods for
+        
+      
+    
+    </summary>
+    
+      <category term="论文" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/"/>
+    
+      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="A3C" scheme="http://ldgyyf.cn/tags/A3C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>DRL论文阅读（八）之DDPG算法</title>
     <link href="http://ldgyyf.cn/2019/08/04/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8BDDPG%E7%AE%97%E6%B3%95/"/>
     <id>http://ldgyyf.cn/2019/08/04/论文/深度强化学习/DRL论文阅读（八）之DDPG算法/</id>
     <published>2019-08-04T05:44:10.000Z</published>
-    <updated>2019-08-04T10:35:32.820Z</updated>
+    <updated>2019-08-04T10:41:22.954Z</updated>
     
     <summary type="html">
     
@@ -372,9 +403,9 @@
       <category term="Airsim" scheme="http://ldgyyf.cn/categories/Airsim/"/>
     
     
-      <category term="ubuntu" scheme="http://ldgyyf.cn/tags/ubuntu/"/>
-    
       <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
+    
+      <category term="ubuntu" scheme="http://ldgyyf.cn/tags/ubuntu/"/>
     
   </entry>
   
@@ -461,9 +492,9 @@
       <category term="Airsim" scheme="http://ldgyyf.cn/categories/Airsim/"/>
     
     
-      <category term="ubuntu" scheme="http://ldgyyf.cn/tags/ubuntu/"/>
-    
       <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
+    
+      <category term="ubuntu" scheme="http://ldgyyf.cn/tags/ubuntu/"/>
     
   </entry>
   
@@ -575,34 +606,6 @@
       <category term="VS2017" scheme="http://ldgyyf.cn/tags/VS2017/"/>
     
       <category term="GDAL" scheme="http://ldgyyf.cn/tags/GDAL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VS2017配置（一）之opencv配置</title>
-    <link href="http://ldgyyf.cn/2019/06/26/%E7%B3%BB%E7%BB%9F/VS2017%E9%85%8D%E7%BD%AE%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8Bopencv%E9%85%8D%E7%BD%AE/"/>
-    <id>http://ldgyyf.cn/2019/06/26/系统/VS2017配置（一）之opencv配置/</id>
-    <published>2019-06-26T03:35:46.000Z</published>
-    <updated>2019-06-26T08:55:40.146Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="VS2017" scheme="http://ldgyyf.cn/tags/VS2017/"/>
-    
-      <category term="Opencv" scheme="http://ldgyyf.cn/tags/Opencv/"/>
     
   </entry>
   
