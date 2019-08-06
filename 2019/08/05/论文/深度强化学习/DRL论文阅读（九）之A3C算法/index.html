@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/05/论文/深度强化学习/DRL论文阅读（九）之A3C算法/3.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/05/论文/深度强化学习/DRL论文阅读（九）之A3C算法/4.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/05/论文/深度强化学习/DRL论文阅读（九）之A3C算法/5.png">
-<meta property="og:updated_time" content="2019-08-05T05:54:26.829Z">
+<meta property="og:updated_time" content="2019-08-05T06:03:22.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（九）之A3C算法">
 <meta name="twitter:description" content="前言 针对普通AC算法中比较难收敛的问题，DeepMind在Asynchronous Methods for Deep Reinforcement Learning一文中，介绍了另一种简单的轻量级深度强化学习框架——异步地进行深度神经网络梯度下降。论文提出了四种标准强化学习算法的异步变体，分别是Asynchronous  one-step Q-Learning，Asynchronous  one-">
@@ -542,7 +542,7 @@ A(s_t,a_t;\theta',\theta'_v) = \sum_{i=0}^{k-1} \gamma^i r_{t+i} +\gamma^kV(s_{t
 <p><strong>在实际操作中，论文在该公式中加入了策略$\pi$的熵项$\beta\nabla_{\theta’}H(\pi(s_t;\theta’))$，防止过早的进入次优策略。</strong></p>
 <p>另一条公式是使用TD方式<strong>梯度下降</strong>更新状态值函数的参数，即算法中的$\partial (R-V(s_i;\theta’_v))^2 / \partial\theta’_v$</p>
 <p><strong>注意</strong>：</p>
-<p>上面四个算法都是等所有的异步agent执行完后再用累计的梯度信息更新网络参数。其中n-step的算法（后两个）需要每个agent复制一份子网络，每个agent执行n步后倒退算出每步的总奖励和相关梯度，用来及梯度更新更新主网络参数（如果不复制子网络，则等单个agent执行完n-step耗时太多，而one-step可忽略这个影响）。</p>
+<p>上面四个算法都是等所有的异步agent执行完后再用累计的梯度信息更新网络参数。其中n-step的算法（后两个）需要每个agent复制一份子网络，每个agent执行n步后倒退算出每步的总奖励和相关梯度，用累计梯度更新更新主网络参数（如果不复制子网络，则等单个agent执行完n-step耗时太多，而one-step可忽略这个影响）。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
 <p>A3C解决了Actor-Critic难以收敛的问题，同时更重要的是，它提供了一种通用的异步的并发的强化学习框架，这个框架不止可以用于A3C，还能应用于其他的强化学习算法。</p>
 </blockquote>
@@ -597,6 +597,10 @@ A(s_t,a_t;\theta',\theta'_v) = \sum_{i=0}^{k-1} \gamma^i r_{t+i} +\gamma^kV(s_{t
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/05/代码/DRL/搭建OpenAI-gym环境并简单测试/" rel="prev" title="搭建OpenAI gym环境并简单测试">
+                搭建OpenAI gym环境并简单测试 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -680,7 +684,7 @@ A(s_t,a_t;\theta',\theta'_v) = \sum_{i=0}^{k-1} \gamma^i r_{t+i} +\gamma^kV(s_{t
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -691,7 +695,7 @@ A(s_t,a_t;\theta',\theta'_v) = \sum_{i=0}^{k-1} \gamma^i r_{t+i} +\gamma^kV(s_{t
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -702,7 +706,7 @@ A(s_t,a_t;\theta',\theta'_v) = \sum_{i=0}^{k-1} \gamma^i r_{t+i} +\gamma^kV(s_{t
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

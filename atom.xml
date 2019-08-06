@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-08-05T05:54:26.829Z</updated>
+  <updated>2019-08-06T10:57:54.636Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -17,11 +17,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>代码实现（一）之Nature DQN</title>
+    <link href="http://ldgyyf.cn/2019/08/06/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BNature-DQN/"/>
+    <id>http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/</id>
+    <published>2019-08-06T08:06:49.000Z</published>
+    <updated>2019-08-06T10:57:54.636Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;主要参考莫烦大神的代码，对OpenAI
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="http://ldgyyf.cn/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="http://ldgyyf.cn/tags/OpenAI-gym/"/>
+    
+      <category term="DQN" scheme="http://ldgyyf.cn/tags/DQN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搭建OpenAI gym环境并简单测试</title>
+    <link href="http://ldgyyf.cn/2019/08/05/%E4%BB%A3%E7%A0%81/DRL/%E6%90%AD%E5%BB%BAOpenAI-gym%E7%8E%AF%E5%A2%83%E5%B9%B6%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95/"/>
+    <id>http://ldgyyf.cn/2019/08/05/代码/DRL/搭建OpenAI-gym环境并简单测试/</id>
+    <published>2019-08-05T07:00:18.000Z</published>
+    <updated>2019-08-05T14:51:56.280Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;搭建OpenAI gym环境的目的是为了后面的一系列DRL的强化学习代码的实现，因为OpenAI
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="http://ldgyyf.cn/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="http://ldgyyf.cn/tags/OpenAI-gym/"/>
+    
+  </entry>
+  
+  <entry>
     <title>DRL论文阅读（九）之A3C算法</title>
     <link href="http://ldgyyf.cn/2019/08/05/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BA3C%E7%AE%97%E6%B3%95/"/>
     <id>http://ldgyyf.cn/2019/08/05/论文/深度强化学习/DRL论文阅读（九）之A3C算法/</id>
     <published>2019-08-05T01:12:57.000Z</published>
-    <updated>2019-08-05T05:54:26.829Z</updated>
+    <updated>2019-08-05T06:03:22.670Z</updated>
     
     <summary type="html">
     
@@ -191,9 +255,9 @@
       <category term="Carla" scheme="http://ldgyyf.cn/categories/Carla/"/>
     
     
-      <category term="Unreal Engine" scheme="http://ldgyyf.cn/tags/Unreal-Engine/"/>
-    
       <category term="Carla" scheme="http://ldgyyf.cn/tags/Carla/"/>
+    
+      <category term="Unreal Engine" scheme="http://ldgyyf.cn/tags/Unreal-Engine/"/>
     
   </entry>
   
@@ -550,62 +614,6 @@
     
     
       <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>初识Airsim（二）之Windows下ROS安装配置</title>
-    <link href="http://ldgyyf.cn/2019/06/27/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BWindows%E4%B8%8BROS%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
-    <id>http://ldgyyf.cn/2019/06/27/Airsim/初识Airsim（二）之Windows下ROS安装配置/</id>
-    <published>2019-06-27T06:35:59.000Z</published>
-    <updated>2019-06-27T07:14:07.322Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Airsim" scheme="http://ldgyyf.cn/categories/Airsim/"/>
-    
-    
-      <category term="Windows" scheme="http://ldgyyf.cn/tags/Windows/"/>
-    
-      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VS2017配置（二）之GDAL配置</title>
-    <link href="http://ldgyyf.cn/2019/06/26/%E7%B3%BB%E7%BB%9F/VS2017%E9%85%8D%E7%BD%AE%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BGDAL%E9%85%8D%E7%BD%AE/"/>
-    <id>http://ldgyyf.cn/2019/06/26/系统/VS2017配置（二）之GDAL配置/</id>
-    <published>2019-06-26T06:40:07.000Z</published>
-    <updated>2019-06-26T09:37:59.876Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="VS2017" scheme="http://ldgyyf.cn/tags/VS2017/"/>
-    
-      <category term="GDAL" scheme="http://ldgyyf.cn/tags/GDAL/"/>
     
   </entry>
   
