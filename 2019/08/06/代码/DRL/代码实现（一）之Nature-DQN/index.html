@@ -90,6 +90,7 @@
 <meta property="og:description" content="前言 主要参考莫烦大神的代码，对OpenAI gym的CartPole环境进行算法验证，所用算法为2015版本的Nature DQN。全部代码  一、CartPole说明 下图中的动态图没有显示出来，详细信息，点击CartPole-V0   杆通过未致动的接头连接到推车，推车沿着无摩擦的轨道移动。通过向推车施加+1或-1的力来控制系统。钟摆开始直立，目标是防止它倒下。每个时间步长都会提供+1的奖励">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/9.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/2.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/3.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/4.png">
@@ -97,7 +98,13 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/6.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/7.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/8.png">
-<meta property="og:updated_time" content="2019-08-06T10:57:54.636Z">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/10.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/11.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/12.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/13.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/14.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/15.png">
+<meta property="og:updated_time" content="2019-08-08T14:49:47.788Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（一）之Nature DQN">
 <meta name="twitter:description" content="前言 主要参考莫烦大神的代码，对OpenAI gym的CartPole环境进行算法验证，所用算法为2015版本的Nature DQN。全部代码  一、CartPole说明 下图中的动态图没有显示出来，详细信息，点击CartPole-V0   杆通过未致动的接头连接到推车，推车沿着无摩擦的轨道移动。通过向推车施加+1或-1的力来控制系统。钟摆开始直立，目标是防止它倒下。每个时间步长都会提供+1的奖励">
@@ -411,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.3k
+                  2.8k
                 </span>
               
 
@@ -427,7 +434,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10
+                  12
                 </span>
               
             </div>
@@ -449,13 +456,15 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>主要参考莫烦大神的代码，对OpenAI gym的CartPole环境进行算法验证，所用算法为2015版本的Nature DQN。<a href="https://github.com/ldgcug/DRL-Tensorflow/tree/master/Nature%20DQN" target="_blank" rel="noopener">全部代码</a></p>
+<p>主要参考莫烦大神的代码，对OpenAI gym的CartPole环境进行算法验证，所用算法为2015版本的Nature DQN。<a href="https://github.com/ldgcug/DeepReinforcementLearning-Tensorflow/tree/master/Nature%20DQN" target="_blank" rel="noopener">全部代码</a></p>
 </blockquote>
 <h2 id="一、CartPole说明"><a href="#一、CartPole说明" class="headerlink" title="一、CartPole说明"></a>一、CartPole说明</h2><blockquote>
 <p>下图中的动态图没有显示出来，详细信息，点击<a href="https://gym.openai.com/envs/CartPole-v0/" target="_blank" rel="noopener">CartPole-V0</a></p>
 </blockquote>
 <p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/1.png" alt></p>
 <p>杆通过未致动的接头连接到推车，推车沿着无摩擦的轨道移动。通过向推车施加+1或-1的力来控制系统。钟摆开始直立，目标是防止它倒下。每个时间步长都会提供+1的奖励，以保持杆保持直立。当极点与垂直方向相差超过15度时，该episode结束，或者推车从中心移动超过2.4个单位。</p>
+<p><strong>CartPole的详细说明：</strong><a href="https://github.com/openai/gym/wiki/CartPole-v0" target="_blank" rel="noopener">wiki介绍</a></p>
+<p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/9.png" alt></p>
 <h2 id="二、算法伪代码"><a href="#二、算法伪代码" class="headerlink" title="二、算法伪代码"></a>二、算法伪代码</h2><blockquote>
 <p>图片主要来源于<a href="https://blog.csdn.net/u013236946/article/details/72871858" target="_blank" rel="noopener">草帽B-O-Y</a>的博客</p>
 </blockquote>
@@ -498,7 +507,7 @@
 <h4 id="3-2-7-目标网络参数更新"><a href="#3-2-7-目标网络参数更新" class="headerlink" title="3.2.7 目标网络参数更新"></a>3.2.7 目标网络参数更新</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_target</span><span class="params">(self)</span>:</span></span><br><span class="line">	t_params = tf.get_collection(<span class="string">'target_net_params'</span>)</span><br><span class="line">	e_params = tf.get_collection(<span class="string">'eval_net_params'</span>)</span><br><span class="line">	self.sess.run([tf.assign(t,e) <span class="keyword">for</span> t,e <span class="keyword">in</span> zip(t_params,e_params)])</span><br></pre></td></tr></table></figure>
 <h3 id="3-3-主函数（run-CartPole-py）"><a href="#3-3-主函数（run-CartPole-py）" class="headerlink" title="3.3 主函数（run_CartPole.py）"></a>3.3 主函数（run_CartPole.py）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"><span class="keyword">from</span> dqn <span class="keyword">import</span> DQN  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env = gym.make(<span class="string">'CartPole-v0'</span>) <span class="comment">#使用CartPole-v0环境</span></span><br><span class="line">env = env.unwrapped   <span class="comment">#最好是添加， 不做这个会有很多限制</span></span><br><span class="line"></span><br><span class="line">print(env.action_space) <span class="comment"># 查看这个环境中可用的 action 有多少个</span></span><br><span class="line">print(env.observation_space) <span class="comment"># 查看这个环境中可用的 state 的 observation 有多少个</span></span><br><span class="line">print(env.observation_space.high) <span class="comment"># 查看 observation 最高取值</span></span><br><span class="line">print(env.observation_space.low) <span class="comment"># 查看 observation 最低取值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#定义使用DQN算法，设定缓冲区即epsilon增长速度值</span></span><br><span class="line">RL = DQN(s_dim = env.observation_space.shape[<span class="number">0</span>],</span><br><span class="line">		 a_dim = env.action_space.n,</span><br><span class="line">		 learning_rate = <span class="number">0.01</span>,</span><br><span class="line">		 e_greedy = <span class="number">0.9</span>,</span><br><span class="line">		 replace_target_iter = <span class="number">100</span>,</span><br><span class="line">		 memory_size = <span class="number">2000</span>,</span><br><span class="line">		 e_greedy_increment = <span class="number">0.001</span>)</span><br><span class="line"></span><br><span class="line">total_steps = <span class="number">0</span> <span class="comment">#记录步数</span></span><br><span class="line">total_reward = [] <span class="comment">#记录累计奖励</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i_episode <span class="keyword">in</span> range(<span class="number">200</span>): <span class="comment">#迭代100次，200次，300次都可以</span></span><br><span class="line">	s = env.reset() <span class="comment"># 获取回合 i_episode 第一个 observation</span></span><br><span class="line">	ep_r = <span class="number">0</span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		env.render() <span class="comment"># 刷新显示环境</span></span><br><span class="line"></span><br><span class="line">		a = RL.choose_action(s) <span class="comment"># 根据状态选行为</span></span><br><span class="line">		s_,r,done,info = env.step(a) <span class="comment"># 获取下一个 state</span></span><br><span class="line">		<span class="comment"># the smaller theta and closer to center the better</span></span><br><span class="line">		x, x_dot, theta, theta_dot = s_    <span class="comment"># 细分开, 为了修改原配的 reward</span></span><br><span class="line">        <span class="comment"># x 是车的水平位移, 所以 r1 是车越偏离中心, 分越少</span></span><br><span class="line">		r1 = (env.x_threshold - abs(x))/env.x_threshold - <span class="number">0.8</span></span><br><span class="line">        <span class="comment"># theta 是棒子离垂直的角度, 角度越大, 越不垂直. 所以 r2 是棒越垂直, 分越高</span></span><br><span class="line">		r2 = (env.theta_threshold_radians - abs(theta))/env.theta_threshold_radians - <span class="number">0.5</span></span><br><span class="line">		r = r1 + r2 <span class="comment"># 总 reward 是 r1 和 r2 的结合, 既考虑位置, 也考虑角度, 这样 DQN 学习更有效率</span></span><br><span class="line">		RL.store_transition(s,a,r,s_,done)  <span class="comment"># 保存这一组记忆</span></span><br><span class="line"></span><br><span class="line">		ep_r += r <span class="comment"># 统计当前episode的累计奖励</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> total_steps &gt; <span class="number">1000</span>:</span><br><span class="line">			RL.learn() <span class="comment">#学习训练</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> done:</span><br><span class="line">							print(<span class="string">'episode:'</span>,i_episode,<span class="string">'ep_r:'</span>,round(ep_r,<span class="number">2</span>),<span class="string">'epsilon'</span>,round(RL.epsilon,<span class="number">2</span>),<span class="string">'buffer_size:'</span>,RL.memory_count,<span class="string">'steps:'</span>,total_steps)</span><br><span class="line">			total_reward.append(ep_r)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">		s = s_</span><br><span class="line">		total_steps += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">RL.plot_cost() <span class="comment">#输出cost曲线</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#输出reward曲线</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">plt.plot(np.arange(len(total_reward)),total_reward)</span><br><span class="line">plt.ylabel(<span class="string">'Total Reward'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Episode '</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <h3 id="3-4-全部代码"><a href="#3-4-全部代码" class="headerlink" title="3.4 全部代码"></a>3.4 全部代码</h3><blockquote>
-<p>直接查看<a href="https://github.com/ldgcug/DRL-Tensorflow/blob/master/Nature%20DQN/dqn.py" target="_blank" rel="noopener">所有代码</a></p>
+<p>直接查看<a href="https://github.com/ldgcug/DeepReinforcementLearning-Tensorflow/tree/master/Nature%20DQN" target="_blank" rel="noopener">所有代码</a></p>
 </blockquote>
 <h2 id="四、结果显示"><a href="#四、结果显示" class="headerlink" title="四、结果显示"></a>四、结果显示</h2><p>100个episode（某一次）的cost</p>
 <p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/4.png" alt></p>
@@ -508,11 +517,48 @@
 <p>200个episode（另一次）的cost和reward</p>
 <p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/7.png" alt></p>
 <p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/8.png" alt></p>
+<h2 id="五、MountainCar例子"><a href="#五、MountainCar例子" class="headerlink" title="五、MountainCar例子"></a>五、MountainCar例子</h2><h3 id="5-1-MountainCar问题说明"><a href="#5-1-MountainCar问题说明" class="headerlink" title="5.1 MountainCar问题说明"></a>5.1 MountainCar问题说明</h3><blockquote>
+<p><a href="https://gym.openai.com/envs/MountainCar-v0/" target="_blank" rel="noopener">MountainCar</a></p>
+</blockquote>
+<p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/10.png" alt></p>
+<p>汽车位于一条轨道上，位于两个“山脉”之间。目标是在右边开山;然而，汽车的发动机强度不足以在一次通过中攀登山峰。因此，成功的唯一途径是来回驾驶以增强动力。</p>
+<p><a href="https://github.com/openai/gym/wiki/MountainCar-v0" target="_blank" rel="noopener">MountainCar环境介绍</a></p>
+<p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/11.png" alt></p>
+<h3 id="5-2-代码部分"><a href="#5-2-代码部分" class="headerlink" title="5.2 代码部分"></a>5.2 代码部分</h3><blockquote>
+<p>dqn的代码部分不变，变化的知识主函数的代码，和run_CartPole.py的代码很类似，但有点小区别</p>
+<p><a href="https://github.com/ldgcug/DeepReinforcementLearning-Tensorflow/blob/master/Nature%20DQN/run_MountainCar.py" target="_blank" rel="noopener">run_MountainCar.py</a></p>
+</blockquote>
+<p>下面说下run_MountainCar.py和run_CartPole.py的不同之处</p>
+<p>（1）第一处不同（注释的为CartPole，没注释的为MountainCar）</p>
+<p>首先，环境不同，因此状态维度和行为维度不相同，这个很正常。但是这里的<strong>学习率</strong>、<strong>目标网络更新步数</strong>、<strong>回放池大小</strong>、<strong>探索的增长速度值</strong>全部不相同。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># RL = DQN(s_dim = env.observation_space.shape[0],</span></span><br><span class="line"><span class="comment"># 		 a_dim = env.action_space.n,</span></span><br><span class="line"><span class="comment"># 		 learning_rate = 0.01,</span></span><br><span class="line"><span class="comment"># 		 e_greedy = 0.9,</span></span><br><span class="line"><span class="comment"># 		 replace_target_iter = 100,</span></span><br><span class="line"><span class="comment"># 		 memory_size = 2000,</span></span><br><span class="line"><span class="comment"># 		 e_greedy_increment = 0.001)</span></span><br><span class="line"></span><br><span class="line">RL = DQN(s_dim =  env.observation_space.shape[<span class="number">0</span>],</span><br><span class="line">		 a_dim =  env.action_space.n,</span><br><span class="line">		 learning_rate = <span class="number">0.001</span>,</span><br><span class="line">		 e_greedy = <span class="number">0.9</span>,</span><br><span class="line">		 replace_target_iter = <span class="number">300</span>,</span><br><span class="line">		 memory_size = <span class="number">3000</span>,</span><br><span class="line">		 e_greedy_increment = <span class="number">0.0002</span>)</span><br></pre></td></tr></table></figure>
+<p>（2）第二处不同（奖励不同）</p>
+<p>MountainCar的奖励设置为position，这里加减是为了限定在[0,1]范围内。和前面一样，不同的环境奖励也不相同，这个奖励一般也还好设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r = abs(position - (-0.5)) # r in [0,1]</span><br></pre></td></tr></table></figure>
+<h3 id="5-3-结果显示"><a href="#5-3-结果显示" class="headerlink" title="5.3 结果显示"></a>5.3 结果显示</h3><blockquote>
+<p>我这里的cost的显示图和莫烦的cost的显示图不太一样，但其实在DRL算法中，看中的是累计奖励，即第二幅图和第四幅图。可以看出，累计奖励也是在慢慢的平缓，因为训练到后面，已经知道如何到达目标点，会比较快速的到达，而不用左右来回摇摆，因此是一个下降趋势。</p>
+</blockquote>
+<p>10个episode</p>
+<p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/12.png" alt></p>
+<p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/13.png" alt></p>
+<p>20个episode</p>
+<p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/14.png" alt></p>
+<p><img src="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/15.png" alt></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<p>到后面的时候，cost下降的还是较为明显，但仍然有波动，这不是随机选择行为导致的结果，从模型中也可以看出有时候不太稳定，因此该算法还需要改进</p>
+<p>到后面的时候，cost下降的还是较为明显，但仍然有波动，这可能是随机选择行为导致的结果，从模型中也可以看出有时候不太稳定，因此该算法还需要改进。在实际中，要看重累计奖励而不是损失函数。</p>
+<p>从上面的两个不同例子中可以看出，不同的环境，在主函数中，<strong>学习率、回放池大小、探索的增长速度值、目标网络更新步数</strong>都会有所不同，甚至，在dqn.py中也会改变其<strong>网络结构</strong>，但是这些值又是如何试验找出一个比较合适的值的呢？这是一个问题</p>
 </blockquote>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/6_OpenAI_gym/RL_brain.py" target="_blank" rel="noopener">莫烦</a></li>
+<li><p><a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/6_OpenAI_gym/RL_brain.py" target="_blank" rel="noopener">莫烦</a></p>
+</li>
+<li><p><a href="https://github.com/openai/gym/blob/master/gym/envs/classic_control/cartpole.py" target="_blank" rel="noopener">CartPole源代码</a></p>
+</li>
+<li><p><a href="https://github.com/openai/gym/wiki/CartPole-v0" target="_blank" rel="noopener">CartPole详细介绍</a></p>
+</li>
+<li><p><a href="https://github.com/openai/gym/wiki/MountainCar-v0" target="_blank" rel="noopener">MountainCar详细介绍</a></p>
+</li>
+<li><p><a href="https://github.com/openai/gym/blob/master/gym/envs/classic_control/mountain_car.py" target="_blank" rel="noopener">MountainCar源代码</a></p>
+</li>
 </ul>
 
       
@@ -557,6 +603,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/" rel="prev" title="代码实现（二）之Double DQN">
+                代码实现（二）之Double DQN <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -640,7 +690,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -730,7 +780,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、CartPole说明"><span class="nav-text">一、CartPole说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、算法伪代码"><span class="nav-text">二、算法伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、代码介绍"><span class="nav-text">三、代码介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-代码组成"><span class="nav-text">3.1 代码组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-DQN实现-dqn-py"><span class="nav-text">3.2 DQN实现(dqn.py)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-程序框架"><span class="nav-text">3.2.1 程序框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-初始化"><span class="nav-text">3.2.2 初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-创建Q网络和目标网络"><span class="nav-text">3.2.3 创建Q网络和目标网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-经验回放池的数据存储"><span class="nav-text">3.2.4 经验回放池的数据存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-e-greedy行为选择"><span class="nav-text">3.2.5 e-greedy行为选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-6-训练cnn网络"><span class="nav-text">3.2.6 训练cnn网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-7-目标网络参数更新"><span class="nav-text">3.2.7 目标网络参数更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-主函数（run-CartPole-py）"><span class="nav-text">3.3 主函数（run_CartPole.py）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-全部代码"><span class="nav-text">3.4 全部代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、结果显示"><span class="nav-text">四、结果显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、CartPole说明"><span class="nav-text">一、CartPole说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、算法伪代码"><span class="nav-text">二、算法伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、代码介绍"><span class="nav-text">三、代码介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-代码组成"><span class="nav-text">3.1 代码组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-DQN实现-dqn-py"><span class="nav-text">3.2 DQN实现(dqn.py)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-程序框架"><span class="nav-text">3.2.1 程序框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-初始化"><span class="nav-text">3.2.2 初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-创建Q网络和目标网络"><span class="nav-text">3.2.3 创建Q网络和目标网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-经验回放池的数据存储"><span class="nav-text">3.2.4 经验回放池的数据存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-e-greedy行为选择"><span class="nav-text">3.2.5 e-greedy行为选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-6-训练cnn网络"><span class="nav-text">3.2.6 训练cnn网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-7-目标网络参数更新"><span class="nav-text">3.2.7 目标网络参数更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-主函数（run-CartPole-py）"><span class="nav-text">3.3 主函数（run_CartPole.py）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-全部代码"><span class="nav-text">3.4 全部代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、结果显示"><span class="nav-text">四、结果显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、MountainCar例子"><span class="nav-text">五、MountainCar例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-MountainCar问题说明"><span class="nav-text">5.1 MountainCar问题说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-代码部分"><span class="nav-text">5.2 代码部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-结果显示"><span class="nav-text">5.3 结果显示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>

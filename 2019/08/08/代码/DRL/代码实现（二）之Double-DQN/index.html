@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DRL,OpenAI gym,Double DQN,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 理论部分，这里将不再强调，直接强调重点部分（理论部分请点击Double DQN） 经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。 本文的代码，主要参考莫烦大神的代码，只做了少量的修改。  一、实验环境 总共测试了三种环境，其中CartPole">
+<meta name="keywords" content="DRL,OpenAI gym,Double DQN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码实现（二）之Double DQN">
+<meta property="og:url" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 理论部分，这里将不再强调，直接强调重点部分（理论部分请点击Double DQN） 经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。 本文的代码，主要参考莫烦大神的代码，只做了少量的修改。  一、实验环境 总共测试了三种环境，其中CartPole">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/3.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/4.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/5.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/6.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/7.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/8.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/9.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/10.png">
+<meta property="og:updated_time" content="2019-08-08T16:35:33.898Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码实现（二）之Double DQN">
+<meta name="twitter:description" content="前言 理论部分，这里将不再强调，直接强调重点部分（理论部分请点击Double DQN） 经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。 本文的代码，主要参考莫烦大神的代码，只做了少量的修改。  一、实验环境 总共测试了三种环境，其中CartPole">
+<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/">
+
+
+
+
+
+  <title>代码实现（二）之Double DQN | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">代码实现（二）之Double DQN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-08T22:47:12+08:00">
+                2019-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码/" itemprop="url" rel="index">
+                    <span itemprop="name">代码</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码/深度强化学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度强化学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/" class="leancloud_visitors" data-flag-title="代码实现（二）之Double DQN">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>理论部分，这里将不再强调，直接强调重点部分（理论部分请点击<a href="https://ldgyyf.cn/2019/07/18/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%9B%AE%E6%A0%87Q%E5%80%BC%E8%AE%A1%E7%AE%97%EF%BC%88Double-DQN%EF%BC%89/">Double DQN</a>）</p>
+<p>经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。</p>
+<p>本文的代码，主要参考<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/5.1_Double_DQN" target="_blank" rel="noopener">莫烦大神</a>的代码，只做了少量的修改。</p>
+</blockquote>
+<h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><blockquote>
+<p>总共测试了三种环境，其中CartPole和MountainCar的环境，在<a href="https://ldgyyf.cn/2019/08/06/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BNature-DQN/#more">上一节</a>已经介绍过，这一次，添加了一个Pendulum环境。</p>
+</blockquote>
+<h3 id="1-1-Pendulum环境简单介绍"><a href="#1-1-Pendulum环境简单介绍" class="headerlink" title="1.1 Pendulum环境简单介绍"></a>1.1 Pendulum环境简单介绍</h3><p><strong>目标说明：</strong><a href="https://gym.openai.com/envs/Pendulum-v0/" target="_blank" rel="noopener">详细网址</a></p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png" alt></p>
+<p>倒立摆摆问题是对照文献中的经典问题。在这个版本的问题中，钟摆以随机位置开始，目标是将其向上摆动，使其保持直立。</p>
+<p><strong>环境介绍：</strong><a href="https://github.com/openai/gym/wiki/Pendulum-v0" target="_blank" rel="noopener">详细网址</a>，<a href="https://github.com/openai/gym/blob/master/gym/envs/classic_control/pendulum.py" target="_blank" rel="noopener">pendulum源代码</a></p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png" alt></p>
+<h2 id="二、Double-DQN"><a href="#二、Double-DQN" class="headerlink" title="二、Double DQN"></a>二、Double DQN</h2><p>在<strong>DQN</strong>中，其$Y_t^{DQN}$的计算公式为：</p>
+<script type="math/tex; mode=display">
+Y_t^{DQN} \equiv R_{t+1} + \gamma \max_a Q(S_{t+1},a; \theta_t^-)</script><p>其中，$\theta_t^-$为$Target Q$的网络参数。</p>
+<p>正是因为其max操作，使得其Q值可能比真实值要高，导致动作-值函数过估计。</p>
+<p>而<strong>Double DQN</strong>中，则对$Y_t^{DQN}$进行了一个小小的改动，改动后如下：</p>
+<script type="math/tex; mode=display">
+Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t);\theta^-_t)</script><p>使用Q网络的参数$\theta$来估计贪婪策略的价值，使用$TargetQ$网络的参数$\theta^-$来公平的评估该策略的价值</p>
+<h2 id="三、代码部分"><a href="#三、代码部分" class="headerlink" title="三、代码部分"></a>三、代码部分</h2><blockquote>
+<p>Double DQN的代码相比于DQN，只改动了一处。直接查看<a href="https://github.com/ldgcug/DeepReinforcementLearning-Tensorflow/tree/master/DDQN" target="_blank" rel="noopener">所有代码</a></p>
+</blockquote>
+<h3 id="3-1-代码组成"><a href="#3-1-代码组成" class="headerlink" title="3.1 代码组成"></a>3.1 代码组成</h3><blockquote>
+<p>所有代码里面，主要包含6个代码：</p>
+<p>（1）ddqn.py和ddqn_truth.py</p>
+<p>​        这两个代码几乎完全一致，不同的是，在ddqn.py中，只包含ddqn的算法；而在ddqn_truth.py中，同时包含了ddqn算法和dqn算法，并且添加了求真实Q-values的值</p>
+<p>（2）run_CartPole.py</p>
+<p>​        这个和上一节DQN里面的代码基本完全一致，较之前，多了一个测试环节，测试训练的效果，测试差不多能达到300分。并且主要用于展示损失函数图和累计奖励图</p>
+<p>（3）run_MountainCar.py</p>
+<p>​        这个就和上一节的完全一致了，除了调用的是DDQN外，就没有区别了</p>
+<p>（4）run_CartPole_truth.py和run_Pendulum.py</p>
+<p>​        这两个主函数里面代用的则是ddqn_truth.py函数，最终用于展示其DQN和Double DQN的过估计情况</p>
+</blockquote>
+<h3 id="3-2-网络-ddqn-py"><a href="#3-2-网络-ddqn-py" class="headerlink" title="3.2 网络-ddqn.py"></a>3.2 网络-ddqn.py</h3><blockquote>
+<p>主要用来显示损失函数图和累计奖励图</p>
+</blockquote>
+<p><strong>ddqn.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">q_next = self.sess.run(self.q_next,feed_dict=&#123;self.s_:next_states&#125;)</span><br><span class="line">q_eval = self.sess.run(self.q_eval,feed_dict=&#123;self.s:states&#125;)</span><br><span class="line"><span class="comment"># add q_eval_next</span></span><br><span class="line">q_eval_next = self.sess.run(self.q_eval,feed_dict=&#123;self.s:next_states&#125;)</span><br><span class="line">q_target = q_eval.copy()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(len(mini_batch)):</span><br><span class="line">	<span class="keyword">if</span> dones[k]:</span><br><span class="line">		q_target[k][actions[k]] = rewards[k]</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="comment"># dqn</span></span><br><span class="line">		<span class="comment"># q_target[k][actions[k]]	= rewards[k] + self.gamma * np.max(q_next[k])</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># double dqn</span></span><br><span class="line">		max_action_next = np.argmax(q_eval_next,axis=<span class="number">1</span>)<span class="comment"># argmax Q </span></span><br><span class="line">		<span class="comment">#print('q_next',q_next)</span></span><br><span class="line">		q_target[k][actions[k]]	= rewards[k] + self.gamma * q_next[k,max_action_next[k]]</span><br></pre></td></tr></table></figure>
+<p><strong>dqn.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">q_next = self.sess.run(self.q_next,feed_dict=&#123;self.s_:next_states&#125;)</span><br><span class="line">q_eval = self.sess.run(self.q_eval,feed_dict=&#123;self.s:states&#125;)</span><br><span class="line">q_target = q_eval.copy()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(len(mini_batch)):</span><br><span class="line">	<span class="keyword">if</span> dones[k]:</span><br><span class="line">		q_target[k][actions[k]] = rewards[k]</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		q_target[k][actions[k]]	= rewards[k] + self.gamma * np.max(q_next[k])</span><br></pre></td></tr></table></figure>
+<p>Double DQN 和DQN的代码的主要差别如上，很明显：</p>
+<p>首先，在Double DQN中，多了一个Q值：q_eval_next</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q_eval_next = self.sess.run(self.q_eval,feed_dict=&#123;self.s:next_states&#125;)</span><br></pre></td></tr></table></figure>
+<p>这一行对应了公式里面的：$Q(S_{t+1},a;\theta_t)$</p>
+<p>值得注意的是，这里仍然用的是Q网络，但是状态为下一状态$S_{t+1}$</p>
+<p>然后，在计算时首先求出$argmax$，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">max_action_next = np.argmax(q_eval_next,axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>这一行则对应了$\arg\max_a Q(S_{t+1},a;\theta_t)$，这样就得到了行为$a$</p>
+<p>最后则是计算$Y_t^{DQN}$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q_target[k][actions[k]]	= rewards[k] + self.gamma * q_next[k,max_action_next[k]]</span><br></pre></td></tr></table></figure>
+<p>通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q_next[k,max_action_next[k]]</span><br></pre></td></tr></table></figure>
+<p>则直接获取$Q’(s,a)$的值，而不再是用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.max(q_next[k])</span><br></pre></td></tr></table></figure>
+<p>获取$\max Q’(s,a)$，要注意这其中的区别</p>
+<h3 id="3-3-网络-ddqn-truth-py"><a href="#3-3-网络-ddqn-truth-py" class="headerlink" title="3.3 网络-ddqn_truth.py"></a>3.3 网络-ddqn_truth.py</h3><blockquote>
+<p>把dqn和ddqn算法全部添加进来，并且计算真实Q-values值，用于展示dqn和ddqn与真实Q-values之间的差别的图形</p>
+</blockquote>
+<p>（1）在init函数里面，主要多了double_q和sess的变量，其中double_q的变量是为了判断是否用ddqn，还是dqn。因为要展示两种算法与真实Q-values之间的差异，因此还需要接收主函数输入的sess</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,double_q = True,sess = None)</span>:</span></span><br><span class="line">    self.double_q = double_q <span class="comment">#decide to use double q or not</span></span><br><span class="line">    <span class="keyword">if</span> sess <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">		self.sess = tf.Session()</span><br><span class="line">		self.sess.run(tf.global_variables_initializer())</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">		self.sess = sess</span><br><span class="line">    <span class="comment"># record the truth</span></span><br><span class="line">	self.q = [] <span class="comment">#用来记录真实的Q-values值</span></span><br><span class="line">	self.running_q = <span class="number">0</span> <span class="comment">#用于计算真实Q-values值</span></span><br></pre></td></tr></table></figure>
+<p>（2）在e-greedy行为选择这里，添加了计算真实Q-values的代码，其真值通过</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.running_q = self.running_q * <span class="number">0.99</span> + <span class="number">0.01</span> * np.max(actions_value)</span><br></pre></td></tr></table></figure>
+<p>来实现（为什么？还没有去思考）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">choose_action</span><span class="params">(self,state)</span>:</span></span><br><span class="line">	</span><br><span class="line">	actions_value = self.sess.run(self.q_eval,feed_dict=&#123;self.s:state.reshape(<span class="number">-1</span>,self.s_dim)&#125;)</span><br><span class="line">	self.running_q = self.running_q * <span class="number">0.99</span> + <span class="number">0.01</span> * np.max(actions_value)</span><br><span class="line">	self.q.append(self.running_q)</span><br><span class="line">	<span class="keyword">if</span> np.random.uniform() &lt; self.epsilon:</span><br><span class="line">		<span class="keyword">return</span> np.argmax(actions_value)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> np.random.randint(<span class="number">0</span>,self.a_dim)</span><br></pre></td></tr></table></figure>
+<p>（3）在learn函数里面，通过self.double_q来判断是否用double dqn算法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="comment"># double dqn 需要添加的Q值</span></span><br><span class="line">    q_eval_next = self.sess.run(self.q_eval,feed_dict=&#123;self.s:next_states&#125;)</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">for</span> k <span class="keyword">in</span> range(len(mini_batch)):</span><br><span class="line">			<span class="keyword">if</span> dones[k]:</span><br><span class="line">				q_target[k][actions[k]] = rewards[k]</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				<span class="keyword">if</span> self.double_q:</span><br><span class="line">					<span class="comment"># double dqn</span></span><br><span class="line">					max_action_next = np.argmax(q_eval_next,axis=<span class="number">1</span>)<span class="comment"># argmax Q </span></span><br><span class="line">					q_target[k][actions[k]]	= rewards[k] + self.gamma * q_next[k,max_action_next[k]]</span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					q_target[k][actions[k]]	= rewards[k] + self.gamma * np.max(q_next[k])</span><br></pre></td></tr></table></figure>
+<h3 id="3-4-主函数-run-CartPole-py"><a href="#3-4-主函数-run-CartPole-py" class="headerlink" title="3.4 主函数-run_CartPole.py"></a>3.4 主函数-run_CartPole.py</h3><blockquote>
+<p>和第一节有所不同的是，在训练过程中添加了测试的部分</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">total_steps = <span class="number">0</span></span><br><span class="line">total_reward = []</span><br><span class="line"></span><br><span class="line">EPISODE = <span class="number">100</span></span><br><span class="line">STEP = <span class="number">300</span></span><br><span class="line">TEST = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i_episode <span class="keyword">in</span> range(EPISODE):</span><br><span class="line">	s = env.reset()</span><br><span class="line">	ep_r = <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> step <span class="keyword">in</span> range(STEP):</span><br><span class="line">		env.render()</span><br><span class="line"></span><br><span class="line">		a = RL.choose_action(s)</span><br><span class="line">		s_,r,done,info = env.step(a)</span><br><span class="line">		<span class="comment"># the smaller theta and closer to center the better</span></span><br><span class="line">		x, x_dot, theta, theta_dot = s_</span><br><span class="line">		r1 = (env.x_threshold - abs(x))/env.x_threshold - <span class="number">0.8</span></span><br><span class="line">		r2 = (env.theta_threshold_radians - abs(theta))/env.theta_threshold_radians - <span class="number">0.5</span></span><br><span class="line">		r = r1 + r2</span><br><span class="line">		RL.store_transition(s,a,r,s_,done)</span><br><span class="line"></span><br><span class="line">		ep_r += r </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> total_steps &gt; <span class="number">1000</span>:</span><br><span class="line">			RL.learn()</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> done:</span><br><span class="line">			print(<span class="string">'episode:'</span>,i_episode,<span class="string">'ep_r:'</span>,round(ep_r,<span class="number">2</span>),<span class="string">'epsilon'</span>,round(RL.epsilon,<span class="number">2</span>),<span class="string">'buffer_size:'</span>,RL.memory_count,<span class="string">'steps:'</span>,total_steps)</span><br><span class="line">			total_reward.append(ep_r)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">		s = s_</span><br><span class="line">		total_steps += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Test every 10 episodes</span></span><br><span class="line">	<span class="keyword">if</span> i_episode % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">		total_rewards = <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(TEST):</span><br><span class="line">			state = env.reset()</span><br><span class="line">			<span class="keyword">for</span> j <span class="keyword">in</span> range(STEP):</span><br><span class="line">				env.render()</span><br><span class="line">				action = RL.get_action(state) <span class="comment"># direct action for test</span></span><br><span class="line">				state,reward,done,_ = env.step(action)</span><br><span class="line">				total_rewards += reward</span><br><span class="line">				<span class="keyword">if</span> done:</span><br><span class="line">					<span class="keyword">break</span></span><br><span class="line">		ave_reward = total_rewards/TEST</span><br><span class="line">		<span class="keyword">print</span> (<span class="string">'episode: '</span>,i_episode,<span class="string">'Evaluation Average Reward:'</span>,ave_reward)</span><br></pre></td></tr></table></figure>
+<h3 id="3-5-主函数-run-Pendulum-py"><a href="#3-5-主函数-run-Pendulum-py" class="headerlink" title="3.5 主函数-run_Pendulum.py"></a>3.5 主函数-run_Pendulum.py</h3><blockquote>
+<p>显示dqn和ddqn算法相比于真实Q-values差异的图像</p>
+</blockquote>
+<p>需要说一下的是，因为需要计算dqn和ddqn的值，并显示，因此在这里需要创建两个RL，通过double_q来判断使用何种算法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> ddqn_truth <span class="keyword">import</span> DDQN </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env = gym.make(<span class="string">'Pendulum-v0'</span>)</span><br><span class="line">env = env.unwrapped</span><br><span class="line">env.seed(<span class="number">1</span>) <span class="comment"># 可重复实验</span></span><br><span class="line"></span><br><span class="line">MEMORY_SIZE = <span class="number">3000</span></span><br><span class="line">ACTION_SPACE = <span class="number">11</span>  <span class="comment"># 将原本的连续动作分离成 11 个动作</span></span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">'Natural_DQN'</span>):</span><br><span class="line"></span><br><span class="line">    natural_DQN = DDQN(s_dim = env.observation_space.shape[<span class="number">0</span>],</span><br><span class="line">             a_dim = ACTION_SPACE,</span><br><span class="line">             learning_rate = <span class="number">0.005</span>,</span><br><span class="line">             e_greedy = <span class="number">0.9</span>,</span><br><span class="line">             replace_target_iter = <span class="number">200</span>,</span><br><span class="line">             memory_size = MEMORY_SIZE,</span><br><span class="line">             e_greedy_increment = <span class="number">0.001</span>,</span><br><span class="line">             double_q = <span class="literal">False</span>,</span><br><span class="line">             sess = sess)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">'Double_DQN'</span>):</span><br><span class="line"></span><br><span class="line">    double_DQN = DDQN(s_dim = env.observation_space.shape[<span class="number">0</span>],</span><br><span class="line">             a_dim = ACTION_SPACE,</span><br><span class="line">             learning_rate = <span class="number">0.005</span>,</span><br><span class="line">             e_greedy = <span class="number">0.9</span>,</span><br><span class="line">             replace_target_iter = <span class="number">200</span>,</span><br><span class="line">             memory_size = MEMORY_SIZE,</span><br><span class="line">             e_greedy_increment = <span class="number">0.001</span>,</span><br><span class="line">             double_q = <span class="literal">True</span>,</span><br><span class="line">             sess = sess)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(RL)</span>:</span></span><br><span class="line">    total_steps = <span class="number">0</span></span><br><span class="line">    s = env.reset()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        env.render()</span><br><span class="line">        a = RL.choose_action(s)</span><br><span class="line">        f_action = (a-(ACTION_SPACE<span class="number">-1</span>)/<span class="number">2</span>)/((ACTION_SPACE<span class="number">-1</span>)/<span class="number">4</span>)   <span class="comment"># convert to [-2 ~ 2] float actions</span></span><br><span class="line">        s_, r, done, info = env.step(np.array([f_action]))</span><br><span class="line"></span><br><span class="line">        r /= <span class="number">10</span> <span class="comment"># normalize to a range of (-1, 0). r = 0 when get upright</span></span><br><span class="line">        <span class="comment"># the Q target at upright state will be 0, because Q_target = r + gamma * Qmax(s', a') = 0 + gamma * 0</span></span><br><span class="line">        <span class="comment"># so when Q at this state is greater than 0, the agent overestimates the Q. Please refer to the final result.</span></span><br><span class="line">        RL.store_transition(s,a,r,s_,done)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> total_steps &gt; MEMORY_SIZE: <span class="comment">#learning</span></span><br><span class="line">            RL.learn()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> total_steps - MEMORY_SIZE &gt; <span class="number">20000</span>: <span class="comment"># stop game</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        s = s_</span><br><span class="line">        total_steps += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> RL.q  </span><br><span class="line"></span><br><span class="line">q_natural = train(natural_DQN)</span><br><span class="line">q_double = train(double_DQN)</span><br><span class="line"></span><br><span class="line">plt.plot(np.array(q_natural), c=<span class="string">'r'</span>, label=<span class="string">'natural'</span>)</span><br><span class="line">plt.plot(np.array(q_double), c=<span class="string">'b'</span>, label=<span class="string">'double'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'best'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Q eval'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'training steps'</span>)</span><br><span class="line">plt.grid()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>另外，这里的行为维度a_dim为11，是将原本的连续动作离散化为11个动作，至于为什么离散化为11个动作？</p>
+<p>可能是因为在<a href="https://github.com/openai/gym/blob/master/gym/envs/classic_control/pendulum.py" target="_blank" rel="noopener">源码</a>里面，将行为限定在了[-8,2]里面，因此输入的有11维</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.max_speed=<span class="number">8</span></span><br><span class="line">   self.max_torque=<span class="number">2.</span></span><br><span class="line">   u = np.clip(u, -self.max_torque, self.max_torque)[<span class="number">0</span>]	<span class="comment"># 这里的u是输入的行为</span></span><br></pre></td></tr></table></figure>
+<p>而后面又将获取到的行为做下面操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f_action = (a-(ACTION_SPACE<span class="number">-1</span>)/<span class="number">2</span>)/((ACTION_SPACE<span class="number">-1</span>)/<span class="number">4</span>) <span class="comment"># convert to [-2 ~ 2]</span></span><br></pre></td></tr></table></figure>
+<p>是因为在环境介绍部分说明了行为的界限范围[-2,2]，所以才做的该操作</p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png" alt></p>
+<p>至于$r = r /10$，将奖励限定在(-1,0)的操作还没太看懂，我觉得应该是除以20才对，在介绍部分说明了奖励的取值范围为[-16,0]</p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/3.png" alt></p>
+<p>最后，则显示了两个算法与真实Q-values的差异图像</p>
+<h2 id="四、结果显示"><a href="#四、结果显示" class="headerlink" title="四、结果显示"></a>四、结果显示</h2><p><strong>DDQN算法</strong></p>
+<p>（1）run_CartPole.py</p>
+<p>​    100个episode的损失函数如和累计奖励图</p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/4.png" alt></p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/5.png" alt></p>
+<p>​    （2）run_CartPole_truth.py</p>
+<p>100个episode训练过车中的动作-值函数的近似</p>
+<p>可以看出Double DQN比 nature DQN的值还是要低一些的，即能缓解其过度估计情况，不知道真实值是多少，只是输出来看看效果</p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/6.png" alt></p>
+<p>（3）run_MountainCar.py</p>
+<p>15个episode的损失函数图和累计奖励图</p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/7.png" alt></p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/8.png" alt></p>
+<p>（4）run_Pendulum.py</p>
+<p>​    这个是用莫烦的代码跑的</p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/9.png" alt></p>
+<p>而下图则是我根据莫烦的代码修改后，测试的，图像当然是差不多的，至少证明了我改写过后的代码是没有问题的（虽然只改动了一点点，但是改为自己习惯的就好）</p>
+<p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/10.png" alt></p>
+<p>从这个图中则可以看出，我们的真实Q-values值是0，而Nature DQN在预估的过程中，存在不少高估的情况，改用Double DQN，则会好很多</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>通过这个实验对Double DQN有了更加深刻的了解，并且对DQN的高估也有了一个较直观的理解，但是对立面的一些参数是如何确定的，这点还是有点疑惑，目前还是主要以理解算法为主</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/5.1_Double_DQN" target="_blank" rel="noopener">莫烦-Double DQN</a></li>
+<li><p><a href="https://github.com/openai/gym/blob/master/gym/envs/classic_control/pendulum.py" target="_blank" rel="noopener">pendulum源码</a></p>
+</li>
+<li><p><a href="https://github.com/openai/gym/wiki/Pendulum-v0" target="_blank" rel="noopener">pendulum环境介绍</a></p>
+</li>
+<li><p><a href="https://gym.openai.com/envs/Pendulum-v0/" target="_blank" rel="noopener">pendulum目标介绍</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DRL/" rel="tag"># DRL</a>
+          
+            <a href="/tags/OpenAI-gym/" rel="tag"># OpenAI gym</a>
+          
+            <a href="/tags/Double-DQN/" rel="tag"># Double DQN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/" rel="next" title="代码实现（一）之Nature DQN">
+                <i class="fa fa-chevron-left"></i> 代码实现（一）之Nature DQN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、实验环境"><span class="nav-text">一、实验环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Pendulum环境简单介绍"><span class="nav-text">1.1 Pendulum环境简单介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Double-DQN"><span class="nav-text">二、Double DQN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、代码部分"><span class="nav-text">三、代码部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-代码组成"><span class="nav-text">3.1 代码组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-网络-ddqn-py"><span class="nav-text">3.2 网络-ddqn.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-网络-ddqn-truth-py"><span class="nav-text">3.3 网络-ddqn_truth.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-主函数-run-CartPole-py"><span class="nav-text">3.4 主函数-run_CartPole.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-主函数-run-Pendulum-py"><span class="nav-text">3.5 主函数-run_Pendulum.py</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、结果显示"><span class="nav-text">四、结果显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '代码实现（二）之Double DQN'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '代码实现（二）之Double DQN'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
