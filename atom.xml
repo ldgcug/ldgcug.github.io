@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-08-08T16:35:33.898Z</updated>
+  <updated>2019-08-10T16:01:03.382Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -17,11 +17,69 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>代码实现（四）之 Dueling DQN</title>
+    <link href="http://ldgyyf.cn/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/"/>
+    <id>http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/</id>
+    <published>2019-08-10T15:14:28.000Z</published>
+    <updated>2019-08-10T16:01:03.382Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Dueling  DQN 相比较于之前的Double DQN（目标Q值方面的优化）、Prioritized
+        
+      
+    
+    </summary>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="http://ldgyyf.cn/tags/OpenAI-gym/"/>
+    
+      <category term="Dueling DQN" scheme="http://ldgyyf.cn/tags/Dueling-DQN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码实现（三）之Prioritized Experience Replay</title>
+    <link href="http://ldgyyf.cn/2019/08/09/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BPrioritized-Experience-Replay/"/>
+    <id>http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/</id>
+    <published>2019-08-09T14:56:37.000Z</published>
+    <updated>2019-08-10T05:51:50.026Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;理论部分，点击&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="http://ldgyyf.cn/tags/OpenAI-gym/"/>
+    
+      <category term="Prioritized Experience Replay" scheme="http://ldgyyf.cn/tags/Prioritized-Experience-Replay/"/>
+    
+  </entry>
+  
+  <entry>
     <title>代码实现（二）之Double DQN</title>
     <link href="http://ldgyyf.cn/2019/08/08/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BDouble-DQN/"/>
     <id>http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/</id>
     <published>2019-08-08T14:47:12.000Z</published>
-    <updated>2019-08-08T16:35:33.898Z</updated>
+    <updated>2019-08-10T06:01:05.229Z</updated>
     
     <summary type="html">
     
@@ -329,7 +387,7 @@
     <link href="http://ldgyyf.cn/2019/07/19/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%EF%BC%88Dueling-DQN%EF%BC%89/"/>
     <id>http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/</id>
     <published>2019-07-19T01:52:31.000Z</published>
-    <updated>2019-07-19T03:28:47.975Z</updated>
+    <updated>2019-08-10T15:16:46.535Z</updated>
     
     <summary type="html">
     
@@ -351,9 +409,9 @@
     
       <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
     
-      <category term="DQN" scheme="http://ldgyyf.cn/tags/DQN/"/>
+      <category term="Dueling DQN" scheme="http://ldgyyf.cn/tags/Dueling-DQN/"/>
     
-      <category term="DDueling DQN" scheme="http://ldgyyf.cn/tags/DDueling-DQN/"/>
+      <category term="DQN" scheme="http://ldgyyf.cn/tags/DQN/"/>
     
   </entry>
   
@@ -564,62 +622,6 @@
       <category term="CUDA" scheme="http://ldgyyf.cn/tags/CUDA/"/>
     
       <category term="CUDNN" scheme="http://ldgyyf.cn/tags/CUDNN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>初识Airsim（三）之Ubuntu下Airsim平台搭建</title>
-    <link href="http://ldgyyf.cn/2019/07/02/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BUbuntu%E4%B8%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/"/>
-    <id>http://ldgyyf.cn/2019/07/02/Airsim/初识Airsim（三）之Ubuntu下Airsim平台搭建/</id>
-    <published>2019-07-02T13:01:47.000Z</published>
-    <updated>2019-07-02T14:32:50.810Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Airsim" scheme="http://ldgyyf.cn/categories/Airsim/"/>
-    
-    
-      <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
-    
-      <category term="ubuntu" scheme="http://ldgyyf.cn/tags/ubuntu/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>(转)双系统之Win重装后linux引导损坏</title>
-    <link href="http://ldgyyf.cn/2019/07/01/Linux/%E8%BD%AC-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E4%B9%8BWin%E9%87%8D%E8%A3%85%E5%90%8Elinux%E5%BC%95%E5%AF%BC%E6%8D%9F%E5%9D%8F/"/>
-    <id>http://ldgyyf.cn/2019/07/01/Linux/转-双系统之Win重装后linux引导损坏/</id>
-    <published>2019-07-01T12:37:27.000Z</published>
-    <updated>2019-07-01T14:21:49.536Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
-    
-      <category term="系统" scheme="http://ldgyyf.cn/tags/%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
