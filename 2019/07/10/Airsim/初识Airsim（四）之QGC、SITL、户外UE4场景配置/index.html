@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/11.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/12.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/13.png">
-<meta property="og:updated_time" content="2019-07-10T06:43:18.473Z">
+<meta property="og:updated_time" content="2019-08-12T08:50:48.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
 <meta name="twitter:description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.4k
+                  1.3k
                 </span>
               
 
@@ -457,10 +457,10 @@
 </blockquote>
 <p>点击<a href="https://raw.githubusercontent.com/PX4/Devguide/v1.9.0/build_scripts/ubuntu_sim_nuttx.sh" target="_blank" rel="noopener">此处</a>，拷贝<code>ubuntu_sim_nuttx.sh</code>源代码，粘贴到刚才新建的<code>ubuntu_sim_nuttx.sh</code>文件中</p>
 <p>修改权限，并执行sh文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x ubuntu_sim_nuttx.sh</span><br><span class="line">./ubuntu_sim_nuttx.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x ubuntu_sim_nuttx.sh</span><br><span class="line">./ubuntu_sim_nuttx.sh</span><br></pre></td></tr></table></figure>
 <p>下载过程中，有些需要提示的地方进行确认，下载完成后，重启计算机</p>
 <p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png" alt></p>
-<h3 id="1-3-获取PX4源码"><a href="#1-3-获取PX4源码" class="headerlink" title="1.3 获取PX4源码"></a>1.3 获取PX4源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p PX4</span><br><span class="line">cd PX4</span><br><span class="line">git clone https://github.com/PX4/Firmware.git</span><br><span class="line">cd Firmware</span><br><span class="line">git checkout v1.8.2</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-获取PX4源码"><a href="#1-3-获取PX4源码" class="headerlink" title="1.3 获取PX4源码"></a>1.3 获取PX4源码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p PX4</span><br><span class="line">cd PX4</span><br><span class="line">git clone https://github.com/PX4/Firmware.git</span><br><span class="line">cd Firmware</span><br><span class="line">git checkout v1<span class="number">.8</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
 <h3 id="1-4-编译"><a href="#1-4-编译" class="headerlink" title="1.4 编译"></a>1.4 编译</h3><blockquote>
 <p>要确保到 PX4/Fireware 目录下，然后执行如下命令进行编译</p>
 </blockquote>
@@ -472,29 +472,30 @@
 <p>下载QGC，请点击<a href="https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage" target="_blank" rel="noopener">此处</a></p>
 </blockquote>
 <p>（2）修改权限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/Downloads</span><br><span class="line">chmod +x ./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/Downloads</span><br><span class="line">chmod +x ./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
 <p>（3）运行QGC</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
 <p>最终，会弹出QGC窗口</p>
 <p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/3.png" alt></p>
 <h3 id="2-2-mavros和mavlink的源码安装"><a href="#2-2-mavros和mavlink的源码安装" class="headerlink" title="2.2 mavros和mavlink的源码安装"></a>2.2 mavros和mavlink的源码安装</h3><h4 id="2-2-1-二进制安装方式"><a href="#2-2-1-二进制安装方式" class="headerlink" title="2.2.1 二进制安装方式"></a>2.2.1 二进制安装方式</h4><p>（1）安装mavros</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-kinetic-mavros ros-kinetic-mavros-extras</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-kinetic-mavros ros-kinetic-mavros-extras</span><br></pre></td></tr></table></figure>
 <p>（2）安装GeographicLib</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh</span><br><span class="line">chmod u+x ./install_geographiclib_datasets.sh</span><br><span class="line">sudo su</span><br><span class="line">./install_geographiclib_datasets.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh</span><br><span class="line">chmod u+x ./install_geographiclib_datasets.sh</span><br><span class="line">sudo su</span><br><span class="line">proxychains4 ./install_geographiclib_datasets.sh</span><br></pre></td></tr></table></figure>
 <h4 id="2-2-2-源码安装"><a href="#2-2-2-源码安装" class="headerlink" title="2.2.2 源码安装"></a>2.2.2 源码安装</h4><p>（1）创建工作空间</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/catkin_ws/src</span><br><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin build</span><br><span class="line">wstool init src</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/catkin_ws/src</span><br><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin build</span><br><span class="line">wstool init src</span><br></pre></td></tr></table></figure>
 <p>（2）安装mavlink</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosinstall_generator --rosdistro kinetic mavlink | tee /tmp/mavros.rosinstall</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosinstall_generator --rosdistro kinetic mavlink | tee /tmp/mavros.rosinstall</span><br></pre></td></tr></table></figure>
 <p>（3）安装mavros</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosinstall_generator --upstream mavros | tee -a /tmp/mavros.rosinstall</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosinstall_generator --upstream mavros | tee -a /tmp/mavros.rosinstall</span><br></pre></td></tr></table></figure>
 <p>（3）更新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wstool merge -t src /tmp/mavros.rosinstall</span><br><span class="line">wstool update -t src -j4</span><br><span class="line">rosdep install --from-paths src --ignore-src -y</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wstool merge -t src /tmp/mavros.rosinstall</span><br><span class="line">wstool update -t src -j4</span><br><span class="line">rosdep install --<span class="keyword">from</span>-paths src --ignore-src -y</span><br></pre></td></tr></table></figure>
 <p>（4）安装GeograohicLib</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">./src/mavros/mavros/scripts/install_geographiclib_datasets.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">proxychains4 ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh</span><br></pre></td></tr></table></figure>
 <p>（5）编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin build</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin build</span><br></pre></td></tr></table></figure>
 <p>（6）source</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-安装相关依赖包"><a href="#2-3-安装相关依赖包" class="headerlink" title="2.3 安装相关依赖包"></a>2.3 安装相关依赖包</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-catkin-tools</span><br></pre></td></tr></table></figure>
 <h2 id="三、测试"><a href="#三、测试" class="headerlink" title="三、测试"></a>三、测试</h2><blockquote>
 <font color="red">首先，将前面所打开的所有UE4界面和终端窗口全部关掉</font>
 
@@ -504,18 +505,18 @@
 <p>settions.json文件在~/Documents/Airsim目录下</p>
 </blockquote>
 <p>配置信息修改如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;SeeDocsAt&quot;: &quot;https://github.com/Microsoft/AirSim/blob/master/docs/settings.md&quot;,</span><br><span class="line">  &quot;SettingsVersion&quot;: 1.2,</span><br><span class="line">  &quot;SimMode&quot;:&quot;Multirotor&quot;,</span><br><span class="line">  &quot;Vehicles&quot;:&#123;</span><br><span class="line">         &quot;PX4&quot;:&#123;</span><br><span class="line">             	&quot;VehicleType&quot;:&quot;PX4Multirotor&quot;,</span><br><span class="line">             	&quot;UseSerial&quot;:false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"SeeDocsAt"</span>: <span class="string">"https://github.com/Microsoft/AirSim/blob/master/docs/settings.md"</span>,</span><br><span class="line">  <span class="string">"SettingsVersion"</span>: <span class="number">1.2</span>,</span><br><span class="line">  <span class="string">"SimMode"</span>:<span class="string">"Multirotor"</span>,</span><br><span class="line">  <span class="string">"Vehicles"</span>:&#123;</span><br><span class="line">         <span class="string">"PX4"</span>:&#123;</span><br><span class="line">             	<span class="string">"VehicleType"</span>:<span class="string">"PX4Multirotor"</span>,</span><br><span class="line">             	<span class="string">"UseSerial"</span>:false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="3-2-SITL连接和QGC连接"><a href="#3-2-SITL连接和QGC连接" class="headerlink" title="3.2 SITL连接和QGC连接"></a>3.2 SITL连接和QGC连接</h3><p>（1）编译posix_sitl</p>
 <blockquote>
 <p>进入到PX4/Fireware目录下，编译</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make posix_sitl_ekf2  none_iris</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make posix_sitl_ekf2  none_iris</span><br></pre></td></tr></table></figure>
 <p>编译完成后，等待UDP的链接</p>
 <p>（2）打开QGC</p>
 <blockquote>
 <p>进入到  QGroundControl.AppImage 所在目录，打开QGC</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
 <p>打开后，也会等待无人机的连接</p>
 <p>（3）打开UE4Editor</p>
 <blockquote>
@@ -536,13 +537,13 @@
 <h4 id="3-3-3-ros命令测试"><a href="#3-3-3-ros命令测试" class="headerlink" title="3.3.3 ros命令测试"></a>3.3.3 ros命令测试</h4><blockquote>
 <p>打开一个新终端，执行如下命令</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch mavros px4.launch fcu_url:=&quot;udp://:14540@192.168.1.36:14557&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch mavros px4.launch fcu_url:=<span class="string">"udp://:14540@127.0.0.1:14557"</span></span><br></pre></td></tr></table></figure>
 <p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/8.png" alt></p>
 <p>此时，可以通过调用service服务，来实现起飞</p>
 <blockquote>
 <p>打开新终端，执行下面命令，能执行起飞降落</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rosservice call /mavros/cmd/arming true</span><br><span class="line">rosservice call /mavros/cmd/takeoff -- 0 0 47.6420 122.1404 126.1</span><br><span class="line">rosservice call /mavros/cmd/land -- 0 0 47.6420 122.1404 123</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rosservice call /mavros/cmd/arming true</span><br><span class="line">rosservice call /mavros/cmd/takeoff -- <span class="number">0</span> <span class="number">0</span> <span class="number">47.6420</span> <span class="number">-122.1404</span> <span class="number">126.1</span></span><br><span class="line">rosservice call /mavros/cmd/land -- <span class="number">0</span> <span class="number">0</span> <span class="number">47.6420</span> <span class="number">-122.1404</span> <span class="number">123</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>rostopic list信息查看</p>
 </blockquote>
@@ -714,7 +715,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -736,7 +737,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -804,7 +805,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关关键词"><span class="nav-text">相关关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、PX4-SITL配置"><span class="nav-text">一、PX4 SITL配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-设置dialout用户"><span class="nav-text">1.1 设置dialout用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-安装Pixhawk-Nuttx（and-JMAVSim）"><span class="nav-text">1.2 安装Pixhawk/Nuttx（and JMAVSim）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-获取PX4源码"><span class="nav-text">1.3 获取PX4源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-编译"><span class="nav-text">1.4 编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、QGC和Mavros的安装"><span class="nav-text">二、QGC和Mavros的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-QGC安装"><span class="nav-text">2.1 QGC安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-mavros和mavlink的源码安装"><span class="nav-text">2.2 mavros和mavlink的源码安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-二进制安装方式"><span class="nav-text">2.2.1 二进制安装方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-源码安装"><span class="nav-text">2.2.2 源码安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、测试"><span class="nav-text">三、测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-settions-json配置"><span class="nav-text">3.1 settions.json配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SITL连接和QGC连接"><span class="nav-text">3.2 SITL连接和QGC连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-测试"><span class="nav-text">3.3 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-QGC起飞测试"><span class="nav-text">3.3.1 QGC起飞测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-Firmware窗口命令起飞降落测试"><span class="nav-text">3.3.2 Firmware窗口命令起飞降落测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-ros命令测试"><span class="nav-text">3.3.3 ros命令测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、添加城市道路场景"><span class="nav-text">四、添加城市道路场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考网址"><span class="nav-text">参考网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关关键词"><span class="nav-text">相关关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、PX4-SITL配置"><span class="nav-text">一、PX4 SITL配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-设置dialout用户"><span class="nav-text">1.1 设置dialout用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-安装Pixhawk-Nuttx（and-JMAVSim）"><span class="nav-text">1.2 安装Pixhawk/Nuttx（and JMAVSim）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-获取PX4源码"><span class="nav-text">1.3 获取PX4源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-编译"><span class="nav-text">1.4 编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、QGC和Mavros的安装"><span class="nav-text">二、QGC和Mavros的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-QGC安装"><span class="nav-text">2.1 QGC安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-mavros和mavlink的源码安装"><span class="nav-text">2.2 mavros和mavlink的源码安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-二进制安装方式"><span class="nav-text">2.2.1 二进制安装方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-源码安装"><span class="nav-text">2.2.2 源码安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-安装相关依赖包"><span class="nav-text">2.3 安装相关依赖包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、测试"><span class="nav-text">三、测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-settions-json配置"><span class="nav-text">3.1 settions.json配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SITL连接和QGC连接"><span class="nav-text">3.2 SITL连接和QGC连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-测试"><span class="nav-text">3.3 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-QGC起飞测试"><span class="nav-text">3.3.1 QGC起飞测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-Firmware窗口命令起飞降落测试"><span class="nav-text">3.3.2 Firmware窗口命令起飞降落测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-ros命令测试"><span class="nav-text">3.3.3 ros命令测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、添加城市道路场景"><span class="nav-text">四、添加城市道路场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考网址"><span class="nav-text">参考网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

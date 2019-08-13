@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/4.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/5.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/6.png">
-<meta property="og:updated_time" content="2019-08-10T16:01:03.382Z">
+<meta property="og:updated_time" content="2019-08-11T03:47:02.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（四）之 Dueling DQN">
 <meta name="twitter:description" content="前言 Dueling  DQN 相比较于之前的Double DQN（目标Q值方面的优化）、Prioritized Experience Replay（经验回放池的优化），这次注重的是神经网络的优化，即将最后的Q网络分为V网络和A网络。 其中，V网络仅仅与状态S有关，与具体要采用的动作A无关，通常称为状态价值函数； A网络同时与状态S和动作A有关，通常称为动作优势函数。 其理论部分，点击DRL论文阅">
@@ -519,6 +519,10 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/08/11/ROS/ardrone强化学习训练环境搭建/" rel="prev" title="ardrone强化学习训练环境搭建">
+                ardrone强化学习训练环境搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -601,7 +605,7 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -623,7 +627,7 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1484,6 +1488,26 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

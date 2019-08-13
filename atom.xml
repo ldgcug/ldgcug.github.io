@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-08-10T16:01:03.382Z</updated>
+  <updated>2019-08-12T15:31:35.490Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -17,11 +17,73 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>代码实现（五）之Policy Gradient</title>
+    <link href="http://ldgyyf.cn/2019/08/12/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient/"/>
+    <id>http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/</id>
+    <published>2019-08-12T12:19:02.000Z</published>
+    <updated>2019-08-12T15:31:35.490Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Policy
+        
+      
+    
+    </summary>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="http://ldgyyf.cn/tags/OpenAI-gym/"/>
+    
+      <category term="Policy Gradient" scheme="http://ldgyyf.cn/tags/Policy-Gradient/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ardrone强化学习训练环境搭建</title>
+    <link href="http://ldgyyf.cn/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://ldgyyf.cn/2019/08/11/ROS/ardrone强化学习训练环境搭建/</id>
+    <published>2019-08-10T16:14:09.000Z</published>
+    <updated>2019-08-11T05:41:17.866Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;本篇主要是针对&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="ROS" scheme="http://ldgyyf.cn/categories/ROS/"/>
+    
+    
+      <category term="ROS" scheme="http://ldgyyf.cn/tags/ROS/"/>
+    
+      <category term="Gazebo" scheme="http://ldgyyf.cn/tags/Gazebo/"/>
+    
+      <category term="ardrone" scheme="http://ldgyyf.cn/tags/ardrone/"/>
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>代码实现（四）之 Dueling DQN</title>
     <link href="http://ldgyyf.cn/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/"/>
     <id>http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/</id>
     <published>2019-08-10T15:14:28.000Z</published>
-    <updated>2019-08-10T16:01:03.382Z</updated>
+    <updated>2019-08-11T03:47:02.464Z</updated>
     
     <summary type="html">
     
@@ -50,7 +112,7 @@
     <link href="http://ldgyyf.cn/2019/08/09/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BPrioritized-Experience-Replay/"/>
     <id>http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/</id>
     <published>2019-08-09T14:56:37.000Z</published>
-    <updated>2019-08-10T05:51:50.026Z</updated>
+    <updated>2019-08-11T03:46:56.291Z</updated>
     
     <summary type="html">
     
@@ -79,7 +141,7 @@
     <link href="http://ldgyyf.cn/2019/08/08/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BDouble-DQN/"/>
     <id>http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/</id>
     <published>2019-08-08T14:47:12.000Z</published>
-    <updated>2019-08-10T06:01:05.229Z</updated>
+    <updated>2019-08-11T03:49:10.244Z</updated>
     
     <summary type="html">
     
@@ -112,7 +174,7 @@
     <link href="http://ldgyyf.cn/2019/08/06/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BNature-DQN/"/>
     <id>http://ldgyyf.cn/2019/08/06/代码/DRL/代码实现（一）之Nature-DQN/</id>
     <published>2019-08-06T08:06:49.000Z</published>
-    <updated>2019-08-08T14:49:47.788Z</updated>
+    <updated>2019-08-11T03:46:36.931Z</updated>
     
     <summary type="html">
     
@@ -541,7 +603,7 @@
     <link href="http://ldgyyf.cn/2019/07/10/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BQGC%E3%80%81SITL%E3%80%81%E6%88%B7%E5%A4%96UE4%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE/"/>
     <id>http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/</id>
     <published>2019-07-10T05:20:06.000Z</published>
-    <updated>2019-07-10T06:43:18.473Z</updated>
+    <updated>2019-08-12T08:50:48.104Z</updated>
     
     <summary type="html">
     
@@ -561,67 +623,6 @@
       <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
     
       <category term="ubuntu" scheme="http://ldgyyf.cn/tags/ubuntu/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows下sublime相关配置</title>
-    <link href="http://ldgyyf.cn/2019/07/10/%E7%B3%BB%E7%BB%9F/Windows%E4%B8%8Bsublime%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/"/>
-    <id>http://ldgyyf.cn/2019/07/10/系统/Windows下sublime相关配置/</id>
-    <published>2019-07-10T03:19:07.000Z</published>
-    <updated>2019-07-25T11:00:10.733Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="系统" scheme="http://ldgyyf.cn/categories/%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="Windows" scheme="http://ldgyyf.cn/tags/Windows/"/>
-    
-      <category term="Sublime" scheme="http://ldgyyf.cn/tags/Sublime/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu16下GPU Tensorflow安装详细步骤</title>
-    <link href="http://ldgyyf.cn/2019/07/05/Linux/Ubuntu16%E4%B8%8BGPU-Tensorflow%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/"/>
-    <id>http://ldgyyf.cn/2019/07/05/Linux/Ubuntu16下GPU-Tensorflow安装详细步骤/</id>
-    <published>2019-07-05T03:33:32.000Z</published>
-    <updated>2019-07-05T08:37:34.853Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;以往的GPU
-        
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/categories/Linux/"/>
-    
-    
-      <category term="Tensorflow" scheme="http://ldgyyf.cn/tags/Tensorflow/"/>
-    
-      <category term="Linux" scheme="http://ldgyyf.cn/tags/Linux/"/>
-    
-      <category term="CUDA" scheme="http://ldgyyf.cn/tags/CUDA/"/>
-    
-      <category term="CUDNN" scheme="http://ldgyyf.cn/tags/CUDNN/"/>
     
   </entry>
   

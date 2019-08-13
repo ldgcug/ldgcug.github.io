@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/8.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/9.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/10.png">
-<meta property="og:updated_time" content="2019-08-10T06:01:05.229Z">
+<meta property="og:updated_time" content="2019-08-11T03:49:10.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（二）之Double DQN">
 <meta name="twitter:description" content="前言 理论部分，这里将不再强调，直接强调重点部分（理论部分请点击Double DQN） 经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。 本文的代码，主要参考莫烦大神的代码，只做了少量的修改。  一、实验环境 总共测试了三种环境，其中CartPole">
@@ -557,7 +557,7 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
 <p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/10.png" alt></p>
 <p>从这个图中则可以看出，我们的真实Q-values值是0，而Nature DQN在预估的过程中，存在不少高估的情况，改用Double DQN，则会好很多</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<p>通过这个实验对Double DQN有了更加深刻的了解，并且对DQN的高估也有了一个较直观的理解，但是对立面的一些参数是如何确定的，这点还是有点疑惑，目前还是主要以理解算法为主</p>
+<p>通过这个实验对Double DQN有了更加深刻的了解，并且对DQN的高估也有了一个较直观的理解，但是对里面的一些参数是如何确定的，这点还是有点疑惑，目前还是主要以理解算法为主</p>
 </blockquote>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
 <li><a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/5.1_Double_DQN" target="_blank" rel="noopener">莫烦-Double DQN</a></li>
@@ -698,7 +698,7 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -720,7 +720,7 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1581,6 +1581,26 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
