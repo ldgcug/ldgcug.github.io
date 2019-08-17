@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/2.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/3.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/4.png">
-<meta property="og:updated_time" content="2019-07-31T06:29:56.671Z">
+<meta property="og:updated_time" content="2019-08-13T15:33:43.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL（六）之Actor-Critic算法介绍">
 <meta name="twitter:description" content="前言 在上一节中，讲到了基于Policy Based的强化学习方法，最后也涉及到了模特卡洛策略梯度reinforce算法，但是在计算之前，需要提前知道完整的状态序列，同时还需要单独对策略函数进行迭代更新，不太容易收敛，并且方差较大。 因此本篇笔记将讨论策略（Policy Based）和价值（Value Based）相结合的方法：Actor-Critic算法  一、Policy Gradient回顾">
@@ -530,7 +530,7 @@ J(\theta) = E_{\pi \theta}[r] = \sum_{s \epsilon S}d(s) \sum_{a \epsilon A}\pi_\
 <p>注：该算法仅是基于线性价值函数的近似的Actor-Critic算法。这是一个在线实时算法，针对每一步进行更新，不需要等到Episode结束。</p>
 <p>用特征的线性组合来近似$Q_w(s,a)$进而求解策略梯度的方法引入了偏倚，一个偏倚的价值下得到的策略梯度不一定能最后找到较好的解决方案，例如当近似价值函数的$Q_w(s,a)$ 使用可能会引起状态重名的特征时，就不一定能解决问题了。不过幸运的是，如果我们小心设计近似的 $Q_w(s,a)$函数，是可以避免引入偏倚的，这样我们相当于遵循了准确的策略梯度。</p>
 <p>（2） <strong>兼容近似函数Compatible Function Approximation</strong></p>
-<p>那怎么样才算是小心涉及的$Q_w(s,a)$呢？需要满足下面两个条件：</p>
+<p>那怎么样才算是小心设计的$Q_w(s,a)$呢？需要满足下面两个条件：</p>
 <ul>
 <li><p>近似价值函数的梯度完全等同于策略函数对数的梯度，即不存在重名（兼容）情况:</p>
 <script type="math/tex; mode=display">
@@ -580,9 +580,10 @@ J(\theta) = E_{\pi \theta}[r] = \sum_{s \epsilon S}d(s) \sum_{a \epsilon A}\pi_\
 \theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t) \delta(t)</script><p>​    其中，$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$ 或者$\delta(t) = R_{t+1} + \gamma Q(S_{t+1} ,A_{t+1})-Q(S_t,A_t)$</p>
 <p>（4）基于优势函数：和之前Dueling DQN中的优势函数一样，其优势函数A的定义为：$A(S,A,w,\beta) = Q(S,A,w,\alpha,\beta) - V(S,w,\alpha)$，即动作价值函数和状态价值函数的差值，这时Actor的策略函数参数更新的法公式为：</p>
 <script type="math/tex; mode=display">
-\theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t)A(S,A,w,\beta)</script><p>（5）基于TD($\lambda$)误差：一般都是基于后向TD($\lambda $)误差，是TD误差和效用迹E的乘积，这时Actor的策略函数参数更新的法公式是：</p>
+\theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t)A(S,A,w,\beta)</script><p>（5）基于TD($\lambda$)误差：一般都是基于后向TD($\lambda $)误差，是TD误差和效用迹E的乘积，这时Actor的策略函数参数更新</p>
+<p>的法公式是：</p>
 <script type="math/tex; mode=display">
-\theta = \theta + \alpha \delta(t)E(t)</script><p>​        其中，$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$，$E(t) = \gamma \lambda E_{t-1} + \alpha \nabla_\theta log \pi_\theta (s_t,a_t)$</p>
+\theta = \theta + \alpha \delta(t)E(t)</script><p>​        其中，$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$，$E(t) = \gamma \lambda E_{t-1} + \nabla_\theta log \pi_\theta (s_t,a_t)$</p>
 <p>​        当$\lambda = 0$时，就是第（2）步的普通TD方法</p>
 <p>对于Critic本身的模型参数w，一般都是使用均方误差损失函数来做迭代更新，类似于之前DQN中所讲到的迭代方法。如果我们使用的是最简单的线性Q函数，比如$Q(s,a,w) = \phi(s,a)^T w$，则Critic本身的模型参数w的更新公式可以表示为：</p>
 <script type="math/tex; mode=display">
@@ -598,7 +599,7 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
 <p>算法流程这一块，暂时也不好理解，也确实没有搜到到底哪一个才是真正的算法流程，后面再看代码去加深理解吧</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
 <p>首先，在网上找的关于Actor-Critic的论文阅读，阅读过程一脸懵逼，没办法，后来又在网上找了很多的博客，通过浏览别人的博客进行理解。</p>
-<p>阅读的原论文题目是：<strong>Actor-Critic Algorithms</strong> ，然后网上又有好多的论文笔记是关于这一篇的：<strong>Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor</strong> 具体的，我也不知道是看哪一篇，只知道前一篇Actor-Critic Algorithms的引用次数多。因此阅读的前一篇，后面的一片soft的暂时还没有阅读。</p>
+<p>阅读的原论文题目是：<strong>Actor-Critic Algorithms</strong> ，然后网上又有好多的论文笔记是关于这一篇的：<strong>Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor</strong> 具体的，我也不知道是看哪一篇，只知道前一篇Actor-Critic Algorithms的引用次数多。因此阅读的前一篇，后面的一篇soft的暂时还没有阅读。</p>
 </blockquote>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><blockquote>
 <p>主要参考了刘建平的博客笔记和Fisher’s Blog，还有一些其他人的博客笔记，感谢他们的笔记</p>
@@ -756,7 +757,7 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

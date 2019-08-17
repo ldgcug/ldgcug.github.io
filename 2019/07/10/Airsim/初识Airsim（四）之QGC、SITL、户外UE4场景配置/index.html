@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/11.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/12.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/13.png">
-<meta property="og:updated_time" content="2019-08-12T08:50:48.104Z">
+<meta property="og:updated_time" content="2019-08-16T14:13:29.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
 <meta name="twitter:description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  1.6k
                 </span>
               
 
@@ -421,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -570,11 +570,22 @@
 </blockquote>
 <p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/12.png" alt></p>
 <p>在新终端执行如下命令加载（进入到AirSimNH.sh文件所在目录）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./AirSimNH.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./AirSimNH.sh</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/13.png" alt></p>
 <blockquote>
 <p>同理，Africa的场景也是同样的方式</p>
 </blockquote>
+<h2 id="五、SITL与-sh文件不兼容"><a href="#五、SITL与-sh文件不兼容" class="headerlink" title="五、SITL与.sh文件不兼容"></a>五、SITL与.sh文件不兼容</h2><blockquote>
+<p>如果下载了github上提供的AirSimNH.sh环境，并运行sh文件时，将会出现<strong>第四部分</strong>的图片，但是却不能设置SITL，这样就很难受</p>
+</blockquote>
+<p>通过浏览多方资料，发现了其可能的解决办法（未尝试，但是应该是没问题的），<a href="https://github.com/microsoft/AirSim/issues/1359" target="_blank" rel="noopener">这个解释挺好的</a>。通过浏览Airsim上的<a href="https://github.com/microsoft/AirSim/blob/master/docs/unreal_custenv.md" target="_blank" rel="noopener">doc</a>文档，看到了其他的相关的UE4场景，并且有免费的可以下载，具体步骤参照<a href="https://www.youtube.com/watch?v=y09VbdQWvQY&amp;feature=" target="_blank" rel="noopener">教学视频</a>。本来准备下载的，结果在windows没有下载下来，也就没有测试。其中的两个UE4场景下载网址分别为：</p>
+<ul>
+<li><p><a href="https://www.cgtrader.com/items/50844/download-page#" target="_blank" rel="noopener">cgtrader</a></p>
+</li>
+<li><p><a href="https://www.turbosquid.com/3d-model/city?min_price=0&amp;max_price=0" target="_blank" rel="noopener">TURBOSQUID</a></p>
+</li>
+</ul>
+<p>因此，只要在UE4的商城上，去下载<a href="https://www.unrealengine.com/marketplace/zh-CN/slug/modular-neighborhood-pack" target="_blank" rel="noopener">AirSimNH</a>的环境，这样就下载了AirSimNH.uproject插件，就可以在UE4Editor中添加uproject插件，并且配置SITL控制了。但是其环境，是需要购买的。消费就是另一个问题了。</p>
 <h2 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h2><ul>
 <li>PX4 SITL配置：<a href="https://github.com/microsoft/AirSim/blob/master/docs/px4_sitl.md" target="_blank" rel="noopener">Airsim Github官网</a></li>
 <li>QGC安装：<a href="https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html" target="_blank" rel="noopener">QGC官网</a></li>
@@ -583,7 +594,7 @@
 <li>roslaunch测试：<a href="http://dev.px4.io/en/simulation/ros_interface.html" target="_blank" rel="noopener">PX4官网</a></li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<p>总的来说，Airsim的SITL配置没有问题，但是要使用SITL时，必须打开UE4Editor，然后自己定义场景，而不能使用以及下载好的.sh场景，这个以及测试过。如果要是用城市道路场景，则在setting.json里面一定不能配置PX4的信息。</p>
+<p>总的来说，Airsim的SITL配置没有问题，但是要使用SITL时，必须打开UE4Editor，然后自己定义场景，而不能使用已经下载好的.sh场景，这个已经测试过。如果要是用城市道路场景，则在setting.json里面一定不能配置PX4的信息。</p>
 <p>目前Airsim的HITL配置没有成功，主要是用的Pixhawk进行的测试，并且没有使用遥控器，在linux下不能利用QGC完成起飞，但是在Windows下可以</p>
 <p>SITL或HITL都是利用mavros来完成通信的，这个可能会暂时告一段落，后面会自己利用Airsim提供的API，自己去写ROS节点，利用ROS来实现控制，并且可以利用ROS的通信机制，来完成另种方式的HITL控制</p>
 </blockquote>
@@ -715,7 +726,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -805,7 +816,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关关键词"><span class="nav-text">相关关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、PX4-SITL配置"><span class="nav-text">一、PX4 SITL配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-设置dialout用户"><span class="nav-text">1.1 设置dialout用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-安装Pixhawk-Nuttx（and-JMAVSim）"><span class="nav-text">1.2 安装Pixhawk/Nuttx（and JMAVSim）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-获取PX4源码"><span class="nav-text">1.3 获取PX4源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-编译"><span class="nav-text">1.4 编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、QGC和Mavros的安装"><span class="nav-text">二、QGC和Mavros的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-QGC安装"><span class="nav-text">2.1 QGC安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-mavros和mavlink的源码安装"><span class="nav-text">2.2 mavros和mavlink的源码安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-二进制安装方式"><span class="nav-text">2.2.1 二进制安装方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-源码安装"><span class="nav-text">2.2.2 源码安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-安装相关依赖包"><span class="nav-text">2.3 安装相关依赖包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、测试"><span class="nav-text">三、测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-settions-json配置"><span class="nav-text">3.1 settions.json配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SITL连接和QGC连接"><span class="nav-text">3.2 SITL连接和QGC连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-测试"><span class="nav-text">3.3 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-QGC起飞测试"><span class="nav-text">3.3.1 QGC起飞测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-Firmware窗口命令起飞降落测试"><span class="nav-text">3.3.2 Firmware窗口命令起飞降落测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-ros命令测试"><span class="nav-text">3.3.3 ros命令测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、添加城市道路场景"><span class="nav-text">四、添加城市道路场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考网址"><span class="nav-text">参考网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关关键词"><span class="nav-text">相关关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、PX4-SITL配置"><span class="nav-text">一、PX4 SITL配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-设置dialout用户"><span class="nav-text">1.1 设置dialout用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-安装Pixhawk-Nuttx（and-JMAVSim）"><span class="nav-text">1.2 安装Pixhawk/Nuttx（and JMAVSim）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-获取PX4源码"><span class="nav-text">1.3 获取PX4源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-编译"><span class="nav-text">1.4 编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、QGC和Mavros的安装"><span class="nav-text">二、QGC和Mavros的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-QGC安装"><span class="nav-text">2.1 QGC安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-mavros和mavlink的源码安装"><span class="nav-text">2.2 mavros和mavlink的源码安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-二进制安装方式"><span class="nav-text">2.2.1 二进制安装方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-源码安装"><span class="nav-text">2.2.2 源码安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-安装相关依赖包"><span class="nav-text">2.3 安装相关依赖包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、测试"><span class="nav-text">三、测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-settions-json配置"><span class="nav-text">3.1 settions.json配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SITL连接和QGC连接"><span class="nav-text">3.2 SITL连接和QGC连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-测试"><span class="nav-text">3.3 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-QGC起飞测试"><span class="nav-text">3.3.1 QGC起飞测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-Firmware窗口命令起飞降落测试"><span class="nav-text">3.3.2 Firmware窗口命令起飞降落测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-ros命令测试"><span class="nav-text">3.3.3 ros命令测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、添加城市道路场景"><span class="nav-text">四、添加城市道路场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、SITL与-sh文件不兼容"><span class="nav-text">五、SITL与.sh文件不兼容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考网址"><span class="nav-text">参考网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DRL,OpenAI gym,Actor-Critic,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击DRL（六） 主要在莫烦代码的基础之上，进行更改  一、实验环境 主要使用两个环境进行训练测试，分别是CartPole环境和Pendulum环境。其中CartPole应用于softmax策略函数的离散行为空间，Pendulum应用于高斯策略函数的连续行为空间。  二、Actor-Critic算法 主要用$Q_w(s">
+<meta name="keywords" content="DRL,OpenAI gym,Actor-Critic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码实现（六）之Actor-Critic">
+<meta property="og:url" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击DRL（六） 主要在莫烦代码的基础之上，进行更改  一、实验环境 主要使用两个环境进行训练测试，分别是CartPole环境和Pendulum环境。其中CartPole应用于softmax策略函数的离散行为空间，Pendulum应用于高斯策略函数的连续行为空间。  二、Actor-Critic算法 主要用$Q_w(s">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/2.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/3.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/4.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/5.png">
+<meta property="og:updated_time" content="2019-08-17T08:47:57.525Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码实现（六）之Actor-Critic">
+<meta name="twitter:description" content="前言 针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击DRL（六） 主要在莫烦代码的基础之上，进行更改  一、实验环境 主要使用两个环境进行训练测试，分别是CartPole环境和Pendulum环境。其中CartPole应用于softmax策略函数的离散行为空间，Pendulum应用于高斯策略函数的连续行为空间。  二、Actor-Critic算法 主要用$Q_w(s">
+<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/">
+
+
+
+
+
+  <title>代码实现（六）之Actor-Critic | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">代码实现（六）之Actor-Critic</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-15T23:48:19+08:00">
+                2019-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/" class="leancloud_visitors" data-flag-title="代码实现（六）之Actor-Critic">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击<a href="https://ldgyyf.cn/2019/07/30/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BActor-Critic%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/">DRL（六）</a></p>
+<p>主要在<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/8_Actor_Critic_Advantage" target="_blank" rel="noopener">莫烦代码</a>的基础之上，进行更改</p>
+</blockquote>
+<h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><blockquote>
+<p>主要使用两个环境进行训练测试，分别是CartPole环境和Pendulum环境。其中CartPole应用于softmax策略函数的离散行为空间，Pendulum应用于高斯策略函数的连续行为空间。</p>
+</blockquote>
+<h2 id="二、Actor-Critic算法"><a href="#二、Actor-Critic算法" class="headerlink" title="二、Actor-Critic算法"></a>二、Actor-Critic算法</h2><blockquote>
+<p>主要用$Q_w(s,a)$来代替PG算法中的$v_t$，用来估计行为价值函数$ Q^{\pi_\theta}(s,a)$，即$Q_w(s,a) \approx  Q^{\pi_\theta}(s,a)$，该网络称为Critic网络。</p>
+</blockquote>
+<ul>
+<li>Critic：更新行为价值函数的参数$w$</li>
+<li>Actor：更新策略的参数θ，更新过程会受到Critic的价值函数的引导</li>
+</ul>
+<h3 id="Actor-Critic-的评估"><a href="#Actor-Critic-的评估" class="headerlink" title="Actor-Critic 的评估"></a>Actor-Critic 的评估</h3><blockquote>
+<p>Actor-Critic的评估一般有以下几种方法，主要变化的是$Q_w(s,a)$</p>
+</blockquote>
+<p>（1）<strong>基于状态价值：</strong>这和之前的蒙特卡洛策略梯度REINFORCE方法一样，这时Actor的策略函数参数更新的法公式为：</p>
+<script type="math/tex; mode=display">
+\theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t) V(s,w)</script><p>（2）<strong>基于动作价值：</strong>在DQN中，我们一般使用的都是动作价值函数Q来做价值评估，这时Actor的策略函数参数更新的法公式为：</p>
+<script type="math/tex; mode=display">
+\theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t) Q(s,a,w)</script><p>（3）<strong>基于TD($\lambda$)误差：</strong>一般都是基于后向TD($\lambda$)误差，是TD误差和效用迹E的乘积，这时Actor的策略函数参数更新的法公式是：</p>
+<script type="math/tex; mode=display">
+\theta = \theta + \alpha \delta(t)E(t)</script><p>其中，TD误差$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$，$E(t) = \gamma \lambda E_{t-1} + \nabla_\theta log \pi_\theta (s_t,a_t)$</p>
+<p>当$\lambda=0$时，就是普通TD方法，即$\theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t) \delta(t)$</p>
+<p>（4）<strong>基于优势函数（基准函数Baseline）：</strong>和之前Dueling DQN中的优势函数一样，其优势函数A的定义为：$A(S,A,w,\beta) = Q(S,A,w,\alpha,\beta) - V(S,w,\alpha)$，即动作价值函数和状态价值函数的差值，这时Actor的策略函数参数更新的法公式为：</p>
+<script type="math/tex; mode=display">
+\theta = \theta + \alpha \nabla_\theta log \pi_\theta (s_t,a_t)A(S,A,w,\beta)</script><p><strong>本篇实验过程将基于第三种方法，基于TD($\lambda$)误差进行评估</strong></p>
+<h2 id="三、代码部分"><a href="#三、代码部分" class="headerlink" title="三、代码部分"></a>三、代码部分</h2><blockquote>
+<p>直接查看<a href="https://github.com/ldgcug/DeepReinforcementLearning-Tensorflow/tree/master/Actor-Critic" target="_blank" rel="noopener">全部代码</a></p>
+</blockquote>
+<h3 id="3-1-代码组成"><a href="#3-1-代码组成" class="headerlink" title="3.1 代码组成"></a>3.1 代码组成</h3><blockquote>
+<p>代码主要由四个py程序组成：其中，<strong>run_CartPole.py</strong>对应于<strong>actor_critic.py</strong>，表示对离散行为空间的训练；<strong>run_Pendulum.py</strong>对应于<strong>actor_critic_gaussian.py</strong>表示对连续行为空间的训练</p>
+</blockquote>
+<p><strong>程序架构：</strong>主要分为Actor和Critic两个类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Actor</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,s_dim,a_dim,sess,learning_rate=<span class="number">0.001</span>)</span>:</span></span><br><span class="line">        self.build_softmax_network()<span class="comment">#建立Actor神经网络</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_actor_network</span><span class="params">(self)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">choose_action</span><span class="params">(self,state)</span>:</span><span class="comment">#根据s选择行为</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self,s,a,td)</span>:</span></span><br><span class="line">      	<span class="comment"># s,a用于产生Gradient ascent的方向</span></span><br><span class="line">        <span class="comment"># td来自Critic，用于告诉Actor这个方向对不对</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Critic</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,s_dim,sess,learning_rate=<span class="number">0.01</span>,reward_decay=<span class="number">0.9</span>)</span>:</span></span><br><span class="line">        self.build_critic_network()<span class="comment">#建立Critic神经网络</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_critic_network</span><span class="params">(self)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self,s,r,s_)</span>:</span></span><br><span class="line">        <span class="comment"># 学习状态的价值（state-value），不是行为的价值（action-value）</span></span><br><span class="line">        <span class="comment"># 计算TD-Error = (r+v_) - v</span></span><br><span class="line">        <span class="comment"># 用TD-Error评判这一步的行为有没有带来比平时更好的效果</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-2-softmax策略函数-离散行为空间"><a href="#3-2-softmax策略函数-离散行为空间" class="headerlink" title="3.2 softmax策略函数-离散行为空间"></a>3.2 softmax策略函数-离散行为空间</h3><h4 id="3-2-1-网络-actor-critic-py"><a href="#3-2-1-网络-actor-critic-py" class="headerlink" title="3.2.1 网络-actor-critic.py"></a>3.2.1 网络-actor-critic.py</h4><p><strong>Actor</strong></p>
+<p>训练过程中的一些注意的地方</p>
+<ul>
+<li><strong>输入：</strong>因为Actor可以单次训练，所以输入只需要是一个状态，一个动作和一个TD-Error</li>
+<li><strong>网络结构：</strong>和PG算法中的网络结构一样，使用一个双层的全连接神经网络</li>
+<li><strong>损失函数：</strong>在PG中<strong>loss = -log(prob) * vt</strong>，在这里只是将vt换成了由Critic计算出的<strong>时间差分误差TD-Error</strong></li>
+<li><strong>Actor训练：</strong>只需要将状态、动作以及时间差分值喂给网络就可以了</li>
+<li><strong>选择动作：</strong>和PG一样，根据softmax值进行选择</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Actor</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,s_dim,a_dim,sess,learning_rate=<span class="number">0.001</span>)</span>:</span></span><br><span class="line">		self.s_dim = s_dim</span><br><span class="line">		self.a_dim = a_dim</span><br><span class="line">		self.lr = learning_rate</span><br><span class="line"></span><br><span class="line">		self.sess = sess</span><br><span class="line"></span><br><span class="line">		self.build_softmax_network()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">build_softmax_network</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="comment"># 因为是单步更新，输入的值是一维的，因此这里用[1,self.s_dim]</span></span><br><span class="line">        <span class="comment"># 如果是回合制更新，则很多个s一起输入进来，因此是用None</span></span><br><span class="line">		self.s = tf.placeholder(tf.float32,[<span class="number">1</span>,self.s_dim],name=<span class="string">'state'</span>) <span class="comment">#input</span></span><br><span class="line">		self.a = tf.placeholder(tf.int32,<span class="literal">None</span>,name=<span class="string">"act"</span>)</span><br><span class="line">		self.td_error = tf.placeholder(tf.float32,<span class="literal">None</span>,name=<span class="string">"td_error"</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 网络参数</span></span><br><span class="line">		w_initializer = tf.random_normal_initializer(<span class="number">0.</span>,<span class="number">0.1</span>)</span><br><span class="line">		b_initializer = tf.constant_initializer(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">		c_names = [<span class="string">'actor_network'</span>,tf.GraphKeys.GLOBAL_VARIABLES]</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 隐藏层1 使用relu激活函数</span></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'fc1'</span>):</span><br><span class="line">			w1 = tf.get_variable(<span class="string">'w1'</span>,[self.s_dim,<span class="number">20</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b1 = tf.get_variable(<span class="string">'b1'</span>,[<span class="number">20</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			fc1 = tf.nn.relu(tf.matmul(self.s,w1)+b1)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 隐藏层最后一层，输出是不需要激活函数的</span></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'all_act'</span>):</span><br><span class="line">			w2 = tf.get_variable(<span class="string">'w2'</span>,[<span class="number">20</span>,self.a_dim],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b2 = tf.get_variable(<span class="string">'b2'</span>,[self.a_dim],initializer=b_initializer,collections=c_names)</span><br><span class="line">			all_act  = tf.matmul(fc1,w2) + b2</span><br><span class="line"></span><br><span class="line">		<span class="comment"># softmax 输出层，输出每个行为所对应的概率</span></span><br><span class="line">		self.all_act_prob = tf.nn.softmax(all_act,name=<span class="string">'act_prob'</span>) </span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'exp_v'</span>):</span><br><span class="line">			<span class="comment">#neg_log_prob = tf.log(self.all_act_prob[0, self.a])</span></span><br><span class="line">            neg_log_prob = tf.reduce_sum(tf.log(self.all_act_prob)*tf.one_hot(self.a, self.a_dim))<span class="comment">#log动作概率</span></span><br><span class="line">			self.exp_v = tf.reduce_mean(neg_log_prob * self.td_error)<span class="comment">#log概率*TD方向</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'train'</span>):</span><br><span class="line">			self.train_op = tf.train.AdamOptimizer(self.lr).minimize(-self.exp_v)</span><br><span class="line">            <span class="comment"># 因为我们想不断增加这个exp_v（动作带来的额外价值）</span></span><br><span class="line">            <span class="comment"># 所以我们用过 minimize(-exp_v) 的方式达到maximize(exp_v) 的目的</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 根据softmax所输出的概率选择行为</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">choose_action</span><span class="params">(self,state)</span>:</span></span><br><span class="line">		probs = self.sess.run(self.all_act_prob,feed_dict=&#123;self.s:state.reshape(<span class="number">-1</span>,self.s_dim)&#125;)<span class="comment"># 所有 action 的概率</span></span><br><span class="line">		action = np.random.choice(range(probs.shape[<span class="number">1</span>]),p=probs.ravel())<span class="comment"># 根据概率来选 action</span></span><br><span class="line">		<span class="keyword">return</span> action</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self,s,a,td)</span>:</span></span><br><span class="line">		s = s.reshape(<span class="number">-1</span>,self.s_dim)</span><br><span class="line">		_ = self.sess.run(self.train_op,feed_dict=&#123;self.s:s,self.a:a,self.td_error:td&#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>Critic</strong></p>
+<p>Critic要反馈给Actor一个时间差分值，来决定Actor选择动作的好坏，如果时间差分值大的话，说明当前Actor选择的这个动作的惊喜度较高，需要更多的出现来使得时间差分值减小。</p>
+<p>时间差分计算：$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$，$V(s_t)$表示将$s$状态输入到Critic网络中得到的Q值。因此Critic的输入也分三个，首先是当前状态，当前奖励，下一状态。<strong>为什么没有动作A？</strong>因为动作A是确定的，是由Actor选择的。</p>
+<ul>
+<li><strong>输入：</strong>当前状态，当前奖励，下一状态</li>
+<li><strong>网络结构：</strong>和Actor一样，是一个双层网络，网络最后输出V值</li>
+<li><strong>损失函数：</strong>$\delta(t) = R_{t+1} + \gamma V(S_{t+1}) - V(s_t)$</li>
+<li><strong>Critic训练：</strong>将当前状态、当前奖励、下一状态喂给网络即可，并得到TD-Error的值，最后给Actor</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Critic</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,s_dim,sess,learning_rate=<span class="number">0.01</span>,reward_decay=<span class="number">0.9</span>)</span>:</span></span><br><span class="line">		self.s_dim = s_dim</span><br><span class="line">		self.lr = learning_rate</span><br><span class="line">		self.gamma = reward_decay</span><br><span class="line"></span><br><span class="line">		self.sess = sess </span><br><span class="line"></span><br><span class="line">		self.build_critic_network()</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">build_critic_network</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="comment"># 输入是当前状态、当前奖励、下一状态</span></span><br><span class="line">		self.s = tf.placeholder(tf.float32,[<span class="number">1</span>,self.s_dim],<span class="string">"state"</span>)</span><br><span class="line">		self.v_ = tf.placeholder(tf.float32,[<span class="number">1</span>,<span class="number">1</span>],<span class="string">"v_next"</span>)</span><br><span class="line">		self.r = tf.placeholder(tf.float32,<span class="literal">None</span>,<span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line">		w_initializer = tf.random_normal_initializer(<span class="number">0.</span>,<span class="number">0.1</span>)</span><br><span class="line">		b_initializer = tf.constant_initializer(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">		c_names = [<span class="string">'critic_network'</span>,tf.GraphKeys.GLOBAL_VARIABLES]</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 隐藏层1 </span></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'critic'</span>):</span><br><span class="line">			w1 = tf.get_variable(<span class="string">'w1_c'</span>,[self.s_dim,<span class="number">20</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b1 = tf.get_variable(<span class="string">'b1_c'</span>,[<span class="number">20</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			fc1 = tf.nn.relu(tf.matmul(self.s,w1)+b1)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 隐藏层最后一层，输出是不需要激活函数的</span></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'V'</span>):</span><br><span class="line">			w2 = tf.get_variable(<span class="string">'w2_c'</span>,[<span class="number">20</span>,<span class="number">1</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b2 = tf.get_variable(<span class="string">'b2_c'</span>,[<span class="number">1</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			self.v  = tf.matmul(fc1,w2) + b2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'squard_TD_error'</span>):</span><br><span class="line">			self.td_error = self.r + self.gamma * self.v_ - self.v <span class="comment">#使用时间差分求TD-Error</span></span><br><span class="line">			self.loss = tf.square(self.td_error)<span class="comment"># 均方差求loss</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'train'</span>):</span><br><span class="line">			self.train_op = tf.train.AdamOptimizer(self.lr).minimize(self.loss)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self,s,r,s_)</span>:</span></span><br><span class="line">		s = s.reshape(<span class="number">-1</span>,self.s_dim)</span><br><span class="line">		s_ = s_.reshape(<span class="number">-1</span>,self.s_dim)</span><br><span class="line">		v_ = self.sess.run(self.v,feed_dict=&#123;self.s:s_&#125;)</span><br><span class="line"></span><br><span class="line">		td_error = self.sess.run(self.td_error,feed_dict=&#123;self.s:s,self.v_:v_,self.r:r&#125;)</span><br><span class="line">		_ = self.sess.run(self.train_op,feed_dict=&#123;self.s:s,self.v_:v_,self.r:r&#125;)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> td_error</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-2主函数-run-CartPole-py"><a href="#3-2-2主函数-run-CartPole-py" class="headerlink" title="3.2.2主函数-run_CartPole.py"></a>3.2.2主函数-run_CartPole.py</h4><blockquote>
+<p>和之前不一样的是，里面是单步训练</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">env = gym.make(<span class="string">'CartPole-v0'</span>)</span><br><span class="line">env.seed(<span class="number">1</span>)     </span><br><span class="line">env = env.unwrapped</span><br><span class="line"></span><br><span class="line">N_S = env.observation_space.shape[<span class="number">0</span>]</span><br><span class="line">N_A = env.action_space.n </span><br><span class="line"></span><br><span class="line">DISPLAY_REWARD_THRESHOLD = <span class="number">400</span> <span class="comment">#奖励值阈值，用于判断是否显示界面</span></span><br><span class="line">RENDER = <span class="literal">False</span> <span class="comment"># 刚开始设置为False，不显示</span></span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line">actor = Actor(s_dim=N_S,a_dim=N_A,learning_rate=<span class="number">0.001</span>,sess=sess)</span><br><span class="line">critic = Critic(s_dim=N_S,learning_rate=<span class="number">0.01</span>,reward_decay=<span class="number">0.9</span>,sess=sess)</span><br><span class="line"></span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i_episode <span class="keyword">in</span> range(<span class="number">3000</span>):</span><br><span class="line"></span><br><span class="line">	s = env.reset()</span><br><span class="line">	t = <span class="number">0</span></span><br><span class="line">	track_r = [] <span class="comment">#每回合的所有奖励</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		<span class="keyword">if</span> RENDER:env.render()</span><br><span class="line"></span><br><span class="line">		a = actor.choose_action(s)</span><br><span class="line">		s_,r,done,info = env.step(a)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> done: r = <span class="number">-20</span> <span class="comment">#回合结束的惩罚</span></span><br><span class="line">		track_r.append(r)</span><br><span class="line"></span><br><span class="line">		td_error = critic.learn(s,r,s_)<span class="comment"># Critic学习，得到TD-Error</span></span><br><span class="line">		actor.learn(s,a,td_error) <span class="comment"># Actor学习，更新行为概率</span></span><br><span class="line"></span><br><span class="line">		s = s_</span><br><span class="line">		t += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> done <span class="keyword">or</span> t &gt;= <span class="number">1000</span>:</span><br><span class="line">			ep_rs_sum = sum(track_r)<span class="comment">#回合结束，打印回合累积奖励</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> <span class="string">'running_reward'</span> <span class="keyword">not</span> <span class="keyword">in</span> globals():</span><br><span class="line">				running_reward = ep_rs_sum</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				running_reward = running_reward * <span class="number">0.95</span> + ep_rs_sum*<span class="number">0.05</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> running_reward &gt; DISPLAY_REWARD_THRESHOLD:RENDER=<span class="literal">True</span></span><br><span class="line">			print(<span class="string">'episode:'</span>,i_episode,<span class="string">'reward:'</span>,int(running_reward))</span><br><span class="line">			<span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>（1）为什么加入这个才能学习？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> done: r = <span class="number">-20</span> <span class="comment">#回合结束的惩罚</span></span><br></pre></td></tr></table></figure>
+<p>因为AC在每次更新时，只考虑前后两步，而环境里面的reward只有+1，所以为了体现前后两步的不同，在done的时候给一个-20的信号，让信号强度有所不同</p>
+<p><img src="/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/1.png" alt></p>
+<p>（2）求解TD-Error时，是否需要考虑done的情况？</p>
+<p><img src="/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/2.png" alt></p>
+<p>（3）log概率的代码？如果是下面被注释的那一行，则不太理解</p>
+<p>和带有axis的值类似，若axis=0，则沿着纵轴进行操作；axis=1，沿横轴进行操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#neg_log_prob = tf.log(self.all_act_prob[0, self.a])</span></span><br><span class="line">neg_log_prob = tf.reduce_sum(tf.log(self.all_act_prob)*tf.one_hot(self.a,self.a_dim))<span class="comment">#log动作概率</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/3.png" alt></p>
+<p>（4）AC收敛好像没有PG快？<br><img src="/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/4.png" alt></p>
+<h3 id="3-3-Gaussian策略函数-连续行为空间"><a href="#3-3-Gaussian策略函数-连续行为空间" class="headerlink" title="3.3 Gaussian策略函数-连续行为空间"></a>3.3 Gaussian策略函数-连续行为空间</h3><h4 id="3-3-1-网络-actor-critic-gaussian-py"><a href="#3-3-1-网络-actor-critic-gaussian-py" class="headerlink" title="3.3.1 网络-actor-critic-gaussian.py"></a>3.3.1 网络-actor-critic-gaussian.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Actor</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,s_dim,action_bound,sess,learning_rate=<span class="number">0.001</span>)</span>:</span></span><br><span class="line">		self.s_dim = s_dim</span><br><span class="line">		self.action_bound = action_bound <span class="comment">#对应连续行为，这里不再是维度，而是一个连续空间阈值</span></span><br><span class="line">		self.lr = learning_rate</span><br><span class="line">		self.sess = sess</span><br><span class="line">		self.build_gaussian_network()</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">build_gaussian_network</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="comment"># 输入和Softmax的一样，只是这边a为tf.float32，softmax中也可以设置为float32</span></span><br><span class="line">		self.s = tf.placeholder(tf.float32,[<span class="number">1</span>,self.s_dim],name=<span class="string">'state'</span>) <span class="comment">#input</span></span><br><span class="line">		self.a = tf.placeholder(tf.float32,<span class="literal">None</span>,name=<span class="string">"act"</span>)</span><br><span class="line">		self.td_error = tf.placeholder(tf.float32,<span class="literal">None</span>,name=<span class="string">"td_error"</span>)</span><br><span class="line"></span><br><span class="line">		w_initializer = tf.random_normal_initializer(<span class="number">0.</span>,<span class="number">0.1</span>)</span><br><span class="line">		b_initializer = tf.constant_initializer(<span class="number">0.1</span>)</span><br><span class="line">		c_names = [<span class="string">'actor_network'</span>,tf.GraphKeys.GLOBAL_VARIABLES]</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 隐藏层1</span></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'l1'</span>):</span><br><span class="line">			w1 = tf.get_variable(<span class="string">'w1'</span>,[self.s_dim,<span class="number">30</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b1 = tf.get_variable(<span class="string">'b1'</span>,[<span class="number">30</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			l1 = tf.nn.relu(tf.matmul(self.s,w1)+b1)</span><br><span class="line"></span><br><span class="line">		<span class="comment">#求均值  隐藏层最后一层</span></span><br><span class="line">        <span class="comment">#和softmax有点区别，这里的输出维度是1维，softmax是n维(因为是离散的)，加了tanh激活函数</span></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'mu'</span>):</span><br><span class="line">			w2 = tf.get_variable(<span class="string">'w2'</span>,[<span class="number">30</span>,<span class="number">1</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b2 = tf.get_variable(<span class="string">'b2'</span>,[<span class="number">1</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			mu = tf.nn.tanh(tf.matmul(l1,w2)+b2)</span><br><span class="line"></span><br><span class="line">		<span class="comment">#求方差  输出层 同样是1个维度，并且以了隐藏层的输出（l1）作为输入</span></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'sigma'</span>):</span><br><span class="line">			w3 = tf.get_variable(<span class="string">'w3'</span>,[<span class="number">30</span>,<span class="number">1</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b3 = tf.get_variable(<span class="string">'b3'</span>,[<span class="number">1</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			sigma = tf.nn.softplus(tf.matmul(l1,w3)+b3)</span><br><span class="line"></span><br><span class="line">		global_step = tf.Variable(<span class="number">0</span>,trainable=<span class="literal">False</span>) <span class="comment">#初始化</span></span><br><span class="line">        <span class="comment"># self.e = epsilon = tf.train.exponential_decay(2., global_step, 1000, 0.9)</span></span><br><span class="line">		self.mu,self.sigma = tf.squeeze(mu*<span class="number">2</span>),tf.squeeze(sigma+<span class="number">0.1</span>)<span class="comment"># 均值控制在（-2,2）,因为这个环境的action_bound为2，所以这里直接写的2，方差控制在某个范围内</span></span><br><span class="line">        <span class="comment">#实际应该写为 tf.squeeze(mu*self.action_bound)</span></span><br><span class="line">		self.normal_dist = tf.distributions.Normal(self.mu,self.sigma)<span class="comment">#高斯分布</span></span><br><span class="line"></span><br><span class="line">		self.action = tf.clip_by_value(self.normal_dist.sample(<span class="number">1</span>),self.action_bound[<span class="number">0</span>],self.action_bound[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'exp_v'</span>):</span><br><span class="line">			log_prob = self.normal_dist.log_prob(self.a) <span class="comment"># loss without advantage</span></span><br><span class="line">			self.exp_v = log_prob * self.td_error <span class="comment"># advantage (TD_error) guided loss</span></span><br><span class="line">			self.exp_v += <span class="number">0.01</span> * self.normal_dist.entropy()<span class="comment"># Add cross entropy cost to encourage exploration</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'train'</span>):</span><br><span class="line">			self.train_op = tf.train.AdamOptimizer(self.lr).minimize(-self.exp_v,global_step)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">choose_action</span><span class="params">(self,state)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.sess.run(self.action,feed_dict=&#123;self.s:state.reshape(<span class="number">-1</span>,self.s_dim)&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self,s,a,td)</span>:</span></span><br><span class="line">		s = s.reshape(<span class="number">-1</span>,self.s_dim)</span><br><span class="line">		_ = self.sess.run(self.train_op,feed_dict=&#123;self.s:s,self.a:a,self.td_error:td&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Critic和softmax的critic一样，主要是Actor有所不同</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Critic</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,s_dim,sess,learning_rate=<span class="number">0.01</span>,reward_decay=<span class="number">0.9</span>)</span>:</span></span><br><span class="line">		self.s_dim = s_dim</span><br><span class="line">		self.lr = learning_rate</span><br><span class="line">		self.gamma = reward_decay</span><br><span class="line"></span><br><span class="line">		self.sess = sess </span><br><span class="line"></span><br><span class="line">		self.build_critic_network()</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">build_critic_network</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">		self.s = tf.placeholder(tf.float32,[<span class="number">1</span>,self.s_dim],<span class="string">"state"</span>)</span><br><span class="line">		self.v_ = tf.placeholder(tf.float32,[<span class="number">1</span>,<span class="number">1</span>],<span class="string">"v_next"</span>)</span><br><span class="line">		self.r = tf.placeholder(tf.float32,<span class="literal">None</span>,<span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line">		w_initializer = tf.random_normal_initializer(<span class="number">0.</span>,<span class="number">0.1</span>)</span><br><span class="line">		b_initializer = tf.constant_initializer(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">		c_names = [<span class="string">'critic_network'</span>,tf.GraphKeys.GLOBAL_VARIABLES]</span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'critic'</span>):</span><br><span class="line">			w1 = tf.get_variable(<span class="string">'w1_c'</span>,[self.s_dim,<span class="number">30</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b1 = tf.get_variable(<span class="string">'b1_c'</span>,[<span class="number">30</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			l1 = tf.nn.relu(tf.matmul(self.s,w1)+b1)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'V'</span>):</span><br><span class="line">			w2 = tf.get_variable(<span class="string">'w2_c'</span>,[<span class="number">30</span>,<span class="number">1</span>],initializer=w_initializer,collections=c_names)</span><br><span class="line">			b2 = tf.get_variable(<span class="string">'b2_c'</span>,[<span class="number">1</span>],initializer=b_initializer,collections=c_names)</span><br><span class="line">			self.v  = tf.matmul(l1,w2) + b2</span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'squard_TD_error'</span>):</span><br><span class="line">			self.td_error = self.r + self.gamma * self.v_ - self.v</span><br><span class="line">			self.loss = tf.square(self.td_error)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">'train'</span>):</span><br><span class="line">			self.train_op = tf.train.AdamOptimizer(self.lr).minimize(self.loss)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self,s,r,s_)</span>:</span></span><br><span class="line">		s = s.reshape(<span class="number">-1</span>,self.s_dim)</span><br><span class="line">		s_ = s_.reshape(<span class="number">-1</span>,self.s_dim)</span><br><span class="line">		v_ = self.sess.run(self.v,feed_dict=&#123;self.s:s_&#125;)</span><br><span class="line"></span><br><span class="line">		td_error = self.sess.run(self.td_error,feed_dict=&#123;self.s:s,self.v_:v_,self.r:r&#125;)</span><br><span class="line">		_ = self.sess.run(self.train_op,feed_dict=&#123;self.s:s,self.v_:v_,self.r:r&#125;)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> td_error</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-2-主函数-run-Pendulum-py"><a href="#3-3-2-主函数-run-Pendulum-py" class="headerlink" title="3.3.2 主函数-run_Pendulum.py"></a>3.3.2 主函数-run_Pendulum.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">env = gym.make(<span class="string">'Pendulum-v0'</span>)</span><br><span class="line">env.seed(<span class="number">1</span>)     </span><br><span class="line">env = env.unwrapped</span><br><span class="line"></span><br><span class="line">N_S = env.observation_space.shape[<span class="number">0</span>]</span><br><span class="line">A_BOUND = env.action_space.high</span><br><span class="line"></span><br><span class="line">DISPLAY_REWARD_THRESHOLD = <span class="number">-100</span> <span class="comment"># renders environment if total episode reward is greater then this threshold</span></span><br><span class="line">RENDER = <span class="literal">False</span> <span class="comment"># rendering wastes time</span></span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line">actor = Actor(s_dim=N_S,action_bound=[-A_BOUND,A_BOUND],learning_rate=<span class="number">0.001</span>,sess=sess)</span><br><span class="line">critic = Critic(s_dim=N_S,learning_rate=<span class="number">0.01</span>,reward_decay=<span class="number">0.9</span>,sess=sess)</span><br><span class="line"></span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i_episode <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line"></span><br><span class="line">	s = env.reset()</span><br><span class="line">	t = <span class="number">0</span></span><br><span class="line">	ep_rs = []</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		<span class="keyword">if</span> RENDER:env.render()</span><br><span class="line"></span><br><span class="line">		a = actor.choose_action(s)</span><br><span class="line">		s_,r,done,info = env.step(a)</span><br><span class="line">		r /= <span class="number">10</span></span><br><span class="line"></span><br><span class="line">		td_error = critic.learn(s,r,s_)</span><br><span class="line">		actor.learn(s,a,td_error)</span><br><span class="line"></span><br><span class="line">		s = s_</span><br><span class="line">		t += <span class="number">1</span></span><br><span class="line">		ep_rs.append(r)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>  t &gt; <span class="number">200</span>:</span><br><span class="line">			ep_rs_sum = sum(ep_rs)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> <span class="string">'running_reward'</span> <span class="keyword">not</span> <span class="keyword">in</span> globals():</span><br><span class="line">				running_reward = ep_rs_sum</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				running_reward = running_reward * <span class="number">0.9</span> + ep_rs_sum*<span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> running_reward &gt; DISPLAY_REWARD_THRESHOLD:RENDER=<span class="literal">True</span></span><br><span class="line">			print(<span class="string">'episode:'</span>,i_episode,<span class="string">'reward:'</span>,int(running_reward))</span><br><span class="line">			<span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<p>（1）添加了global_step变量，不太清楚干啥？</p>
+<p><img src="/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/5.png" alt></p>
+<p>（2）这个连续行为的训练效果好像并不太好？</p>
+<p>​    关于连续行为空间的，还是主要看DDPG和A3C吧</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>Actor-Critic算法的思路很好，但是不太容易收敛，目前对AC算法进行改进，解决其难收敛的问题主要有DDPG和A3C算法，而且测试的AC在连续行为空间上的效果不太好</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-1-actor-critic/" target="_blank" rel="noopener">莫烦AC算法介绍</a></li>
+<li><p><a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/8_Actor_Critic_Advantage" target="_blank" rel="noopener">莫烦AC源代码</a></p>
+</li>
+<li><p><a href="https://cloud.tencent.com/developer/article/1092347" target="_blank" rel="noopener">深度强化学习-Actor-Citic算法原理和实现</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DRL/" rel="tag"># DRL</a>
+          
+            <a href="/tags/OpenAI-gym/" rel="tag"># OpenAI gym</a>
+          
+            <a href="/tags/Actor-Critic/" rel="tag"># Actor-Critic</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/13/Airsim/初始Airsim（五）之PX4、Mavros控制/" rel="next" title="初始Airsim（五）之PX4、Mavros控制">
+                <i class="fa fa-chevron-left"></i> 初始Airsim（五）之PX4、Mavros控制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、实验环境"><span class="nav-text">一、实验环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Actor-Critic算法"><span class="nav-text">二、Actor-Critic算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Actor-Critic-的评估"><span class="nav-text">Actor-Critic 的评估</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、代码部分"><span class="nav-text">三、代码部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-代码组成"><span class="nav-text">3.1 代码组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-softmax策略函数-离散行为空间"><span class="nav-text">3.2 softmax策略函数-离散行为空间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-网络-actor-critic-py"><span class="nav-text">3.2.1 网络-actor-critic.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2主函数-run-CartPole-py"><span class="nav-text">3.2.2主函数-run_CartPole.py</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Gaussian策略函数-连续行为空间"><span class="nav-text">3.3 Gaussian策略函数-连续行为空间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-网络-actor-critic-gaussian-py"><span class="nav-text">3.3.1 网络-actor-critic-gaussian.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-主函数-run-Pendulum-py"><span class="nav-text">3.3.2 主函数-run_Pendulum.py</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '代码实现（六）之Actor-Critic'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '代码实现（六）之Actor-Critic'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
