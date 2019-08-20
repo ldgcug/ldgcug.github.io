@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Airsim,ubuntu,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 Airsim的官方github上面其实提供了一些强化学习的训练demo，如drone的DQN训练、car的DQN训练，但是都是基于cntk进行实现的，而这一块我不熟悉，还是用我熟悉的Tensorflow进行训练测试，与drone的DQN训练目标不同，甚至由于是cntk相关实现，也没有去细看其官方训练demo。 但是其思想都差不多，因为都是基于DQN进行训练  一、问题定义 在AirSimNH">
+<meta name="keywords" content="Airsim,ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识Airsim（七）之强化学习训练测试">
+<meta property="og:url" content="http://ldgyyf.cn/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 Airsim的官方github上面其实提供了一些强化学习的训练demo，如drone的DQN训练、car的DQN训练，但是都是基于cntk进行实现的，而这一块我不熟悉，还是用我熟悉的Tensorflow进行训练测试，与drone的DQN训练目标不同，甚至由于是cntk相关实现，也没有去细看其官方训练demo。 但是其思想都差不多，因为都是基于DQN进行训练  一、问题定义 在AirSimNH">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/2.png">
+<meta property="og:updated_time" content="2019-08-20T07:13:42.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识Airsim（七）之强化学习训练测试">
+<meta name="twitter:description" content="前言 Airsim的官方github上面其实提供了一些强化学习的训练demo，如drone的DQN训练、car的DQN训练，但是都是基于cntk进行实现的，而这一块我不熟悉，还是用我熟悉的Tensorflow进行训练测试，与drone的DQN训练目标不同，甚至由于是cntk相关实现，也没有去细看其官方训练demo。 但是其思想都差不多，因为都是基于DQN进行训练  一、问题定义 在AirSimNH">
+<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ldgyyf.cn/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/">
+
+
+
+
+
+  <title>初识Airsim（七）之强化学习训练测试 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初识Airsim（七）之强化学习训练测试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-20T13:15:44+08:00">
+                2019-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Airsim/" itemprop="url" rel="index">
+                    <span itemprop="name">Airsim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/" class="leancloud_visitors" data-flag-title="初识Airsim（七）之强化学习训练测试">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>Airsim的官方github上面其实提供了一些强化学习的训练demo，如drone的<a href="https://github.com/microsoft/AirSim/blob/master/PythonClient/multirotor/DQNdrone.py" target="_blank" rel="noopener">DQN训练</a>、car的<a href="https://github.com/microsoft/AirSim/blob/master/PythonClient/car/DQNcar.py" target="_blank" rel="noopener">DQN训练</a>，但是都是基于cntk进行实现的，而这一块我不熟悉，还是用我熟悉的Tensorflow进行训练测试，与drone的DQN训练目标不同，甚至由于是cntk相关实现，也没有去细看其官方训练demo。</p>
+<p>但是其思想都差不多，因为都是基于DQN进行训练</p>
+</blockquote>
+<h2 id="一、问题定义"><a href="#一、问题定义" class="headerlink" title="一、问题定义"></a>一、问题定义</h2><blockquote>
+<p>在AirSimNH.sh的场景下进行训练</p>
+</blockquote>
+<p><img src="/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/1.png" alt></p>
+<h3 id="1-1-目标"><a href="#1-1-目标" class="headerlink" title="1.1 目标"></a>1.1 目标</h3><blockquote>
+<p> 训练一个agent，从起点出发，沿着道路中心线飞行到正前方6米处的地方</p>
+</blockquote>
+<h3 id="1-2-马尔科夫状态过程"><a href="#1-2-马尔科夫状态过程" class="headerlink" title="1.2 马尔科夫状态过程"></a>1.2 马尔科夫状态过程</h3><ul>
+<li><strong>状态集：</strong>深度图像的灰度图集合（n种）</li>
+<li><strong>行为集：</strong>前行、左行、右行（3种）</li>
+<li><strong>转换函数：</strong>model free</li>
+<li><strong>奖励函数：</strong><ul>
+<li>正面奖励：到达目标点范围：x属于[-4.5,7.5]，y属于[-0.8,0.8]，reward = 1</li>
+<li>负面奖励：超出边界：x &gt; 7.5 或者 abs(y) &gt;2，reward = -1</li>
+<li>生活成本：每走一步，reward = -0.01</li>
+</ul>
+</li>
+<li><strong>起始状态：</strong>（0，0，-3）</li>
+<li><strong>结束状态：</strong><ul>
+<li>到达目标点</li>
+<li>超出边界</li>
+<li>20步强制结束当前episode</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、代码部分"><a href="#二、代码部分" class="headerlink" title="二、代码部分"></a>二、代码部分</h2><blockquote>
+<p>直接查看<a href="https://github.com/ldgcug/Airsim_Controller/tree/master/DQN_Controller" target="_blank" rel="noopener">所有代码</a></p>
+</blockquote>
+<p><strong>（1）经验缓冲池：ReplayBuffer.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReplayBuffer</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,buffer_size)</span>:</span></span><br><span class="line">        self.buffer_size = buffer_size <span class="comment"># mini_batch大小</span></span><br><span class="line">        self.num_experiences = <span class="number">0</span> <span class="comment"># 当前经验池中的个数</span></span><br><span class="line">        self.buffer = deque() <span class="comment"># 创建队列，用于存储数据</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getBatch</span><span class="params">(self,batch_size)</span>:</span> <span class="comment">#从缓冲池中均匀随机采样</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(self,state,action,reward,new_state,done)</span>:</span> <span class="comment"># 存储数据</span></span><br></pre></td></tr></table></figure>
+<p>（2）<strong>环境：AirsimEnv.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">goals = [<span class="number">6</span>,<span class="number">2</span>]</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Env</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.client = airsim.MultirotorClient()</span><br><span class="line">		self.client.confirmConnection()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 图片转换</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">transform_input</span><span class="params">(self,responses, img_height, img_width)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 重置，并完成无人机的起飞动作，中间有对环境的暂停和取消操作</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset</span><span class="params">(self)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 执行行为</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">step</span><span class="params">(self,quad_offset)</span>:</span></span><br><span class="line">        reward , done = self.compute_reward(quad_pos) <span class="comment"># 得到奖励</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算奖励</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compute_reward</span><span class="params">(self,quad_pos)</span>:</span></span><br></pre></td></tr></table></figure>
+<p>（3）<strong>DQN训练：dqn.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> AirsimEnv <span class="keyword">import</span> Env</span><br><span class="line"><span class="keyword">from</span> ReplayBuffer <span class="keyword">import</span> ReplayBuffer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weight_variable</span><span class="params">(shape)</span>:</span></span><br><span class="line">	initial = tf.truncated_normal(shape,stddev = <span class="number">0.1</span>)</span><br><span class="line">	<span class="keyword">return</span> tf.Variable(initial)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bias_varialbe</span><span class="params">(shape)</span>:</span></span><br><span class="line">	initial = tf.constant(<span class="number">0.1</span>,shape = shape)</span><br><span class="line">	<span class="keyword">return</span> tf.Variable(initial)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv2d</span><span class="params">(x,w)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> tf.nn.conv2d(x,w,strides = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],padding = <span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv1d</span><span class="params">(x,w)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> tf.nn.conv2d(x,w,strides = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>],padding = <span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DQNAgent</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,state_size,action_size,lr,gamma,batch_size,epsilon)</span>:</span></span><br><span class="line">        self.createNet() <span class="comment">#创建Q网络</span></span><br><span class="line">        </span><br><span class="line">        self.createtargetNet() <span class="comment">#创建Target Q网络</span></span><br><span class="line">        </span><br><span class="line">        self.sess.run(tf.global_variables_initializer())<span class="comment"># 初始化所有参数</span></span><br><span class="line">        </span><br><span class="line">        self.saver = tf.train.Saver(max_to_keep=<span class="number">1</span>) <span class="comment">#保存模型</span></span><br><span class="line">        </span><br><span class="line">        self.load() <span class="comment">#加载模型</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">createNet</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">"loss"</span>):</span><br><span class="line">			self.loss = tf.reduce_mean(tf.squared_difference(self.q_target,self.q_eval))</span><br><span class="line"></span><br><span class="line">		<span class="keyword">with</span> tf.variable_scope(<span class="string">"train"</span>):</span><br><span class="line">			self.train_op = tf.train.RMSPropOptimizer(self.lr).minimize(self.loss)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">createtargetNet</span><span class="params">(self)</span>:</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">(self)</span>:</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_action</span><span class="params">(self,state)</span>:</span> <span class="comment">#e-greedy策略选择行为</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">(self,batch)</span>:</span> <span class="comment"># 训练网络</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train_target</span><span class="params">(self)</span>:</span> <span class="comment">#Target网络更新</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">interpret_action</span><span class="params">(action)</span>:</span> <span class="comment"># 得到真正的行为</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># argparse parser</span></span><br><span class="line">	parser = argparse.ArgumentParser()</span><br><span class="line">	parser.add_argument(<span class="string">'--img_height'</span>,     type=int,      default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--img_width'</span>, 	    type=int,      default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--lr'</span>,		        type=float,    default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--gamma'</span>,			type=float,    default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--batch_size'</span>,	    type=int,      default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--memory_size'</span>,	type=float,    default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--epsilon'</span>,		type=float,    default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--epsilon_end'</span>,	type=float,    default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--update_target'</span>,	type=int,      default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--explore'</span>,		type=int,      default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--train_episode'</span>,	type=int,      default=)</span><br><span class="line">	parser.add_argument(<span class="string">'--max_steps'</span>,		type=int,      default=)</span><br><span class="line"></span><br><span class="line">	args = parser.parse_args()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># make RL agent</span></span><br><span class="line">	buffer = ReplayBuffer(args.memory_size)</span><br><span class="line">	env = Env()</span><br><span class="line">	state_size = args.img_width*args.img_height</span><br><span class="line">	action_size = <span class="number">3</span></span><br><span class="line">	start_time = time.asctime( time.localtime(time.time()))</span><br><span class="line">	dqn = DQNAgent(</span><br><span class="line">		state_size = state_size,</span><br><span class="line">		action_size = action_size,</span><br><span class="line">		lr = args.lr,</span><br><span class="line">		gamma = args.gamma,</span><br><span class="line">		batch_size = args.batch_size,</span><br><span class="line">		epsilon = args.epsilon</span><br><span class="line">		)</span><br><span class="line">	step = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(args.train_episode):</span><br><span class="line"></span><br><span class="line">		s_t = env.reset()</span><br><span class="line">		total_reward = <span class="number">0</span></span><br><span class="line">		episode_step = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(args.max_steps):</span><br><span class="line">			dqn.epsilon -= <span class="number">1.0</span> / args.explore <span class="comment">#epsilon衰减</span></span><br><span class="line">			dqn.epsilon = max(dqn.epsilon,args.epsilon_end)</span><br><span class="line">            </span><br><span class="line">			a_t = dqn.get_action(s_t) <span class="comment"># e_greedy得到行为</span></span><br><span class="line">			real_action = interpret_action(a_t) <span class="comment">#真实行为，转换为了元祖</span></span><br><span class="line">			<span class="keyword">try</span>:</span><br><span class="line">				s_next_t,r_t,done,quad_pos = env.step(real_action)</span><br><span class="line">				<span class="comment">#s_next_t = transform_input(s_next_t,args.img_height,args.img_width)</span></span><br><span class="line">			<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">				print(<span class="string">'Error :'</span> ,e)</span><br><span class="line"></span><br><span class="line">			buffer.add(s_t,a_t,r_t,s_next_t,done) <span class="comment">#存储数据</span></span><br><span class="line">			total_reward += r_t</span><br><span class="line"></span><br><span class="line">			s_t = s_next_t</span><br><span class="line">			step += <span class="number">1</span></span><br><span class="line">			episode_step += <span class="number">1</span></span><br><span class="line">			print(<span class="string">'quadrotor position'</span>,quad_pos.x_val,quad_pos.y_val,quad_pos.z_val)</span><br><span class="line">			print(<span class="string">'\n'</span>)</span><br><span class="line">			print(<span class="string">"Episode"</span>,i,<span class="string">"episode_step"</span>,episode_step,<span class="string">"Action"</span>,a_t,<span class="string">"Reward"</span>,r_t,<span class="string">'step'</span>,step,<span class="string">'buffer'</span>,len(buffer.buffer),<span class="string">'done'</span>,done)</span><br><span class="line">			print(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> step &gt; <span class="number">500</span>: <span class="comment">#大于500步，开始训练</span></span><br><span class="line">				batch = buffer.getBatch(args.batch_size)</span><br><span class="line">				dqn.train_model(batch)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> step % args.update_target == <span class="number">0</span>: <span class="comment">#更新target网络，并保存模型</span></span><br><span class="line">				dqn.train_target()</span><br><span class="line">				dqn.save()</span><br><span class="line">			<span class="keyword">if</span> done:</span><br><span class="line">				print(<span class="string">'episode %d is done'</span>%i)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">		print(<span class="string">'start_time'</span>,start_time)</span><br><span class="line">		print(<span class="string">'Episode'</span>,i,<span class="string">'total reward'</span>,total_reward)</span><br><span class="line">		f1 = open(<span class="string">r"/home/tifo/tifo/DQN/data/car_total_reward"</span>+str(int(i/<span class="number">1000</span>))+<span class="string">".txt"</span>,<span class="string">"a+"</span>)</span><br><span class="line">		f1.write(<span class="string">"Episode:"</span>+str(i)+<span class="string">"    total_reward:"</span>+str(total_reward)+<span class="string">"   episode_step:"</span>+str(episode_step)+<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">	print(<span class="string">'start_time'</span>,start_time)</span><br><span class="line">	print(<span class="string">'end_time'</span>,time.asctime( time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
+<p><strong>（4）random_test.py：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> AirsimEnv <span class="keyword">import</span> Env</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">interpret_action</span><span class="params">(action)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment"># argparse parser</span></span><br><span class="line">	parser = argparse.ArgumentParser()</span><br><span class="line">	parser.add_argument(<span class="string">'--test_episode'</span>,	type=int,      default=<span class="number">1000</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'--max_steps'</span>,		type=int,      default=<span class="number">20</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'--actions'</span>,		type=int,      default=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">	args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># make RL agent</span></span><br><span class="line">	env = Env()</span><br><span class="line">	start_time = time.asctime( time.localtime(time.time()))</span><br><span class="line">	step = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(args.test_episode):</span><br><span class="line"></span><br><span class="line">		s_t = env.reset()</span><br><span class="line">		total_reward = <span class="number">0</span></span><br><span class="line">		episode_step = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(args.max_steps):</span><br><span class="line">			a_t = np.random.choice(args.actions) <span class="comment">#随机选择行为</span></span><br><span class="line">			real_action = interpret_action(a_t)</span><br><span class="line">			<span class="keyword">try</span>:</span><br><span class="line">				s_next_t,r_t,done,quad_pos = env.step(real_action)</span><br><span class="line">				<span class="comment">#s_next_t = transform_input(s_next_t,args.img_height,args.img_width)</span></span><br><span class="line">			<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">				print(<span class="string">'Error :'</span> ,e)</span><br><span class="line"></span><br><span class="line">			total_reward += r_t</span><br><span class="line"></span><br><span class="line">			s_t = s_next_t</span><br><span class="line">			step += <span class="number">1</span></span><br><span class="line">			episode_step += <span class="number">1</span></span><br><span class="line">			print(<span class="string">'quadrotor position'</span>,quad_pos.x_val,quad_pos.y_val,quad_pos.z_val)</span><br><span class="line">			print(<span class="string">'\n'</span>)</span><br><span class="line">			print(<span class="string">"Episode"</span>,i,<span class="string">"episode_step"</span>,episode_step,<span class="string">"Action"</span>,a_t,<span class="string">"Reward"</span>,r_t,<span class="string">'step'</span>,step,<span class="string">'done'</span>,done)</span><br><span class="line">			print(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> done:</span><br><span class="line">				print(<span class="string">'episode %d is done'</span>%i)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">		print(<span class="string">'start_time'</span>,start_time)</span><br><span class="line">		print(<span class="string">'Episode'</span>,i,<span class="string">'total reward'</span>,total_reward)</span><br><span class="line">		f1 = open(<span class="string">r"/home/tifo/tifo/DQN/data/random_test"</span>+<span class="string">".txt"</span>,<span class="string">"a+"</span>)</span><br><span class="line">		f1.write(<span class="string">"Episode:"</span>+str(i)+<span class="string">"    total_reward:"</span>+str(total_reward)+<span class="string">"   episode_step:"</span>+str(episode_step)+<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">	print(<span class="string">'start_time'</span>,start_time)</span><br><span class="line">	print(<span class="string">'end_time'</span>,time.asctime( time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
+<p><strong>（5）dqn_test.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> AirsimEnv <span class="keyword">import</span> Env</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weight_variable</span><span class="params">(shape)</span>:</span></span><br><span class="line">	initial = tf.truncated_normal(shape,stddev = <span class="number">0.1</span>)</span><br><span class="line">	<span class="keyword">return</span> tf.Variable(initial)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bias_varialbe</span><span class="params">(shape)</span>:</span></span><br><span class="line">	initial = tf.constant(<span class="number">0.1</span>,shape = shape)</span><br><span class="line">	<span class="keyword">return</span> tf.Variable(initial)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv2d</span><span class="params">(x,w)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> tf.nn.conv2d(x,w,strides = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],padding = <span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv1d</span><span class="params">(x,w)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> tf.nn.conv2d(x,w,strides = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>],padding = <span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DQNAgent</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,state_size,action_size)</span>:</span></span><br><span class="line">		self.state_size = state_size</span><br><span class="line">		self.action_size = action_size</span><br><span class="line"></span><br><span class="line">		self.sess = tf.Session()</span><br><span class="line"></span><br><span class="line">		self.createNet()</span><br><span class="line">		self.sess.run(tf.global_variables_initializer())</span><br><span class="line">		self.saver = tf.train.Saver(max_to_keep = <span class="number">1</span>)</span><br><span class="line">		self.load()</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">createNet</span><span class="params">(self)</span>:</span> <span class="comment">#创建网络</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">(self)</span>:</span> <span class="comment">#加载网络模型</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_action</span><span class="params">(self,state)</span>:</span> <span class="comment"># 从网络中选择最大值的行为</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">interpret_action</span><span class="params">(action)</span>:</span> <span class="comment">#将行为转换为对应的元祖</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment"># argparse parser</span></span><br><span class="line">	parser = argparse.ArgumentParser()</span><br><span class="line">	parser.add_argument(<span class="string">'--img_height'</span>,     type=int,      default=<span class="number">84</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'--img_width'</span>, 	    type=int,      default=<span class="number">84</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'--dqn_test_episode'</span>,	type=int,      default=<span class="number">1000</span>)</span><br><span class="line">	parser.add_argument(<span class="string">'--max_steps'</span>,		type=int,      default=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">	args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># make RL agent</span></span><br><span class="line">	env = Env()</span><br><span class="line">	state_size = args.img_width*args.img_height</span><br><span class="line">	action_size = <span class="number">3</span></span><br><span class="line">	start_time = time.asctime( time.localtime(time.time()))</span><br><span class="line">	dqn = DQNAgent(</span><br><span class="line">		state_size = state_size,</span><br><span class="line">		action_size = action_size</span><br><span class="line">		)</span><br><span class="line">	step = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(args.dqn_test_episode):</span><br><span class="line"></span><br><span class="line">		s_t = env.reset()</span><br><span class="line">		total_reward = <span class="number">0</span></span><br><span class="line">		episode_step = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(args.max_steps):</span><br><span class="line">			a_t = dqn.get_action(s_t)</span><br><span class="line">			real_action = interpret_action(a_t)</span><br><span class="line">			<span class="keyword">try</span>:</span><br><span class="line">				s_next_t,r_t,done,quad_pos = env.step(real_action)</span><br><span class="line">				<span class="comment">#s_next_t = transform_input(s_next_t,args.img_height,args.img_width)</span></span><br><span class="line">			<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">				print(<span class="string">'Error :'</span> ,e)</span><br><span class="line"></span><br><span class="line">			total_reward += r_t</span><br><span class="line"></span><br><span class="line">			s_t = s_next_t</span><br><span class="line">			step += <span class="number">1</span></span><br><span class="line">			episode_step += <span class="number">1</span></span><br><span class="line">			print(<span class="string">'quadrotor position'</span>,quad_pos.x_val,quad_pos.y_val,quad_pos.z_val)</span><br><span class="line">			print(<span class="string">'\n'</span>)</span><br><span class="line">			print(<span class="string">"Episode"</span>,i,<span class="string">"episode_step"</span>,episode_step,<span class="string">"Action"</span>,a_t,<span class="string">"Reward"</span>,r_t,<span class="string">'step'</span>,step,<span class="string">'done'</span>,done)</span><br><span class="line">			print(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> done:</span><br><span class="line">				print(<span class="string">'episode %d is done'</span>%i)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">		print(<span class="string">'start_time'</span>,start_time)</span><br><span class="line">		print(<span class="string">'Episode'</span>,i,<span class="string">'total reward'</span>,total_reward)</span><br><span class="line">		f1 = open(<span class="string">r"/home/tifo/tifo/DQN/data/dqn_test"</span>+<span class="string">".txt"</span>,<span class="string">"a+"</span>)</span><br><span class="line">		f1.write(<span class="string">"Episode:"</span>+str(i)+<span class="string">"    total_reward:"</span>+str(total_reward)+<span class="string">"   episode_step:"</span>+str(episode_step)+<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">	print(<span class="string">'start_time'</span>,start_time)</span><br><span class="line">	print(<span class="string">'end_time'</span>,time.asctime( time.localtime(time.time())))</span><br></pre></td></tr></table></figure>
+<h2 id="三、训练数据和测试数据"><a href="#三、训练数据和测试数据" class="headerlink" title="三、训练数据和测试数据"></a>三、训练数据和测试数据</h2><p><strong>（1）DQN训练数据</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>迭代范围</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>单位：千</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-1000</td>
+<td>215</td>
+<td>764</td>
+<td>20</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1000-2000</td>
+<td>122</td>
+<td>869</td>
+<td>8</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2000-3000</td>
+<td>446</td>
+<td>549</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3000-4000</td>
+<td>621</td>
+<td>366</td>
+<td>12</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4000-5000</td>
+<td>716</td>
+<td>273</td>
+<td>10</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5000-6000</td>
+<td>704</td>
+<td>287</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6000-7000</td>
+<td>734</td>
+<td>262</td>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr>
+<td>7000-8000</td>
+<td>766</td>
+<td>222</td>
+<td>11</td>
+<td>8</td>
+</tr>
+<tr>
+<td>8000-9000</td>
+<td>766</td>
+<td>222</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr>
+<td>9000-10000</td>
+<td>768</td>
+<td>225</td>
+<td>6</td>
+<td>10</td>
+</tr>
+<tr>
+<td>1-10000</td>
+<td>5866</td>
+<td>4044</td>
+<td>90</td>
+<td>总计</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>训练过程中累积奖励图（每50个episode的reward取均值）</strong></p>
+<p><img src="/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/2.png" alt></p>
+<p><strong>（2）随机飞行测试数据</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>迭代范围</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>单位：千</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-1000</td>
+<td>235</td>
+<td>734</td>
+<td>31</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>（3）DQN网络测试数据</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>迭代范围</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>单位：千</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-1000</td>
+<td>999</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>训练过程中，其值稳定在770左右，而测试的时候，其值接近1000，可能是因为训练过程中存在10%的概率随机选择行为，因此训练的准确性没有测试的准确性高。</p>
+<p>测试和训练的场景都是同一个场景</p>
+<p><strong>在32GB 1080TI显卡上训练接近28个小时左右</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">episode <span class="number">999</span> <span class="keyword">is</span> done</span><br><span class="line">(<span class="string">'start_time'</span>, <span class="string">'Fri Jul 19 20:01:46 2019'</span>)</span><br><span class="line">(<span class="string">'Episode'</span>, <span class="number">999</span>, <span class="string">'total reward'</span>, <span class="number">0.92</span>)</span><br><span class="line">(<span class="string">'start_time'</span>, <span class="string">'Fri Jul 19 20:01:46 2019'</span>)</span><br><span class="line">(<span class="string">'end_time'</span>, <span class="string">'Fri Jul 19 23:21:02 2019'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>通过直接调用API完成了DQN算法的一个简单验证，训练的目标很简单。但将代码封装为ros后，训练效果却很差。在ros的控制下，使用RGB图训练过，也使用过深度图训练过，训练效果都不太好。暂时还没太弄清楚其原因。不过在ros的转换下，其深度图显示的有点问题。和原图不提啊一样</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Airsim/" rel="tag"># Airsim</a>
+          
+            <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/19/Airsim/初始Airsim（六）之多机控制/" rel="next" title="初始Airsim（六）之多机控制">
+                <i class="fa fa-chevron-left"></i> 初始Airsim（六）之多机控制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、问题定义"><span class="nav-text">一、问题定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-目标"><span class="nav-text">1.1 目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-马尔科夫状态过程"><span class="nav-text">1.2 马尔科夫状态过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、代码部分"><span class="nav-text">二、代码部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、训练数据和测试数据"><span class="nav-text">三、训练数据和测试数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '初识Airsim（七）之强化学习训练测试'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '初识Airsim（七）之强化学习训练测试'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
