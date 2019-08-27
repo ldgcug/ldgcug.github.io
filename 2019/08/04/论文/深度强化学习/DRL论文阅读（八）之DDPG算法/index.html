@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/04/论文/深度强化学习/DRL论文阅读（八）之DDPG算法/5.jpg">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/04/论文/深度强化学习/DRL论文阅读（八）之DDPG算法/6.png">
 <meta property="og:image" content="http://ldgyyf.cn/2019/08/04/论文/深度强化学习/DRL论文阅读（八）之DDPG算法/7.jpg">
-<meta property="og:updated_time" content="2019-08-04T10:41:22.954Z">
+<meta property="og:updated_time" content="2019-08-20T13:47:06.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（八）之DDPG算法">
 <meta name="twitter:description" content="前言 DDPG （Deep Deterministic Policy Gradient）算法是一种model-free（无环境模型），off-policy（产生行为的策略和进行评估的策略不一样）的强化学习算法，且使用了深度神经网络用于函数近似。相比较于DQN（model-free、off-policy），DQN只能解决离散、低维的动作空间，而DDPG可以解决连续动作空间的问题。  背景：  RL要">
@@ -631,7 +631,8 @@ L = \frac{1}{N} \sum_i(y_i - Q(s_i,a_i|\theta^Q)^2)</script><p>其中，$y_i = r
 a_t = \mu(s_t | \theta^\mu) + N_t</script><p>​            behavior策略是一个根据当前online策略$\mu$和随机UO噪声生成的随机过程，从这个随机过程中采样获            得$a_t$的值</p>
 <p>​        2、gym执行$a_t$，返回reward $r_t$和新的状态$s_{t+1}$</p>
 <p>​        3、actor将这个状态转换过程（transition）:$(s_t,a_t,r_t,s_{t+1})$存入buffer $R $中，作为训练online网络的                数据集</p>
-<p>​        4、从buffer $R$beta中，随机采样$N$个transition数据，作为online策略网络、online Q网络的一个mini-            batch训练数据，我们用$(s_i,a_i,r_i,s_{i+1})$表示mini-batch中的单个transition数据</p>
+<p>​        4、从buffer $R$中，随机</p>
+<p>采样$N$个transition数据，作为online策略网络、online Q网络的一个mini-            batch训练数据，我们用$(s_i,a_i,r_i,s_{i+1})$表示mini-batch中的单个transition数据</p>
 <p>​        5、计算online Q网络的梯度</p>
 <p>​            Q网络的loss：</p>
 <script type="math/tex; mode=display">
@@ -811,7 +812,7 @@ L = \frac{1}{N} \sum_i(y_i - Q(s_i,a_i|\theta^Q)^2)</script><p>​            �
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -833,7 +834,7 @@ L = \frac{1}{N} \sum_i(y_i - Q(s_i,a_i|\theta^Q)^2)</script><p>​            �
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

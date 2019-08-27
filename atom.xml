@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ldgyyf.cn/"/>
-  <updated>2019-08-20T07:13:42.425Z</updated>
+  <updated>2019-08-24T07:40:40.131Z</updated>
   <id>http://ldgyyf.cn/</id>
   
   <author>
@@ -15,6 +15,98 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>代码实现（七）之DDPG</title>
+    <link href="http://ldgyyf.cn/2019/08/24/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%83%EF%BC%89%E4%B9%8BDDPG/"/>
+    <id>http://ldgyyf.cn/2019/08/24/代码/DRL/代码实现（七）之DDPG/</id>
+    <published>2019-08-24T05:33:03.000Z</published>
+    <updated>2019-08-24T07:40:40.131Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="http://ldgyyf.cn/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="http://ldgyyf.cn/tags/OpenAI-gym/"/>
+    
+      <category term="DDPG" scheme="http://ldgyyf.cn/tags/DDPG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初识Airsim（九）之Pixhawk配置（Ubuntu16下HITL配置）</title>
+    <link href="http://ldgyyf.cn/2019/08/22/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BPixhawk%E9%85%8D%E7%BD%AE%EF%BC%88Ubuntu16%E4%B8%8BHITL%E9%85%8D%E7%BD%AE%EF%BC%89/"/>
+    <id>http://ldgyyf.cn/2019/08/22/Airsim/初识Airsim（九）之Pixhawk配置（Ubuntu16下HITL配置）/</id>
+    <published>2019-08-22T05:31:10.000Z</published>
+    <updated>2019-08-22T06:47:58.396Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在Airsim上做PX4的集成，并简单完成其算法验证&lt;/p&gt;
+&lt;font
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="http://ldgyyf.cn/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
+    
+      <category term="PX4" scheme="http://ldgyyf.cn/tags/PX4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初识Airsim（八）之Pixhawk配置（HIL）</title>
+    <link href="http://ldgyyf.cn/2019/08/21/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8BPixhawk%E9%85%8D%E7%BD%AE%EF%BC%88HIL%EF%BC%89/"/>
+    <id>http://ldgyyf.cn/2019/08/21/Airsim/初识Airsim（八）之Pixhawk配置（HIL）/</id>
+    <published>2019-08-21T09:20:29.000Z</published>
+    <updated>2019-08-22T06:42:07.526Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在Airsim上做PX4的集成，并简单完成其算法验证&lt;/p&gt;
+&lt;font
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="http://ldgyyf.cn/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="http://ldgyyf.cn/tags/Airsim/"/>
+    
+      <category term="PX4" scheme="http://ldgyyf.cn/tags/PX4/"/>
+    
+  </entry>
   
   <entry>
     <title>初识Airsim（七）之强化学习训练测试</title>
@@ -173,7 +265,7 @@
     <link href="http://ldgyyf.cn/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     <id>http://ldgyyf.cn/2019/08/11/ROS/ardrone强化学习训练环境搭建/</id>
     <published>2019-08-10T16:14:09.000Z</published>
-    <updated>2019-08-11T05:41:17.866Z</updated>
+    <updated>2019-08-27T03:25:40.202Z</updated>
     
     <summary type="html">
     
@@ -369,7 +461,7 @@
     <link href="http://ldgyyf.cn/2019/08/05/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BA3C%E7%AE%97%E6%B3%95/"/>
     <id>http://ldgyyf.cn/2019/08/05/论文/深度强化学习/DRL论文阅读（九）之A3C算法/</id>
     <published>2019-08-05T01:12:57.000Z</published>
-    <updated>2019-08-05T06:03:22.670Z</updated>
+    <updated>2019-08-25T03:00:06.504Z</updated>
     
     <summary type="html">
     
@@ -400,7 +492,7 @@
     <link href="http://ldgyyf.cn/2019/08/04/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8BDDPG%E7%AE%97%E6%B3%95/"/>
     <id>http://ldgyyf.cn/2019/08/04/论文/深度强化学习/DRL论文阅读（八）之DDPG算法/</id>
     <published>2019-08-04T05:44:10.000Z</published>
-    <updated>2019-08-04T10:41:22.954Z</updated>
+    <updated>2019-08-20T13:47:06.216Z</updated>
     
     <summary type="html">
     
@@ -542,102 +634,6 @@
       <category term="Unreal Engine" scheme="http://ldgyyf.cn/tags/Unreal-Engine/"/>
     
       <category term="Carla" scheme="http://ldgyyf.cn/tags/Carla/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DRL论文阅读（五）之Policy Gradient理解</title>
-    <link href="http://ldgyyf.cn/2019/07/23/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient%E7%90%86%E8%A7%A3/"/>
-    <id>http://ldgyyf.cn/2019/07/23/论文/深度强化学习/DRL论文阅读（五）之Policy-Gradient理解/</id>
-    <published>2019-07-23T07:36:26.000Z</published>
-    <updated>2019-07-31T04:38:26.096Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="论文" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/"/>
-    
-      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
-    
-      <category term="Policy Gradient" scheme="http://ldgyyf.cn/tags/Policy-Gradient/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）</title>
-    <link href="http://ldgyyf.cn/2019/07/19/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%EF%BC%88Dueling-DQN%EF%BC%89/"/>
-    <id>http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/</id>
-    <published>2019-07-19T01:52:31.000Z</published>
-    <updated>2019-08-10T15:16:46.535Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;DDQN对DQN的目标Q值进行优化，去除max操作来减少过度估计的问题，Prioritized Replay
-        
-      
-    
-    </summary>
-    
-      <category term="论文" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/"/>
-    
-      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
-    
-      <category term="Dueling DQN" scheme="http://ldgyyf.cn/tags/Dueling-DQN/"/>
-    
-      <category term="DQN" scheme="http://ldgyyf.cn/tags/DQN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）</title>
-    <link href="http://ldgyyf.cn/2019/07/18/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7%EF%BC%88Prioritized-Experience-Replay%EF%BC%89/"/>
-    <id>http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/</id>
-    <published>2019-07-18T08:19:07.000Z</published>
-    <updated>2019-07-18T10:30:39.781Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;上一篇介绍了Double
-        
-      
-    
-    </summary>
-    
-      <category term="论文" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/"/>
-    
-      <category term="深度强化学习" scheme="http://ldgyyf.cn/categories/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="DRL" scheme="http://ldgyyf.cn/tags/DRL/"/>
-    
-      <category term="DQN" scheme="http://ldgyyf.cn/tags/DQN/"/>
-    
-      <category term="Prioritized Experience Replay" scheme="http://ldgyyf.cn/tags/Prioritized-Experience-Replay/"/>
     
   </entry>
   
