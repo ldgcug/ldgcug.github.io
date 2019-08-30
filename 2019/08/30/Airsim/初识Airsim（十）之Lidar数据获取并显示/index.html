@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Airsim,Lidar,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 在Airsim若要使用Lidar传感器并进行显示，一般都离不开rviz，使用rviz对ros的topic进行显示，但也因此，需要先将数据封装成ros的消息类型，我没有采用官方的airsim_ros包，而是自己进行封装创建。 那么目前导航功能包集只接受使用sensor_msgs/LaserScan或sensor_msgs/PointCloud及新出来的sensor_msgs/PointClou">
+<meta name="keywords" content="Airsim,Lidar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识Airsim（十）之Lidar数据获取并显示">
+<meta property="og:url" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 在Airsim若要使用Lidar传感器并进行显示，一般都离不开rviz，使用rviz对ros的topic进行显示，但也因此，需要先将数据封装成ros的消息类型，我没有采用官方的airsim_ros包，而是自己进行封装创建。 那么目前导航功能包集只接受使用sensor_msgs/LaserScan或sensor_msgs/PointCloud及新出来的sensor_msgs/PointClou">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/1.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/2.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/3.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/4.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/5.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/6.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/7.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/8.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/9.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/10.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/11.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/12.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/13.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/14.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/15.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/16.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/17.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/18.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/19.png">
+<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/20.png">
+<meta property="og:updated_time" content="2019-08-30T08:39:11.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识Airsim（十）之Lidar数据获取并显示">
+<meta name="twitter:description" content="前言 在Airsim若要使用Lidar传感器并进行显示，一般都离不开rviz，使用rviz对ros的topic进行显示，但也因此，需要先将数据封装成ros的消息类型，我没有采用官方的airsim_ros包，而是自己进行封装创建。 那么目前导航功能包集只接受使用sensor_msgs/LaserScan或sensor_msgs/PointCloud及新出来的sensor_msgs/PointClou">
+<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/">
+
+
+
+
+
+  <title>初识Airsim（十）之Lidar数据获取并显示 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初识Airsim（十）之Lidar数据获取并显示</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-30T13:38:55+08:00">
+                2019-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Airsim/" itemprop="url" rel="index">
+                    <span itemprop="name">Airsim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/" class="leancloud_visitors" data-flag-title="初识Airsim（十）之Lidar数据获取并显示">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>在Airsim若要使用Lidar传感器并进行显示，一般都离不开rviz，使用rviz对ros的topic进行显示，但也因此，需要先将数据封装成ros的消息类型，我没有采用官方的airsim_ros包，而是自己进行封装创建。</p>
+<p>那么目前导航功能包集只接受使用sensor_msgs/LaserScan或sensor_msgs/PointCloud及新出来的sensor_msgs/PointCloud2消息类型发布的传感器数据。</p>
+<p>但我在google或者百度上也搜寻了很多LaserScan和PointCloud之间的区别，没怎么找到，更多的都是介绍如何使用这两个类型去发布ros数据。因此，也只有根据自己的理解去记录。</p>
+</blockquote>
+<h2 id="一、Airsim添加Lidar传感器"><a href="#一、Airsim添加Lidar传感器" class="headerlink" title="一、Airsim添加Lidar传感器"></a>一、Airsim添加Lidar传感器</h2><blockquote>
+<p>详情请点击官方<a href="https://github.com/microsoft/AirSim/blob/master/docs/lidar.md" target="_blank" rel="noopener">Lidar文档</a></p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NumberOfChannels</td>
+<td>激光雷达线束（<font color="red">单线或多线</font>），默认为16线</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>扫描范围（单位米）</td>
+</tr>
+<tr>
+<td>PointsPerSecond</td>
+<td>每秒捕获的点数</td>
+</tr>
+<tr>
+<td>RotationsPerSecon</td>
+<td>每秒轮换数</td>
+</tr>
+<tr>
+<td>HorizontalFOVStart</td>
+<td>水平起始角度（以度为单位）</td>
+</tr>
+<tr>
+<td>HorizontalFOVEnd</td>
+<td>水平结束角度（以度为单位）</td>
+</tr>
+<tr>
+<td>VerticalFOVUpper</td>
+<td>Vertical FOV upper limit for the lidar, in degrees</td>
+</tr>
+<tr>
+<td>VerticalFOVLower</td>
+<td>垂直角度下限（以度为单位）</td>
+</tr>
+<tr>
+<td>X Y Z</td>
+<td>激光雷达相对于车辆的位置（NED坐标，米为单位）</td>
+</tr>
+<tr>
+<td>Roll Pitch Yaw</td>
+<td>激光雷达相对车车辆的方向（以度为单位）</td>
+</tr>
+<tr>
+<td>DataFrame</td>
+<td>输出中的点的框架</td>
+</tr>
+</tbody>
+</table>
+</div>
+<font color="red">那么**线束**到底代表什么意思呢？单线和多线又有什么区别？</font>
+
+<p>在<a href="http://www.wangdali.net/lidar/" target="_blank" rel="noopener">浅谈激光雷达</a>一文中解释了相关线束的含义，通过浏览，个人理解为：每个线束每秒捕获的点数都有个最大值，如100000，那么多线则能捕获更多的点数，因此多线可以捕获到上百万的点数。单线可以表示为单个圆，多线可以有多个圆。</p>
+<p><strong>且多线激光中一般垂直方向角度的范围为40度（不超过40度），忘记是在哪篇文章上看到过</strong></p>
+<h3 id="1-1-settings-json默认配置"><a href="#1-1-settings-json默认配置" class="headerlink" title="1.1 settings.json默认配置"></a>1.1 settings.json默认配置</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"SeeDocsAt"</span>: <span class="string">"https://github.com/Microsoft/AirSim/blob/master/docs/settings_json.md"</span>,</span><br><span class="line">    <span class="attr">"SettingsVersion"</span>: <span class="number">1.2</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"SimMode"</span>: <span class="string">"Multirotor"</span>,</span><br><span class="line"></span><br><span class="line">     <span class="attr">"Vehicles"</span>: &#123;</span><br><span class="line">		<span class="attr">"Drone1"</span>: &#123;</span><br><span class="line">			<span class="attr">"VehicleType"</span>: <span class="string">"simpleflight"</span>,</span><br><span class="line">			<span class="attr">"AutoCreate"</span>: <span class="literal">true</span>,</span><br><span class="line">			<span class="attr">"Sensors"</span>: &#123;</span><br><span class="line">			    <span class="attr">"LidarSensor1"</span>: &#123; </span><br><span class="line">					"SensorType": 6, # 6表示使用激光雷达传感器</span><br><span class="line">					"Enabled" : true,</span><br><span class="line">					"NumberOfChannels": 16, # 16线激光</span><br><span class="line">					"RotationsPerSecond": 10,</span><br><span class="line">					"PointsPerSecond": 100000,</span><br><span class="line">					"X": 0, "Y": 0, "Z": -1,</span><br><span class="line">					"Roll": 0, "Pitch": 0, "Yaw" : 0, # 定义位姿姿态</span><br><span class="line">					"VerticalFOVUpper": -15,</span><br><span class="line">					"VerticalFOVLower": -25, # 垂直方向角度范围</span><br><span class="line">					"HorizontalFOVStart": -20, </span><br><span class="line">					"HorizontalFOVEnd": 20, # 水平方向角度范围</span><br><span class="line">					"DrawDebugPoints": true, # 是否在环境中可视</span><br><span class="line">					"DataFrame": "SensorLocalFrame" #垂直惯性坐标系"VehicleInertialFrame" or 传感器坐标系"SensorLocalFrame"</span><br><span class="line">				&#125;,</span><br><span class="line">				"LidarSensor2": &#123;  # 可以定义多个雷达</span><br><span class="line">				   "SensorType": 6,</span><br><span class="line">					"Enabled" : true,</span><br><span class="line">					"NumberOfChannels": 4,</span><br><span class="line">					"RotationsPerSecond": 10,</span><br><span class="line">					"PointsPerSecond": 10000,</span><br><span class="line">					"X": 0, "Y": 0, "Z": -1,</span><br><span class="line">					"Roll": 0, "Pitch": 0, "Yaw" : 0,</span><br><span class="line">					"VerticalFOVUpper": -15,</span><br><span class="line">					"VerticalFOVLower": -25,</span><br><span class="line">					"DrawDebugPoints": true,</span><br><span class="line">					"DataFrame": "SensorLocalFrame"</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>如果调用getLidarData（）函数，则将返回点云数组、时间戳和雷达位姿，其中：</strong></p>
+<p><strong>点云在雷达坐标系中（NED坐标系，以米为单位）</strong></p>
+<p><strong>雷达位姿在车的坐标系中（NED坐标系，以米为单位）</strong></p>
+<h3 id="1-2-简单json配置，测试"><a href="#1-2-简单json配置，测试" class="headerlink" title="1.2 简单json配置，测试"></a>1.2 简单json配置，测试</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"SeeDocsAt"</span>: <span class="string">"https://github.com/Microsoft/AirSim/blob/master/docs/settings.md"</span>,</span><br><span class="line">  <span class="attr">"SettingsVersion"</span>: <span class="number">1.2</span>,</span><br><span class="line">  <span class="attr">"SimMode"</span>:<span class="string">"Multirotor"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">"Vehicles"</span>:&#123;</span><br><span class="line">    <span class="attr">"Drone1"</span>:&#123;</span><br><span class="line">      <span class="attr">"VehicleType"</span>:<span class="string">"SimpleFlight"</span>,</span><br><span class="line">      "X":0,"Y":0,"Z":0,  # 设定无人机的初始坐标</span><br><span class="line">      "Sensors":</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"MyLidar1"</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          "SensorType":6, # 激光雷达传感器为6</span><br><span class="line">          "Enabled":true,</span><br><span class="line">          "NumberOfChannels":16, # 16线激光</span><br><span class="line">          "PointsPerSecond":10000,</span><br><span class="line">          "X":0,"Y":0,"Z":-1,</span><br><span class="line">          "DrawDebugPoints":true,</span><br><span class="line">          "Roll": 0, "Pitch": 0, "Yaw" : 0, # 定义了雷达相对于无人机的位姿</span><br><span class="line">          "VerticalFOVUpper": 0,</span><br><span class="line">          "VerticalFOVLower": 0, # 垂直角度，一般不超过40度</span><br><span class="line">          "HorizontalFOVStart": -20,</span><br><span class="line">          "HorizontalFOVEnd": 20, # 水平角度范围</span><br><span class="line">          "DrawDebugPoints": true, # 是否在环境中可视</span><br><span class="line">          "DataFrame": "SensorLocalFrame" #垂直惯性坐标系"VehicleInertialFrame" or 传感器坐标系"SensorLocalFrame"</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>环境中的显示（第一视角）</strong></p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/1.png" alt></p>
+<p><strong>Python代码编写，获取雷达数据</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*-coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> airsim</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> pprint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client = airsim.MultirotorClient()</span><br><span class="line">client.confirmConnection()</span><br><span class="line">client.enableApiControl(<span class="literal">True</span>)</span><br><span class="line">client.armDisarm(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">lidarData = client.getLidarData()</span><br><span class="line">print(<span class="string">'lidar'</span>,lidarData)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> len(lidarData.point_cloud) &gt;<span class="number">3</span>:</span><br><span class="line">	points = np.array(lidarData.point_cloud,dtype=np.dtype(<span class="string">'f4'</span>))</span><br><span class="line">	points = np.reshape(points,(int(points.shape[<span class="number">0</span>]/<span class="number">3</span>),<span class="number">3</span>))</span><br><span class="line">	print(<span class="string">'number of points'</span>),len(points)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">"\tNo points received from Lidar data"</span>)</span><br></pre></td></tr></table></figure>
+<p>这里不展示输出内容，因为输出内容比较多，占位置，在每次运行时，其获得的雷达点的个数可能会稍有不同，并且雷达探测到的点也会不一样，不相同才是正常的。</p>
+<h2 id="二、单线激光雷达设置"><a href="#二、单线激光雷达设置" class="headerlink" title="二、单线激光雷达设置"></a>二、单线激光雷达设置</h2><h3 id="2-1-settings-json设置"><a href="#2-1-settings-json设置" class="headerlink" title="2.1 settings.json设置"></a>2.1 settings.json设置</h3><blockquote>
+<p>为什么要将垂直角度设置为0？因为个人理解单线是水平的，即2维的，如果设置了垂直角度，则将变成三维，后面会显示设置了垂直角度后的区别</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"SeeDocsAt"</span>: <span class="string">"https://github.com/Microsoft/AirSim/blob/master/docs/settings.md"</span>,</span><br><span class="line">  <span class="attr">"SettingsVersion"</span>: <span class="number">1.2</span>,</span><br><span class="line">  <span class="attr">"SimMode"</span>:<span class="string">"Multirotor"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">"Vehicles"</span>:&#123;</span><br><span class="line">    <span class="attr">"Drone1"</span>:&#123;</span><br><span class="line">      <span class="attr">"VehicleType"</span>:<span class="string">"SimpleFlight"</span>,</span><br><span class="line">      <span class="attr">"X"</span>:<span class="number">0</span>,<span class="attr">"Y"</span>:<span class="number">0</span>,<span class="attr">"Z"</span>:<span class="number">0</span>,</span><br><span class="line">      <span class="attr">"Roll"</span>: <span class="number">0</span>, <span class="attr">"Pitch"</span>: <span class="number">0</span>, <span class="attr">"Yaw"</span> : <span class="number">0</span>,</span><br><span class="line">      <span class="attr">"Sensors"</span>:</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"MyLidar1"</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"SensorType"</span>:<span class="number">6</span>,</span><br><span class="line">          <span class="attr">"Enabled"</span>:<span class="literal">true</span>,</span><br><span class="line">          "NumberOfChannels":1, # 设置为单线</span><br><span class="line">          "PointsPerSecond":10000, # 10000个数据点</span><br><span class="line">          "X":0,"Y":0,"Z":-0.5,</span><br><span class="line">          "DrawDebugPoints":true,</span><br><span class="line">          "Roll": 0, "Pitch": 0, "Yaw" : 0,</span><br><span class="line">          "VerticalFOVUpper": 0,</span><br><span class="line">          "VerticalFOVLower": 0, # 垂直角度为0 </span><br><span class="line">          "HorizontalFOVStart": -90, </span><br><span class="line">          "HorizontalFOVEnd": 90, # 水平180度</span><br><span class="line">          "DrawDebugPoints": true,</span><br><span class="line">          "DataFrame": "SensorLocalFrame"</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试环境</strong></p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/2.png" alt></p>
+<h3 id="2-2-Python代码编写（LaserScan）"><a href="#2-2-Python代码编写（LaserScan）" class="headerlink" title="2.2 Python代码编写（LaserScan）"></a>2.2 Python代码编写（LaserScan）</h3><blockquote>
+<p>LaserScan是一个二维结构，即垂直角度为0</p>
+</blockquote>
+<p><strong>LaserScan消息定义</strong>：<a href="http://docs.ros.org/api/sensor_msgs/html/msg/LaserScan.html" target="_blank" rel="noopener">官方定义</a></p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/3.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Header head：</span><br><span class="line">    uint32 seq //对应一个标识符，随着消息被发布，它会自动增加</span><br><span class="line">    time stamp //时间戳，以激光扫描为例，stamp可能对应每次扫描开始的时间</span><br><span class="line">    string frame_id //以激光扫描为例，它将是激光数据所在帧（坐标系）</span><br><span class="line">    </span><br><span class="line">float32 angle_min        <span class="comment"># scan的开始角度 [弧度]</span></span><br><span class="line">float32 angle_max        <span class="comment"># scan的结束角度 [弧度]</span></span><br><span class="line">float32 angle_increment  <span class="comment"># 测量的角度间的距离 [弧度]</span></span><br><span class="line">float32 time_increment   <span class="comment"># 测量间的时间 [秒]</span></span><br><span class="line">float32 scan_time        <span class="comment"># 扫描间的时间 [秒]</span></span><br><span class="line">float32 range_min        <span class="comment"># 最小的测量距离 [米]</span></span><br><span class="line">float32 range_max        <span class="comment"># 最大的测量距离 [米]</span></span><br><span class="line">float32[] ranges         <span class="comment"># 测量的距离数据 [米] (注意: 值 &lt; range_min 或 &gt; range_max 应当被丢弃)</span></span><br><span class="line">float32[] intensities    <span class="comment"># 强度数据 [device-specific units]</span></span><br></pre></td></tr></table></figure>
+<p><strong>ros发布LaserScan消息（Python）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> airsim</span><br><span class="line"><span class="keyword">import</span> numpy  <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sensor_msgs.msg <span class="keyword">import</span> LaserSca</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取无人机的xyz坐标，为后面计算距离做准备</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_drone_position</span><span class="params">(client)</span>:</span></span><br><span class="line">	position = client.getMultirotorState().kinematics_estimated.position</span><br><span class="line">	<span class="keyword">return</span> position</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将点云数据转换成相应角度和距离</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">point_cloud_to_angle_position</span><span class="params">(pos,points)</span>:</span></span><br><span class="line">	obs_distance = []</span><br><span class="line">	angles = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(points)):</span><br><span class="line">		x = round(points[i][<span class="number">0</span>],<span class="number">2</span>)</span><br><span class="line">		y = round(points[i][<span class="number">1</span>],<span class="number">2</span>)</span><br><span class="line">		z = round(points[i][<span class="number">2</span>],<span class="number">2</span>)</span><br><span class="line">		<span class="keyword">if</span> x != <span class="number">0</span>:</span><br><span class="line">			angle = math.atan(y/x) * <span class="number">180</span> / <span class="number">3.14</span> <span class="comment"># 利用三角函数关系求当前角度</span></span><br><span class="line">			angle = math.floor(angle) <span class="comment">#向下取整</span></span><br><span class="line">			angles.append(angle)</span><br><span class="line">			distance = math.sqrt((pos.x_val -x) **<span class="number">2</span> + (pos.y_val-y) **<span class="number">2</span> +(pos.z_val - z)**<span class="number">2</span>) <span class="comment"># 根据激光点坐标和无人机当前点坐标求解距离</span></span><br><span class="line">			obs_distance.append(distance)</span><br><span class="line">		<span class="comment">#print([i,angle,distance])</span></span><br><span class="line">	angles,obs_distance = scale_point_cloud(angles,obs_distance) <span class="comment"># 进行相应变换</span></span><br><span class="line">	<span class="keyword">return</span> angles,obs_distance</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在180度范围内，每隔1度，取一个值，即将会取181个值（中间有0度）</span></span><br><span class="line"><span class="comment"># 对每个角度，求出其对应的下标有哪些，然后求均值，表示当前角度的激光点距离</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scale_point_cloud</span><span class="params">(angles,obs_distance)</span>:</span></span><br><span class="line">	angle_min = <span class="number">-90.0</span></span><br><span class="line">	angle_max = <span class="number">90.0</span></span><br><span class="line">	new_angles = []</span><br><span class="line">	new_obs_distance = []</span><br><span class="line">	<span class="comment"># address_index = [x for x in range(len(list_position_name)) if list_position_name[x] == i]</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(int(angle_max - angle_min + <span class="number">1</span>)):</span><br><span class="line">		address_index = [x <span class="keyword">for</span> x <span class="keyword">in</span> range(len(angles)) <span class="keyword">if</span> angles[x] == angle_min + i ] <span class="comment"># 求每个角度的下标</span></span><br><span class="line">		<span class="keyword">if</span> len(address_index) == <span class="number">0</span>: <span class="comment">#如果某个角度没有值，则直接给最大值</span></span><br><span class="line">			distance = <span class="number">100.0</span></span><br><span class="line">		<span class="keyword">else</span>: <span class="comment"># 否则，求均值</span></span><br><span class="line">			total_dis = <span class="number">0</span></span><br><span class="line">			<span class="keyword">for</span> j <span class="keyword">in</span> range(len(address_index)):</span><br><span class="line">				total_dis += obs_distance[address_index[j]]</span><br><span class="line">			distance = total_dis / len(address_index)</span><br><span class="line">		new_angles.append(angle_min + i)</span><br><span class="line">		new_obs_distance.append(distance)</span><br><span class="line">		<span class="comment">#print(new_angles[i],new_obs_distance[i])</span></span><br><span class="line">	<span class="keyword">return</span> new_angles,new_obs_distance</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布ros数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pub_laserscan</span><span class="params">(obs_distance)</span>:</span></span><br><span class="line">	laserscan = LaserScan()</span><br><span class="line">	laserscan.header.stamp = rospy.Time.now()</span><br><span class="line">	laserscan.header.frame_id = <span class="string">'lidar'</span></span><br><span class="line">	laserscan.angle_min = <span class="number">-1.57</span></span><br><span class="line">	laserscan.angle_max = <span class="number">1.57</span> <span class="comment"># 对应180度</span></span><br><span class="line">	laserscan.angle_increment = <span class="number">3.14</span> / <span class="number">180</span> <span class="comment">#弧度的增量，这样就是隔1度取值</span></span><br><span class="line">	laserscan.time_increment = <span class="number">1.0</span>  / <span class="number">10</span>   / <span class="number">180</span> <span class="comment"># 中间的10对应于json中的RotationsPerSecond</span></span><br><span class="line">	laserscan.range_min = <span class="number">0.0</span></span><br><span class="line">	laserscan.range_max = <span class="number">100.0</span></span><br><span class="line">	laserscan.ranges = [] <span class="comment"># 距离</span></span><br><span class="line">	laserscan.intensities = [] <span class="comment"># 强度</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(obs_distance)):</span><br><span class="line">		laserscan.ranges.append(obs_distance[i])</span><br><span class="line">		laserscan.intensities.append(<span class="number">0.0</span>)</span><br><span class="line">	print(laserscan)</span><br><span class="line">	<span class="keyword">return</span> laserscan</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># connect the simulator</span></span><br><span class="line">	client = airsim.MultirotorClient()</span><br><span class="line">	client.confirmConnection()</span><br><span class="line">	client.enableApiControl(<span class="literal">True</span>)</span><br><span class="line">	client.armDisarm(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">	scan_pub = rospy.Publisher(<span class="string">'/scan'</span>, LaserScan, queue_size=<span class="number">10</span>)</span><br><span class="line">	rate = rospy.Rate(<span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line"></span><br><span class="line">		<span class="comment"># get the lidar data</span></span><br><span class="line">		lidarData = client.getLidarData()</span><br><span class="line">		<span class="comment">#print('lidar',lidarData)</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> len(lidarData.point_cloud) &gt;<span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">			points = np.array(lidarData.point_cloud,dtype=np.dtype(<span class="string">'f4'</span>))</span><br><span class="line">			points = np.reshape(points,(int(points.shape[<span class="number">0</span>]/<span class="number">3</span>),<span class="number">3</span>))</span><br><span class="line">			<span class="comment">#print('points:',points)</span></span><br><span class="line">			pos = get_drone_position(client)</span><br><span class="line">			angles,obs_distance = point_cloud_to_angle_position(pos,points)</span><br><span class="line">			print(<span class="string">'number of points'</span>),len(points)</span><br><span class="line">			laserscan = pub_laserscan(obs_distance)</span><br><span class="line">			scan_pub.publish(laserscan)</span><br><span class="line">			rate.sleep()</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			print(<span class="string">"\tNo points received from Lidar data"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	rospy.init_node(<span class="string">'drone1_lidar'</span>,anonymous=<span class="literal">True</span>)</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+<p><strong>rviz显示LaserScan数据</strong></p>
+<p>要注意，在rviz界面中，将Style的类型设置为Points，否则可能会看不到点，具体的见PointCloud中的图片</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/4.png" alt></p>
+<h3 id="2-3-Python代码编写（PointCloud）"><a href="#2-3-Python代码编写（PointCloud）" class="headerlink" title="2.3 Python代码编写（PointCloud）"></a>2.3 Python代码编写（PointCloud）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> airsim</span><br><span class="line"><span class="keyword">import</span> numpy  <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> geometry_msgs.msg <span class="keyword">import</span> Point32</span><br><span class="line"><span class="keyword">from</span> sensor_msgs.msg <span class="keyword">import</span> LaserScan,PointCloud</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pub_pointcloud</span><span class="params">(points)</span>:</span></span><br><span class="line">	pc = PointCloud()</span><br><span class="line">	pc.header.stamp = rospy.Time.now()</span><br><span class="line">	pc.header.frame_id = <span class="string">'lidar'</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(points)):</span><br><span class="line">		pc.points.append(Point32(points[i][<span class="number">0</span>],points[i][<span class="number">1</span>],points[i][<span class="number">2</span>]))</span><br><span class="line">	print(<span class="string">'pc:'</span>,pc)</span><br><span class="line">	<span class="keyword">return</span> pc</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># connect the simulator</span></span><br><span class="line">	client = airsim.MultirotorClient()</span><br><span class="line">	client.confirmConnection()</span><br><span class="line">	client.enableApiControl(<span class="literal">True</span>)</span><br><span class="line">	client.armDisarm(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">	pointcloud_pub = rospy.Publisher(<span class="string">'/pointcloud'</span>, PointCloud, queue_size=<span class="number">10</span>)</span><br><span class="line">	rate = rospy.Rate(<span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line"></span><br><span class="line">		<span class="comment"># get the lidar data</span></span><br><span class="line">		lidarData = client.getLidarData()</span><br><span class="line">		<span class="comment">#print('lidar',lidarData)</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> len(lidarData.point_cloud) &gt;<span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">			points = np.array(lidarData.point_cloud,dtype=np.dtype(<span class="string">'f4'</span>))</span><br><span class="line">			points = np.reshape(points,(int(points.shape[<span class="number">0</span>]/<span class="number">3</span>),<span class="number">3</span>))</span><br><span class="line">			<span class="comment">#print('points:',points)</span></span><br><span class="line">			pc = pub_pointcloud(points)</span><br><span class="line">			pointcloud_pub.publish(pc)</span><br><span class="line">			rate.sleep()</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			print(<span class="string">"\tNo points received from Lidar data"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	rospy.init_node(<span class="string">'drone1_lidar'</span>,anonymous=<span class="literal">True</span>)</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+<p><strong>rviz显示PointCloud数据</strong></p>
+<p>其中的Style要设置为Points</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/5.png" alt></p>
+<h3 id="2-4-rviz同时显示LaserScan和PointCloud数据"><a href="#2-4-rviz同时显示LaserScan和PointCloud数据" class="headerlink" title="2.4 rviz同时显示LaserScan和PointCloud数据"></a>2.4 rviz同时显示LaserScan和PointCloud数据</h3><p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/6.png" alt></p>
+<p>上图中，红色的为LaserScan数据，白色的为PointCloud数据，能够从图中看出，红色的和白色的点还是很接近的。为什么不一致呢？因为LaserScan是封装成了180个点，并且对相同的角度的距离求均值得出来的，而PointCloud直接获取的是points数据，没有做任何的修改。因此PointCloud数据更真实一点，但LaserScan目前来说也还行。</p>
+<h2 id="三、多线激光雷达设置"><a href="#三、多线激光雷达设置" class="headerlink" title="三、多线激光雷达设置"></a>三、多线激光雷达设置</h2><h3 id="3-1-settings-json设置"><a href="#3-1-settings-json设置" class="headerlink" title="3.1 settings.json设置"></a>3.1 settings.json设置</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"SeeDocsAt"</span>: <span class="string">"https://github.com/Microsoft/AirSim/blob/master/docs/settings.md"</span>,</span><br><span class="line">  <span class="attr">"SettingsVersion"</span>: <span class="number">1.2</span>,</span><br><span class="line">  <span class="attr">"SimMode"</span>:<span class="string">"Multirotor"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">"Vehicles"</span>:&#123;</span><br><span class="line">    <span class="attr">"Drone1"</span>:&#123;</span><br><span class="line">      <span class="attr">"VehicleType"</span>:<span class="string">"SimpleFlight"</span>,</span><br><span class="line">      <span class="attr">"X"</span>:<span class="number">0</span>,<span class="attr">"Y"</span>:<span class="number">0</span>,<span class="attr">"Z"</span>:<span class="number">0</span>,</span><br><span class="line">      <span class="attr">"Roll"</span>: <span class="number">0</span>, <span class="attr">"Pitch"</span>: <span class="number">0</span>, <span class="attr">"Yaw"</span> : <span class="number">0</span>,</span><br><span class="line">      <span class="attr">"Sensors"</span>:</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"MyLidar1"</span>:</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"SensorType"</span>:<span class="number">6</span>,</span><br><span class="line">          <span class="attr">"Enabled"</span>:<span class="literal">true</span>,</span><br><span class="line">          "NumberOfChannels":16, # 设置16线激光</span><br><span class="line">          "PointsPerSecond":100000, # 这里将点的个数增加了，因为环境变得更复杂了一点</span><br><span class="line">          "X":0,"Y":0,"Z":-0.5,</span><br><span class="line">          "DrawDebugPoints":true,</span><br><span class="line">          "Roll": 0, "Pitch": 0, "Yaw" : 0,</span><br><span class="line">          "VerticalFOVUpper": -15,</span><br><span class="line">          "VerticalFOVLower": 25, # 垂直设置40度范围</span><br><span class="line">          "HorizontalFOVStart": -180, </span><br><span class="line">          "HorizontalFOVEnd": 180, # 水平设置360度</span><br><span class="line">          "DrawDebugPoints": true,</span><br><span class="line">          "DataFrame": "SensorLocalFrame"</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试环境</strong>（16线的显示）</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/7.png" alt></p>
+<h3 id="3-2-PointCloud显示"><a href="#3-2-PointCloud显示" class="headerlink" title="3.2 PointCloud显示"></a>3.2 PointCloud显示</h3><blockquote>
+<p>代码和2.3节的代码一样</p>
+</blockquote>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/8.png" alt></p>
+<p>从上图中可以看出，由于channel修改为16，则会有圆圈产生，并且设置了垂直角度，因此，整个点云图看起来是3维的。</p>
+<p><strong>（1）若将垂直角度还是设置为0，则其点云图将会是二维显示</strong></p>
+<p>在json中，重新将垂直角度设为0，</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"VerticalFOVUpper": 0,</span><br><span class="line">"VerticalFOVLower": 0, # 重新设置为0度</span><br></pre></td></tr></table></figure>
+<p>则其点云图显示如下，则将会二维显示</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/9.png" alt></p>
+<p><strong>（2）若垂直角度还是40度，增大channel，如增大为32或64时，显示效果如下：</strong></p>
+<p>设置为32线时，其环境中可视化的激光圈数明显增加</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/10.png" alt></p>
+<p>其rviz图为：</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/11.png" alt></p>
+<p>设置为64线时，环境中激光可视化</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/12.png" alt></p>
+<p>其rviz图：</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/13.png" alt></p>
+<p>从这个中可以看出，随着channel的增加，其环境中可视化的激光圈数明显增加，并且rviz里面的探测距离明显变得更远。</p>
+<p><strong>（3）垂直角度40度，64channel，并设置50w个点</strong></p>
+<p>尝试过设置100w个点，但是在启动sh文件时，UE4左上角会提示Lidar capping number of points to scan信息，感觉还是有些问题的，但是100w个点，仍然能显示。因此后面修改为50w个点，没有该信息提示</p>
+<p>rviz显示图为：</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/14.png" alt></p>
+<p>和上一张图比较，增加更多的点，其扫描出的物体能够更精确。</p>
+<p><strong>rviz显示PointCloud并上色</strong></p>
+<p>在Color Transformer一栏，设置为AxisColor，则其效果见下图</p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/15.png" alt></p>
+<h2 id="四、比较"><a href="#四、比较" class="headerlink" title="四、比较"></a>四、比较</h2><h3 id="4-1-单线，50w点，无垂直角度，水平角度范围180"><a href="#4-1-单线，50w点，无垂直角度，水平角度范围180" class="headerlink" title="4.1 单线，50w点，无垂直角度，水平角度范围180"></a>4.1 单线，50w点，无垂直角度，水平角度范围180</h3><p><strong>PointCloud显示</strong></p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/16.png" alt></p>
+<p><strong>LaserScan显示</strong></p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/17.png" alt></p>
+<p><strong>LaserScan和PointCloud同时显示</strong></p>
+<p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/18.png" alt></p>
+<h3 id="4-2-单线，50w点，垂直角度40度，水平角度范围180"><a href="#4-2-单线，50w点，垂直角度40度，水平角度范围180" class="headerlink" title="4.2 单线，50w点，垂直角度40度，水平角度范围180"></a>4.2 单线，50w点，垂直角度40度，水平角度范围180</h3><p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/19.png" alt></p>
+<p>红色的LaserScan数据，白色的为PointCloud数据，看起来很接近，但是添加了垂直角度后，单线的激光检测就不对了</p>
+<h3 id="4-3-多线（16），50w点，垂直角度40度，水平角度范围180"><a href="#4-3-多线（16），50w点，垂直角度40度，水平角度范围180" class="headerlink" title="4.3 多线（16），50w点，垂直角度40度，水平角度范围180"></a>4.3 多线（16），50w点，垂直角度40度，水平角度范围180</h3><p><img src="/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/20.png" alt></p>
+<p>红色的为LaserScan，其他颜色的为PointCloud。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>通过从比较中可以看出，</p>
+<p>（1）单线激光雷达，不适合设置垂直角度，只适合二维。就连PointCloud在单线垂直角度下，都显示不对</p>
+<p>（2）多线激光雷达，一般设置垂直角度，显示三维点云数据</p>
+<p>我目前设置的LaserScan，是对数据进行了处理，但是目前只考虑了180度的范围，没有考虑360度，因为360度中角度会发生相应的变化，后面会在继续进行处理~</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><p><a href="https://blog.csdn.net/yangziluomu/article/details/79576508" target="_blank" rel="noopener">ros传感器消息及RVIZ可视化Laserscan和PointCloud（C++）</a></p>
+</li>
+<li><p><a href="http://www.wangdali.net/lidar/" target="_blank" rel="noopener">浅谈激光雷达</a></p>
+</li>
+<li><p><a href="https://wiki.ros.org/rviz/DisplayTypes/PointCloud" target="_blank" rel="noopener">PointCloud参数详解</a></p>
+</li>
+<li><p><a href="https://answers.ros.org/question/207071/how-to-fill-up-a-pointcloud-message-with-data-in-python/" target="_blank" rel="noopener">ros发布LaserScan和PointCloud（Python）</a></p>
+</li>
+<li><p><a href="http://wiki.ros.org/laser_geometry" target="_blank" rel="noopener">LaserScan转PointCloud2（Python）</a></p>
+</li>
+</ul>
+<p>已经测试过的LaserScan转PointCloud2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sensor_msgs.point_cloud2 <span class="keyword">as</span> pc2</span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> sensor_msgs.msg <span class="keyword">import</span> PointCloud2, LaserScan</span><br><span class="line"><span class="keyword">import</span> laser_geometry.laser_geometry <span class="keyword">as</span> lg</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">rospy.init_node(<span class="string">"laserscan_to_pointcloud"</span>)</span><br><span class="line"></span><br><span class="line">lp = lg.LaserProjection()</span><br><span class="line">pc_pub = rospy.Publisher(<span class="string">"test"</span>, PointCloud2, queue_size=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_cb</span><span class="params">(msg)</span>:</span></span><br><span class="line">	<span class="comment"># convert the message of type LaserScan to a PointCloud2</span></span><br><span class="line">	pc2_msg = lp.projectLaser(msg)</span><br><span class="line"></span><br><span class="line">	pc_pub.publish(pc2_msg)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># convert it to a generator of the individual points</span></span><br><span class="line">	point_generator = pc2.read_points(pc2_msg)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># we can access a generator in a loop</span></span><br><span class="line">	sum = <span class="number">0.0</span></span><br><span class="line">	num = <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> point <span class="keyword">in</span> point_generator:</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> math.isnan(point[<span class="number">2</span>]):</span><br><span class="line">			sum += point[<span class="number">2</span>]</span><br><span class="line">			num += <span class="number">1</span></span><br><span class="line">	<span class="comment"># we can calculate the average z value for example</span></span><br><span class="line">	print(str(sum/num))</span><br><span class="line"></span><br><span class="line">	<span class="comment"># or a list of the individual points which is less efficient</span></span><br><span class="line">	point_list = pc2.read_points_list(pc2_msg)</span><br><span class="line"></span><br><span class="line">	print(point_list[len(point_list)/<span class="number">2</span>].x)</span><br><span class="line"></span><br><span class="line">rospy.Subscriber(<span class="string">"/scan"</span>, LaserScan, scan_cb, queue_size=<span class="number">1</span>)</span><br><span class="line">rospy.spin()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Airsim/" rel="tag"># Airsim</a>
+          
+            <a href="/tags/Lidar/" rel="tag"># Lidar</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/代码/DRL/代码实现（七）之DDPG/" rel="next" title="代码实现（七）之DDPG">
+                <i class="fa fa-chevron-left"></i> 代码实现（七）之DDPG
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Airsim添加Lidar传感器"><span class="nav-text">一、Airsim添加Lidar传感器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-settings-json默认配置"><span class="nav-text">1.1 settings.json默认配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-简单json配置，测试"><span class="nav-text">1.2 简单json配置，测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、单线激光雷达设置"><span class="nav-text">二、单线激光雷达设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-settings-json设置"><span class="nav-text">2.1 settings.json设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Python代码编写（LaserScan）"><span class="nav-text">2.2 Python代码编写（LaserScan）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Python代码编写（PointCloud）"><span class="nav-text">2.3 Python代码编写（PointCloud）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-rviz同时显示LaserScan和PointCloud数据"><span class="nav-text">2.4 rviz同时显示LaserScan和PointCloud数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、多线激光雷达设置"><span class="nav-text">三、多线激光雷达设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-settings-json设置"><span class="nav-text">3.1 settings.json设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-PointCloud显示"><span class="nav-text">3.2 PointCloud显示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、比较"><span class="nav-text">四、比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-单线，50w点，无垂直角度，水平角度范围180"><span class="nav-text">4.1 单线，50w点，无垂直角度，水平角度范围180</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-单线，50w点，垂直角度40度，水平角度范围180"><span class="nav-text">4.2 单线，50w点，垂直角度40度，水平角度范围180</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-多线（16），50w点，垂直角度40度，水平角度范围180"><span class="nav-text">4.3 多线（16），50w点，垂直角度40度，水平角度范围180</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '初识Airsim（十）之Lidar数据获取并显示'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '初识Airsim（十）之Lidar数据获取并显示'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
