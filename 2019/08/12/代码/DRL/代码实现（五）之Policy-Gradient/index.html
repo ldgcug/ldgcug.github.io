@@ -85,18 +85,18 @@
 <meta name="keywords" content="DRL,OpenAI gym,Policy Gradient">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码实现（五）之Policy Gradient">
-<meta property="og:url" content="http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 Policy Gradient是RL里面基于Policy-Based的方法，与前面的DQN的基于Value-Based的方法不同。其理论部分，查看DRL论文阅读（五） 本篇代码是基于莫烦的代码，然后进行了少量的修改，实践中使用的是离散行为空间的softmax策略函数，而不是连续行为空间的高斯策略函数  一、实验环境 使用CartPole和MountainCar作为实验环境，这里将不再对环境进">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/3.png">
 <meta property="og:updated_time" content="2019-08-17T09:09:41.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（五）之Policy Gradient">
 <meta name="twitter:description" content="前言 Policy Gradient是RL里面基于Policy-Based的方法，与前面的DQN的基于Value-Based的方法不同。其理论部分，查看DRL论文阅读（五） 本篇代码是基于莫烦的代码，然后进行了少量的修改，实践中使用的是离散行为空间的softmax策略函数，而不是连续行为空间的高斯策略函数  一、实验环境 使用CartPole和MountainCar作为实验环境，这里将不再对环境进">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/1.png">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/">
 
 
 
@@ -301,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -444,7 +444,7 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>Policy Gradient是RL里面基于Policy-Based的方法，与前面的DQN的基于Value-Based的方法不同。其理论部分，查看<a href="https://ldgyyf.cn/2019/07/23/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient%E7%90%86%E8%A7%A3/">DRL论文阅读（五）</a></p>
+<p>Policy Gradient是RL里面基于Policy-Based的方法，与前面的DQN的基于Value-Based的方法不同。其理论部分，查看<a href="https://ldgyyf.cn/2019/07/23/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient%E7%90%86%E8%A7%A3/" target="_blank" rel="noopener">DRL论文阅读（五）</a></p>
 <p>本篇代码是基于<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/7_Policy_gradient_softmax" target="_blank" rel="noopener">莫烦</a>的代码，然后进行了少量的修改，实践中使用的是离散行为空间的softmax策略函数，而不是连续行为空间的高斯策略函数</p>
 </blockquote>
 <h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><blockquote>
@@ -681,7 +681,7 @@ a \sim N(\mu(s),\sigma^2)</script></li>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -692,7 +692,7 @@ a \sim N(\mu(s),\sigma^2)</script></li>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -703,7 +703,7 @@ a \sim N(\mu(s),\sigma^2)</script></li>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -793,7 +793,7 @@ a \sim N(\mu(s),\sigma^2)</script></li>
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

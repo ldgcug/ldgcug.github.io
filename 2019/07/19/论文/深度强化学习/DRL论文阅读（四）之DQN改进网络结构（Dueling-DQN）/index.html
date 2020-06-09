@@ -85,27 +85,27 @@
 <meta name="keywords" content="DRL,Dueling DQN,DQN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）">
-<meta property="og:url" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 DDQN对DQN的目标Q值进行优化，去除max操作来减少过度估计的问题，Prioritized Replay DQN对DQN的经验回访池进行优化，给每个experience一个权重值，并按权重采样来优化算法提高训练速度，而这篇博客即将介绍的是Dueling DQN，对DQN的神经网络结构进行优化  一、论文题目 Dueling Network Architectures for Deep R">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/7.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/9.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/10.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/11.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/12.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/13.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/11.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/12.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/13.png">
 <meta property="og:updated_time" content="2019-08-10T15:16:46.535Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（四）之DQN改进网络结构（Dueling DQN）">
 <meta name="twitter:description" content="前言 DDQN对DQN的目标Q值进行优化，去除max操作来减少过度估计的问题，Prioritized Replay DQN对DQN的经验回访池进行优化，给每个experience一个权重值，并按权重采样来优化算法提高训练速度，而这篇博客即将介绍的是Dueling DQN，对DQN的神经网络结构进行优化  一、论文题目 Dueling Network Architectures for Deep R">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/1.png">
 
 
 
@@ -135,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/">
 
 
 
@@ -310,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/19/论文/深度强化学习/DRL论文阅读（四）之DQN改进网络结构（Dueling-DQN）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -689,7 +689,7 @@ A(s,a;\theta,\alpha)</script><p>其中，theta是卷积层参数，alpha和beta�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -700,7 +700,7 @@ A(s,a;\theta,\alpha)</script><p>其中，theta是卷积层参数，alpha和beta�
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -711,7 +711,7 @@ A(s,a;\theta,\alpha)</script><p>其中，theta是卷积层参数，alpha和beta�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -801,7 +801,7 @@ A(s,a;\theta,\alpha)</script><p>其中，theta是卷积层参数，alpha和beta�
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

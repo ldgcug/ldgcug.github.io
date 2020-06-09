@@ -85,21 +85,21 @@
 <meta name="keywords" content="DRL,OpenAI gym,Dueling DQN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码实现（四）之 Dueling DQN">
-<meta property="og:url" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 Dueling  DQN 相比较于之前的Double DQN（目标Q值方面的优化）、Prioritized Experience Replay（经验回放池的优化），这次注重的是神经网络的优化，即将最后的Q网络分为V网络和A网络。 其中，V网络仅仅与状态S有关，与具体要采用的动作A无关，通常称为状态价值函数； A网络同时与状态S和动作A有关，通常称为动作优势函数。 其理论部分，点击DRL论文阅">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/6.png">
 <meta property="og:updated_time" content="2019-08-17T09:09:28.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（四）之 Dueling DQN">
 <meta name="twitter:description" content="前言 Dueling  DQN 相比较于之前的Double DQN（目标Q值方面的优化）、Prioritized Experience Replay（经验回放池的优化），这次注重的是神经网络的优化，即将最后的Q网络分为V网络和A网络。 其中，V网络仅仅与状态S有关，与具体要采用的动作A无关，通常称为状态价值函数； A网络同时与状态S和动作A有关，通常称为动作优势函数。 其理论部分，点击DRL论文阅">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/1.png">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/">
 
 
 
@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -450,7 +450,7 @@
 <p>Dueling  DQN 相比较于之前的Double DQN（目标Q值方面的优化）、Prioritized Experience Replay（经验回放池的优化），这次注重的是神经网络的优化，即将最后的Q网络分为V网络和A网络。</p>
 <p>其中，V网络仅仅与状态S有关，与具体要采用的动作A无关，通常称为状态价值函数；</p>
 <p>A网络同时与状态S和动作A有关，通常称为动作优势函数。</p>
-<p>其理论部分，点击<a href="https://ldgyyf.cn/2019/07/19/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%EF%BC%88Dueling-DQN%EF%BC%89/">DRL论文阅读（四）</a></p>
+<p>其理论部分，点击<a href="https://ldgyyf.cn/2019/07/19/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%EF%BC%88Dueling-DQN%EF%BC%89/" target="_blank" rel="noopener">DRL论文阅读（四）</a></p>
 <p>本文的代码主要参考<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/5.3_Dueling_DQN" target="_blank" rel="noopener">莫烦</a>的代码来修改的。</p>
 </blockquote>
 <h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><blockquote>
@@ -638,7 +638,7 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -649,7 +649,7 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -660,7 +660,7 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -750,7 +750,7 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + \left(A(s,a;\theta,\alpha) - \f
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

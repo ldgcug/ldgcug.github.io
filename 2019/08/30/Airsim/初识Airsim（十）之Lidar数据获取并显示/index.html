@@ -85,35 +85,35 @@
 <meta name="keywords" content="Airsim,Lidar">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识Airsim（十）之Lidar数据获取并显示">
-<meta property="og:url" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 在Airsim若要使用Lidar传感器并进行显示，一般都离不开rviz，使用rviz对ros的topic进行显示，但也因此，需要先将数据封装成ros的消息类型，我没有采用官方的airsim_ros包，而是自己进行封装创建。 那么目前导航功能包集只接受使用sensor_msgs/LaserScan或sensor_msgs/PointCloud及新出来的sensor_msgs/PointClou">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/7.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/8.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/9.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/10.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/11.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/12.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/13.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/14.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/15.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/16.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/17.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/18.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/19.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/20.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/11.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/12.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/13.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/14.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/15.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/16.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/17.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/18.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/19.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/20.png">
 <meta property="og:updated_time" content="2019-08-30T08:39:11.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识Airsim（十）之Lidar数据获取并显示">
 <meta name="twitter:description" content="前言 在Airsim若要使用Lidar传感器并进行显示，一般都离不开rviz，使用rviz对ros的topic进行显示，但也因此，需要先将数据封装成ros的消息类型，我没有采用官方的airsim_ros包，而是自己进行封装创建。 那么目前导航功能包集只接受使用sensor_msgs/LaserScan或sensor_msgs/PointCloud及新出来的sensor_msgs/PointClou">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/1.png">
 
 
 
@@ -143,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/">
 
 
 
@@ -318,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -739,7 +739,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -750,7 +750,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -761,7 +761,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -851,7 +851,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

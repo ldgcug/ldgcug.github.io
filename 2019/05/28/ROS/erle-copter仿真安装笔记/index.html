@@ -85,7 +85,7 @@
 <meta name="keywords" content="ROS,Gazebo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="erle_copter仿真安装笔记">
-<meta property="og:url" content="http://ldgyyf.cn/2019/05/28/ROS/erle-copter仿真安装笔记/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/05/28/ROS/erle-copter仿真安装笔记/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 Erle_copter仿真无人机飞行器相比于ardone仿真无人机飞行器的优势在于，Erle_copter更偏底层控制一点，使用Erle_copter仿真，可以和自己组装的真机无人机相匹配，而ardrone仿真无人机飞行器更接近于真机的ardrone或bebop，如果想要对真机ardrone或真机bebop进行修改，会有一定的难度，且购买成品无人机比自己组装无人机价格更贵。  安装前提 操作">
 <meta property="og:locale" content="zh-Hans">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/05/28/ROS/erle-copter仿真安装笔记/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/05/28/ROS/erle-copter仿真安装笔记/">
 
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/05/28/ROS/erle-copter仿真安装笔记/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/05/28/ROS/erle-copter仿真安装笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -494,7 +494,7 @@
 <p>修改 has_binary_operator.hpp文件（为避免包BOOST_JOIN错误）</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gedit /usr/include/boost/type_traits/detail/has_binary_operator.hpp</span><br></pre></td></tr></table></figure>
-<p>点击<a href="https://ldgyyf.cn/2019/05/28/ROS/erle-copter仿真安装笔记之has-binary-operator-hpp/#more">此处</a>，拷贝其中的has_binary_operator.hpp代码，并粘贴至当前的has_binary_operator.hpp 文件中</p>
+<p>点击<a href="https://ldgyyf.cn/2019/05/28/ROS/erle-copter仿真安装笔记之has-binary-operator-hpp/#more" target="_blank" rel="noopener">此处</a>，拷贝其中的has_binary_operator.hpp代码，并粘贴至当前的has_binary_operator.hpp 文件中</p>
 <p>主要的修改是在源文件中的两处位置添加了 <code>#ifndef Q_MOC_RUN</code> 和<code>#endif</code></p>
 <blockquote>
 <p>下载相应包进行替换（替换掉原工作空间的drcsim、hector_gazebo、gazebo_ros_pkgs） 链接: <a href="https://pan.baidu.com/s/1TufCNJ8z5TxyC5rnZhi56A" target="_blank" rel="noopener">https://pan.baidu.com/s/1TufCNJ8z5TxyC5rnZhi56A</a> 提取码: usjz 下载文件主要包含三个文件，分别是drcsim、hector_gazebo、gazebo_ros_pkgs，将它们解压，并将（drcsim、hector_gazebo、gazebo_ros_pkgs）复制到~/simulation/ros_catkin_ws/src目录下，将前面的三个文件进行替换</p>
@@ -661,7 +661,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -672,7 +672,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -683,7 +683,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -773,7 +773,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -85,26 +85,26 @@
 <meta name="keywords" content="DRL,DPG">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DRL论文阅读（七）之DPG方法">
-<meta property="og:url" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 为什么需要引入确定性策略梯度？ 传统的策略梯度算法以概率形式$\pi_\theta(a|s) = P[a|s;\theta]$来表示一个策略，以此来随机的选择行为。但DPG用一种确定性的策略形式$a=\mu_\theta(s)$。 DPG有着比PG更简单的形式：DPG的策略函数的更新就是action-value的期望，这种简单的形式使得DPG比PG更有效，同时在高维度行为空间也比PG表现更好">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/10.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/7.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/8.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/9.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/11.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/11.png">
 <meta property="og:updated_time" content="2019-08-04T06:11:11.833Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（七）之DPG方法">
 <meta name="twitter:description" content="前言 为什么需要引入确定性策略梯度？ 传统的策略梯度算法以概率形式$\pi_\theta(a|s) = P[a|s;\theta]$来表示一个策略，以此来随机的选择行为。但DPG用一种确定性的策略形式$a=\mu_\theta(s)$。 DPG有着比PG更简单的形式：DPG的策略函数的更新就是action-value的期望，这种简单的形式使得DPG比PG更有效，同时在高维度行为空间也比PG表现更好">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/1.png">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/">
 
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -709,7 +709,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -720,7 +720,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -731,7 +731,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -821,7 +821,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

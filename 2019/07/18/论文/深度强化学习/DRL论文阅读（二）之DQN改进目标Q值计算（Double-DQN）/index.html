@@ -85,23 +85,23 @@
 <meta name="keywords" content="DRL,DQN,Double DQN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DRL论文阅读（二）之DQN改进目标Q值计算（Double DQN）">
-<meta property="og:url" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 在DDQN之前，基本所有的目标Q值都是通过贪婪法直接得到，无论是Q-learning还是DQN（Nature）。虽然DQN中用了两个Q网络并使用目标Q网络计算Q值，但是在得到a的过程中，还是使用的贪婪法计算得到。 使用max虽然可以让Q值向可能的优化目标靠拢，但是很容易过犹不及，导致过度估计，过度估计即最使得估计得值函数比值函数的真实值大，从而可能会影响最终的策略决策，导致最终的策略并非最优">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/7.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/8.png">
 <meta property="og:updated_time" content="2019-07-18T10:31:37.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（二）之DQN改进目标Q值计算（Double DQN）">
 <meta name="twitter:description" content="前言 在DDQN之前，基本所有的目标Q值都是通过贪婪法直接得到，无论是Q-learning还是DQN（Nature）。虽然DQN中用了两个Q网络并使用目标Q网络计算Q值，但是在得到a的过程中，还是使用的贪婪法计算得到。 使用max虽然可以让Q值向可能的优化目标靠拢，但是很容易过犹不及，导致过度估计，过度估计即最使得估计得值函数比值函数的真实值大，从而可能会影响最终的策略决策，导致最终的策略并非最优">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/1.png">
 
 
 
@@ -131,7 +131,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/">
 
 
 
@@ -306,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（二）之DQN改进目标Q值计算（Double-DQN）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -650,7 +650,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -661,7 +661,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -672,7 +672,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -762,7 +762,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

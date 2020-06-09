@@ -85,28 +85,28 @@
 <meta name="keywords" content="Airsim,ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
-<meta property="og:url" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/7.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/8.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/9.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/10.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/11.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/12.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/13.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/11.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/12.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/13.png">
 <meta property="og:updated_time" content="2019-08-16T14:13:29.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
 <meta name="twitter:description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png">
 
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/">
 
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -726,7 +726,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -737,7 +737,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -748,7 +748,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -838,7 +838,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

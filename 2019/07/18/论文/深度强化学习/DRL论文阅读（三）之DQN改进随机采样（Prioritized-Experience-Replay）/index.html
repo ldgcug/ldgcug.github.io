@@ -85,26 +85,26 @@
 <meta name="keywords" content="DRL,DQN,Prioritized Experience Replay">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）">
-<meta property="og:url" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 上一篇介绍了Double DQN对DQN的目标Q值优化，这篇将介绍在DDQN的基础上，对经验回放池的优化  一、论文题目 PRIORITIZED EXPERIENCE REPLAY   二、研究目标 在DDQN基础上，改进经验回放池的均匀随机采样算法，使得学习更高效  三、问题定义 DDQN的均匀随机采样问题  以往的DQN或DDQN的做法是从buffer中均匀随机采样，这样会导致一些有用的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/11.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/8.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/7.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/9.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/11.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/10.png">
 <meta property="og:updated_time" content="2019-07-18T10:30:39.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DRL论文阅读（三）之DQN改进随机采样（Prioritized Experience Replay）">
 <meta name="twitter:description" content="前言 上一篇介绍了Double DQN对DQN的目标Q值优化，这篇将介绍在DDQN的基础上，对经验回放池的优化  一、论文题目 PRIORITIZED EXPERIENCE REPLAY   二、研究目标 在DDQN基础上，改进经验回放池的均匀随机采样算法，使得学习更高效  三、问题定义 DDQN的均匀随机采样问题  以往的DQN或DDQN的做法是从buffer中均匀随机采样，这样会导致一些有用的">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/1.png">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/">
 
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/18/论文/深度强化学习/DRL论文阅读（三）之DQN改进随机采样（Prioritized-Experience-Replay）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -690,7 +690,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -701,7 +701,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -712,7 +712,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -802,7 +802,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

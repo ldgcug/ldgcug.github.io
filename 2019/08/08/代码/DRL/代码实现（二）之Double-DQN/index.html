@@ -85,26 +85,26 @@
 <meta name="keywords" content="DRL,OpenAI gym,Double DQN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码实现（二）之Double DQN">
-<meta property="og:url" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 理论部分，这里将不再强调，直接强调重点部分（理论部分请点击Double DQN） 经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。 本文的代码，主要参考莫烦大神的代码，只做了少量的修改。  一、实验环境 总共测试了三种环境，其中CartPole">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/7.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/8.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/9.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/10.png">
 <meta property="og:updated_time" content="2019-08-11T03:49:10.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（二）之Double DQN">
 <meta name="twitter:description" content="前言 理论部分，这里将不再强调，直接强调重点部分（理论部分请点击Double DQN） 经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。 本文的代码，主要参考莫烦大神的代码，只做了少量的修改。  一、实验环境 总共测试了三种环境，其中CartPole">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/">
 
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -452,12 +452,12 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>理论部分，这里将不再强调，直接强调重点部分（理论部分请点击<a href="https://ldgyyf.cn/2019/07/18/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%9B%AE%E6%A0%87Q%E5%80%BC%E8%AE%A1%E7%AE%97%EF%BC%88Double-DQN%EF%BC%89/">Double DQN</a>）</p>
+<p>理论部分，这里将不再强调，直接强调重点部分（理论部分请点击<a href="https://ldgyyf.cn/2019/07/18/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E7%9B%AE%E6%A0%87Q%E5%80%BC%E8%AE%A1%E7%AE%97%EF%BC%88Double-DQN%EF%BC%89/" target="_blank" rel="noopener">Double DQN</a>）</p>
 <p>经验证，DQN中使用max操作，会使得其Q值会出现过估计的情况，因此提出了DQN的改进算法之一：Double DQN；Double DQN就是将DQN中的目标Q值的动作与计算分离，来减缓过估计情况。</p>
 <p>本文的代码，主要参考<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/5.1_Double_DQN" target="_blank" rel="noopener">莫烦大神</a>的代码，只做了少量的修改。</p>
 </blockquote>
 <h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><blockquote>
-<p>总共测试了三种环境，其中CartPole和MountainCar的环境，在<a href="https://ldgyyf.cn/2019/08/06/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BNature-DQN/#more">上一节</a>已经介绍过，这一次，添加了一个Pendulum环境。</p>
+<p>总共测试了三种环境，其中CartPole和MountainCar的环境，在<a href="https://ldgyyf.cn/2019/08/06/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BNature-DQN/#more" target="_blank" rel="noopener">上一节</a>已经介绍过，这一次，添加了一个Pendulum环境。</p>
 </blockquote>
 <h3 id="1-1-Pendulum环境简单介绍"><a href="#1-1-Pendulum环境简单介绍" class="headerlink" title="1.1 Pendulum环境简单介绍"></a>1.1 Pendulum环境简单介绍</h3><p><strong>目标说明：</strong><a href="https://gym.openai.com/envs/Pendulum-v0/" target="_blank" rel="noopener">详细网址</a></p>
 <p><img src="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/1.png" alt></p>
@@ -698,7 +698,7 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -709,7 +709,7 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -720,7 +720,7 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -810,7 +810,7 @@ Y_t^{DoubleQ} \equiv R_{t+1} + \gamma Q(S_{t+1},\arg\max_a Q(S_{t+1},a;\theta_t)
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

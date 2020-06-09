@@ -85,22 +85,22 @@
 <meta name="keywords" content="DRL,OpenAI gym,Prioritized Experience Replay">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码实现（三）之Prioritized Experience Replay">
-<meta property="og:url" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 理论部分，点击DRL论文阅读（三）查看 本文的代码主要参考了莫烦和Fisher’s的代码，在他们的基础之上，修改为自己习惯能看懂的代码 Prioritized DQN不同于DQN/DDQN的是，它关注的是经验回放池中那些很少但有用的正面信息  一、实验环境 使用MountainCar环境来对算法进行测试   和之前有所不同的是，这次我们不需要重度改变它的reward。所以只要没有拿到小旗子，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/5.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/6.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/7.png">
 <meta property="og:updated_time" content="2019-08-17T09:09:16.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（三）之Prioritized Experience Replay">
 <meta name="twitter:description" content="前言 理论部分，点击DRL论文阅读（三）查看 本文的代码主要参考了莫烦和Fisher’s的代码，在他们的基础之上，修改为自己习惯能看懂的代码 Prioritized DQN不同于DQN/DDQN的是，它关注的是经验回放池中那些很少但有用的正面信息  一、实验环境 使用MountainCar环境来对算法进行测试   和之前有所不同的是，这次我们不需要重度改变它的reward。所以只要没有拿到小旗子，">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/1.png">
 
 
 
@@ -130,7 +130,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/">
 
 
 
@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -448,7 +448,7 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>理论部分，点击<a href="https://ldgyyf.cn/2019/07/18/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7%EF%BC%88Prioritized-Experience-Replay%EF%BC%89/">DRL论文阅读（三</a>）查看</p>
+<p>理论部分，点击<a href="https://ldgyyf.cn/2019/07/18/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7%EF%BC%88Prioritized-Experience-Replay%EF%BC%89/" target="_blank" rel="noopener">DRL论文阅读（三</a>）查看</p>
 <p>本文的代码主要参考了<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/5.2_Prioritized_Replay_DQN/RL_brain.py" target="_blank" rel="noopener">莫烦</a>和<a href="https://github.com/BlueFisher/Reinforcement-Learning/tree/master/Deep_Q_Network/Prioritized_DQN" target="_blank" rel="noopener">Fisher’s</a>的代码，在他们的基础之上，修改为自己习惯能看懂的代码</p>
 <p>Prioritized DQN不同于DQN/DDQN的是，它关注的是经验回放池中那些很少但有用的正面信息</p>
 </blockquote>
@@ -659,7 +659,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -670,7 +670,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -681,7 +681,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -771,7 +771,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

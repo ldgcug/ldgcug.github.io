@@ -85,20 +85,20 @@
 <meta name="keywords" content="DRL,OpenAI gym,Actor-Critic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码实现（六）之Actor-Critic">
-<meta property="og:url" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/index.html">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/index.html">
 <meta property="og:site_name" content="ldg个人博客">
 <meta property="og:description" content="前言 针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击DRL（六） 主要在莫烦代码的基础之上，进行更改  一、实验环境 主要使用两个环境进行训练测试，分别是CartPole环境和Pendulum环境。其中CartPole应用于softmax策略函数的离散行为空间，Pendulum应用于高斯策略函数的连续行为空间。  二、Actor-Critic算法 主要用$Q_w(s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/1.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/2.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/3.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/4.png">
-<meta property="og:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/5.png">
 <meta property="og:updated_time" content="2019-08-17T09:09:55.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实现（六）之Actor-Critic">
 <meta name="twitter:description" content="前言 针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击DRL（六） 主要在莫烦代码的基础之上，进行更改  一、实验环境 主要使用两个环境进行训练测试，分别是CartPole环境和Pendulum环境。其中CartPole应用于softmax策略函数的离散行为空间，Pendulum应用于高斯策略函数的连续行为空间。  二、Actor-Critic算法 主要用$Q_w(s">
-<meta name="twitter:image" content="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/1.png">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/1.png">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/">
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/">
 
 
 
@@ -303,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ldgyyf.cn/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ldg">
@@ -446,7 +446,7 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击<a href="https://ldgyyf.cn/2019/07/30/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BActor-Critic%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/">DRL（六）</a></p>
+<p>针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击<a href="https://ldgyyf.cn/2019/07/30/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BActor-Critic%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/" target="_blank" rel="noopener">DRL（六）</a></p>
 <p>主要在<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/tree/master/contents/8_Actor_Critic_Advantage" target="_blank" rel="noopener">莫烦代码</a>的基础之上，进行更改</p>
 </blockquote>
 <h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><blockquote>
@@ -663,7 +663,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -674,7 +674,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -685,7 +685,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -775,7 +775,7 @@
       <div class="footer-inner">
         
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
