@@ -100,7 +100,7 @@
 <meta property="og:image" content="https://ldgcug.xyz/2020/06/10/代码/Deep%20Learning/uzh无人机竞速实验（二）/09.png">
 <meta property="og:image" content="https://ldgcug.xyz/2020/06/10/代码/Deep%20Learning/uzh无人机竞速实验（二）/10.png">
 <meta property="og:image" content="https://ldgcug.xyz/2020/06/10/代码/Deep%20Learning/uzh无人机竞速实验（二）/11.png">
-<meta property="og:updated_time" content="2020-06-12T10:10:54.835Z">
+<meta property="og:updated_time" content="2020-06-12T11:18:48.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="uzh无人机竞速实验（二）">
 <meta name="twitter:description" content="前言 在上一篇博客中，主要介绍了实验的一些操作方法，本篇博客将介绍具体的实验流程 本文的所有实验的地面纹理都已修改为瓷砖背景  一、实验一 室内背景，且门框形状固定，门框纹理固定，收集训练数据  （1）将背景修改为真实场景下的训练背景 （2）设置无人机飞行时间，将门框形状和门框纹理进行固定  因为是在服务器上运行，服务器上的机器性能不够，测试发现，飞行40s，只能穿越前6个框，进行算法验证测试 不">
@@ -414,7 +414,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.2k
+                  3.3k
                 </span>
               
 
@@ -877,6 +877,8 @@
 </div>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><blockquote>
 <p>所做的实验基本就是这些，做的都是一些比较简单的实验，但由于训练的模型过于多，找不到合适的了，因此也就不再这里添加checkpoint，这篇博客，也只是大概记录下实验流程，如果还要了解的清楚一点的，还是得结合PPT去看。</p>
+<p>其相关的checkpoint模型，点击<a href="https://github.com/ldgcug/drone_racing" target="_blank" rel="noopener">这里</a>，进行下载，其模型不一定准确，因为训练过的模型确实太多，建议将其中的背景图和网络模型进行测试，看看效果，还是重新训练模型较好。</p>
+<p>最后，说明一点，如果需要在一台机器上同时进行网络训练和数据收集操作，建议最好重新创建文件夹，在不同的文件夹下进行操作。</p>
 </blockquote>
 
       
