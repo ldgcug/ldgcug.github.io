@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ldgcug.xyz/"/>
-  <updated>2020-06-09T08:35:59.775Z</updated>
+  <updated>2020-06-12T10:10:54.835Z</updated>
   <id>https://ldgcug.xyz/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>uzh无人机竞速实验（二）</title>
+    <link href="https://ldgcug.xyz/2020/06/10/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>https://ldgcug.xyz/2020/06/10/代码/Deep Learning/uzh无人机竞速实验（二）/</id>
+    <published>2020-06-10T01:21:09.000Z</published>
+    <updated>2020-06-12T10:10:54.835Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;在&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="https://ldgcug.xyz/tags/Deep-Learning/"/>
+    
+      <category term="Drone Racing" scheme="https://ldgcug.xyz/tags/Drone-Racing/"/>
+    
+  </entry>
   
   <entry>
     <title>uzh无人机竞速实验</title>
@@ -54,7 +85,7 @@
     <link href="https://ldgcug.xyz/2020/06/06/%E5%BD%B1%E8%AF%84/%E7%94%B5%E8%A7%86%E5%89%A7/%E8%AF%B7%E5%9B%9E%E7%AD%941988/"/>
     <id>https://ldgcug.xyz/2020/06/06/影评/电视剧/请回答1988/</id>
     <published>2020-06-06T11:20:10.000Z</published>
-    <updated>2020-06-09T08:42:07.018Z</updated>
+    <updated>2020-06-09T10:31:02.627Z</updated>
     
     <summary type="html">
     
@@ -594,37 +625,6 @@
       <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
     
       <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DRL论文阅读（九）之A3C算法</title>
-    <link href="https://ldgcug.xyz/2019/08/05/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BA3C%E7%AE%97%E6%B3%95/"/>
-    <id>https://ldgcug.xyz/2019/08/05/论文/深度强化学习/DRL论文阅读（九）之A3C算法/</id>
-    <published>2019-08-05T01:12:57.000Z</published>
-    <updated>2019-08-25T03:00:06.504Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;针对普通AC算法中比较难收敛的问题，DeepMind在&lt;em&gt;Asynchronous Methods for
-        
-      
-    
-    </summary>
-    
-      <category term="论文" scheme="https://ldgcug.xyz/categories/%E8%AE%BA%E6%96%87/"/>
-    
-      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
-    
-      <category term="A3C" scheme="https://ldgcug.xyz/tags/A3C/"/>
     
   </entry>
   
