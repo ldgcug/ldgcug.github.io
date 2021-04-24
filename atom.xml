@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ldgcug.xyz/"/>
-  <updated>2020-06-12T11:18:48.210Z</updated>
+  <updated>2021-04-24T04:02:56.963Z</updated>
   <id>https://ldgcug.xyz/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://ldgcug.xyz/2021/04/24/%E7%94%9F%E6%B4%BB/%E5%8E%A8%E8%89%BA/%E5%AE%B6%E5%B8%B8%E5%B0%8F%E5%8E%A8/"/>
+    <id>https://ldgcug.xyz/2021/04/24/生活/厨艺/家常小厨/</id>
+    <published>2021-04-24T02:41:58.560Z</published>
+    <updated>2021-04-24T04:02:56.963Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>uzh无人机竞速实验（二）</title>
@@ -594,37 +616,6 @@
       <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
     
       <category term="DQN" scheme="https://ldgcug.xyz/tags/DQN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>搭建OpenAI gym环境并简单测试</title>
-    <link href="https://ldgcug.xyz/2019/08/05/%E4%BB%A3%E7%A0%81/DRL/%E6%90%AD%E5%BB%BAOpenAI-gym%E7%8E%AF%E5%A2%83%E5%B9%B6%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95/"/>
-    <id>https://ldgcug.xyz/2019/08/05/代码/DRL/搭建OpenAI-gym环境并简单测试/</id>
-    <published>2019-08-05T07:00:18.000Z</published>
-    <updated>2019-08-05T14:51:56.280Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;搭建OpenAI gym环境的目的是为了后面的一系列DRL的强化学习代码的实现，因为OpenAI
-        
-      
-    
-    </summary>
-    
-      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
-    
-      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
-    
-      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
     
   </entry>
   
