@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DRL,DPG,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 为什么需要引入确定性策略梯度？ 传统的策略梯度算法以概率形式$\pi_\theta(a|s) = P[a|s;\theta]$来表示一个策略，以此来随机的选择行为。但DPG用一种确定性的策略形式$a=\mu_\theta(s)$。 DPG有着比PG更简单的形式：DPG的策略函数的更新就是action-value的期望，这种简单的形式使得DPG比PG更有效，同时在高维度行为空间也比PG表现更好">
+<meta name="keywords" content="DRL,DPG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRL论文阅读（七）之DPG方法">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 为什么需要引入确定性策略梯度？ 传统的策略梯度算法以概率形式$\pi_\theta(a|s) = P[a|s;\theta]$来表示一个策略，以此来随机的选择行为。但DPG用一种确定性的策略形式$a=\mu_\theta(s)$。 DPG有着比PG更简单的形式：DPG的策略函数的更新就是action-value的期望，这种简单的形式使得DPG比PG更有效，同时在高维度行为空间也比PG表现更好">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/11.png">
+<meta property="og:updated_time" content="2019-08-04T06:11:11.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DRL论文阅读（七）之DPG方法">
+<meta name="twitter:description" content="前言 为什么需要引入确定性策略梯度？ 传统的策略梯度算法以概率形式$\pi_\theta(a|s) = P[a|s;\theta]$来表示一个策略，以此来随机的选择行为。但DPG用一种确定性的策略形式$a=\mu_\theta(s)$。 DPG有着比PG更简单的形式：DPG的策略函数的更新就是action-value的期望，这种简单的形式使得DPG比PG更有效，同时在高维度行为空间也比PG表现更好">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/">
+
+
+
+
+
+  <title>DRL论文阅读（七）之DPG方法 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DRL论文阅读（七）之DPG方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-31T13:26:56+08:00">
+                2019-07-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/深度强化学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度强化学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/" class="leancloud_visitors" data-flag-title="DRL论文阅读（七）之DPG方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>为什么需要引入确定性策略梯度？</p>
+<p>传统的策略梯度算法以概率形式$\pi_\theta(a|s) = P[a|s;\theta]$来表示一个策略，以此来随机的选择行为。但DPG用一种确定性的策略形式$a=\mu_\theta(s)$。</p>
+<p>DPG有着比PG更简单的形式：DPG的策略函数的更新就是action-value的期望，这种简单的形式使得DPG比PG更有效，同时在高维度行为空间也比PG表现更好</p>
+</blockquote>
+<h2 id="一、论文题目"><a href="#一、论文题目" class="headerlink" title="一、论文题目"></a>一、论文题目</h2><blockquote>
+<p><strong>Deterministic Policy Gradient Algorithms</strong> </p>
+</blockquote>
+<h2 id="二、研究目标"><a href="#二、研究目标" class="headerlink" title="二、研究目标"></a>二、研究目标</h2><blockquote>
+<p>研究一种更有效的估计策略梯度以及能在高维度行为空间表现更好的算法</p>
+</blockquote>
+<h2 id="三、问题定义"><a href="#三、问题定义" class="headerlink" title="三、问题定义"></a>三、问题定义</h2><blockquote>
+<p>对以往的随机策略而言，对于某一些动作集合来说，它可能是连续值，或者非常高维的离散值，这样动作的空间维度很大。如果使用使用随机策略，即像DQN一样研究它所有的可能动作的概率，并计算出各个可能的动作的价值的话，那需要的样本量是非常大才行的。于是有人就想出确定性策略来简化这个问题。</p>
+</blockquote>
+<ul>
+<li><strong>随机策略：</strong>在相同的策略下，在同一个状态处，采用的动作是基于一个概率分布$\pi_\theta(a|s) = P[a|s;\theta]$的，即是不确定的。</li>
+<li><strong>确定性策略：</strong>在同一个状态处，虽然采用的动作概率不同，但是最大概率只有一个，如果我们只取最大概率的动作，去掉这个概率分布，那么则会简化很多，即作为确定性策略。<strong>相同的策略，在同一个状态处，动作是唯一确定的，即$\pi_\theta(s) = a$。</strong></li>
+</ul>
+<h2 id="四、DPG方法介绍"><a href="#四、DPG方法介绍" class="headerlink" title="四、DPG方法介绍"></a>四、DPG方法介绍</h2><h3 id="4-1-知识回顾"><a href="#4-1-知识回顾" class="headerlink" title="4.1 知识回顾"></a>4.1 知识回顾</h3><h4 id="4-1-1-随机策略梯度（Stochastic-Policy-Gradient）"><a href="#4-1-1-随机策略梯度（Stochastic-Policy-Gradient）" class="headerlink" title="4.1.1 随机策略梯度（Stochastic Policy Gradient）"></a>4.1.1 随机策略梯度（Stochastic Policy Gradient）</h4><blockquote>
+<p>策略梯度的根本目的就是使累计奖励最大，即最大化期望reward：</p>
+</blockquote>
+<script type="math/tex; mode=display">
+\begin{split} J(\pi_\theta) &= \int_S \rho^\pi(s)\int_A\pi_\theta(s,a)r(s,a)dads \\&= E_{s\sim\rho^\pi,a\sim\pi_\theta}[r(s,a)]\end{split}\tag{1}</script><p>策略梯度的基本思想就是沿着$\nabla_\theta J(\pi_\theta)$方向调整参数：</p>
+<script type="math/tex; mode=display">
+\begin{split} \nabla_\theta J(\pi_\theta) &= \int_S \rho^\pi(s)\int_A\nabla_\theta\pi_\theta(a|s)Q^\pi(s,a)dads \\ &=E_{s\sim\rho^\pi,a\sim\pi_\theta}[\nabla_\theta log\pi_\theta(a|s)Q^\pi(s,a)] \end{split}\tag{2}</script><p><strong>推导过程：</strong></p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/1.png" alt></p>
+<p>综上，尽管状态分布$\rho^\pi(s)$依赖于策略的参数，但策略梯度并不依赖于状态分布的梯度</p>
+<h4 id="4-1-2-随机Actor-Critic算法（Stochastic-Actor-Critic-Algorithms）"><a href="#4-1-2-随机Actor-Critic算法（Stochastic-Actor-Critic-Algorithms）" class="headerlink" title="4.1.2 随机Actor-Critic算法（Stochastic Actor-Critic Algorithms）"></a>4.1.2 随机Actor-Critic算法（Stochastic Actor-Critic Algorithms）</h4><blockquote>
+<p>基于策略梯度理论的actor-critic算法是一个被广泛使用的框架，该框架主要由两部分组成：</p>
+<ul>
+<li>actor通过随机梯度上升更新随机策略$\pi_\theta(s)$的参数$\theta$</li>
+<li>critic来估计行为价值函数$Q^w(s,a) \approx Q^\pi(s,a)$，例如时间差分（TD）算法</li>
+</ul>
+<p>注：我们不知道公式中的真实action-value对应关系的函数$Q^\pi(s,a)$，但是我们使用参数$w$创建近似的价值函数$Q^w(s,a) $，通过合适的策略计算算法，使得$Q^w(s,a) \approx Q^\pi(s,a)$</p>
+</blockquote>
+<p>但是，通常来说，用$Q^w(s,a) $来逼近$ Q^\pi(s,a)$，会引入偏差，为了消除偏差，近似函数应满足：</p>
+<ol>
+<li>$Q_w(s,a) = \nabla_\theta log \pi_\theta(a|s)^Tw$（对于随机策略的函数逼近为线性）</li>
+<li>$\varepsilon^2(w) = E_{s\sim\rho^\pi,a\sim\pi_\theta} [(Q^{w}(s,a) - Q^\pi(s,a))^2]$（参数$w$，应该最小化均方差）</li>
+</ol>
+<p>则我的策略梯度为：</p>
+<script type="math/tex; mode=display">
+\nabla_\theta J(\pi_\theta)=E_{s\sim\rho^\pi,a\sim\pi_\theta}[\nabla_\theta log\pi_\theta(a|s)Q^w(s,a)</script><p>在实践中，一般放宽条件2，更有利于算法通过时间差分学习到更有效的评估函数。如果条件1、2全部满足的话，整个算法相当于不适用critic。</p>
+<h3 id="4-2-离线策略（异策略）Actor-Critic（Off-Policy-Actor-Critic）"><a href="#4-2-离线策略（异策略）Actor-Critic（Off-Policy-Actor-Critic）" class="headerlink" title="4.2 离线策略（异策略）Actor-Critic（Off-Policy Actor-Critic）"></a>4.2 离线策略（异策略）Actor-Critic（Off-Policy Actor-Critic）</h3><blockquote>
+<p>Off-policy的意思就是我们训练用的数据使用的策略和当前要更新的策略不是一个策略，设数据使用的策略为$\beta$，而当前要训练的策略是$\pi$，这里用到了importance sampling。</p>
+</blockquote>
+<p>即不同于行为策略$\pi$的off-policy（异） 策略$\beta$来选择状态、行为轨迹（trajectories）</p>
+<p>目标函数通常修改为目标策略的价值函数：</p>
+<script type="math/tex; mode=display">
+\begin{split} J_\beta(\pi_\theta) &= \int_S \rho^\beta(s) V^\pi(s)ds \\ &=\int_S\int_A\rho^\beta(s)\pi_\theta(a|s)Q^\pi(s,a)dads \end{split}</script><p>Off-policy的 策略梯度为:</p>
+<script type="math/tex; mode=display">
+\begin{split} \nabla_\theta J_\beta(\pi_\theta) &\approx \int_S\int_A\rho^\beta(s)\nabla_\theta\pi_\theta(a|s)Q^\pi(s,a)dads  \\ &= E_{s\sim\rho^\pi,a\sim\pi_\theta}[ \frac{\pi_\theta(a|s)}{\beta_\theta(a|s)}\nabla_\theta log\pi_\theta(a|s)Q^\pi(s,a)] \end{split}\tag{4\5}</script><p>离线（Off-policy）actor-critic算法（OffPAC）使用行为策略（behaviour policy）$\beta(a|s)$来生成轨迹，critic会用状态价值函数$V^v(s)\approx V^\pi(s)$来进行估计，actor用来更新策略的参数$\theta$，actor和critic都是通过离线的轨迹数据来进行训练，和上面公式不同的是，我们在这里用TD-error $\delta_t = r_{t+1} + \gamma V^v(s_{t+1}) - V^v(s_t)$代替上式中的$Q^\pi(s,a)$，这样可以提供真实梯度的近似值。在更新actor和critic时，都需要用重要性采样比率$\frac{\pi_\theta(a|s)}{\beta_\theta(a|s)}$来进行重要性采样，这一比率来判断action到底是根据策略$\pi$还是$\beta $。</p>
+<h3 id="4-3-确定性策略梯度（Gradients-of-Deterministic-Policies）"><a href="#4-3-确定性策略梯度（Gradients-of-Deterministic-Policies）" class="headerlink" title="4.3 确定性策略梯度（Gradients of Deterministic Policies）"></a>4.3 确定性策略梯度（Gradients of Deterministic Policies）</h3><blockquote>
+<p>现在考虑如何将策略梯度扩展到确定性策略，即$a=\mu_\theta (s)$。类似于前面提到的随机策略梯度，确定性策略梯度实际上是随机策略梯度的一个特例</p>
+</blockquote>
+<h4 id="4-3-1-动作-值函数梯度（Action-Value-Gradients）"><a href="#4-3-1-动作-值函数梯度（Action-Value-Gradients）" class="headerlink" title="4.3.1 动作-值函数梯度（Action-Value Gradients）"></a>4.3.1 动作-值函数梯度（Action-Value Gradients）</h4><blockquote>
+<p>绝大多数的model free强化学习算法都是基于一般的策略迭代，即策略评估（policy evaluation）和策略改善（policy improvement）交替进行。策略评估就是估计动作-值函数$Q^\pi(s,a)$或$Q^\mu(s,a)$，比如用MC（蒙特卡洛）或TD来进行估计，然后在进行策略改善，策略改善最常用的方法是用贪心法：$\mu^{k+1}(s) = argmax_a Q^{\mu^k}(s,a)$</p>
+</blockquote>
+<p>但是在连续行为空间中，策略改善环节的贪心法就不可行，因为贪心法需要在每一步都最大化，因此就出现了问题。一个简单的替代方案就是将策略往$Q$的梯度方向移动，而不是全局最大化$Q$。具体来说，对于每一个探索果的状态$s$，策略网络的参数$\theta^{k+1}$以$\nabla_\theta Q^{\mu^k}(s,\mu_\theta(s))$的一定比例来更新。每个不同的状态，都提供了一个更新的方向，所有方向的均值，可以看做$\rho^\mu(s)$。</p>
+<script type="math/tex; mode=display">
+\theta^{k+1} = \theta^k + \alpha E_{s\sim\rho^{\mu^k}}[\nabla_\theta Q^{\mu^k}(s,\mu_\theta(s))]</script><p>策略改善可以分解为动作-值函数的梯度和评估策略的梯度更新，根据导数的链式法则：</p>
+<script type="math/tex; mode=display">
+\theta^{k+1} = \theta^k + \alpha E_{s\sim\rho^{\mu^k}}[\nabla_\theta \mu_\theta(s) \nabla_a Q^{\mu^k}(s,a)|_{a=\mu_\theta(s)}]</script><p>按照惯例，$\nabla_\theta \mu_\theta(s)$是一个雅克比矩阵，也就是说，每一列都是梯度$\nabla_\theta[\mu_\theta(s)]|_d$（d是动作空间的维度）。通过改变策略，不同的状态都会被探索，并且状态分布$\rho^\mu(s)$也会改变。</p>
+<h3 id="4-4-确定性策略梯度定理（Deterministic-Policy-Gradient-Theorem）"><a href="#4-4-确定性策略梯度定理（Deterministic-Policy-Gradient-Theorem）" class="headerlink" title="4.4 确定性策略梯度定理（Deterministic Policy Gradient Theorem）"></a>4.4 确定性策略梯度定理（Deterministic Policy Gradient Theorem）</h3><blockquote>
+<p>现在考虑带有参数向量$\theta \epsilon R^n$的确定性策略$\mu_\theta:S \rightarrow A$</p>
+</blockquote>
+<p>定义：</p>
+<ul>
+<li>目标函数:$J(\mu_\theta) = E[r_1^\gamma|\mu]$</li>
+<li>概率分布：$p(s \rightarrow s’,t,\mu)$</li>
+<li>折扣状态分布：$\rho^\mu(s)$</li>
+</ul>
+<p>类比于随机策略，因为此时是确定性策略，所以不需要在对行为$a$做积分求期望，则累计奖励期望为：</p>
+<script type="math/tex; mode=display">
+\begin{split} J(\mu_\theta) &= \int_S \rho^\mu(s)r(s,\mu_\theta(s)) ds \\ &=E_{s\sim\rho^\mu}[r(s,\mu_\theta(s))] \end{split}</script><p>如果MDP过程满足$p(s’|s,a)$，$\nabla_ap(s’|s,a)$，$\mu_\theta(s)$，$\nabla_\theta \mu_\theta(s)$，$r(s,a)$，$\nabla_a r(s,a)$，$p_1(s)$在参数$s,a,s’,x$下都是连续的，那么意味着$\nabla_\theta \mu_\theta(s)$和$\nabla_a Q^\mu(s,a)$存在且确定性策略梯度存在。那么与随机策略梯度相同，我们使用$Q$值来代替即时奖励，则对于$J$的梯度，即DPG为：</p>
+<script type="math/tex; mode=display">
+\begin{split} \nabla_\theta J(\mu_\theta) &= \int_S \rho^\mu(s)\nabla_\theta \mu_\theta(s) \nabla_aQ^\mu(s,a)|_{a= \mu_\theta(s)}ds \\ &= E_{s\sim\rho^\mu}[\nabla_\theta \mu_\theta(s)  \nabla_aQ^\mu(s,a)|_{a= \mu_\theta(s)}]  \\ &= E_{s\sim\rho^\mu}[\nabla_\theta Q^\mu(s, \mu_\theta(s))] 
+\end{split} \tag{9}</script><p>可以发现，与随机策略梯度相比，DPG少了对行为的积分，多了对动作-值函数的梯度，这也使得DPG需要更少的采样却能达到比随机策略梯度更好的效果。</p>
+<p><strong>证明过程</strong>：（我没怎么看懂）</p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/2.png" alt></p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/3.png" alt></p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/4.png" alt></p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/5.png" alt></p>
+<h4 id="4-4-1-确定性策略是随机策略梯度的极限形式"><a href="#4-4-1-确定性策略是随机策略梯度的极限形式" class="headerlink" title="4.4.1 确定性策略是随机策略梯度的极限形式"></a>4.4.1 确定性策略是随机策略梯度的极限形式</h4><blockquote>
+<p>DPG公式乍看并不像随机策略梯度公式，但实际上DPG是岁及策略梯度的一种特例情况。假设定义随机策略的参数为$\pi_{\mu_\theta,\delta}$，其中$\delta$是方差参数，也就是说，如果$\delta = 0$，则随机策略等于确定性策略$\pi_{\mu_\theta } \equiv \mu_\theta$，所以可以得出策略梯度的极限形式： </p>
+</blockquote>
+<script type="math/tex; mode=display">
+\lim_{\delta \rightarrow 0} \nabla_\theta J(\pi_{\mu_\theta,\delta}) = \nabla_\theta J(\mu_\theta) \tag{10}</script><h3 id="4-5-确定性Actor-Critic算法"><a href="#4-5-确定性Actor-Critic算法" class="headerlink" title="4.5 确定性Actor-Critic算法"></a>4.5 确定性Actor-Critic算法</h3><blockquote>
+<p>与随机Actor-Critic算法类似，用一个可导的动作-值函数$Q^w(s,a)$来估计$Q^\mu (s,a) $</p>
+</blockquote>
+<h4 id="4-5-1-On-Policy-确定性AC"><a href="#4-5-1-On-Policy-确定性AC" class="headerlink" title="4.5.1 On-Policy 确定性AC"></a>4.5.1 On-Policy 确定性AC</h4><blockquote>
+<p>对于同策略（On-Policy）AC，critic使用Sarsa来估计动作-值函数，算法为：</p>
+</blockquote>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/6.png" alt></p>
+<p>其中，同策略的确定性策略梯度为：</p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/10.png" alt></p>
+<h4 id="4-5-2-Off-Policy-确定性AC"><a href="#4-5-2-Off-Policy-确定性AC" class="headerlink" title="4.5.2 Off-Policy 确定性AC"></a>4.5.2 Off-Policy 确定性AC</h4><blockquote>
+<p>对于异策略来说，在生成样本轨迹时所用的策略可以使任意的随机行为策略$\beta(s,a)$，目标函数$J$为：</p>
+</blockquote>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/7.png" alt></p>
+<p>梯度为：</p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/8.png" alt></p>
+<p>critic采用Q-learing的学习策略来估计动作-值函数：</p>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/9.png" alt></p>
+<p>可以看出同策略和异策略的不同之处在于对$a_t$的生成，同策略用的是确定性策略，异策略则用的是一个任意的随机策略。不同的是同策略是选择状态$s_{t+1}$最大的$Q$，而异策略是选择状态$s_{t+1}$和动作$\mu(s_{t+1})$的$Q$。</p>
+<h3 id="4-6-无偏证明"><a href="#4-6-无偏证明" class="headerlink" title="4.6 无偏证明"></a>4.6 无偏证明</h3><blockquote>
+<p>这部分是证明用Q代替期望奖励时如何无偏</p>
+</blockquote>
+<h2 id="五、结果"><a href="#五、结果" class="headerlink" title="五、结果"></a>五、结果</h2><blockquote>
+<p>红色是本文结果：DAC off-policy &gt; SAC off-policy &gt; SAC on-policy</p>
+</blockquote>
+<p><img src="/2019/07/31/论文/深度强化学习/DRL论文阅读（七）之DPG方法/11.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>好吧，自从看PG以来，关于PG、AC、DPG这里总是感觉有点懂又有一点不懂，作为DDPG以及A3C等的基础，先做一个大概的了解吧，后面看了DDPG和A3C后，在回过来看看，是否会理解更深刻一点</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><blockquote>
+<p>主要参考了下面博客中的前两篇</p>
+</blockquote>
+<ul>
+<li><p><a href="https://bluefisher.github.io/2018/05/16/Deterministic-Policy-Gradient/" target="_blank" rel="noopener">Deterministic Policy Gradient-Fisher’s Blog</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/53613085" target="_blank" rel="noopener">Deterministic Policy Gradient Algorithms阅读笔记（or翻译）</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/taoyafan/article/details/94363459" target="_blank" rel="noopener">RL论文阅读七 Deterministic Policy Gradient Algorithms</a></p>
+</li>
+<li><p><a href="https://www.cnblogs.com/statruidong/p/10765579.html" target="_blank" rel="noopener">文献笔记Deterministic Policy Gradient Algorithms</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/weixin_37895339/article/details/84881872" target="_blank" rel="noopener">强化学习-确定性策略强化学习-DPG&amp;DDPG算法推导及分析</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DRL/" rel="tag"># DRL</a>
+          
+            <a href="/tags/DPG/" rel="tag"># DPG</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/30/论文/深度强化学习/DRL（六）之Actor-Critic算法介绍/" rel="next" title="DRL（六）之Actor-Critic算法介绍">
+                <i class="fa fa-chevron-left"></i> DRL（六）之Actor-Critic算法介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/04/论文/深度强化学习/DRL论文阅读（八）之DDPG算法/" rel="prev" title="DRL论文阅读（八）之DDPG算法">
+                DRL论文阅读（八）之DDPG算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、论文题目"><span class="nav-text">一、论文题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、研究目标"><span class="nav-text">二、研究目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、问题定义"><span class="nav-text">三、问题定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、DPG方法介绍"><span class="nav-text">四、DPG方法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-知识回顾"><span class="nav-text">4.1 知识回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-随机策略梯度（Stochastic-Policy-Gradient）"><span class="nav-text">4.1.1 随机策略梯度（Stochastic Policy Gradient）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-随机Actor-Critic算法（Stochastic-Actor-Critic-Algorithms）"><span class="nav-text">4.1.2 随机Actor-Critic算法（Stochastic Actor-Critic Algorithms）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-离线策略（异策略）Actor-Critic（Off-Policy-Actor-Critic）"><span class="nav-text">4.2 离线策略（异策略）Actor-Critic（Off-Policy Actor-Critic）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-确定性策略梯度（Gradients-of-Deterministic-Policies）"><span class="nav-text">4.3 确定性策略梯度（Gradients of Deterministic Policies）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-动作-值函数梯度（Action-Value-Gradients）"><span class="nav-text">4.3.1 动作-值函数梯度（Action-Value Gradients）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-确定性策略梯度定理（Deterministic-Policy-Gradient-Theorem）"><span class="nav-text">4.4 确定性策略梯度定理（Deterministic Policy Gradient Theorem）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-1-确定性策略是随机策略梯度的极限形式"><span class="nav-text">4.4.1 确定性策略是随机策略梯度的极限形式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-确定性Actor-Critic算法"><span class="nav-text">4.5 确定性Actor-Critic算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-1-On-Policy-确定性AC"><span class="nav-text">4.5.1 On-Policy 确定性AC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-2-Off-Policy-确定性AC"><span class="nav-text">4.5.2 Off-Policy 确定性AC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-无偏证明"><span class="nav-text">4.6 无偏证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、结果"><span class="nav-text">五、结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'DRL论文阅读（七）之DPG方法'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'DRL论文阅读（七）之DPG方法'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

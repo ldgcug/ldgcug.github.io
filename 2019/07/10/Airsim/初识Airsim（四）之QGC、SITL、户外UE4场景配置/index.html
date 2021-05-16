@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Airsim,ubuntu,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
+<meta name="keywords" content="Airsim,ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/11.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/12.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/13.png">
+<meta property="og:updated_time" content="2019-08-16T14:13:29.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
+<meta name="twitter:description" content="前言 这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过  相关关键词 QGC SITL PX4  一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -a -G dialout $USER 执行完后，注销，重新登录，重启更好 1.2 安装Pixhawk">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/">
+
+
+
+
+
+  <title>初识Airsim（四）之QGC、SITL、户外UE4场景配置 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初识Airsim（四）之QGC、SITL、户外UE4场景配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T13:20:06+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Airsim/" itemprop="url" rel="index">
+                    <span itemprop="name">Airsim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/" class="leancloud_visitors" data-flag-title="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过</p>
+</blockquote>
+<h2 id="相关关键词"><a href="#相关关键词" class="headerlink" title="相关关键词"></a>相关关键词</h2><ul>
+<li>QGC</li>
+<li>SITL</li>
+<li>PX4</li>
+</ul>
+<h2 id="一、PX4-SITL配置"><a href="#一、PX4-SITL配置" class="headerlink" title="一、PX4 SITL配置"></a>一、PX4 SITL配置</h2><h3 id="1-1-设置dialout用户"><a href="#1-1-设置dialout用户" class="headerlink" title="1.1 设置dialout用户"></a>1.1 设置dialout用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G dialout $USER</span><br></pre></td></tr></table></figure>
+<p>执行完后，注销，重新登录，重启更好</p>
+<h3 id="1-2-安装Pixhawk-Nuttx（and-JMAVSim）"><a href="#1-2-安装Pixhawk-Nuttx（and-JMAVSim）" class="headerlink" title="1.2 安装Pixhawk/Nuttx（and JMAVSim）"></a>1.2 安装Pixhawk/Nuttx（and JMAVSim）</h3><blockquote>
+<p>在桌面新建sh文件，并命名为：<code>ubuntu_sim_nuttx.sh</code></p>
+</blockquote>
+<p>点击<a href="https://raw.githubusercontent.com/PX4/Devguide/v1.9.0/build_scripts/ubuntu_sim_nuttx.sh" target="_blank" rel="noopener">此处</a>，拷贝<code>ubuntu_sim_nuttx.sh</code>源代码，粘贴到刚才新建的<code>ubuntu_sim_nuttx.sh</code>文件中</p>
+<p>修改权限，并执行sh文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x ubuntu_sim_nuttx.sh</span><br><span class="line">./ubuntu_sim_nuttx.sh</span><br></pre></td></tr></table></figure>
+<p>下载过程中，有些需要提示的地方进行确认，下载完成后，重启计算机</p>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/1.png" alt></p>
+<h3 id="1-3-获取PX4源码"><a href="#1-3-获取PX4源码" class="headerlink" title="1.3 获取PX4源码"></a>1.3 获取PX4源码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p PX4</span><br><span class="line">cd PX4</span><br><span class="line">git clone https://github.com/PX4/Firmware.git</span><br><span class="line">cd Firmware</span><br><span class="line">git checkout v1<span class="number">.8</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-4-编译"><a href="#1-4-编译" class="headerlink" title="1.4 编译"></a>1.4 编译</h3><blockquote>
+<p>要确保到 PX4/Fireware 目录下，然后执行如下命令进行编译</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make posix_sitl_ekf2  none_iris</span><br></pre></td></tr></table></figure>
+<p>编译完成后，窗口会出现等待UDP连接的提示</p>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/2.png" alt></p>
+<h2 id="二、QGC和Mavros的安装"><a href="#二、QGC和Mavros的安装" class="headerlink" title="二、QGC和Mavros的安装"></a>二、QGC和Mavros的安装</h2><h3 id="2-1-QGC安装"><a href="#2-1-QGC安装" class="headerlink" title="2.1 QGC安装"></a>2.1 QGC安装</h3><p>（1）下载QGC</p>
+<blockquote>
+<p>下载QGC，请点击<a href="https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage" target="_blank" rel="noopener">此处</a></p>
+</blockquote>
+<p>（2）修改权限</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/Downloads</span><br><span class="line">chmod +x ./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
+<p>（3）运行QGC</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
+<p>最终，会弹出QGC窗口</p>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/3.png" alt></p>
+<h3 id="2-2-mavros和mavlink的源码安装"><a href="#2-2-mavros和mavlink的源码安装" class="headerlink" title="2.2 mavros和mavlink的源码安装"></a>2.2 mavros和mavlink的源码安装</h3><h4 id="2-2-1-二进制安装方式"><a href="#2-2-1-二进制安装方式" class="headerlink" title="2.2.1 二进制安装方式"></a>2.2.1 二进制安装方式</h4><p>（1）安装mavros</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-kinetic-mavros ros-kinetic-mavros-extras</span><br></pre></td></tr></table></figure>
+<p>（2）安装GeographicLib</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh</span><br><span class="line">chmod u+x ./install_geographiclib_datasets.sh</span><br><span class="line">sudo su</span><br><span class="line">proxychains4 ./install_geographiclib_datasets.sh</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-源码安装"><a href="#2-2-2-源码安装" class="headerlink" title="2.2.2 源码安装"></a>2.2.2 源码安装</h4><p>（1）创建工作空间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/catkin_ws/src</span><br><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin build</span><br><span class="line">wstool init src</span><br></pre></td></tr></table></figure>
+<p>（2）安装mavlink</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosinstall_generator --rosdistro kinetic mavlink | tee /tmp/mavros.rosinstall</span><br></pre></td></tr></table></figure>
+<p>（3）安装mavros</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosinstall_generator --upstream mavros | tee -a /tmp/mavros.rosinstall</span><br></pre></td></tr></table></figure>
+<p>（3）更新</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wstool merge -t src /tmp/mavros.rosinstall</span><br><span class="line">wstool update -t src -j4</span><br><span class="line">rosdep install --<span class="keyword">from</span>-paths src --ignore-src -y</span><br></pre></td></tr></table></figure>
+<p>（4）安装GeograohicLib</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">proxychains4 ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh</span><br></pre></td></tr></table></figure>
+<p>（5）编译</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin build</span><br></pre></td></tr></table></figure>
+<p>（6）source</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-安装相关依赖包"><a href="#2-3-安装相关依赖包" class="headerlink" title="2.3 安装相关依赖包"></a>2.3 安装相关依赖包</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-catkin-tools</span><br></pre></td></tr></table></figure>
+<h2 id="三、测试"><a href="#三、测试" class="headerlink" title="三、测试"></a>三、测试</h2><blockquote>
+<font color="red">首先，将前面所打开的所有UE4界面和终端窗口全部关掉</font>
+
+</blockquote>
+<h3 id="3-1-settions-json配置"><a href="#3-1-settions-json配置" class="headerlink" title="3.1 settions.json配置"></a>3.1 settions.json配置</h3><blockquote>
+<p>需要将settion.json里面的配置修改为PX4配置</p>
+<p>settions.json文件在~/Documents/Airsim目录下</p>
+</blockquote>
+<p>配置信息修改如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"SeeDocsAt"</span>: <span class="string">"https://github.com/Microsoft/AirSim/blob/master/docs/settings.md"</span>,</span><br><span class="line">  <span class="string">"SettingsVersion"</span>: <span class="number">1.2</span>,</span><br><span class="line">  <span class="string">"SimMode"</span>:<span class="string">"Multirotor"</span>,</span><br><span class="line">  <span class="string">"Vehicles"</span>:&#123;</span><br><span class="line">         <span class="string">"PX4"</span>:&#123;</span><br><span class="line">             	<span class="string">"VehicleType"</span>:<span class="string">"PX4Multirotor"</span>,</span><br><span class="line">             	<span class="string">"UseSerial"</span>:false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-SITL连接和QGC连接"><a href="#3-2-SITL连接和QGC连接" class="headerlink" title="3.2 SITL连接和QGC连接"></a>3.2 SITL连接和QGC连接</h3><p>（1）编译posix_sitl</p>
+<blockquote>
+<p>进入到PX4/Fireware目录下，编译</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make posix_sitl_ekf2  none_iris</span><br></pre></td></tr></table></figure>
+<p>编译完成后，等待UDP的链接</p>
+<p>（2）打开QGC</p>
+<blockquote>
+<p>进入到  QGroundControl.AppImage 所在目录，打开QGC</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./QGroundControl.AppImage</span><br></pre></td></tr></table></figure>
+<p>打开后，也会等待无人机的连接</p>
+<p>（3）打开UE4Editor</p>
+<blockquote>
+<p>双击运行  UnrealEngine/Engine/Binaries/Linux/UE4Editor 文件，选择之前添加的插件Blocks，原来的Rolling没有AirsimGameMode</p>
+</blockquote>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/4.png" alt></p>
+<p>点击打开后，点击播放，加载出来后，会发现PX4 的UDP已经连接上，QGC也已经连接上</p>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/5.png" alt></p>
+<h3 id="3-3-测试"><a href="#3-3-测试" class="headerlink" title="3.3 测试"></a>3.3 测试</h3><h4 id="3-3-1-QGC起飞测试"><a href="#3-3-1-QGC起飞测试" class="headerlink" title="3.3.1 QGC起飞测试"></a>3.3.1 QGC起飞测试</h4><blockquote>
+<p>点击QGC的起飞按钮，并滑动确定，最终Multirotor会起飞</p>
+</blockquote>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/6.png" alt></p>
+<h4 id="3-3-2-Firmware窗口命令起飞降落测试"><a href="#3-3-2-Firmware窗口命令起飞降落测试" class="headerlink" title="3.3.2 Firmware窗口命令起飞降落测试"></a>3.3.2 Firmware窗口命令起飞降落测试</h4><blockquote>
+<p>在之前的等待UDP连接的窗口上输入命令测试</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">commander takeoff</span><br><span class="line">commander land</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/7.png" alt></p>
+<h4 id="3-3-3-ros命令测试"><a href="#3-3-3-ros命令测试" class="headerlink" title="3.3.3 ros命令测试"></a>3.3.3 ros命令测试</h4><blockquote>
+<p>打开一个新终端，执行如下命令</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch mavros px4.launch fcu_url:=<span class="string">"udp://:14540@127.0.0.1:14557"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/8.png" alt></p>
+<p>此时，可以通过调用service服务，来实现起飞</p>
+<blockquote>
+<p>打开新终端，执行下面命令，能执行起飞降落</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rosservice call /mavros/cmd/arming true</span><br><span class="line">rosservice call /mavros/cmd/takeoff -- <span class="number">0</span> <span class="number">0</span> <span class="number">47.6420</span> <span class="number">-122.1404</span> <span class="number">126.1</span></span><br><span class="line">rosservice call /mavros/cmd/land -- <span class="number">0</span> <span class="number">0</span> <span class="number">47.6420</span> <span class="number">-122.1404</span> <span class="number">123</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>rostopic list信息查看</p>
+</blockquote>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/9.png" alt></p>
+<blockquote>
+<p>rosservice 命令结果输出</p>
+<p>输出要为true才有效</p>
+</blockquote>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/10.png" alt></p>
+<h2 id="四、添加城市道路场景"><a href="#四、添加城市道路场景" class="headerlink" title="四、添加城市道路场景"></a>四、添加城市道路场景</h2><blockquote>
+<p>Airsim有一些关于UE4的城市道路场景，但是在linux下我成功加载的目前只有两个，总共没测试过几个，能成功加载的是Africa、和Neighborhood，其中有加载过关于City的，但是这是两个zip.001这样的文件组成的，目前还没有解压成功（Linux下），在windows下应该能成功解压</p>
+<font color="red">在打开下载的这些场景时，setting.json的配置信息不能修改为SITL的配置，为最初始的默认配置即可</font>
+
+</blockquote>
+<p>（1）下载场景</p>
+<blockquote>
+<p>下载场景，请点击<a href="https://github.com/Microsoft/AirSim/releases" target="_blank" rel="noopener">此处</a></p>
+</blockquote>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/11.png" alt></p>
+<p>（2）加载场景</p>
+<blockquote>
+<p>首先下载的场景，要为如下的文件结构才行</p>
+<p>windows的场景为exe文件，linux下的为sh文件，如果没有sh文件这样，则不能加载</p>
+</blockquote>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/12.png" alt></p>
+<p>在新终端执行如下命令加载（进入到AirSimNH.sh文件所在目录）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./AirSimNH.sh</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/13.png" alt></p>
+<blockquote>
+<p>同理，Africa的场景也是同样的方式</p>
+</blockquote>
+<h2 id="五、SITL与-sh文件不兼容"><a href="#五、SITL与-sh文件不兼容" class="headerlink" title="五、SITL与.sh文件不兼容"></a>五、SITL与.sh文件不兼容</h2><blockquote>
+<p>如果下载了github上提供的AirSimNH.sh环境，并运行sh文件时，将会出现<strong>第四部分</strong>的图片，但是却不能设置SITL，这样就很难受</p>
+</blockquote>
+<p>通过浏览多方资料，发现了其可能的解决办法（未尝试，但是应该是没问题的），<a href="https://github.com/microsoft/AirSim/issues/1359" target="_blank" rel="noopener">这个解释挺好的</a>。通过浏览Airsim上的<a href="https://github.com/microsoft/AirSim/blob/master/docs/unreal_custenv.md" target="_blank" rel="noopener">doc</a>文档，看到了其他的相关的UE4场景，并且有免费的可以下载，具体步骤参照<a href="https://www.youtube.com/watch?v=y09VbdQWvQY&amp;feature=" target="_blank" rel="noopener">教学视频</a>。本来准备下载的，结果在windows没有下载下来，也就没有测试。其中的两个UE4场景下载网址分别为：</p>
+<ul>
+<li><p><a href="https://www.cgtrader.com/items/50844/download-page#" target="_blank" rel="noopener">cgtrader</a></p>
+</li>
+<li><p><a href="https://www.turbosquid.com/3d-model/city?min_price=0&amp;max_price=0" target="_blank" rel="noopener">TURBOSQUID</a></p>
+</li>
+</ul>
+<p>因此，只要在UE4的商城上，去下载<a href="https://www.unrealengine.com/marketplace/zh-CN/slug/modular-neighborhood-pack" target="_blank" rel="noopener">AirSimNH</a>的环境，这样就下载了AirSimNH.uproject插件，就可以在UE4Editor中添加uproject插件，并且配置SITL控制了。但是其环境，是需要购买的。消费就是另一个问题了。</p>
+<h2 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h2><ul>
+<li>PX4 SITL配置：<a href="https://github.com/microsoft/AirSim/blob/master/docs/px4_sitl.md" target="_blank" rel="noopener">Airsim Github官网</a></li>
+<li>QGC安装：<a href="https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html" target="_blank" rel="noopener">QGC官网</a></li>
+<li>Mavros安装：<a href="http://dev.px4.io/en/ros/mavros_installation.html" target="_blank" rel="noopener">mavos官网</a></li>
+<li>settings配置：<a href="https://github.com/microsoft/AirSim/blob/master/docs/settings.md" target="_blank" rel="noopener">github文档</a></li>
+<li>roslaunch测试：<a href="http://dev.px4.io/en/simulation/ros_interface.html" target="_blank" rel="noopener">PX4官网</a></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>总的来说，Airsim的SITL配置没有问题，但是要使用SITL时，必须打开UE4Editor，然后自己定义场景，而不能使用已经下载好的.sh场景，这个已经测试过。如果要是用城市道路场景，则在setting.json里面一定不能配置PX4的信息。</p>
+<p>目前Airsim的HITL配置没有成功，主要是用的Pixhawk进行的测试，并且没有使用遥控器，在linux下不能利用QGC完成起飞，但是在Windows下可以</p>
+<p>SITL或HITL都是利用mavros来完成通信的，这个可能会暂时告一段落，后面会自己利用Airsim提供的API，自己去写ROS节点，利用ROS来实现控制，并且可以利用ROS的通信机制，来完成另种方式的HITL控制</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Airsim/" rel="tag"># Airsim</a>
+          
+            <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/系统/Windows下sublime相关配置/" rel="next" title="Windows下sublime相关配置">
+                <i class="fa fa-chevron-left"></i> Windows下sublime相关配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/" rel="prev" title="ros自定义msg消息类型及roslaunch启动多节点">
+                ros自定义msg消息类型及roslaunch启动多节点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关关键词"><span class="nav-text">相关关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、PX4-SITL配置"><span class="nav-text">一、PX4 SITL配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-设置dialout用户"><span class="nav-text">1.1 设置dialout用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-安装Pixhawk-Nuttx（and-JMAVSim）"><span class="nav-text">1.2 安装Pixhawk/Nuttx（and JMAVSim）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-获取PX4源码"><span class="nav-text">1.3 获取PX4源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-编译"><span class="nav-text">1.4 编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、QGC和Mavros的安装"><span class="nav-text">二、QGC和Mavros的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-QGC安装"><span class="nav-text">2.1 QGC安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-mavros和mavlink的源码安装"><span class="nav-text">2.2 mavros和mavlink的源码安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-二进制安装方式"><span class="nav-text">2.2.1 二进制安装方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-源码安装"><span class="nav-text">2.2.2 源码安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-安装相关依赖包"><span class="nav-text">2.3 安装相关依赖包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、测试"><span class="nav-text">三、测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-settions-json配置"><span class="nav-text">3.1 settions.json配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SITL连接和QGC连接"><span class="nav-text">3.2 SITL连接和QGC连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-测试"><span class="nav-text">3.3 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-QGC起飞测试"><span class="nav-text">3.3.1 QGC起飞测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-Firmware窗口命令起飞降落测试"><span class="nav-text">3.3.2 Firmware窗口命令起飞降落测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-ros命令测试"><span class="nav-text">3.3.3 ros命令测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、添加城市道路场景"><span class="nav-text">四、添加城市道路场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、SITL与-sh文件不兼容"><span class="nav-text">五、SITL与.sh文件不兼容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考网址"><span class="nav-text">参考网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '初识Airsim（四）之QGC、SITL、户外UE4场景配置'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '初识Airsim（四）之QGC、SITL、户外UE4场景配置'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

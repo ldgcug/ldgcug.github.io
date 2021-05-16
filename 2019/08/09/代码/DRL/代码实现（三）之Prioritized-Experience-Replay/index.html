@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DRL,OpenAI gym,Prioritized Experience Replay,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 理论部分，点击DRL论文阅读（三）查看 本文的代码主要参考了莫烦和Fisher’s的代码，在他们的基础之上，修改为自己习惯能看懂的代码 Prioritized DQN不同于DQN/DDQN的是，它关注的是经验回放池中那些很少但有用的正面信息  一、实验环境 使用MountainCar环境来对算法进行测试   和之前有所不同的是，这次我们不需要重度改变它的reward。所以只要没有拿到小旗子，">
+<meta name="keywords" content="DRL,OpenAI gym,Prioritized Experience Replay">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码实现（三）之Prioritized Experience Replay">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 理论部分，点击DRL论文阅读（三）查看 本文的代码主要参考了莫烦和Fisher’s的代码，在他们的基础之上，修改为自己习惯能看懂的代码 Prioritized DQN不同于DQN/DDQN的是，它关注的是经验回放池中那些很少但有用的正面信息  一、实验环境 使用MountainCar环境来对算法进行测试   和之前有所不同的是，这次我们不需要重度改变它的reward。所以只要没有拿到小旗子，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/7.png">
+<meta property="og:updated_time" content="2019-08-17T09:09:16.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码实现（三）之Prioritized Experience Replay">
+<meta name="twitter:description" content="前言 理论部分，点击DRL论文阅读（三）查看 本文的代码主要参考了莫烦和Fisher’s的代码，在他们的基础之上，修改为自己习惯能看懂的代码 Prioritized DQN不同于DQN/DDQN的是，它关注的是经验回放池中那些很少但有用的正面信息  一、实验环境 使用MountainCar环境来对算法进行测试   和之前有所不同的是，这次我们不需要重度改变它的reward。所以只要没有拿到小旗子，">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/">
+
+
+
+
+
+  <title>代码实现（三）之Prioritized Experience Replay | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">代码实现（三）之Prioritized Experience Replay</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-09T22:56:37+08:00">
+                2019-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码/" itemprop="url" rel="index">
+                    <span itemprop="name">代码</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码/深度强化学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度强化学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/" class="leancloud_visitors" data-flag-title="代码实现（三）之Prioritized Experience Replay">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>理论部分，点击<a href="https://ldgyyf.cn/2019/07/18/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BDQN%E6%94%B9%E8%BF%9B%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7%EF%BC%88Prioritized-Experience-Replay%EF%BC%89/" target="_blank" rel="noopener">DRL论文阅读（三</a>）查看</p>
+<p>本文的代码主要参考了<a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/5.2_Prioritized_Replay_DQN/RL_brain.py" target="_blank" rel="noopener">莫烦</a>和<a href="https://github.com/BlueFisher/Reinforcement-Learning/tree/master/Deep_Q_Network/Prioritized_DQN" target="_blank" rel="noopener">Fisher’s</a>的代码，在他们的基础之上，修改为自己习惯能看懂的代码</p>
+<p>Prioritized DQN不同于DQN/DDQN的是，它关注的是经验回放池中那些很少但有用的正面信息</p>
+</blockquote>
+<h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><blockquote>
+<p>使用MountainCar环境来对算法进行测试</p>
+</blockquote>
+<p><img src="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/1.png" alt></p>
+<p>和之前有所不同的是，这次我们不需要重度改变它的reward。所以只要没有拿到小旗子，reward = -1，拿到小旗子时，定义reward = 10。比起之前的DQN，这个reward定义更加准确。如果使用这种reward定义方式，可以想象Nature DQN会花很久的时间学习，因为记忆库中只有很少很少的+10 的reward可以学习，正负样本不一样，而使用Prioritized DQN，就会重视这种少量的，但值得学习的样本。</p>
+<h2 id="二、Prioritized-Experience-Replay"><a href="#二、Prioritized-Experience-Replay" class="headerlink" title="二、Prioritized Experience Replay"></a>二、Prioritized Experience Replay</h2><p><strong>伪代码</strong></p>
+<p><img src="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/2.png" alt></p>
+<p>在该算法中，我们batch抽样时，并不是随机抽样，而是按照Memory中的样本的优先级来抽，这样能更有效的找到我们需要学习的样本。</p>
+<p><strong>SumTree</strong></p>
+<p>由于使用贪婪法来选取优先经验的时间复杂度太高，同时还有其他问题，所以我们用$P(i) = \frac{p_i^\alpha}{\sum_k p_k^\alpha}$来定义某个片段的选取概率，其中我们采用比例优先的方式来计算$p_i$，即$p_i = |\delta_i| + \epsilon$，$\delta_i$为TD-Error，$\epsilon$为一个很小的正数，为了避免TD-Error为0的特殊边缘例子也能被采样到，并用SumTree这种数据结构来表示每个存储的片段。</p>
+<p>SumTree是一种二叉树类型的数据结构，所有叶子节点存储优先级$p_i$，所有父节点为子节点之和，所以这棵树的根节点为所有叶子节点的和，如下图所示：</p>
+<p><img src="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/3.png" alt></p>
+<p>抽样时，我们会将$p_i$的总和除以batch_size，分成batch_size个区间，如上图例子所示，一共有<code>3、10、12、4、1、2、8、2</code>等八个优先级节点$p_i$，如果设置batch_size为6，则会分成6个区间，每个区间为：<code>[0-7],[7-14],[14-21],[21-28],[28-35],[35-41]</code>，在分别在这6个区间中均匀的随机选取一个数，从根节点依次往下搜索。</p>
+<p>如果在第4个区间[21-28]抽取到了24，则将24与根节点的左节点进行比较，因为24 &lt; 29，所以继续向左搜索，将24与29的左节点比较，发现24 &gt; 13，则继续向右搜索，同时 24 - 13 = 11。将11与16的左节点比较，11 &lt; 12，因为12已经是叶子节点，则搜索完毕，选择12这个优先级。</p>
+<p>图中叶子节点下面的括号中的区间表示该优先级可以被搜索到的范围，由此可见优先级大的被搜索到的概率就高，同时优先级小的，也有一定的概率被选中。</p>
+<h2 id="三、代码部分"><a href="#三、代码部分" class="headerlink" title="三、代码部分"></a>三、代码部分</h2><blockquote>
+<p>没有按照文中，与Double DQN结合，而是与Nature DQN相结合</p>
+<p>若想要看全部代码，直接查看<a href="https://github.com/ldgcug/DeepReinforcementLearning-Tensorflow/tree/master/Prioritized" target="_blank" rel="noopener">所有代码</a></p>
+</blockquote>
+<h3 id="3-1-代码组成"><a href="#3-1-代码组成" class="headerlink" title="3.1 代码组成"></a>3.1 代码组成</h3><blockquote>
+<p>代码由两部分组成，分别为<strong>prioritized.py</strong> 和<strong>run_MountainCar.py</strong></p>
+<p>（1）prioritized.py</p>
+<p>​        这个代码中主要包含三个类：SumTree、Memory(prioritized)、DQNPrioritizedReplay</p>
+<p>后面又重新添加了Double DQN的prioritized.py，这里将不对这个进行说明，毕竟代码改动很少</p>
+</blockquote>
+<h3 id="3-2-网络-prioritized-py"><a href="#3-2-网络-prioritized-py" class="headerlink" title="3.2 网络-prioritized.py"></a>3.2 网络-prioritized.py</h3><h4 id="3-2-1-SumTree有效抽样"><a href="#3-2-1-SumTree有效抽样" class="headerlink" title="3.2.1  SumTree有效抽样"></a>3.2.1  SumTree有效抽样</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SumTree</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,capacity)</span>:</span></span><br><span class="line">		self.capacity = capacity <span class="comment"># SumTree能存储的最多优先级个数，如之前的SumTree图，则值为8</span></span><br><span class="line">		self.tree = np.zeros(<span class="number">2</span> * capacity - <span class="number">1</span>) <span class="comment"># 顺序表存储二叉树，其个数为 2 * capacity -1</span></span><br><span class="line">		self.data = np.zeros(capacity,dtype=object) <span class="comment"># 每个优先级对应的经验片段，dtype必须要添加</span></span><br><span class="line"></span><br><span class="line">		self.size = <span class="number">0</span></span><br><span class="line">		self.curr_point = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 当有新的sample时，添加进tree 和data</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(self,data)</span>:</span></span><br><span class="line">		self.data[self.curr_point] = data <span class="comment">#存储的为(s,a,r,s_,done)</span></span><br><span class="line">        </span><br><span class="line">		self.update(self.curr_point,max(self.tree[self.capacity<span class="number">-1</span>:self.capacity+self.size]) + <span class="number">1</span>)<span class="comment">#添加数据时，默认优先级为当前的最大优先级+1</span></span><br><span class="line"></span><br><span class="line">		self.curr_point += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> self.curr_point &gt;= self.capacity:</span><br><span class="line">			self.curr_point = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> self.size &lt; self.capacity:</span><br><span class="line">			self.size += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">	<span class="comment"># 当sample被train后，有了新的TD-Error，就在tree中更新</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self,point,weight)</span>:</span></span><br><span class="line">		tree_idx = point + self.capacity - <span class="number">1</span> <span class="comment">#这样才能得到最下面的叶子节索引</span></span><br><span class="line">		change = weight - self.tree[tree_idx]</span><br><span class="line"></span><br><span class="line">		self.tree[tree_idx] = weight</span><br><span class="line">		parent = (tree_idx - <span class="number">1</span>) // <span class="number">2</span></span><br><span class="line">		<span class="keyword">while</span> parent &gt;= <span class="number">0</span>:  <span class="comment">#这种方法比递归更快</span></span><br><span class="line">			self.tree[parent] += change</span><br><span class="line">			parent = (parent <span class="number">-1</span>) // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">total_p</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.tree[<span class="number">0</span>] <span class="comment">#获取所有的叶子节点之和</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment">#获取最小的优先级，在计算重要性比率中将会使用</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get_min</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> min(self.tree[self.capacity - <span class="number">1</span>: self.capacity + self.size <span class="number">-1</span>])</span><br><span class="line">	<span class="comment">#根据一个权重进行抽样</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">sample</span><span class="params">(self,v)</span>:</span></span><br><span class="line">		idx = <span class="number">0</span></span><br><span class="line">		<span class="keyword">while</span> idx &lt; self.capacity<span class="number">-1</span>:</span><br><span class="line">			l_idx = idx * <span class="number">2</span> +<span class="number">1</span></span><br><span class="line">			r_idx = l_idx +<span class="number">1</span></span><br><span class="line">			<span class="keyword">if</span> self.tree[l_idx] &gt;= v:</span><br><span class="line">				idx = l_idx </span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				idx = r_idx </span><br><span class="line">				v = v - self.tree[l_idx]</span><br><span class="line"></span><br><span class="line">		point = idx - (self.capacity - <span class="number">1</span>) <span class="comment">#计算叶子节点的索引</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> point,self.data[point],self.tree[idx] / self.total_p()</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-2-Memory（Prioritized的存储，DQN不采用）"><a href="#3-2-2-Memory（Prioritized的存储，DQN不采用）" class="headerlink" title="3.2.2 Memory（Prioritized的存储，DQN不采用）"></a>3.2.2 Memory（Prioritized的存储，DQN不采用）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memory</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,batch_size,max_size,beta)</span>:</span></span><br><span class="line">		self.batch_size = batch_size <span class="comment">#mini_batch的大小</span></span><br><span class="line">		<span class="comment">#self.max_size = 2**math.floor(math.log2(max_size))</span></span><br><span class="line">		self.beta = beta</span><br><span class="line">		self.sum_tree = SumTree(max_size)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">store</span><span class="params">(self,s,a,r,s_,done)</span>:</span></span><br><span class="line">		transitions = (s,a,r,s_,done)</span><br><span class="line">		self.sum_tree.add(transitions)</span><br><span class="line">	</span><br><span class="line">    <span class="comment">#采样samples</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get_mini_batches</span><span class="params">(self)</span>:</span></span><br><span class="line">		n_sample = self.batch_size <span class="keyword">if</span> self.sum_tree.size &gt;= self.batch_size <span class="keyword">else</span> self.sum_tree.size  <span class="comment">#采样的个数</span></span><br><span class="line">		total = self.sum_tree.total_p() <span class="comment">#获取所有TD-Error的和</span></span><br><span class="line"></span><br><span class="line">		step = total // n_sample <span class="comment">#生成n_sample个区间</span></span><br><span class="line">		points_transitions_probs = []</span><br><span class="line">		</span><br><span class="line">        <span class="comment">#在每个区间均匀随机的抽取一个数，并去SumTree中采样</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(n_sample):</span><br><span class="line">			v = np.random.uniform(i * step,(i +<span class="number">1</span>) * step <span class="number">-1</span>)</span><br><span class="line">			t = self.sum_tree.sample(v)</span><br><span class="line">			points_transitions_probs.append(t)</span><br><span class="line"></span><br><span class="line">		points,transitions,probs = zip(*points_transitions_probs)</span><br><span class="line"></span><br><span class="line">		<span class="comment">#max_importance_ratio = (n_sample * self.sum_tree.get_min())**-self.beta</span></span><br><span class="line">		mini_prob = self.sum_tree.get_min() / total <span class="comment">#计算最小的p_i</span></span><br><span class="line">		importance_ratio = [pow(probs[i] /mini_prob,-self.beta) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(probs))] <span class="comment">#重要性采样的权重</span></span><br><span class="line">		<span class="comment">#tuple(np.array(e) for e in zip(*transitions))</span></span><br><span class="line">		<span class="keyword">return</span> points,transitions,importance_ratio</span><br><span class="line">	</span><br><span class="line">    <span class="comment">#训练完抽取的samples后，要更新tree中的sample的TD-Error</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self,points,td_error)</span>:</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(len(points)):</span><br><span class="line">			td_error += <span class="number">0.01</span> <span class="comment">#为了防止TD-Error为0，加一个小的数，如果不加，则会发生除0错误</span></span><br><span class="line">			self.sum_tree.update(points[i],td_error[i]) <span class="comment">#更新TD-Error</span></span><br></pre></td></tr></table></figure>
+<p>在伪代码中，重要性采样的权重</p>
+<p>$w_j = \frac{(N <em> P(j))^{-\beta}}{max_i(w_i)} = \frac{(N </em> P(j))^{-\beta}}{max_i((N * P(i))^{-\beta})} = \frac{(P(j))^{-\beta}}{max_i((P(i))^{-\beta})} = (\frac {p_j}{min_iP(i)})^{-\beta}$</p>
+<p>且伪代码中的第十二行赋值实际是$p_j = （|\delta_i| + \epsilon）^\alpha $，如果采用rank-based，则为$rank(i)^{-\alpha}$，我们的代码中$\alpha$设置为了1，因此才会是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">td_error += <span class="number">0.01</span></span><br></pre></td></tr></table></figure>
+<p>去更新TD-Error</p>
+<p>在莫烦的代码中，$\alpha$设置的为0.6，因此更新为这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">batch_update</span><span class="params">(self, tree_idx, abs_errors)</span>:</span></span><br><span class="line">    abs_errors += self.epsilon  <span class="comment"># convert to abs and avoid 0</span></span><br><span class="line">    clipped_errors = np.minimum(abs_errors, self.abs_err_upper)</span><br><span class="line">    ps = np.power(clipped_errors, self.alpha)</span><br><span class="line">    <span class="keyword">for</span> ti, p <span class="keyword">in</span> zip(tree_idx, ps):</span><br><span class="line">        self.tree.update(ti, p)</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-3-DQNPrioritizedReplay训练"><a href="#3-3-3-DQNPrioritizedReplay训练" class="headerlink" title="3.3.3 DQNPrioritizedReplay训练"></a>3.3.3 DQNPrioritizedReplay训练</h4><blockquote>
+<p>只说明添加了Prioritized之后的代码部分</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DQNPrioritizedReplay</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">#计算DQN中的experience数量和大小</span></span><br><span class="line">		self.memory_count = <span class="number">0</span></span><br><span class="line">		self.memory_size = memory_size</span><br><span class="line">        </span><br><span class="line">		self.batch_size = batch_size</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> self.prioritized:</span><br><span class="line">			self.memory = Memory(batch_size,memory_size,<span class="number">0.9</span>)<span class="comment">#Prioritized采用Memory方式</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			self.memory = deque() <span class="comment">#DQN自己定义队列</span></span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_net</span><span class="params">(self)</span>:</span>   </span><br><span class="line">        <span class="keyword">if</span> self.prioritized:</span><br><span class="line">			self.importance_ratio = tf.placeholder(tf.float32,[<span class="literal">None</span>,<span class="number">1</span>],name = <span class="string">'importance_ratio'</span>)<span class="comment">#重要性采样的权重占位符</span></span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">store_transition</span><span class="params">(self,s,a,r,s_,done)</span>:</span></span><br><span class="line">		transition = (s,a,r,s_,done)</span><br><span class="line">		<span class="keyword">if</span> self.prioritized:</span><br><span class="line">			self.memory.store(s,a,r,s_,done)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">if</span> self.memory_count &lt; self.memory_size:</span><br><span class="line">				self.memory.append(transition)</span><br><span class="line">				self.memory_count += <span class="number">1</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				self.memory.popleft()</span><br><span class="line">				self.memory.append(transition)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.prioritized:</span><br><span class="line">			points,mini_batch,importance_ratio = self.memory.get_mini_batches()</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="comment"># sample batch memory from all memory</span></span><br><span class="line">			<span class="keyword">if</span> self.memory_count &gt; self.batch_size:</span><br><span class="line">				mini_batch = random.sample(self.memory,self.batch_size)</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				mini_batch = random.sample(self.memory,self.memory_count)</span><br><span class="line">		</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> self.prioritized:</span><br><span class="line">			_ = self.sess.run(self.train_op,feed_dict=&#123;self.s:states,self.q_target:q_target,self.importance_ratio:np.array([importance_ratio]).T&#125;)</span><br><span class="line">            <span class="comment">#这里要计算TD-Error</span></span><br><span class="line">			td_error = self.sess.run(self.td_error,feed_dict=&#123;self.s:states,self.q_target:q_target,self.importance_ratio:np.array([importance_ratio]).T&#125;)</span><br><span class="line">			loss = self.sess.run(self.loss,feed_dict=&#123;self.s:states,self.q_target:q_target,self.importance_ratio:np.array([importance_ratio]).T&#125;)</span><br><span class="line">            <span class="comment">#计算完后，要更新samples的TD-Error</span></span><br><span class="line">			self.memory.update(points,td_error)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			loss = self.sess.run(self.loss,feed_dict=&#123;self.s:states,self.q_target:q_target&#125;)</span><br><span class="line">			_ = self.sess.run(self.train_op,feed_dict=&#123;self.s:states,self.q_target:q_target&#125;)</span><br></pre></td></tr></table></figure>
+<p>这里的Prioritized DQN和Nature DQN的experience存储方式不同。</p>
+<p>但突然想到了一个问题：</p>
+<p>Nature DQN是在Memory里面有很多个数据，从里面去均匀随机抽取</p>
+<p>而Prioritized DQN好像只存储了mini-batch个数据，并且对这些数据进行替换更新，但是在更新过程中，会不会存在将重要的数据给替换掉了呢？如这重要数据就是正面奖励的数据，而用负面奖励数据去替换掉了？</p>
+<h2 id="四、结果显示"><a href="#四、结果显示" class="headerlink" title="四、结果显示"></a>四、结果显示</h2><blockquote>
+<p>在训练的时候，将env.render()注释掉，首先训练过程会很快</p>
+<p>其次是没有注释时，小车好像很难到达旗子那里去，不知道env.render()的影响为什么这么大</p>
+<p>下面的图片结果都是在注释掉的情况下训练产生的，没有注释时，时间太长，且一直找不到旗子</p>
+<p>注释下，几分钟就可以完成训练（CPU）</p>
+<p>而没注释，20分钟了可能5个episode都没有完成</p>
+</blockquote>
+<p><strong>（1）DQN下的训练</strong></p>
+<p>某一次训练</p>
+<p><img src="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/4.png" alt></p>
+<p>另一次训练结果</p>
+<p><img src="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/5.png" alt></p>
+<p><strong>（2）Double DQN下的训练</strong></p>
+<p>没有加seed</p>
+<p>某一次训练</p>
+<p><img src="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/6.png" alt></p>
+<p>某一次训练</p>
+<p><img src="/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/7.png" alt></p>
+<p>但是在输出中，步数是不止这么一点的，还不太清楚是为什么没有达到6w步（显示），但是能看出Prioritized 在找到一次正面奖励之后，还是比DQN要训练的快的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#======================== Double  DQN ======================================</span></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">26000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">0</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">36000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">1</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">39000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">2</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">41000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">3</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">42000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">4</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">44000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">5</span>, <span class="string">'finished'</span>) </span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">45000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">6</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">48000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">7</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">53000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">8</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">54000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">9</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">55000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">56000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">10</span>, <span class="string">'finished'</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">11</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">57000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">58000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">12</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">13</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">59000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">60000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">14</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">61000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">15</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">16</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">62000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">17</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">63000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">18</span>, <span class="string">'finished'</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">19</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ==============================Double DQN withPrioritized ======================</span></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">0</span>, <span class="string">'finished'</span>)</span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">33000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">37000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">1</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">38000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">2</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">39000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">3</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">4</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">44000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">5</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">45000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">6</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">46000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">7</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">47000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">8</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">48000</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">9</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line"> target_params_replaces </span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">49000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">10</span>, <span class="string">'finished'</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">11</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">50000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">12</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">13</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">51000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">14</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">15</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">52000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">16</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">17</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'current steps:'</span>, <span class="number">53000</span>)</span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">18</span>, <span class="string">'finished'</span>)</span><br><span class="line"></span><br><span class="line">(<span class="string">'episode:'</span>, <span class="number">19</span>, <span class="string">'finished'</span>)</span><br></pre></td></tr></table></figure>
+<p>从图中可以看出，我们都从两种方法最初拿到第一个<code>R += 10</code>奖励的时候算起，看看经历过一次<code>R += 10</code>后，他们有没有好好利用这次的奖励，可以看出，有Prioritized replay的可以高效利用这些不常拿到的奖励，并好好学习他们。所以 Prioritized replay会更快结束每个episode，很快就到达了小旗子。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>对代码中seed函数不是太能理解，反正是对随机数产生变化的函数</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-6-prioritized-replay/" target="_blank" rel="noopener">莫烦解析</a></li>
+<li><p><a href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/5.2_Prioritized_Replay_DQN/RL_brain.py" target="_blank" rel="noopener">莫烦代码</a></p>
+</li>
+<li><p><a href="https://bluefisher.github.io/2018/06/02/Prioritized-Experience-Replay-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">Fisher’s 博客</a></p>
+</li>
+<li><a href="https://github.com/BlueFisher/Reinforcement-Learning/tree/master/Deep_Q_Network/Prioritized_DQN" target="_blank" rel="noopener">Fisher’s代码</a></li>
+<li><a href="https://www.cnblogs.com/pinard/p/9797695.html" target="_blank" rel="noopener">刘建平博客</a></li>
+<li><a href="https://github.com/ljpzzz/machinelearning/blob/master/reinforcement-learning/ddqn_prioritised_replay.py" target="_blank" rel="noopener">刘建平代码</a></li>
+<li><a href="https://stepneverstop.github.io/Prioritized-Experience-Replay.html" target="_blank" rel="noopener">论文解析</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DRL/" rel="tag"># DRL</a>
+          
+            <a href="/tags/OpenAI-gym/" rel="tag"># OpenAI gym</a>
+          
+            <a href="/tags/Prioritized-Experience-Replay/" rel="tag"># Prioritized Experience Replay</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/" rel="next" title="代码实现（二）之Double DQN">
+                <i class="fa fa-chevron-left"></i> 代码实现（二）之Double DQN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/" rel="prev" title="代码实现（四）之 Dueling DQN">
+                代码实现（四）之 Dueling DQN <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、实验环境"><span class="nav-text">一、实验环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Prioritized-Experience-Replay"><span class="nav-text">二、Prioritized Experience Replay</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、代码部分"><span class="nav-text">三、代码部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-代码组成"><span class="nav-text">3.1 代码组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-网络-prioritized-py"><span class="nav-text">3.2 网络-prioritized.py</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-SumTree有效抽样"><span class="nav-text">3.2.1  SumTree有效抽样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-Memory（Prioritized的存储，DQN不采用）"><span class="nav-text">3.2.2 Memory（Prioritized的存储，DQN不采用）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-DQNPrioritizedReplay训练"><span class="nav-text">3.3.3 DQNPrioritizedReplay训练</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、结果显示"><span class="nav-text">四、结果显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '代码实现（三）之Prioritized Experience Replay'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '代码实现（三）之Prioritized Experience Replay'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

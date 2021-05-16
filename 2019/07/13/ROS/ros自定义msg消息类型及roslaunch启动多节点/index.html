@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ROS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言 有时候需要自己定制一些特定的msg消息类型，而原有的就不一定能满足，这时候就需要自己进行一些相关的设置了 对于自定义的ros节点，也能通过roslaunch启动节点（py程序）  rosmsg相关设置默认msg消息类型 官网  如geometry_msgs：msg API  一、创建工作空间 我这里采用的编译方式是catkin build，而不是catkin_make，是因为一些需要，如ma">
+<meta name="keywords" content="ROS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ros自定义msg消息类型及roslaunch启动多节点">
+<meta property="og:url" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 有时候需要自己定制一些特定的msg消息类型，而原有的就不一定能满足，这时候就需要自己进行一些相关的设置了 对于自定义的ros节点，也能通过roslaunch启动节点（py程序）  rosmsg相关设置默认msg消息类型 官网  如geometry_msgs：msg API  一、创建工作空间 我这里采用的编译方式是catkin build，而不是catkin_make，是因为一些需要，如ma">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/8.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/9.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/10.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/11.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/12.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/14.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/13.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/15.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/16.png">
+<meta property="og:updated_time" content="2019-07-14T03:52:34.715Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ros自定义msg消息类型及roslaunch启动多节点">
+<meta name="twitter:description" content="前言 有时候需要自己定制一些特定的msg消息类型，而原有的就不一定能满足，这时候就需要自己进行一些相关的设置了 对于自定义的ros节点，也能通过roslaunch启动节点（py程序）  rosmsg相关设置默认msg消息类型 官网  如geometry_msgs：msg API  一、创建工作空间 我这里采用的编译方式是catkin build，而不是catkin_make，是因为一些需要，如ma">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/">
+
+
+
+
+
+  <title>ros自定义msg消息类型及roslaunch启动多节点 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ldg">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ros自定义msg消息类型及roslaunch启动多节点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-13T20:15:35+08:00">
+                2019-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/" class="leancloud_visitors" data-flag-title="ros自定义msg消息类型及roslaunch启动多节点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>有时候需要自己定制一些特定的msg消息类型，而原有的就不一定能满足，这时候就需要自己进行一些相关的设置了</p>
+<p>对于自定义的ros节点，也能通过roslaunch启动节点（py程序）</p>
+</blockquote>
+<h1 id="rosmsg相关设置"><a href="#rosmsg相关设置" class="headerlink" title="rosmsg相关设置"></a>rosmsg相关设置</h1><h2 id="默认msg消息类型"><a href="#默认msg消息类型" class="headerlink" title="默认msg消息类型"></a>默认msg消息类型</h2><blockquote>
+<p><a href="http://www.ros.org/browse/search.php?distro=melodic&amp;q=msg" target="_blank" rel="noopener">官网</a></p>
+</blockquote>
+<p>如geometry_msgs：<a href="http://docs.ros.org/diamondback/api/geometry_msgs/html/index-msg.html" target="_blank" rel="noopener">msg API</a></p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/1.png" alt></p>
+<h2 id="一、创建工作空间"><a href="#一、创建工作空间" class="headerlink" title="一、创建工作空间"></a>一、创建工作空间</h2><blockquote>
+<p>我这里采用的编译方式是catkin build，而不是catkin_make，是因为一些需要，如mavros和mavlink的编译方式为catkin build，如果不需要下载这两个包，则采用哪一种编译方式都不影响</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p catkin_ws/src</span><br><span class="line">cd catkin_ws</span><br><span class="line">catkin build</span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<p>下图是我已经全部创建好后的所有ros包，也正是有mavlink和mavros，所有才采用catkin build编译</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/2.png" alt></p>
+<h2 id="二、在工作空间创建新的ros消息包"><a href="#二、在工作空间创建新的ros消息包" class="headerlink" title="二、在工作空间创建新的ros消息包"></a>二、在工作空间创建新的ros消息包</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg ldg_msgs rospy std_msgs roscpp</span><br><span class="line">cd ldg_msgs</span><br><span class="line">mkdir msg</span><br><span class="line">cd msg</span><br><span class="line">touch Velocity.msg</span><br></pre></td></tr></table></figure>
+<p>然后打开Velocity.msg</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit Velocity.msg</span><br></pre></td></tr></table></figure>
+<p>将如下代码复制粘贴进去</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">float32 vx</span><br><span class="line">float32 vy</span><br><span class="line">float32 vz</span><br><span class="line">int32   t</span><br></pre></td></tr></table></figure>
+<p>文件结构如下图</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/3.png" alt></p>
+<h2 id="三、修改package-xml"><a href="#三、修改package-xml" class="headerlink" title="三、修改package.xml"></a>三、修改package.xml</h2><blockquote>
+<p>因为需要message_generation生成C++或Python能使用的代码，所以向package.xml文件中添加如下两行：</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</span><br><span class="line">&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</span><br></pre></td></tr></table></figure>
+<p>在如下位置进行添加</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/4.png" alt></p>
+<h2 id="四、修改CMakeLists-txt"><a href="#四、修改CMakeLists-txt" class="headerlink" title="四、修改CMakeLists.txt"></a>四、修改CMakeLists.txt</h2><blockquote>
+<p>CMakeLists.txt中有四个地方需要修改：</p>
+</blockquote>
+<h3 id="4-1-添加message-generation"><a href="#4-1-添加message-generation" class="headerlink" title="4.1 添加message_generation"></a>4.1 添加message_generation</h3><blockquote>
+<p>向find_package()中添加message_generation</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">find_package(catkin REQUIRED COMPONENTS</span><br><span class="line">  roscpp</span><br><span class="line">  rospy</span><br><span class="line">  std_msgs</span><br><span class="line">  message_generation</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>在如下位置进行修改为上面的代码</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/5.png" alt></p>
+<h3 id="4-2-添加Velocity-msg"><a href="#4-2-添加Velocity-msg" class="headerlink" title="4.2 添加Velocity.msg"></a>4.2 添加Velocity.msg</h3><blockquote>
+<p>向add_message_files()中添加Velocity.msg</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add_message_files(</span><br><span class="line">  FILES</span><br><span class="line">  Velocity.msg</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>在如下位置进行修改为上面的代码</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/6.png" alt></p>
+<h3 id="4-3-去掉generate-message（）注释"><a href="#4-3-去掉generate-message（）注释" class="headerlink" title="4.3 去掉generate_message（）注释"></a>4.3 去掉generate_message（）注释</h3><p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/7.png" alt></p>
+<h3 id="4-4-添加message-runtime"><a href="#4-4-添加message-runtime" class="headerlink" title="4.4 添加message_runtime"></a>4.4 添加message_runtime</h3><blockquote>
+<p>向catkin_package()添加message_runtime</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">catkin_package(</span><br><span class="line">   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>在如下位置进行修改为上面的代码</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/8.png" alt></p>
+<h2 id="五、编译"><a href="#五、编译" class="headerlink" title="五、编译"></a>五、编译</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin build</span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<h2 id="六、测试"><a href="#六、测试" class="headerlink" title="六、测试"></a>六、测试</h2><ul>
+<li><p>首先，要启动roscore</p>
+</li>
+<li><p>然后，在另一个新终端，执行如下命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws</span><br><span class="line">source devel/setup.bash</span><br><span class="line">rosmsg show ldg_msgs/Velocity</span><br></pre></td></tr></table></figure>
+<p>出现如下信息，则说明配置成功</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/9.png" alt></p>
+</li>
+<li><p>python代码测试</p>
+<blockquote>
+<p>创建test.py程序，拷贝如下代码，不报错即可</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*-coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> ldg_msgs.msg <span class="keyword">import</span> Velocity</span><br><span class="line"></span><br><span class="line">msg = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">receiveVel</span><span class="params">(data)</span>:</span></span><br><span class="line">	<span class="comment">#vel = Velocity()</span></span><br><span class="line">	msg = data</span><br><span class="line">	print(<span class="string">'data'</span>,data)</span><br><span class="line"></span><br><span class="line">test = rospy.Subscriber(<span class="string">"/test"</span>,Velocity,receiveVel)</span><br><span class="line"></span><br><span class="line">rospy.init_node(<span class="string">'test'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line">	print(<span class="string">'msg'</span>,msg)</span><br><span class="line">	time.sleep(<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="七、添加多个自定义msg消息类型"><a href="#七、添加多个自定义msg消息类型" class="headerlink" title="七、添加多个自定义msg消息类型"></a>七、添加多个自定义msg消息类型</h2><h3 id="7-1-创建多个msg文件"><a href="#7-1-创建多个msg文件" class="headerlink" title="7.1 创建多个msg文件"></a>7.1 创建多个msg文件</h3><blockquote>
+<p><code>ldg_msgs</code>文件夹下中添加<code>VelocityZ.msg</code>、<code>Imu.msg</code>、<code>Position.msg</code>等文件</p>
+</blockquote>
+<p><code>ldg_msgs/msg</code>文件目录结构</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/10.png" alt></p>
+<p>msg消息类型</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/11.png" alt></p>
+<h3 id="7-2-CMakeLists-txt添加msg"><a href="#7-2-CMakeLists-txt添加msg" class="headerlink" title="7.2 CMakeLists.txt添加msg"></a>7.2 CMakeLists.txt添加msg</h3><p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/12.png" alt></p>
+<h3 id="7-3-编译"><a href="#7-3-编译" class="headerlink" title="7.3 编译"></a>7.3 编译</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin build</span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>已经定义过msg消息类型后，在此基础之上，只需要照着第七步就可以完成后面的多个msg消息类型的定制化了，同样的，也能参照第六步进行相关测试</p>
+</blockquote>
+<h1 id="roslaunch相关设置"><a href="#roslaunch相关设置" class="headerlink" title="roslaunch相关设置"></a>roslaunch相关设置</h1><blockquote>
+<p>已经通过多个py程序定义了多个ros节点</p>
+</blockquote>
+<h2 id="一、文件结构"><a href="#一、文件结构" class="headerlink" title="一、文件结构"></a>一、文件结构</h2><ul>
+<li>工作空间名：catkin_ws</li>
+<li>编译方式：catkin build</li>
+<li>自定义msg包名：ldg_msgs</li>
+<li>ros控制程序包名：ros_controller</li>
+<li>roslaunch启动文件：ros_airsim.launch</li>
+<li>ros节点对应驱动py：*_driver.py</li>
+<li>ros控制程序py：ros_controller.py</li>
+</ul>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/14.png" alt></p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/13.png" alt></p>
+<h2 id="二、roslaunch文件编写"><a href="#二、roslaunch文件编写" class="headerlink" title="二、roslaunch文件编写"></a>二、roslaunch文件编写</h2><blockquote>
+<p>在catkin_ws/src文件夹下创建一个和include、src同级的launch文件夹，并在launch文件夹下创建<code>.luanch</code>文件，<code>.launch</code>文件内容如下</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line"></span><br><span class="line">	&lt;group ns = <span class="string">"Drone1"</span>&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">"ros_controller"</span> name=<span class="string">"drone1_takeoff_driver"</span> type=<span class="string">"drone1_takeoff_driver.py"</span> /&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">"ros_controller"</span> name=<span class="string">"drone1_camera_driver"</span> type=<span class="string">"drone1_camera_driver.py"</span> /&gt;</span><br><span class="line">	&lt;/group&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&lt;group ns = <span class="string">"Drone2"</span>&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">"ros_controller"</span> name=<span class="string">"drone2_takeoff_driver"</span> type=<span class="string">"drone2_takeoff_driver.py"</span> /&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">"ros_controller"</span> name=<span class="string">"drone2_camera_driver"</span> type=<span class="string">"drone2_camera_driver.py"</span> output = <span class="string">"screen"</span> /&gt;</span><br><span class="line">	&lt;/group&gt;</span><br><span class="line"></span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>pkg是ros的程序包名，name是对节点重新进行命名，type是对应相应节点的py程序</p>
+</blockquote>
+<h2 id="三、roslaunch启动多节点"><a href="#三、roslaunch启动多节点" class="headerlink" title="三、roslaunch启动多节点"></a>三、roslaunch启动多节点</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd catkin_ws</span><br><span class="line">source devel/setup.bash</span><br><span class="line">roslaunch ros_controller ros_airsim.launch</span><br></pre></td></tr></table></figure>
+<p>启动launch文件后，终端输出信息如下：</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/15.png" alt></p>
+<p>利用rostopic list查看信息，这里自定义的节点订阅和发布的topic就都显示出来了</p>
+<p><img src="/2019/07/13/ROS/ros自定义msg消息类型及roslaunch启动多节点/16.png" alt></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ul>
+<li>rosmsg相关设置：<a href="https://blog.csdn.net/NiYintang/article/details/86043621" target="_blank" rel="noopener">rosmsg</a></li>
+<li>roslaunch相关设置：<a href="https://blog.csdn.net/Forrest_Z/article/details/52618833" target="_blank" rel="noopener">roslaunch</a></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><blockquote>
+<p>因为控制代码使用python语言写的，因此在利用roslaunch启动ros的多个节点时，并不需要在CMakeLists.list和package.xml里面进行相关的配置，但是自定义msg消息类型则是需要进行配置的，至此，就能全部通过ros来控制了，最开始我通过shell命令来启动多个python文件从而来启动多个节点，这种方式不如roslaunch好</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ROS/" rel="tag"># ROS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/Airsim/初识Airsim（四）之QGC、SITL、户外UE4场景配置/" rel="next" title="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
+                <i class="fa fa-chevron-left"></i> 初识Airsim（四）之QGC、SITL、户外UE4场景配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/17/论文/深度强化学习/DRL论文阅读（一）之DQN方法/" rel="prev" title="DRL论文阅读（一）之DQN方法">
+                DRL论文阅读（一）之DQN方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="ldg">
+            
+              <p class="site-author-name" itemprop="name">ldg</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rosmsg相关设置"><span class="nav-text">rosmsg相关设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#默认msg消息类型"><span class="nav-text">默认msg消息类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、创建工作空间"><span class="nav-text">一、创建工作空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、在工作空间创建新的ros消息包"><span class="nav-text">二、在工作空间创建新的ros消息包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、修改package-xml"><span class="nav-text">三、修改package.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、修改CMakeLists-txt"><span class="nav-text">四、修改CMakeLists.txt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-添加message-generation"><span class="nav-text">4.1 添加message_generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-添加Velocity-msg"><span class="nav-text">4.2 添加Velocity.msg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-去掉generate-message（）注释"><span class="nav-text">4.3 去掉generate_message（）注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-添加message-runtime"><span class="nav-text">4.4 添加message_runtime</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、编译"><span class="nav-text">五、编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、测试"><span class="nav-text">六、测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、添加多个自定义msg消息类型"><span class="nav-text">七、添加多个自定义msg消息类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-创建多个msg文件"><span class="nav-text">7.1 创建多个msg文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-CMakeLists-txt添加msg"><span class="nav-text">7.2 CMakeLists.txt添加msg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-编译"><span class="nav-text">7.3 编译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#roslaunch相关设置"><span class="nav-text">roslaunch相关设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、文件结构"><span class="nav-text">一、文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、roslaunch文件编写"><span class="nav-text">二、roslaunch文件编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、roslaunch启动多节点"><span class="nav-text">三、roslaunch启动多节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-text">参考文献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'ros自定义msg消息类型及roslaunch启动多节点'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'ros自定义msg消息类型及roslaunch启动多节点'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

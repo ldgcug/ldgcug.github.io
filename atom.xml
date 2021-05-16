@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ldg个人博客</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://ldgcug.xyz/"/>
+  <updated>2021-05-16T11:47:21.132Z</updated>
+  <id>https://ldgcug.xyz/</id>
+  
+  <author>
+    <name>ldg</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树的相关知识</title>
+    <link href="https://ldgcug.xyz/2021/05/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/"/>
+    <id>https://ldgcug.xyz/2021/05/07/数据结构/树的相关知识/</id>
+    <published>2021-05-07T14:17:03.000Z</published>
+    <updated>2021-05-16T11:47:21.132Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;树&quot;&gt;&lt;a href=&quot;#树&quot; class=&quot;headerlink&quot; title=&quot;树&quot;&gt;&lt;/a&gt;树&lt;/h1&gt;&lt;h2 id=&quot;1、为什么需要树？&quot;&gt;&lt;a href=&quot;#1、为什么需要树？&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="数据结构" scheme="https://ldgcug.xyz/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>家常小厨</title>
+    <link href="https://ldgcug.xyz/2021/04/24/%E7%94%9F%E6%B4%BB/%E5%8E%A8%E8%89%BA/%E5%AE%B6%E5%B8%B8%E5%B0%8F%E5%8E%A8/"/>
+    <id>https://ldgcug.xyz/2021/04/24/生活/厨艺/家常小厨/</id>
+    <published>2021-04-24T04:13:31.000Z</published>
+    <updated>2021-04-24T04:23:24.850Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;好的厨艺都是慢慢从家常菜开始练起的……&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;菜品&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="生活" scheme="https://ldgcug.xyz/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="厨艺" scheme="https://ldgcug.xyz/tags/%E5%8E%A8%E8%89%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>uzh无人机竞速实验（二）</title>
+    <link href="https://ldgcug.xyz/2020/06/10/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>https://ldgcug.xyz/2020/06/10/代码/Deep Learning/uzh无人机竞速实验（二）/</id>
+    <published>2020-06-10T01:21:09.000Z</published>
+    <updated>2020-06-12T11:18:48.210Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;在&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="https://ldgcug.xyz/tags/Deep-Learning/"/>
+    
+      <category term="Drone Racing" scheme="https://ldgcug.xyz/tags/Drone-Racing/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>uzh无人机竞速实验</title>
+    <link href="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/"/>
+    <id>https://ldgcug.xyz/2020/06/07/代码/Deep Learning/uzh无人机竞速实验/</id>
+    <published>2020-06-07T09:42:37.000Z</published>
+    <updated>2020-06-09T08:35:59.775Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;基于uzh的论文和其代码做的一些相关的无人机竞速实验&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="https://ldgcug.xyz/tags/Deep-Learning/"/>
+    
+      <category term="Drone Racing" scheme="https://ldgcug.xyz/tags/Drone-Racing/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>请回答1988</title>
+    <link href="https://ldgcug.xyz/2020/06/06/%E5%BD%B1%E8%AF%84/%E7%94%B5%E8%A7%86%E5%89%A7/%E8%AF%B7%E5%9B%9E%E7%AD%941988/"/>
+    <id>https://ldgcug.xyz/2020/06/06/影评/电视剧/请回答1988/</id>
+    <published>2020-06-06T11:20:10.000Z</published>
+    <updated>2020-06-09T10:31:02.627Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="影评" scheme="https://ldgcug.xyz/categories/%E5%BD%B1%E8%AF%84/"/>
+    
+      <category term="电视剧" scheme="https://ldgcug.xyz/categories/%E5%BD%B1%E8%AF%84/%E7%94%B5%E8%A7%86%E5%89%A7/"/>
+    
+    
+      <category term="影评" scheme="https://ldgcug.xyz/tags/%E5%BD%B1%E8%AF%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Airsim（问题及可能的解决方法）</title>
+    <link href="https://ldgcug.xyz/2019/09/04/Airsim/Airsim%EF%BC%88%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%89/"/>
+    <id>https://ldgcug.xyz/2019/09/04/Airsim/Airsim（问题及可能的解决方法）/</id>
+    <published>2019-09-04T06:07:04.000Z</published>
+    <updated>2019-09-05T08:57:10.366Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git使用笔记</title>
+    <link href="https://ldgcug.xyz/2019/08/31/%E9%9A%8F%E7%AC%94/Git%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"/>
+    <id>https://ldgcug.xyz/2019/08/31/随笔/Git使用笔记/</id>
+    <published>2019-08-31T14:45:20.000Z</published>
+    <updated>2019-08-31T15:47:31.944Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="随笔" scheme="https://ldgcug.xyz/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="Git" scheme="https://ldgcug.xyz/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初识Airsim（十）之Lidar数据获取并显示</title>
+    <link href="https://ldgcug.xyz/2019/08/30/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8BLidar%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E5%B9%B6%E6%98%BE%E7%A4%BA/"/>
+    <id>https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/</id>
+    <published>2019-08-30T05:38:55.000Z</published>
+    <updated>2019-08-30T08:39:11.045Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
+    
+      <category term="Lidar" scheme="https://ldgcug.xyz/tags/Lidar/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码实现（七）之DDPG</title>
+    <link href="https://ldgcug.xyz/2019/08/24/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%83%EF%BC%89%E4%B9%8BDDPG/"/>
+    <id>https://ldgcug.xyz/2019/08/24/代码/DRL/代码实现（七）之DDPG/</id>
+    <published>2019-08-24T05:33:03.000Z</published>
+    <updated>2019-08-24T07:40:40.131Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
+    
+      <category term="DDPG" scheme="https://ldgcug.xyz/tags/DDPG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初识Airsim（九）之Pixhawk配置（Ubuntu16下HITL配置）</title>
+    <link href="https://ldgcug.xyz/2019/08/22/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BPixhawk%E9%85%8D%E7%BD%AE%EF%BC%88Ubuntu16%E4%B8%8BHITL%E9%85%8D%E7%BD%AE%EF%BC%89/"/>
+    <id>https://ldgcug.xyz/2019/08/22/Airsim/初识Airsim（九）之Pixhawk配置（Ubuntu16下HITL配置）/</id>
+    <published>2019-08-22T05:31:10.000Z</published>
+    <updated>2019-08-22T06:47:58.396Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在Airsim上做PX4的集成，并简单完成其算法验证&lt;/p&gt;
+&lt;font
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
+    
+      <category term="PX4" scheme="https://ldgcug.xyz/tags/PX4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初识Airsim（八）之Pixhawk配置（HIL）</title>
+    <link href="https://ldgcug.xyz/2019/08/21/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8BPixhawk%E9%85%8D%E7%BD%AE%EF%BC%88HIL%EF%BC%89/"/>
+    <id>https://ldgcug.xyz/2019/08/21/Airsim/初识Airsim（八）之Pixhawk配置（HIL）/</id>
+    <published>2019-08-21T09:20:29.000Z</published>
+    <updated>2019-08-22T06:42:07.526Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在Airsim上做PX4的集成，并简单完成其算法验证&lt;/p&gt;
+&lt;font
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
+    
+      <category term="PX4" scheme="https://ldgcug.xyz/tags/PX4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初识Airsim（七）之强化学习训练测试</title>
+    <link href="https://ldgcug.xyz/2019/08/20/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%83%EF%BC%89%E4%B9%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/"/>
+    <id>https://ldgcug.xyz/2019/08/20/Airsim/初识Airsim（七）之强化学习训练测试/</id>
+    <published>2019-08-20T05:15:44.000Z</published>
+    <updated>2019-08-20T07:13:42.425Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Airsim的官方github上面其实提供了一些强化学习的训练demo，如drone的&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
+    
+      <category term="ubuntu" scheme="https://ldgcug.xyz/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初始Airsim（六）之多机控制</title>
+    <link href="https://ldgcug.xyz/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/"/>
+    <id>https://ldgcug.xyz/2019/08/19/Airsim/初始Airsim（六）之多机控制/</id>
+    <published>2019-08-19T02:37:57.000Z</published>
+    <updated>2019-08-20T05:13:37.183Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
+    
+      <category term="ubuntu" scheme="https://ldgcug.xyz/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码实现（六）之Actor-Critic</title>
+    <link href="https://ldgcug.xyz/2019/08/15/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BActor-Critic/"/>
+    <id>https://ldgcug.xyz/2019/08/15/代码/DRL/代码实现（六）之Actor-Critic/</id>
+    <published>2019-08-15T15:48:19.000Z</published>
+    <updated>2019-08-17T09:09:55.122Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;针对前面PG算法的高方差问题，本篇博客将基于AC算法进行实现。其理论部分请点击&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
+    
+      <category term="Actor-Critic" scheme="https://ldgcug.xyz/tags/Actor-Critic/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初始Airsim（五）之PX4、Mavros控制</title>
+    <link href="https://ldgcug.xyz/2019/08/13/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPX4%E3%80%81Mavros%E6%8E%A7%E5%88%B6/"/>
+    <id>https://ldgcug.xyz/2019/08/13/Airsim/初始Airsim（五）之PX4、Mavros控制/</id>
+    <published>2019-08-13T02:41:32.000Z</published>
+    <updated>2019-08-16T09:58:16.496Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
+    
+    
+      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
+    
+      <category term="ubuntu" scheme="https://ldgcug.xyz/tags/ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码实现（五）之Policy Gradient</title>
+    <link href="https://ldgcug.xyz/2019/08/12/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient/"/>
+    <id>https://ldgcug.xyz/2019/08/12/代码/DRL/代码实现（五）之Policy-Gradient/</id>
+    <published>2019-08-12T12:19:02.000Z</published>
+    <updated>2019-08-17T09:09:41.939Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Policy
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
+    
+      <category term="Policy Gradient" scheme="https://ldgcug.xyz/tags/Policy-Gradient/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ardrone强化学习训练环境搭建</title>
+    <link href="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>https://ldgcug.xyz/2019/08/11/ROS/ardrone强化学习训练环境搭建/</id>
+    <published>2019-08-10T16:14:09.000Z</published>
+    <updated>2019-08-27T03:25:40.202Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;本篇主要是针对&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="ROS" scheme="https://ldgcug.xyz/categories/ROS/"/>
+    
+    
+      <category term="ROS" scheme="https://ldgcug.xyz/tags/ROS/"/>
+    
+      <category term="Gazebo" scheme="https://ldgcug.xyz/tags/Gazebo/"/>
+    
+      <category term="ardrone" scheme="https://ldgcug.xyz/tags/ardrone/"/>
+    
+      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码实现（四）之 Dueling DQN</title>
+    <link href="https://ldgcug.xyz/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/"/>
+    <id>https://ldgcug.xyz/2019/08/10/代码/DRL/代码实现（四）之-Dueling-DQN/</id>
+    <published>2019-08-10T15:14:28.000Z</published>
+    <updated>2019-08-17T09:09:28.670Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Dueling  DQN 相比较于之前的Double DQN（目标Q值方面的优化）、Prioritized
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
+    
+      <category term="Dueling DQN" scheme="https://ldgcug.xyz/tags/Dueling-DQN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码实现（三）之Prioritized Experience Replay</title>
+    <link href="https://ldgcug.xyz/2019/08/09/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BPrioritized-Experience-Replay/"/>
+    <id>https://ldgcug.xyz/2019/08/09/代码/DRL/代码实现（三）之Prioritized-Experience-Replay/</id>
+    <published>2019-08-09T14:56:37.000Z</published>
+    <updated>2019-08-17T09:09:16.419Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;理论部分，点击&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
+    
+      <category term="Prioritized Experience Replay" scheme="https://ldgcug.xyz/tags/Prioritized-Experience-Replay/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码实现（二）之Double DQN</title>
+    <link href="https://ldgcug.xyz/2019/08/08/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BDouble-DQN/"/>
+    <id>https://ldgcug.xyz/2019/08/08/代码/DRL/代码实现（二）之Double-DQN/</id>
+    <published>2019-08-08T14:47:12.000Z</published>
+    <updated>2019-08-11T03:49:10.244Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;理论部分，这里将不再强调，直接强调重点部分（理论部分请点击&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
+    
+      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
+    
+      <category term="Double DQN" scheme="https://ldgcug.xyz/tags/Double-DQN/"/>
+    
+  </entry>
+  
+</feed>
