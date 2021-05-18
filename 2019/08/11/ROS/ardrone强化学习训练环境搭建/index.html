@@ -1,37 +1,1963 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ROS,Gazebo,ardrone,DRL," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言 本篇主要是针对DRL论文阅读（一）中的论文题目来实现，其主要实现了第一部分标记检测，目前是只实现了单纹理下的训练。 其论文题目：Autonomous Quadrotor Landing using Deep Reinforcement Learning  一、基础环境搭建1.1 版本说明 Ubuntu16.04 ROS Kinetic Gazebo8.6  1.2 Gazebo8.6安装12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ardrone强化学习训练环境搭建">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 本篇主要是针对DRL论文阅读（一）中的论文题目来实现，其主要实现了第一部分标记检测，目前是只实现了单纹理下的训练。 其论文题目：Autonomous Quadrotor Landing using Deep Reinforcement Learning  一、基础环境搭建1.1 版本说明 Ubuntu16.04 ROS Kinetic Gazebo8.6  1.2 Gazebo8.6安装12">
+<meta property="og:locale">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/3.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/4.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/5.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/8.png">
+<meta property="article:published_time" content="2019-08-10T16:14:09.000Z">
+<meta property="article:modified_time" content="2019-08-27T03:25:40.202Z">
+<meta property="article:author" content="ldg">
+<meta property="article:tag" content="ROS">
+<meta property="article:tag" content="Gazebo">
+<meta property="article:tag" content="ardrone">
+<meta property="article:tag" content="DRL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/11/ROS/ardrone强化学习训练环境搭建/"/>
+
+
+
+
+
+  <title>ardrone强化学习训练环境搭建 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page,false) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ardrone强化学习训练环境搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-11T00:14:09+08:00">
+                2019-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="leancloud_visitors" data-flag-title="ardrone强化学习训练环境搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>本篇主要是针对<a target="_blank" rel="noopener" href="https://ldgyyf.cn/2019/07/17/%E8%AE%BA%E6%96%87/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/DRL%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BDQN%E6%96%B9%E6%B3%95/">DRL论文阅读（一）</a>中的论文题目来实现，其主要实现了第一部分标记检测，目前是只实现了单纹理下的训练。</p>
+<p>其论文题目：<strong>Autonomous Quadrotor Landing using Deep Reinforcement Learning</strong></p>
+</blockquote>
+<h2 id="一、基础环境搭建"><a href="#一、基础环境搭建" class="headerlink" title="一、基础环境搭建"></a>一、基础环境搭建</h2><h3 id="1-1-版本说明"><a href="#1-1-版本说明" class="headerlink" title="1.1 版本说明"></a>1.1 版本说明</h3><ul>
+<li><strong>Ubuntu16.04</strong></li>
+<li><strong>ROS Kinetic</strong></li>
+<li><strong>Gazebo8.6</strong></li>
+</ul>
+<h3 id="1-2-Gazebo8-6安装"><a href="#1-2-Gazebo8-6安装" class="headerlink" title="1.2 Gazebo8.6安装"></a>1.2 Gazebo8.6安装</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">&#x27;echo &quot;deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main&quot; &gt; /etc/apt/sources.list.d/gazebo-stable.list&#x27;</span></span><br><span class="line">wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install gazebo8</span><br><span class="line">sudo apt-get install libgazebo8-dev</span><br></pre></td></tr></table></figure>
+<p>安装好后，在终端输入<strong>gazebo8</strong>，出现如下界面，则安装成功</p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1.png" alt></p>
+<h3 id="1-3-ros-kinetic安装（不安装full版）"><a href="#1-3-ros-kinetic安装（不安装full版）" class="headerlink" title="1.3 ros kinetic安装（不安装full版）"></a>1.3 ros kinetic安装（不安装full版）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">&#x27;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#x27;</span></span><br><span class="line">sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:<span class="number">80</span> --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ros-kinetic-desktop</span><br><span class="line">sudo rosdep init</span><br><span class="line">rosdep update</span><br><span class="line">echo <span class="string">&quot;source /opt/ros/kinetic/setup.bash&quot;</span> &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br><span class="line">sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential</span><br></pre></td></tr></table></figure>
+<p>安装完后，终端输入<strong>roscore</strong>，输出的最后一行出现started core service [/roscore]，则ros安装成功</p>
+<h3 id="1-4-安装必要ros包"><a href="#1-4-安装必要ros包" class="headerlink" title="1.4 安装必要ros包"></a>1.4 安装必要ros包</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-kinetic-gazebo8-msgs</span><br><span class="line">sudo apt-get install ros-kinetic-gazebo8-ros-control</span><br><span class="line">sudo apt-get install ros-kinetic-gazebo8-plugins</span><br><span class="line">sudo apt-get install ros-kinetic-gazebo8-ros-pkgs</span><br><span class="line">sudo apt-get install ros-kinetic-gazebo8-ros</span><br><span class="line">sudo apt-get install ros-kinetic-image-view</span><br></pre></td></tr></table></figure>
+<h3 id="1-5-已经安装默认的ros-kinetic？"><a href="#1-5-已经安装默认的ros-kinetic？" class="headerlink" title="1.5 已经安装默认的ros-kinetic？"></a>1.5 已经安装默认的ros-kinetic？</h3><blockquote>
+<p>如果机器已经默认安装了ros-kinetic-desktop-full，则会默认安装gazebo7版本。此时，需要先卸载gazebo7然后重新安装gazebo8</p>
+</blockquote>
+<p><strong>卸载ros-kinetic-desktop-full</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove ros-kinetic-desktop-full</span><br></pre></td></tr></table></figure>
+<p><strong>卸载gazebo7</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove gazebo* </span><br></pre></td></tr></table></figure>
+<p>然后重新按照<strong>1.2节</strong>和<strong>1.3节</strong>和<strong>1.4节</strong>在做一遍，在<strong>1.3节</strong>的步骤中，其实是可以只执行到第四步即可的。因为其他的之前已经安装过了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-kinetic-desktop</span><br></pre></td></tr></table></figure>
+<h2 id="二、搭建qlab实验环境"><a href="#二、搭建qlab实验环境" class="headerlink" title="二、搭建qlab实验环境"></a>二、搭建qlab实验环境</h2><p><strong>安装ros-kinetic-ardrone-autonomy</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-kinetic-ardrone-autonomy</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-创建ros工作空间"><a href="#2-1-创建ros工作空间" class="headerlink" title="2.1 创建ros工作空间"></a>2.1 创建ros工作空间</h3><p>创建工作空间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir qlab_ws</span><br><span class="line">cd qlab_ws</span><br><span class="line">mkdir src</span><br><span class="line">cd src</span><br><span class="line">catkin_init_workspace</span><br></pre></td></tr></table></figure>
+<p>编译和source</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ~/qlab_ws</span><br><span class="line">catkin_make</span><br><span class="line">echo <span class="string">&quot;source ~/qlab_ws/devel/setup.bash&quot;</span> &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-下载qlab源码"><a href="#2-2-下载qlab源码" class="headerlink" title="2.2 下载qlab源码"></a>2.2 下载qlab源码</h3><p>下载并拷贝完后，~/qlab_ws/src文件夹下将会有deep_reinforced_landing和qlab两个文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd </span><br><span class="line">git clone https://github.com/pulver22/QLAB.git -b gazebo8</span><br><span class="line">cp -r QLAB/deep_reinforced_landing/ QLAB/qlab/ ~/qlab_ws/src</span><br></pre></td></tr></table></figure>
+<p>编译和source</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd qlab_ws</span><br><span class="line">catkin_make</span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<p><strong>注：每次ros工作空间下拷贝或新建了新的程序包，都需要重新编译和source</strong></p>
+<h3 id="2-3-启动测试"><a href="#2-3-启动测试" class="headerlink" title="2.3 启动测试"></a>2.3 启动测试</h3><p><strong>相关配置</strong>：因为在启动launch文件的时候，它里面会加载一些model模型，这些模型全部在qlab的文件夹下，因此需要在<strong>~/.bashrc</strong>文件下添加其路径，或者将modes文件夹全部拷贝到<strong>.gazebo</strong>文件夹下也可以.</p>
+<p>（1）打开~/.bashrc文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>（2）在最后一行添加如下代码</p>
+<p>下面的username要修改为对应的机器的用户名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export GAZEBO_MODEL_PATH=<span class="string">&quot;/home/username/qlab_ws/src/qlab/qlab_gazebo/models&quot;</span></span><br></pre></td></tr></table></figure>
+<p>（3）关闭~/.bashrc文件并source</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>启动qlab.launch</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/qlab_ws</span><br><span class="line">roslaunch qlab_gazebo qlab.launch</span><br></pre></td></tr></table></figure>
+<p>启动drl.launch</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/qlab_ws</span><br><span class="line">roslaunch deep_reinforced_landing drl.launch</span><br></pre></td></tr></table></figure>
+<p><strong>查看rostopic</strong></p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2.png" alt></p>
+<p><strong>常用的控制命令</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rostopic pub -<span class="number">1</span> /quadrotor/ardrone/takeoff std_msgs/Empty</span><br><span class="line">rostopic pub -<span class="number">1</span> /quadrotor/ardrone/land std_msgs/Empty</span><br><span class="line">rosrun image_view image_view image:=/quadrotor/ardrone/front/ardrone/front/image_raw</span><br><span class="line">rosrun image_view image_view image:=/quadrotor/ardrone/bottom/ardrone/bottom/image_raw</span><br></pre></td></tr></table></figure>
+<h2 id="三、强化学习训练"><a href="#三、强化学习训练" class="headerlink" title="三、强化学习训练"></a>三、强化学习训练</h2><h3 id="3-1-修改相关配置"><a href="#3-1-修改相关配置" class="headerlink" title="3.1 修改相关配置"></a>3.1 修改相关配置</h3><p><strong>（1）修改无人机最大高度</strong></p>
+<blockquote>
+<p>因为在第一阶段训练的过程中，无人机的高度是固定在20m左右的，而其默认的最大高度为3m，因此需要先修改最大高度限定，可以修改为22m</p>
+</blockquote>
+<p>在<strong>~/qlab_ws/src/qlab/qlab_description/urdf</strong>文件夹下找到<strong>quadrotor_sensors.urdf.xacro</strong>文件</p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/3.png" alt></p>
+<p>然后在其中的第20行，将max_range的值由3.0修改为22.0</p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/4.png" alt></p>
+<p>这样，无人机的最大高度就修改为了22</p>
+<p><strong>（2）训练时，需要关闭clinet，即关闭gazebo图形界面，提升训练速度</strong></p>
+<p>训练时，启动<strong>qlab.launch</strong>进行训练，则对<strong>qlab.launch</strong>文件进行修改</p>
+<p>将其中的第七行的<strong>gui</strong>的值由<strong>true</strong>修改为<strong>false</strong>，如图所示</p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/5.png" alt></p>
+<p>在该launch文件中，还引用了<strong>ardrone_sim_world.launch</strong>，因此也去这个launch文件中进行修改</p>
+<p>同样的，找到第5行，将<strong>gui</strong>的值修改为<strong>false</strong></p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/6.png" alt></p>
+<p><strong>注：如果要关闭掉client的图像界面，则最好是在启动的相关的文件中，将所有的gui的值都设为false，这样比较保险</strong></p>
+<h3 id="3-2-安装相关包"><a href="#3-2-安装相关包" class="headerlink" title="3.2 安装相关包"></a>3.2 安装相关包</h3><ul>
+<li><p><strong>gym</strong></p>
+<p>可以采用pip安装，也可以采用源码安装方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install gym</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Tensorflow</strong>：<a target="_blank" rel="noopener" href="https://ldgyyf.cn/2019/07/05/Linux/Ubuntu16%E4%B8%8BGPU-Tensorflow%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/">详细安装</a></p>
+</li>
+</ul>
+<h3 id="3-3-DQN代码编写"><a href="#3-3-DQN代码编写" class="headerlink" title="3.3 DQN代码编写"></a>3.3 DQN代码编写</h3><blockquote>
+<p>现在重新整理了代码，正在训练过程中~</p>
+<p>直接查看<a target="_blank" rel="noopener" href="https://github.com/ldgcug/DQN_Ardrone">所有代码</a></p>
+</blockquote>
+<font color="red">下面的代码是在32G RAM、1080TI机器上跑的</font>
+
+<h4 id="3-3-1-固定方向训练"><a href="#3-3-1-固定方向训练" class="headerlink" title="3.3.1 固定方向训练"></a>3.3.1 固定方向训练</h4><blockquote>
+<p>在该机器上，训练了差不多24h，不知道什么原因，电脑关机了，于是就只训练了不到12w步</p>
+<p>于2019-8-17 10:35:40开始训练，2019.8.18 10.20 左右结束，可能更早</p>
+</blockquote>
+<p><strong>训练过程中的统计</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>正面百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1(w)</td>
+<td>872</td>
+<td>5844</td>
+<td>3284</td>
+<td>8.72%</td>
+</tr>
+<tr>
+<td>1-2</td>
+<td>1183</td>
+<td>5818</td>
+<td>2999</td>
+<td>11.83%</td>
+</tr>
+<tr>
+<td>2-3</td>
+<td>2757</td>
+<td>4895</td>
+<td>2348</td>
+<td>27.57%</td>
+</tr>
+<tr>
+<td>3-4</td>
+<td>3952</td>
+<td>3397</td>
+<td>2651</td>
+<td>39.52%</td>
+</tr>
+<tr>
+<td>4-5</td>
+<td>4564</td>
+<td>2514</td>
+<td>2922</td>
+<td>45.64%</td>
+</tr>
+<tr>
+<td>5-6</td>
+<td>5724</td>
+<td>2240</td>
+<td>2036</td>
+<td>57.24%</td>
+</tr>
+<tr>
+<td>6-7</td>
+<td>7055</td>
+<td>1713</td>
+<td>1232</td>
+<td>70.55%</td>
+</tr>
+<tr>
+<td>7-8</td>
+<td>7597</td>
+<td>1496</td>
+<td>907</td>
+<td>75.97%</td>
+</tr>
+<tr>
+<td>8-9</td>
+<td>7870</td>
+<td>1435</td>
+<td>695</td>
+<td>78.70%</td>
+</tr>
+<tr>
+<td>9-10</td>
+<td>8128</td>
+<td>1340</td>
+<td>532</td>
+<td>81.28%</td>
+</tr>
+<tr>
+<td>10-11</td>
+<td>8499</td>
+<td>1166</td>
+<td>335</td>
+<td>84.99%</td>
+</tr>
+<tr>
+<td>11-12(7504)</td>
+<td>6524</td>
+<td>782</td>
+<td>198</td>
+<td>86.94%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>在训练场景下的dqn网络测试（后面会用其他不同场景测试，不用训练场景）</strong></p>
+<blockquote>
+<p>开始时间：2019.8.18 12:59:30，结束时间：2019.8-18 14:12:04</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>正面百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1(w)</td>
+<td>8933</td>
+<td>815</td>
+<td>252</td>
+<td>89.33%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>在训练场景下的随机飞行测试</strong></p>
+<blockquote>
+<p>开始时间：2019.8.18 10:27:21，结束时间：2019.8-18 12:25:23</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>正面百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1(w)</td>
+<td>735</td>
+<td>5316</td>
+<td>3949</td>
+<td>7.35%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>训练过程中的累积奖励图</strong></p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/7.png" alt></p>
+<h4 id="3-3-2-随机方向训练"><a href="#3-3-2-随机方向训练" class="headerlink" title="3.3.2 随机方向训练"></a>3.3.2 随机方向训练</h4><blockquote>
+<p>在该机器上，训练了接近2天的时间，总共训练了大概287000个episode，总飞行步数：2806854</p>
+<p>从2019-8-22 11:42:55开始训练，到2019-8-24 09:58:30结束</p>
+</blockquote>
+<p><strong>训练过程中的统计</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>正面百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1(w)</td>
+<td>886</td>
+<td>5925</td>
+<td>3189</td>
+<td>8.86%</td>
+</tr>
+<tr>
+<td>1-2</td>
+<td>1469</td>
+<td>5496</td>
+<td>3035</td>
+<td>14.69</td>
+</tr>
+<tr>
+<td>2-3</td>
+<td>2401</td>
+<td>4611</td>
+<td>2988</td>
+<td>24.01%</td>
+</tr>
+<tr>
+<td>3-4</td>
+<td>3377</td>
+<td>3362</td>
+<td>3261</td>
+<td>33.77%</td>
+</tr>
+<tr>
+<td>4-5</td>
+<td>4152</td>
+<td>2970</td>
+<td>2878</td>
+<td>41.52%</td>
+</tr>
+<tr>
+<td>5-6</td>
+<td>4689</td>
+<td>2721</td>
+<td>2590</td>
+<td>46.89%</td>
+</tr>
+<tr>
+<td>6-7</td>
+<td>6125</td>
+<td>2529</td>
+<td>1346</td>
+<td>61.25%</td>
+</tr>
+<tr>
+<td>7-8</td>
+<td>8043</td>
+<td>1846</td>
+<td>111</td>
+<td>80.43%</td>
+</tr>
+<tr>
+<td>8-9</td>
+<td>8569</td>
+<td>1366</td>
+<td>65</td>
+<td>85.69</td>
+</tr>
+<tr>
+<td>9-10</td>
+<td>8777</td>
+<td>1177</td>
+<td>46</td>
+<td>87.77%</td>
+</tr>
+<tr>
+<td>10-11</td>
+<td>9003</td>
+<td>977</td>
+<td>20</td>
+<td>90.03%</td>
+</tr>
+<tr>
+<td>11-12</td>
+<td>9103</td>
+<td>890</td>
+<td>7</td>
+<td>91.03%</td>
+</tr>
+<tr>
+<td>12-13</td>
+<td>9137</td>
+<td>861</td>
+<td>2</td>
+<td>91.37%</td>
+</tr>
+<tr>
+<td>13-14</td>
+<td>9132</td>
+<td>861</td>
+<td>7</td>
+<td>91.32%</td>
+</tr>
+<tr>
+<td>14-15</td>
+<td>9159</td>
+<td>838</td>
+<td>3</td>
+<td>91.59%</td>
+</tr>
+<tr>
+<td>15-16</td>
+<td>9191</td>
+<td>803</td>
+<td>6</td>
+<td>91.91%</td>
+</tr>
+<tr>
+<td>16-17</td>
+<td>9179</td>
+<td>819</td>
+<td>2</td>
+<td>91.79%</td>
+</tr>
+<tr>
+<td>17-18</td>
+<td>9195</td>
+<td>799</td>
+<td>6</td>
+<td>91.95%</td>
+</tr>
+<tr>
+<td>18-19</td>
+<td>9220</td>
+<td>777</td>
+<td>3</td>
+<td>92.2%</td>
+</tr>
+<tr>
+<td>19-20</td>
+<td>9159</td>
+<td>834</td>
+<td>7</td>
+<td>91.59%</td>
+</tr>
+<tr>
+<td>20-21</td>
+<td>9182</td>
+<td>815</td>
+<td>3</td>
+<td>91.82%</td>
+</tr>
+<tr>
+<td>21-22</td>
+<td>9214</td>
+<td>778</td>
+<td>8</td>
+<td>92.14%</td>
+</tr>
+<tr>
+<td>22-23</td>
+<td>9121</td>
+<td>873</td>
+<td>6</td>
+<td>91.21%</td>
+</tr>
+<tr>
+<td>23-24</td>
+<td>9146</td>
+<td>850</td>
+<td>4</td>
+<td>91.46%</td>
+</tr>
+<tr>
+<td>24-25</td>
+<td>9112</td>
+<td>883</td>
+<td>5</td>
+<td>91.12%</td>
+</tr>
+<tr>
+<td>25-26</td>
+<td>9204</td>
+<td>792</td>
+<td>4</td>
+<td>92.04%</td>
+</tr>
+<tr>
+<td>26-27</td>
+<td>9178</td>
+<td>820</td>
+<td>2</td>
+<td>91.78%</td>
+</tr>
+<tr>
+<td>27-28</td>
+<td>9200</td>
+<td>797</td>
+<td>3</td>
+<td>92%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>在训练场景下的dqn网络测试（后面会用其他不同场景测试，不用训练场景）</strong></p>
+<blockquote>
+<p>开始时间：2019.8.24 10:05:04，结束时间：2019.8-24 11:11:34 总步数：59784</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>正面奖励次数</th>
+<th>负面奖励次数</th>
+<th>强制截止次数</th>
+<th>正面百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1(w)</td>
+<td>9278</td>
+<td>721</td>
+<td>1</td>
+<td>92.78%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>训练过程中的累积奖励图</strong></p>
+<p><img src="/2019/08/11/ROS/ardrone%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/8.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><blockquote>
+<p>这是做的第一个DRL的强化学习代码训练，最开始确实花了很多功夫，并且状态空间很大，需要有一个好的机器，训练速度才会快，我最开始是在服务器上8G、CPU上进行的训练，耗费了一个多月才训练完单纹理的目标检测阶段。机器尤为重要。</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="http://gazebosim.org/tutorials?cat=install&amp;tut=install_ubuntu&amp;ver=8.0">gazebo8安装</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/pulver22/QLAB">QLAB源码</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ROS/" rel="tag"># ROS</a>
+          
+            <a href="/tags/Gazebo/" rel="tag"># Gazebo</a>
+          
+            <a href="/tags/ardrone/" rel="tag"># ardrone</a>
+          
+            <a href="/tags/DRL/" rel="tag"># DRL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/" rel="next" title="代码实现（四）之 Dueling DQN">
+                <i class="fa fa-chevron-left"></i> 代码实现（四）之 Dueling DQN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/12/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BA%94%EF%BC%89%E4%B9%8BPolicy-Gradient/" rel="prev" title="代码实现（五）之Policy Gradient">
+                代码实现（五）之Policy Gradient <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/header.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">一、基础环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E"><span class="nav-text">1.1 版本说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Gazebo8-6%E5%AE%89%E8%A3%85"><span class="nav-text">1.2 Gazebo8.6安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-ros-kinetic%E5%AE%89%E8%A3%85%EF%BC%88%E4%B8%8D%E5%AE%89%E8%A3%85full%E7%89%88%EF%BC%89"><span class="nav-text">1.3 ros kinetic安装（不安装full版）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81ros%E5%8C%85"><span class="nav-text">1.4 安装必要ros包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E9%BB%98%E8%AE%A4%E7%9A%84ros-kinetic%EF%BC%9F"><span class="nav-text">1.5 已经安装默认的ros-kinetic？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%90%AD%E5%BB%BAqlab%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="nav-text">二、搭建qlab实验环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%88%9B%E5%BB%BAros%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-text">2.1 创建ros工作空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%B8%8B%E8%BD%BDqlab%E6%BA%90%E7%A0%81"><span class="nav-text">2.2 下载qlab源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%90%AF%E5%8A%A8%E6%B5%8B%E8%AF%95"><span class="nav-text">2.3 启动测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83"><span class="nav-text">三、强化学习训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%BF%AE%E6%94%B9%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE"><span class="nav-text">3.1 修改相关配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E5%8C%85"><span class="nav-text">3.2 安装相关包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-DQN%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99"><span class="nav-text">3.3 DQN代码编写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-%E5%9B%BA%E5%AE%9A%E6%96%B9%E5%90%91%E8%AE%AD%E7%BB%83"><span class="nav-text">3.3.1 固定方向训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-%E9%9A%8F%E6%9C%BA%E6%96%B9%E5%90%91%E8%AE%AD%E7%BB%83"><span class="nav-text">3.3.2 随机方向训练</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'ardrone强化学习训练环境搭建'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'ardrone强化学习训练环境搭建'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

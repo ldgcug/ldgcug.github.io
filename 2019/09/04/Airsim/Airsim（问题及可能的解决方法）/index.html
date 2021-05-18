@@ -1,37 +1,1572 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Airsim," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言 本篇博客，将对前面的Airsim仿真平台开发过程中遇到过的一系列问题进行记录，并尽可能的记录其中的解决方法。  问题一：安装过程中的问题1.1 Windows下ROS的安装（已解决） 在机器人控制这一方面，不可避免的会想通过ros对机器人进行控制，而ros在ubuntu下的安装非常方便，在WIndows上安装不如Linux下方便；至少，在接触Airsim之前，我没有在Windows下安装过r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Airsim（问题及可能的解决方法）">
+<meta property="og:url" content="https://ldgcug.xyz/2019/09/04/Airsim/Airsim%EF%BC%88%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%89/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 本篇博客，将对前面的Airsim仿真平台开发过程中遇到过的一系列问题进行记录，并尽可能的记录其中的解决方法。  问题一：安装过程中的问题1.1 Windows下ROS的安装（已解决） 在机器人控制这一方面，不可避免的会想通过ros对机器人进行控制，而ros在ubuntu下的安装非常方便，在WIndows上安装不如Linux下方便；至少，在接触Airsim之前，我没有在Windows下安装过r">
+<meta property="og:locale">
+<meta property="og:image" content="https://ldgcug.xyz/2019/09/04/Airsim/Airsim%EF%BC%88%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%89/1.png">
+<meta property="article:published_time" content="2019-09-04T06:07:04.000Z">
+<meta property="article:modified_time" content="2019-09-05T08:57:10.366Z">
+<meta property="article:author" content="ldg">
+<meta property="article:tag" content="Airsim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/09/04/Airsim/Airsim%EF%BC%88%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%89/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2019/09/04/Airsim/Airsim（问题及可能的解决方法）/"/>
+
+
+
+
+
+  <title>Airsim（问题及可能的解决方法） | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page,false) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/09/04/Airsim/Airsim%EF%BC%88%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Airsim（问题及可能的解决方法）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-04T14:07:04+08:00">
+                2019-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Airsim/" itemprop="url" rel="index">
+                    <span itemprop="name">Airsim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/04/Airsim/Airsim%EF%BC%88%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%89/" class="leancloud_visitors" data-flag-title="Airsim（问题及可能的解决方法）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>本篇博客，将对前面的Airsim仿真平台开发过程中遇到过的一系列问题进行记录，并尽可能的记录其中的解决方法。</p>
+</blockquote>
+<h2 id="问题一：安装过程中的问题"><a href="#问题一：安装过程中的问题" class="headerlink" title="问题一：安装过程中的问题"></a>问题一：安装过程中的问题</h2><h3 id="1-1-Windows下ROS的安装（已解决）"><a href="#1-1-Windows下ROS的安装（已解决）" class="headerlink" title="1.1 Windows下ROS的安装（已解决）"></a>1.1 Windows下ROS的安装（<font color="red">已解决</font>）</h3><blockquote>
+<p>在机器人控制这一方面，不可避免的会想通过ros对机器人进行控制，而ros在ubuntu下的安装非常方便，在WIndows上安装不如Linux下方便；至少，在接触Airsim之前，我没有在Windows下安装过ros。</p>
+</blockquote>
+<p>第一次在Windows上装ros的时候，还真没有安装成功，在安装一些安装包时，并没有按照其默认路径进行安装，然后也由于刚开始不熟的原因，没有安装成功。因此，后来专门记录写了一篇博客，来记录ros在windows上的安装，其安装过程见<a target="_blank" rel="noopener" href="https://ldgyyf.cn/2019/06/27/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B9%8BWindows%E4%B8%8BROS%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Windows下ROS安装配置</a>。</p>
+<font color="red">注：如果要使用ros控制，则还是在Ubuntu下控制比较好。我后来记录了Airsim在Ubuntu下的安装笔记。</font>
+
+<h3 id="1-2-Ubuntu终端科学上网（已解决）"><a href="#1-2-Ubuntu终端科学上网（已解决）" class="headerlink" title="1.2 Ubuntu终端科学上网（已解决）"></a>1.2 Ubuntu终端科学上网（<font color="red">已解决</font>）</h3><blockquote>
+<p>Airsim仿真平台开发，与Ubuntu科学上网有什么关系呢？</p>
+<p>有关系，并且是很大的关系，因为Airsim就是微软开发的，其资源很多都是国外的，国内很难下载到。</p>
+</blockquote>
+<p>如果你的Airsim只是在Windows上进行开发，可能更方便，因为Windows下科学上网更简单，但是在下载资源这方面可能还是不如Ubuntu，因为Windows上更多的是网页端下载，在网页端下载一些国外的资源时，有时会很慢，很难下载~</p>
+<p>因此，在Ubuntu下进行开发时，保证终端科学上网是一个很重要的前提。这个也是为了后面的Airsim在Ubuntu上的安装做准备。</p>
+<p>其安装过程见<a target="_blank" rel="noopener" href="https://ldgyyf.cn/2019/06/27/Linux/ubuntu%E4%B8%8B%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">Ubuntu终端科学上网</a>。</p>
+<h3 id="1-3-Ubuntu下GPU-Tensorflow安装（已解决）"><a href="#1-3-Ubuntu下GPU-Tensorflow安装（已解决）" class="headerlink" title="1.3 Ubuntu下GPU Tensorflow安装（已解决）"></a>1.3 Ubuntu下GPU Tensorflow安装（<font color="red">已解决</font>）</h3><blockquote>
+<p>在用Airsim做人工智能（深度学习、强化学习）的算法验证这一方面，大部分是用Tensorflow库来验证，当然也有其他的一些，如Keras、pytorch等。但是这些方面这里不考虑，主要以Tensorflow为主。</p>
+</blockquote>
+<p>Ubuntu下安装GPU的Tensorflow时，很容易碰到的一个问题，就是登陆界面重复登陆，这个可能是安装了不合适的版本导致的。因此，我记录了一个稍微比较详细一些的安装文档。</p>
+<p>其安装过程见<a target="_blank" rel="noopener" href="https://ldgyyf.cn/2019/07/05/Linux/Ubuntu16%E4%B8%8BGPU-Tensorflow%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/">Ubuntu16下GPU-Tensorflow安装步骤</a></p>
+<h3 id="1-4-Ubuntu下，ros相关报错（已解决）"><a href="#1-4-Ubuntu下，ros相关报错（已解决）" class="headerlink" title="1.4 Ubuntu下，ros相关报错（已解决）"></a>1.4 Ubuntu下，ros相关报错（<font color="red">已解决</font>）</h3><blockquote>
+<p>不确定是卸载了一些ros的相关依赖还是什么其他的误操作，在终端执行sudo apt-get update时，提示Hash Sum Minbatch错误。</p>
+</blockquote>
+<p>在网上查找过其解决方法，如：换源、终端翻墙update、换网络、删除/var/list文件都未能解决，最后通过重装系统解决的。虽然重装系统能解决该问题，但并不是一个好方法~</p>
+<h2 id="问题二：开发过程中的问题"><a href="#问题二：开发过程中的问题" class="headerlink" title="问题二：开发过程中的问题"></a>问题二：开发过程中的问题</h2><h3 id="2-1-自定义ros后，python线程锁的问题（已解决）"><a href="#2-1-自定义ros后，python线程锁的问题（已解决）" class="headerlink" title="2.1 自定义ros后，python线程锁的问题（已解决）"></a>2.1 自定义ros后，python线程锁的问题（<font color="red">已解决</font>）</h3><blockquote>
+<p>自定义了ros，并且同时进行sub和pub时，容易出现python线程锁的问题，具体错误信息如下图：</p>
+</blockquote>
+<p><img src="/2019/09/04/Airsim/Airsim%EF%BC%88%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%89/1.png" alt></p>
+<p><strong>解决方法：添加python线程锁</strong>，<a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/python-basic/threading/6-lock/">参考</a></p>
+<h3 id="2-2-Airsim中无人机的控制问题（已解决）"><a href="#2-2-Airsim中无人机的控制问题（已解决）" class="headerlink" title="2.2 Airsim中无人机的控制问题（已解决）"></a>2.2 Airsim中无人机的控制问题（<font color="red">已解决</font>）</h3><blockquote>
+<p>默认的，无人机的控制坐标系是NED坐标系，即+x永远朝着正北方飞行，也就是绝对方向控制~</p>
+<p>但是，我们在正常的控制无人机时，采用的坐标系是BODY坐标系，即+x永远朝着机头方向飞行，也就是相对控制~</p>
+</blockquote>
+<p>因此，在真正控制时，需要做一个转换，我这里暂时只考虑了东南西北四个方向。</p>
+<p><strong>解决方法：每次控制时，首先获取无人机的当前角度angle，然后根据angle的角度，确定当前机头朝向~</strong></p>
+<p><strong>即下图所示，这样就完成了+x永远朝着机头方向前行</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">机头朝向</th>
+<th style="text-align:center">x轴</th>
+<th style="text-align:center">y轴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">North</td>
+<td style="text-align:center">x = x</td>
+<td style="text-align:center">y = y</td>
+</tr>
+<tr>
+<td style="text-align:center">West</td>
+<td style="text-align:center">x = y</td>
+<td style="text-align:center">y = -x</td>
+</tr>
+<tr>
+<td style="text-align:center">South</td>
+<td style="text-align:center">x = -x</td>
+<td style="text-align:center">y = -y</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">y = -x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-3-Airsim中使用期望速度进行控制的问题（已解决）"><a href="#2-3-Airsim中使用期望速度进行控制的问题（已解决）" class="headerlink" title="2.3 Airsim中使用期望速度进行控制的问题（已解决）"></a>2.3 Airsim中使用期望速度进行控制的问题（<font color="red">已解决</font>）</h3><blockquote>
+<p>2.2节说明了Airism中的无人机相对控制的问题（一般给定固定速度），而本节则要说明的是：初始时，设置一个期望速度值，当给定轨迹点时，根据当前距离与目标轨迹点之间的差值，进行速度求解并且归一化，在这其中就会涉及到坐标系转换的一些问题~</p>
+</blockquote>
+<p>举例（暂不考虑Z轴）：无人机起始点（0,0），轨迹点1（10,0），轨迹点2（10，-20），期望速度：2m/s，时间t：1s</p>
+<ul>
+<li>起始点-&gt;轨迹点1：dx = 10 -0 =10，vx = dx / t = 10 / 1 = 10m/s，归一化 vx‘  约等于2m/s，按照2.2的控制方式，此时 vx’ = vx’， vy’ = vy’，此时机头朝北</li>
+<li>转向：到达轨迹点1后，左转，左转完成后，此时机头朝西</li>
+<li>轨迹点1-&gt;轨迹点2：dy = -20 - 0 = 20，vy = dy / t = -20m/s，归一化vy’ 约等于2m/s，按照2.2的控制方式，此时 vx’ = vy’，vy’ = vx’（机头朝西）,此时，无人机会朝着South方向运动，并不是West方向。</li>
+</ul>
+<p>这样就会存在问题，在轨迹点1到轨迹点2的过程中，我按照了2.2的控制方式，但是无人机却并不是朝着我想要的West方向前行，因此，需要采用坐标系转换的方法来解决该问题：</p>
+<p><strong>说明：</strong>在获取Airsim中无人机的坐标时，我们获取的都是NED坐标系下的xyz值，而我们所采用的这种期望速度方法，实际上是BODY坐标系下的方法，即每次根据BODY坐标系下的xyz值，来进行差值求解，并且进行归一化~</p>
+<p>具体的，可以参见<a target="_blank" rel="noopener" href="https://ldgyyf.cn/2019/08/19/Airsim/初始Airsim（六）之多机控制/">Airsim（六）之多机控制</a>中的代码注释部分。</p>
+<h3 id="2-4-自定义ROS间的通信问题（已解决）"><a href="#2-4-自定义ROS间的通信问题（已解决）" class="headerlink" title="2.4 自定义ROS间的通信问题（已解决）"></a>2.4 自定义ROS间的通信问题（<font color="red">已解决</font>）</h3><blockquote>
+<p>其主要问题是，使用ros指令发送消息的时候，需要考虑其中的通信频率问题</p>
+</blockquote>
+<p>ros不同于api控制的地方在于：api控制可以等到该条指令结束后，在执行下一条指令。而ros则会将指令全部寄存在缓存中，也是会执行其发布的每一条命令，但是如果通信频率不一致的话，airsim中的无人机响应其ros指令时可能会出现问题。</p>
+<p>目前，测试的是在ros的驱动程序中，设置频率为250HZ，在其控制程序中，设置频率为1HZ，差不多能保证其发送接收一致。</p>
+<h3 id="2-5-UDP通信间的大图像传输（未解决）"><a href="#2-5-UDP通信间的大图像传输（未解决）" class="headerlink" title="2.5 UDP通信间的大图像传输（未解决）"></a>2.5 UDP通信间的大图像传输（<font color="red">未解决</font>）</h3><blockquote>
+<p>尝试了在两台电脑间使用UDP来进行控制，但是在获取Airsim的图像时，如果设置的图像分辨率较大，这时，图像大小会超出的默认最大值，会报错~</p>
+</blockquote>
+<p>会出现这种情况的原因是设置的图像分辨率较大，因此可以将分辨率设置为合适的值，这样是不会报错的，并且可以在接收端的一方，重新对图像的大小进行修改，这样也能达到最初想要的效果，但是如何利用UDP进行大数据传输，这个问题仍然没有解决。</p>
+<p>在网上有搜过相关代码，其思想一般都是先将大文件进行打包，然后传输前加一个文件头，另一端接收时，对文件头进行解析，然后进行分段接收。但其python代码较少，并且依靠网上的代码，并没有测试成功过~</p>
+<h2 id="问题三：相关配置问题"><a href="#问题三：相关配置问题" class="headerlink" title="问题三：相关配置问题"></a>问题三：相关配置问题</h2><h3 id="3-1-Pixhawk配置（HITL配置）（已解决）"><a href="#3-1-Pixhawk配置（HITL配置）（已解决）" class="headerlink" title="3.1 Pixhawk配置（HITL配置）（已解决）"></a>3.1 Pixhawk配置（HITL配置）（<font color="red">已解决</font>）</h3><blockquote>
+<p>参考网上的教程，其Pixhawk大多都是在Windows下配置的，Linux的很少，但是基本也都差不多</p>
+</blockquote>
+<p>总之，在配置Pixhawk的过程中，很花费了一些功夫，主要就是其很容易爆No GPS相关的错误，后来，经过尝试，终于解决了该问题。</p>
+<p>其配置过程见<a target="_blank" rel="noopener" href="https://ldgyyf.cn/2019/08/22/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BPixhawk%E9%85%8D%E7%BD%AE%EF%BC%88Ubuntu16%E4%B8%8BHITL%E9%85%8D%E7%BD%AE%EF%BC%89/">Pixhawk配置（Ubuntu16下HITL配置）</a></p>
+<h2 id="问题四：各种未解决的问题"><a href="#问题四：各种未解决的问题" class="headerlink" title="问题四：各种未解决的问题"></a>问题四：各种未解决的问题</h2><h3 id="4-1-Airsim图像，转化成ros的topic之后，和原图有些区别？（未解决）"><a href="#4-1-Airsim图像，转化成ros的topic之后，和原图有些区别？（未解决）" class="headerlink" title="4.1 Airsim图像，转化成ros的topic之后，和原图有些区别？（未解决）"></a>4.1 Airsim图像，转化成ros的topic之后，和原图有些区别？（<font color="red">未解决</font>）</h3><blockquote>
+<p>通过API，获取Airsim中的无人机图像，并将其转化为ros后，和原图有些区别，但是不是很大</p>
+</blockquote>
+<p>这里暂时找不到原先的记录了，总之，这个地方是存在问题的~</p>
+<h3 id="4-2-自定义ROS，强化学习训练不好？（未解决）"><a href="#4-2-自定义ROS，强化学习训练不好？（未解决）" class="headerlink" title="4.2 自定义ROS，强化学习训练不好？（未解决）"></a>4.2 自定义ROS，强化学习训练不好？（<font color="red">未解决</font>）</h3><blockquote>
+<p>同样的逻辑，在用api进行强化学习训练测试时，经过30小时左右的训练，大概能训练好，但是添加了自定义的ros，却不行？</p>
+</blockquote>
+<p>暂时也不清楚，是为什么训练不好效果，可能与获取的深度图像不一致有关系，可能与无法用ros进行pause和unpause函数控制有关，可能通信频率设置的不太对。</p>
+<p>总之，在github上面很少找到用ros来进行强化学习训练的，或者这种方法就根本不好，也是存在问题~</p>
+<h3 id="4-3-SITL模式下与-sh文件不兼容（未解决）"><a href="#4-3-SITL模式下与-sh文件不兼容（未解决）" class="headerlink" title="4.3 SITL模式下与.sh文件不兼容（未解决）"></a>4.3 SITL模式下与.sh文件不兼容（<font color="red">未解决</font>）</h3><blockquote>
+<p>若在Airsim中使用SITL模式，则只能用UE4提供的环境，如创建的Rolling环境，这时与封装好的sh文件时不兼容的，即启动会报错，无法打开界面~</p>
+</blockquote>
+<p>之所以没有解决，是因为可能是需要下载对应的sh的uproject文件，而这个文件环境是需要在UE4的商店中进行购买的，没有购买，因此这方面也存在问题，也就没有测试过~</p>
+<h3 id="4-4-SITL模式与Lidar传感器不兼容（未解决）"><a href="#4-4-SITL模式与Lidar传感器不兼容（未解决）" class="headerlink" title="4.4 SITL模式与Lidar传感器不兼容（未解决）"></a>4.4 SITL模式与Lidar传感器不兼容（<font color="red">未解决</font>）</h3><blockquote>
+<p>在json中，设置为了SITL模式，并添加Lidar传感器，结果界面可以出来，但是传感器出不来，不知道其原因</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>由于主要是在对Airsim仿真平台进行开发研究，更多的是环境相关的配置问题，因此，其中的问题，也算不上什么难点，主要还是对Airsim不太熟悉，后面熟悉后就好了。</p>
+<p>更多的记录的是开发过程中遇到的一些主要问题等</p>
+</blockquote>
+<p><strong>其中，很多问题不是特别好用文字或图片的形式说明，当中，某些记录可能也不太清楚了，如果有问题，可以和我联系，我的邮箱是:  ldgcug@qq.com</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Airsim/" rel="tag"># Airsim</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/31/%E9%9A%8F%E7%AC%94/Git%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" rel="next" title="Git使用笔记">
+                <i class="fa fa-chevron-left"></i> Git使用笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/06/%E5%BD%B1%E8%AF%84/%E7%94%B5%E8%A7%86%E5%89%A7/%E8%AF%B7%E5%9B%9E%E7%AD%941988/" rel="prev" title="请回答1988">
+                请回答1988 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/header.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">问题一：安装过程中的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Windows%E4%B8%8BROS%E7%9A%84%E5%AE%89%E8%A3%85%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">1.1 Windows下ROS的安装（已解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Ubuntu%E7%BB%88%E7%AB%AF%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">1.2 Ubuntu终端科学上网（已解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Ubuntu%E4%B8%8BGPU-Tensorflow%E5%AE%89%E8%A3%85%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">1.3 Ubuntu下GPU Tensorflow安装（已解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Ubuntu%E4%B8%8B%EF%BC%8Cros%E7%9B%B8%E5%85%B3%E6%8A%A5%E9%94%99%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">1.4 Ubuntu下，ros相关报错（已解决）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">问题二：开发过程中的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E8%87%AA%E5%AE%9A%E4%B9%89ros%E5%90%8E%EF%BC%8Cpython%E7%BA%BF%E7%A8%8B%E9%94%81%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">2.1 自定义ros后，python线程锁的问题（已解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Airsim%E4%B8%AD%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%9A%84%E6%8E%A7%E5%88%B6%E9%97%AE%E9%A2%98%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">2.2 Airsim中无人机的控制问题（已解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Airsim%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%9C%9F%E6%9C%9B%E9%80%9F%E5%BA%A6%E8%BF%9B%E8%A1%8C%E6%8E%A7%E5%88%B6%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">2.3 Airsim中使用期望速度进行控制的问题（已解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E8%87%AA%E5%AE%9A%E4%B9%89ROS%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">2.4 自定义ROS间的通信问题（已解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-UDP%E9%80%9A%E4%BF%A1%E9%97%B4%E7%9A%84%E5%A4%A7%E5%9B%BE%E5%83%8F%E4%BC%A0%E8%BE%93%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">2.5 UDP通信间的大图像传输（未解决）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89%EF%BC%9A%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="nav-text">问题三：相关配置问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Pixhawk%E9%85%8D%E7%BD%AE%EF%BC%88HITL%E9%85%8D%E7%BD%AE%EF%BC%89%EF%BC%88%E5%B7%B2%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">3.1 Pixhawk配置（HITL配置）（已解决）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%9B%9B%EF%BC%9A%E5%90%84%E7%A7%8D%E6%9C%AA%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">问题四：各种未解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Airsim%E5%9B%BE%E5%83%8F%EF%BC%8C%E8%BD%AC%E5%8C%96%E6%88%90ros%E7%9A%84topic%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%92%8C%E5%8E%9F%E5%9B%BE%E6%9C%89%E4%BA%9B%E5%8C%BA%E5%88%AB%EF%BC%9F%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">4.1 Airsim图像，转化成ros的topic之后，和原图有些区别？（未解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E8%87%AA%E5%AE%9A%E4%B9%89ROS%EF%BC%8C%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E4%B8%8D%E5%A5%BD%EF%BC%9F%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">4.2 自定义ROS，强化学习训练不好？（未解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-SITL%E6%A8%A1%E5%BC%8F%E4%B8%8B%E4%B8%8E-sh%E6%96%87%E4%BB%B6%E4%B8%8D%E5%85%BC%E5%AE%B9%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">4.3 SITL模式下与.sh文件不兼容（未解决）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-SITL%E6%A8%A1%E5%BC%8F%E4%B8%8ELidar%E4%BC%A0%E6%84%9F%E5%99%A8%E4%B8%8D%E5%85%BC%E5%AE%B9%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-text">4.4 SITL模式与Lidar传感器不兼容（未解决）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'Airsim（问题及可能的解决方法）'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'Airsim（问题及可能的解决方法）'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

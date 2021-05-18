@@ -1,37 +1,1624 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="房," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="大学生落户准备资料 身份证原件 户口本原件（户口本首页（地址页）、户口本本人页） 毕业证原件 租房合同（申请人签名）  一、武汉大学生落户 先在网上提交资料，进行申请，等申请通过后（工作日内一般第二天就会有回复），在拿着申请资料到相关地址办理落户  1、需要哪些申请材料？ 1、登录湖北公安政务服务平台，没有注册过，可先进行注册。我是在手机上下载了一个鄂汇办APP，然后扫码登录，更方便。    2、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大学生落户">
+<meta property="og:url" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="大学生落户准备资料 身份证原件 户口本原件（户口本首页（地址页）、户口本本人页） 毕业证原件 租房合同（申请人签名）  一、武汉大学生落户 先在网上提交资料，进行申请，等申请通过后（工作日内一般第二天就会有回复），在拿着申请资料到相关地址办理落户  1、需要哪些申请材料？ 1、登录湖北公安政务服务平台，没有注册过，可先进行注册。我是在手机上下载了一个鄂汇办APP，然后扫码登录，更方便。    2、">
+<meta property="og:locale">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517232431119.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517232745645.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517233319919.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517233448018.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517234011149.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235058843.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235426277.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235553118.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235711114.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235856502.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000031264.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000113120.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000951886.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000706173.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000755006.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518001753511.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518002948556.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518003226753.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518004018519.png">
+<meta property="article:published_time" content="2021-05-17T23:20:03.000Z">
+<meta property="article:modified_time" content="2021-05-17T23:22:29.264Z">
+<meta property="article:author" content="ldg">
+<meta property="article:tag" content="房">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517232431119.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2021/05/18/随笔/大学生落户/"/>
+
+
+
+
+
+  <title>大学生落户 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page,false) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">大学生落户</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-18T07:20:03+08:00">
+                2021-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/" class="leancloud_visitors" data-flag-title="大学生落户">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="大学生落户准备资料"><a href="#大学生落户准备资料" class="headerlink" title="大学生落户准备资料"></a>大学生落户准备资料</h2><ul>
+<li>身份证原件</li>
+<li>户口本原件（户口本首页（地址页）、户口本本人页）</li>
+<li>毕业证原件</li>
+<li>租房合同（申请人签名）</li>
+</ul>
+<h2 id="一、武汉大学生落户"><a href="#一、武汉大学生落户" class="headerlink" title="一、武汉大学生落户"></a>一、武汉大学生落户</h2><blockquote>
+<p>先在网上提交资料，进行申请，等申请通过后（工作日内一般第二天就会有回复），在拿着申请资料到相关地址办理落户</p>
+</blockquote>
+<h3 id="1、需要哪些申请材料？"><a href="#1、需要哪些申请材料？" class="headerlink" title="1、需要哪些申请材料？"></a>1、需要哪些申请材料？</h3><blockquote>
+<p>1、登录<a target="_blank" rel="noopener" href="https://wsgaj.chutianyun.gov.cn//#/">湖北公安政务服务平台</a>，没有注册过，可先进行注册。我是在手机上下载了一个<strong>鄂汇办</strong>APP，然后扫码登录，更方便。</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517232431119.png" alt="image-20210517232431119"></p>
+<blockquote>
+<p>2、登录成功后，在首页点击<strong>办事中心</strong>，然后在搜索栏中搜索<strong>落户</strong>，即会弹出<strong>【武汉】大学毕业生落户</strong>信息</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517232745645.png" alt="image-20210517232745645"></p>
+<blockquote>
+<p>3、选择<strong>网上申报</strong>，在弹出框中选择<code>受理公安机关</code>、填写<code>申请人信息</code>，查看所需的申请材料</p>
+<p>（1）<strong>受理公安机关</strong></p>
+<p>​        以落户武汉<strong>洪山区</strong>为例，可选择<code>武汉市公安局</code>-&gt;<code>洪山区分局</code>-&gt;<code>洪山区政务服务中心公安窗口</code></p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517233319919.png" alt="image-20210517233319919"></p>
+<blockquote>
+<p>（2）<strong>申请人信息</strong></p>
+<p>​        按实际信息进行填写</p>
+<p>（3）<strong>附件材料上传</strong></p>
+<p>​        下图就是申请落户所需的附件材料准备了</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517233448018.png" alt="image-20210517233448018"></p>
+<h3 id="2、材料准备"><a href="#2、材料准备" class="headerlink" title="2、材料准备"></a>2、材料准备</h3><h4 id="2-1-《申报户口登记表》（学生落户登记类）"><a href="#2-1-《申报户口登记表》（学生落户登记类）" class="headerlink" title="2.1 《申报户口登记表》（学生落户登记类）"></a>2.1 《申报户口登记表》（学生落户登记类）</h4><blockquote>
+<p>点击<strong>样表下载</strong>，下载<strong>申报户口登记表</strong></p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517234011149.png" alt="image-20210517234011149"></p>
+<blockquote>
+<p>建议，下载下来后，直接打印，全手写，总共也没多少可填写的地方，我当初就是电脑上填写，导致最后的<strong>受理人签名</strong>那一行到第二页去了，所以建议全手写，即使真的不想手写，最后的申请人签名一定得手写，<strong>签名必须手写</strong></p>
+<p>（1）<strong>申请落户类别</strong></p>
+<ul>
+<li>[x] 【武汉】大学毕业落户</li>
+</ul>
+<p>（2）<strong>申请人员基本情况</strong></p>
+<p>​            <strong>实际居住地址</strong>：按实际情况填写</p>
+<p>​            <strong>所属派出所（实际居住地址栏）</strong>：关山派出所（以关山派出所为例）</p>
+<p>​            <strong>拟落户地址</strong>：**小区社区公共户</p>
+<ul>
+<li>[x] 社区公共户</li>
+</ul>
+<p>​            <strong>拟落户地派出所</strong>：关山派出所</p>
+<p>（3）<strong>随迁人员情况</strong>：根据实际情况填写，我没有随迁人员，因此该栏空着</p>
+<p>（4）<strong>申请理由</strong>：随便写，如在武汉长期工作，想把户口迁往武汉</p>
+<p>（5）<strong>申请人签名及日期</strong>：<strong>一定要手写</strong></p>
+</blockquote>
+<h4 id="2-2-《居民户口本》首页及本人页"><a href="#2-2-《居民户口本》首页及本人页" class="headerlink" title="2.2 《居民户口本》首页及本人页"></a>2.2 《居民户口本》首页及本人页</h4><blockquote>
+<p>本人页就不多说，首页要有地址栏的那页</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235058843.png" alt="image-20210517235058843"></p>
+<h4 id="2-3、学历证明"><a href="#2-3、学历证明" class="headerlink" title="2.3、学历证明"></a>2.3、学历证明</h4><blockquote>
+<p>登录<a target="_blank" rel="noopener" href="https://www.chsi.com.cn/">学信网</a>，下载学历证明</p>
+<p>（1）登录后，在<code>首页</code>-&gt;<code>高等教育信息</code>中，点击<code>学历</code></p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235426277.png" alt="image-20210517235426277"></p>
+<blockquote>
+<p>（2）若有多个学历，选择最高学历，下载，点击<code>查看该学历的电子注册备案表</code></p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235553118.png" alt="image-20210517235553118"></p>
+<blockquote>
+<p>（3）在最高学历中，点击查看，若失效，可进行<strong>延长验证有效期</strong></p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235711114.png" alt="image-20210517235711114"></p>
+<blockquote>
+<p>（4）在弹出框，点击<strong>下载</strong>，下载<strong>PDF</strong>报告</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210517235856502.png" alt="image-20210517235856502"></p>
+<h4 id="2-4-、毕业证原件"><a href="#2-4-、毕业证原件" class="headerlink" title="2.4 、毕业证原件"></a>2.4 、毕业证原件</h4><blockquote>
+<p>还不把积灰已久的毕业证赶紧找出来，拍个照</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000031264.png" alt="image-20210518000031264"></p>
+<h4 id="2-5-、居住凭证"><a href="#2-5-、居住凭证" class="headerlink" title="2.5 、居住凭证"></a>2.5 、居住凭证</h4><blockquote>
+<p>只用房屋租赁合同书就可以了（不需要其他的太多信息）</p>
+<p>承租方一定得是申请人，我当时就填写的不是本人名字，结果导致第一次被拒</p>
+<p>没有居住凭证怎么办？照着这个格式，打印一份，然后找个同学帮忙填写一些信息，就完成了，这个不那么重要，重要的是身份证、户口本、学历证明、毕业证原件的好吧。</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000113120.png" alt="image-20210518000113120"></p>
+<h4 id="2-6-、配偶及子女随迁的关系凭证"><a href="#2-6-、配偶及子女随迁的关系凭证" class="headerlink" title="2.6 、配偶及子女随迁的关系凭证"></a>2.6 、配偶及子女随迁的关系凭证</h4><blockquote>
+<p>视情况而定咯，我没有提交该信息</p>
+</blockquote>
+<h4 id="2-7-、业务主体人照片"><a href="#2-7-、业务主体人照片" class="headerlink" title="2.7 、业务主体人照片"></a>2.7 、业务主体人照片</h4><blockquote>
+<p>需要申请人本人手持申报户口登记表的自拍照片，拍上半身就可以了</p>
+</blockquote>
+<h3 id="3、网上材料提交"><a href="#3、网上材料提交" class="headerlink" title="3、网上材料提交"></a>3、网上材料提交</h3><blockquote>
+<p>将前期准备的材料网上提交就可以了，工作日内提交，一般第二天就会收到反馈结果了</p>
+<p>提交的所有信息，全部以png或者jpg形式上传就可以了，比如登记表是word文档、学历证明是PDF，<strong>截图</strong>就可以了，不需要真的上传word文档或pdf文件，说不定后台系统识别还会乱码（我还就真乱码，反馈告诉我乱码）</p>
+<p>当进行资料提交，下一步，下一步后，发现只能选择窗口办理，说好的线上办理呢？又被忽悠了呀，只有这一个选择，没办法，只能这样选咯。要注意其中的说明，<strong>网上预审通过后，还需要前往办理窗口提交材料进行办件的办理</strong>。</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000951886.png" alt="image-20210518000951886"></p>
+<h3 id="4、等待审批"><a href="#4、等待审批" class="headerlink" title="4、等待审批"></a>4、等待审批</h3><blockquote>
+<p>我第一次提交，没太看仔细，结果导致审批未通过</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000706173.png" alt="image-20210518000706173"></p>
+<blockquote>
+<p>可以失败一次，老失败就不行咯，最后审批通过的结果如下图</p>
+<p>里面的提示：<strong>关山街派出所</strong>非常重要，所以文字还是要看仔细，特别是不熟悉的资料时。</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518000755006.png" alt="image-20210518000755006"></p>
+<h3 id="5、线下落户"><a href="#5、线下落户" class="headerlink" title="5、线下落户"></a>5、线下落户</h3><blockquote>
+<p>那么问题来了，网上提交时，选择的受理机关是<strong>洪山区政务服务中心公安窗口</strong>，那是要到这个位置去办理落户手续吗？</p>
+<p>答案明显不是啦！</p>
+<p>审批意见中已经说得清清楚楚了，请携带资料前往<strong>关山街派出所</strong>办理相关落户手续</p>
+<p>当时忙着上班，请假去办理落户手续，根本没来得及看，结果先跑到洪山区政务服务中心公安窗口去咨询，然后这边告诉我要去关山街派出所办理，当时的心，哇凉哇凉。</p>
+<p>最后，携带网上提交的<strong>材料原件及复印件（包括身份证、户口本、学籍证明、居住凭证、毕业证等）</strong>，去拟落户派出所办理落户手续就可以了。</p>
+<p><strong>落户完成后，就可以得到这样一张登记表了，这就算完成大学生落户了</strong></p>
+<p>当时准备办个武汉身份证，结果指纹系统出现故障，指纹录不进去，身份证又耽搁了一周，唉，啥事都遇到了。</p>
+<p><strong>关山派出所周六也上班哦。</strong></p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518001753511.png" alt="image-20210518001753511"></p>
+<h2 id="二、武汉落户买房？"><a href="#二、武汉落户买房？" class="headerlink" title="二、武汉落户买房？"></a>二、武汉落户买房？</h2><h3 id="1、购房资格"><a href="#1、购房资格" class="headerlink" title="1、购房资格"></a>1、购房资格</h3><blockquote>
+<p>一般在武汉连续缴纳2年社保或以大学生身份落户武汉就拥有了购房资格了，如果用学历落户，但还不是武汉户口的话，按照前面的大学生落户说明，先去办理落户手续，一般3个工作日内就可以全部完成的。武汉对学历落户还是非常非常重视的。</p>
+</blockquote>
+<h3 id="2、房查"><a href="#2、房查" class="headerlink" title="2、房查"></a>2、房查</h3><blockquote>
+<p>手机微信上关注<strong>武汉住保房管</strong>公众号，进入公众号后，点击右下角的<strong>武房服务</strong>，然后选择<strong>个人房产信息查询</strong>，填写相关信息，等待结果（一般第二天就可以出结果）</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518002948556.png" alt="image-20210518002948556"></p>
+<blockquote>
+<p>房查结果</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518003226753.png" alt="image-20210518003226753"></p>
+<h3 id="3、房票"><a href="#3、房票" class="headerlink" title="3、房票"></a>3、房票</h3><blockquote>
+<p>等武汉户口下来（一张登记表）后，就可以进行房票查询了</p>
+<p>进入<strong>武汉住保房管</strong>公众号，选择<code>武房服务</code>-&gt;<code>购房资格核查服务</code>-&gt;<code>网上申报</code>-&gt;<code>本市户籍购房家庭</code>（本市户籍：<strong>是</strong>，其他按实际情况填写）-&gt;<code>下一步</code>-&gt;<code>上传影像资料</code>（身份证正反面可使用原户籍地身份证，户籍资料选择落户手续完成后发放的一张登记表），其他信息按实际情况填写即可。</p>
+<p>房票结果（一般工作日内第二天出结果）</p>
+</blockquote>
+<p><img src="/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/image-20210518004018519.png" alt="image-20210518004018519"></p>
+<h3 id="4、收入证明"><a href="#4、收入证明" class="headerlink" title="4、收入证明"></a>4、收入证明</h3><blockquote>
+<p>在公司办理收入证明，找公司相关行政即可</p>
+<p>注意事项：</p>
+<p>（1）一定要有公司盖章</p>
+<p>（2）月均收入要在房贷的2倍及以上</p>
+</blockquote>
+<h3 id="5、贷款银行资金流水"><a href="#5、贷款银行资金流水" class="headerlink" title="5、贷款银行资金流水"></a>5、贷款银行资金流水</h3><blockquote>
+<p><strong>工作日内</strong>，本人持身份证，去贷款银行机器上打印资金流水即可（一般半年内），不是ATM机</p>
+</blockquote>
+<h3 id="6、个人征信"><a href="#6、个人征信" class="headerlink" title="6、个人征信"></a>6、个人征信</h3><blockquote>
+<p><strong>非工作日</strong>（最好提前打电话咨询），去近处可以打印个人征信的机器上，本人持身份证在银行机器上打印个人征信即可，打印纸张越少，说明信用卡、贷款等越少。</p>
+</blockquote>
+<h3 id="7、首付"><a href="#7、首付" class="headerlink" title="7、首付"></a>7、首付</h3><blockquote>
+<p>能凑够首付，就可以去准备前6项资料了。</p>
+</blockquote>
+<h2 id="三、武汉房价？"><a href="#三、武汉房价？" class="headerlink" title="三、武汉房价？"></a>三、武汉房价？</h2><blockquote>
+<p>2021年，主要经过了2016年的暴涨后，再也不是能随随便便就买的起的房了</p>
+<p>2021年5月份光谷东的新房房价均价2.2w-2.3w，目前新希望是光谷东的最南方最便宜的一个位置了，均价1.7w左右，也非常难买。</p>
+<p>其他位置，比如江夏文化大道、黄家湖地铁小镇、花山等区域都是1.2w-1.5w的价格了，难！</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%88%BF/" rel="tag"># 房</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" rel="next" title="树的相关知识">
+                <i class="fa fa-chevron-left"></i> 树的相关知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/18/%E7%B3%BB%E7%BB%9F/%EF%BC%88%E8%BD%AC%EF%BC%89win10%E5%AE%89%E8%A3%85git%E6%8A%A5exit%20code128%E9%94%99%E8%AF%AF/" rel="prev" title="(转)win10 git安装 exit code128错误">
+                (转)win10 git安装 exit code128错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/header.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7%E5%87%86%E5%A4%87%E8%B5%84%E6%96%99"><span class="nav-text">大学生落户准备资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%AD%A6%E6%B1%89%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7"><span class="nav-text">一、武汉大学生落户</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%9C%80%E8%A6%81%E5%93%AA%E4%BA%9B%E7%94%B3%E8%AF%B7%E6%9D%90%E6%96%99%EF%BC%9F"><span class="nav-text">1、需要哪些申请材料？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%9D%90%E6%96%99%E5%87%86%E5%A4%87"><span class="nav-text">2、材料准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E3%80%8A%E7%94%B3%E6%8A%A5%E6%88%B7%E5%8F%A3%E7%99%BB%E8%AE%B0%E8%A1%A8%E3%80%8B%EF%BC%88%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7%E7%99%BB%E8%AE%B0%E7%B1%BB%EF%BC%89"><span class="nav-text">2.1 《申报户口登记表》（学生落户登记类）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E3%80%8A%E5%B1%85%E6%B0%91%E6%88%B7%E5%8F%A3%E6%9C%AC%E3%80%8B%E9%A6%96%E9%A1%B5%E5%8F%8A%E6%9C%AC%E4%BA%BA%E9%A1%B5"><span class="nav-text">2.2 《居民户口本》首页及本人页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3%E3%80%81%E5%AD%A6%E5%8E%86%E8%AF%81%E6%98%8E"><span class="nav-text">2.3、学历证明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E3%80%81%E6%AF%95%E4%B8%9A%E8%AF%81%E5%8E%9F%E4%BB%B6"><span class="nav-text">2.4 、毕业证原件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E3%80%81%E5%B1%85%E4%BD%8F%E5%87%AD%E8%AF%81"><span class="nav-text">2.5 、居住凭证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E3%80%81%E9%85%8D%E5%81%B6%E5%8F%8A%E5%AD%90%E5%A5%B3%E9%9A%8F%E8%BF%81%E7%9A%84%E5%85%B3%E7%B3%BB%E5%87%AD%E8%AF%81"><span class="nav-text">2.6 、配偶及子女随迁的关系凭证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-%E3%80%81%E4%B8%9A%E5%8A%A1%E4%B8%BB%E4%BD%93%E4%BA%BA%E7%85%A7%E7%89%87"><span class="nav-text">2.7 、业务主体人照片</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E7%BD%91%E4%B8%8A%E6%9D%90%E6%96%99%E6%8F%90%E4%BA%A4"><span class="nav-text">3、网上材料提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E7%AD%89%E5%BE%85%E5%AE%A1%E6%89%B9"><span class="nav-text">4、等待审批</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E7%BA%BF%E4%B8%8B%E8%90%BD%E6%88%B7"><span class="nav-text">5、线下落户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%AD%A6%E6%B1%89%E8%90%BD%E6%88%B7%E4%B9%B0%E6%88%BF%EF%BC%9F"><span class="nav-text">二、武汉落户买房？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%B4%AD%E6%88%BF%E8%B5%84%E6%A0%BC"><span class="nav-text">1、购房资格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%88%BF%E6%9F%A5"><span class="nav-text">2、房查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%88%BF%E7%A5%A8"><span class="nav-text">3、房票</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%94%B6%E5%85%A5%E8%AF%81%E6%98%8E"><span class="nav-text">4、收入证明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E8%B4%B7%E6%AC%BE%E9%93%B6%E8%A1%8C%E8%B5%84%E9%87%91%E6%B5%81%E6%B0%B4"><span class="nav-text">5、贷款银行资金流水</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E4%B8%AA%E4%BA%BA%E5%BE%81%E4%BF%A1"><span class="nav-text">6、个人征信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81%E9%A6%96%E4%BB%98"><span class="nav-text">7、首付</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%AD%A6%E6%B1%89%E6%88%BF%E4%BB%B7%EF%BC%9F"><span class="nav-text">三、武汉房价？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '大学生落户'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '大学生落户'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

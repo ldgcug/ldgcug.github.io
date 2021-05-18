@@ -1,37 +1,1525 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Airsim,ubuntu," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言 之前的控制部分都是在单个drone或car的条件下进行控制的，本篇博客将基于多个drone进行控制  一、settings.json设置 多机的配置如下，其中如果要设置某一个drone的初始角度，则只需要修改Yaw的值即可。 Yaw的值一般取[0,90,-90,180]这4个值中的一个 这里的drone2的Yaw设置的为180，通过api获取的yaw为-3.14  1234567891011">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初始Airsim（六）之多机控制">
+<meta property="og:url" content="https://ldgcug.xyz/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 之前的控制部分都是在单个drone或car的条件下进行控制的，本篇博客将基于多个drone进行控制  一、settings.json设置 多机的配置如下，其中如果要设置某一个drone的初始角度，则只需要修改Yaw的值即可。 Yaw的值一般取[0,90,-90,180]这4个值中的一个 这里的drone2的Yaw设置的为180，通过api获取的yaw为-3.14  1234567891011">
+<meta property="og:locale">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/1.png">
+<meta property="og:image" content="https://ldgcug.xyz/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/2.png">
+<meta property="article:published_time" content="2019-08-19T02:37:57.000Z">
+<meta property="article:modified_time" content="2019-08-20T05:13:37.183Z">
+<meta property="article:author" content="ldg">
+<meta property="article:tag" content="Airsim">
+<meta property="article:tag" content="ubuntu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ldgcug.xyz/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2019/08/19/Airsim/初始Airsim（六）之多机控制/"/>
+
+
+
+
+
+  <title>初始Airsim（六）之多机控制 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page,false) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初始Airsim（六）之多机控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-19T10:37:57+08:00">
+                2019-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Airsim/" itemprop="url" rel="index">
+                    <span itemprop="name">Airsim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/" class="leancloud_visitors" data-flag-title="初始Airsim（六）之多机控制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  23
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>之前的控制部分都是在单个drone或car的条件下进行控制的，本篇博客将基于多个drone进行控制</p>
+</blockquote>
+<h2 id="一、settings-json设置"><a href="#一、settings-json设置" class="headerlink" title="一、settings.json设置"></a>一、settings.json设置</h2><blockquote>
+<p>多机的配置如下，其中如果要设置某一个drone的初始角度，则只需要修改Yaw的值即可。</p>
+<p>Yaw的值一般取<strong>[0,90,-90,180]</strong>这4个值中的一个</p>
+<p>这里的drone2的Yaw设置的为180，通过api获取的yaw为-3.14</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;SeeDocsAt&quot;</span>: <span class="string">&quot;https://github.com/Microsoft/AirSim/blob/master/docs/settings.md&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;SettingsVersion&quot;</span>: <span class="number">1.2</span>,</span><br><span class="line">  <span class="attr">&quot;SimMode&quot;</span>:<span class="string">&quot;Multirotor&quot;</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">&quot;Vehicles&quot;</span>:&#123;</span><br><span class="line">  	<span class="attr">&quot;Drone1&quot;</span>:&#123;</span><br><span class="line">      <span class="attr">&quot;VehicleType&quot;</span>:<span class="string">&quot;SimpleFlight&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;X&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;Y&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;Z&quot;</span>:<span class="number">0</span>,</span><br><span class="line">      <span class="attr">&quot;Pitch&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;Roll&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;Yaw&quot;</span>:<span class="number">0</span></span><br><span class="line">	&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="attr">&quot;Drone2&quot;</span>:&#123;</span><br><span class="line">      <span class="attr">&quot;VehicleType&quot;</span>:<span class="string">&quot;SimpleFlight&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;X&quot;</span>:<span class="number">4</span>,<span class="attr">&quot;Y&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;Z&quot;</span>:<span class="number">0</span>,</span><br><span class="line">      <span class="attr">&quot;Pitch&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;Roll&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;Yaw&quot;</span>:<span class="number">180</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二、代码部分"><a href="#二、代码部分" class="headerlink" title="二、代码部分"></a>二、代码部分</h2><blockquote>
+<p>直接查看<a target="_blank" rel="noopener" href="https://github.com/ldgcug/Airsim_Controller">所有代码</a></p>
+</blockquote>
+<h3 id="2-1-API控制"><a href="#2-1-API控制" class="headerlink" title="2.1 API控制"></a>2.1 API控制</h3><p> <strong>connect_simulator.py</strong></p>
+<blockquote>
+<p>下面只展示一些比较核心的代码</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Connect</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,vehicle_name</span>):</span></span><br><span class="line">		<span class="keyword">if</span> vehicle_name <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">			vehicle_name = <span class="string">&#x27;Drone1&#x27;</span></span><br><span class="line"></span><br><span class="line">		self.vehicle_name = vehicle_name</span><br><span class="line"></span><br><span class="line">		<span class="comment"># connect simulator</span></span><br><span class="line">		self.client = airsim.MultirotorClient()</span><br><span class="line">		self.client.confirmConnection()</span><br><span class="line">		self.client.enableApiControl(<span class="literal">True</span>,vehicle_name)</span><br><span class="line">		self.client.armDisarm(<span class="literal">True</span>,vehicle_name)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># get data from airsim</span></span><br><span class="line">	<span class="comment">#获取drone1的姿态信息 </span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getQuadrotorPose_Drone1</span>(<span class="params">self</span>):</span> <span class="comment">#(x,y,z)</span></span><br><span class="line">		init_drone1_x,init_drone1_y,init_drone1_z = <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span><span class="comment">#由于在settings.json里面可能会给drone设置坐标，因此这里的xyz的值要与json文件里的值进行对应，之所以这样做，是因为不论在json文件中给drone设定何处的xyz坐标值，实际获取的drone的初始坐标都是（0,0,0），因此才加上了初始值</span></span><br><span class="line">		state = self.client.simGetVehiclePose(vehicle_name=self.vehicle_name)</span><br><span class="line">		state.position.x_val += init_drone1_x</span><br><span class="line">		state.position.y_val += init_drone1_y</span><br><span class="line">		state.position.z_val += init_drone1_z</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;position:&#x27;</span>,[state.position.x_val,state.position.y_val,state.position.z_val])</span><br><span class="line">		<span class="keyword">return</span> state</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#获取drone2的姿态信息</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getQuadrotorPose_Drone2</span>(<span class="params">self</span>):</span> <span class="comment">#(x,y,z)</span></span><br><span class="line">		init_drone2_x,init_drone2_y,init_drone2_z = <span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span> <span class="comment">#这里的x=4就对应于json中的drone2的x坐标值</span></span><br><span class="line">		state = self.client.simGetVehiclePose(vehicle_name=self.vehicle_name)</span><br><span class="line">		state.position.x_val += init_drone2_x</span><br><span class="line">		state.position.y_val += init_drone2_y</span><br><span class="line">		state.position.z_val += init_drone2_z</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;position:&#x27;</span>,[state.position.x_val,state.position.y_val,state.position.z_val])</span><br><span class="line">		<span class="keyword">return</span> state</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-1位置控制"><a href="#2-1-1位置控制" class="headerlink" title="2.1.1位置控制"></a>2.1.1位置控制</h4><p><strong>Drone1控制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Navigate</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.keyControl = Connect(vehicle_name=<span class="string">&#x27;Drone1&#x27;</span>)</span><br><span class="line">        <span class="comment"># 这里又设定了一个初始坐标值，是为了后面的计算，并且这里的初始值也与json里对应</span></span><br><span class="line">		self.init_drone1_x,self.init_drone1_y,self.init_drone1_z = <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">auto_navigate</span>(<span class="params">self,navigate_point,direction</span>):</span></span><br><span class="line">		x,y,z,v = navigate_point[<span class="number">0</span>],navigate_point[<span class="number">1</span>],navigate_point[<span class="number">2</span>],navigate_point[<span class="number">3</span>] <span class="comment">#轨迹点目标值</span></span><br><span class="line">		<span class="comment"># 这里之所以要减去初始值，是因为在使用moveByPosition的API时，无人机并不是到目标值就停止</span></span><br><span class="line">        <span class="comment"># 例如，xyz的初始坐标为（0,0,0），目标点（20,0,-3），无人机会在起飞后，最终到达（20,0,-3）停止</span></span><br><span class="line">        <span class="comment"># 若xyz的初始坐标为(10,0,0)，目标点（20,0,-3），无人机最终会到达（30,0,-3）处停止</span></span><br><span class="line">        <span class="comment"># 因此，在获取到目标点之后，减去xyz的初始值即可</span></span><br><span class="line">        x -= self.init_drone1_x</span><br><span class="line">		y -= self.init_drone1_y</span><br><span class="line">		z -= self.init_drone1_z</span><br><span class="line">		self.keyControl.moveByPosition(x,y,z,v)</span><br><span class="line">		self.keyControl.getQuadrotorPose_Drone1()</span><br><span class="line">		<span class="keyword">if</span> direction == <span class="string">&quot;left&quot;</span>:</span><br><span class="line">			self.keyControl.yaw_left()</span><br><span class="line">		<span class="keyword">elif</span> direction == <span class="string">&quot;right&quot;</span>:</span><br><span class="line">			self.keyControl.yaw_right()</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;direction&#x27;</span>,self.keyControl.direction)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line"></span><br><span class="line">	control = Navigate()</span><br><span class="line">	<span class="comment"># 设定轨迹点</span></span><br><span class="line">	navigate_point = [</span><br><span class="line">		[<span class="number">78</span>,-<span class="number">1.5</span>,-<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line">		[<span class="number">78</span>,-<span class="number">126</span>,-<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line">		[<span class="number">124</span>,-<span class="number">130</span>,-<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line">		[<span class="number">124</span>,<span class="number">124</span>,-<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line">		[<span class="number">3</span>,<span class="number">124</span>,-<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line">		[<span class="number">0</span>,<span class="number">0</span>,-<span class="number">3</span>,<span class="number">5</span>]</span><br><span class="line">	]</span><br><span class="line">    <span class="comment"># 设定转角方向</span></span><br><span class="line">	direction =[</span><br><span class="line">		<span class="string">&quot;left&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span></span><br><span class="line">	]</span><br><span class="line"></span><br><span class="line">	control.keyControl.takeoff()</span><br><span class="line"></span><br><span class="line">	control.keyControl.getQuadrotorPose_Drone1()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(navigate_point)):</span><br><span class="line">		control.auto_navigate(navigate_point[i],direction[i])</span><br><span class="line"></span><br><span class="line">	control.keyControl.land()</span><br><span class="line"></span><br><span class="line">	control.keyControl.reset()</span><br></pre></td></tr></table></figure>
+<p><strong>Drone2控制</strong></p>
+<p>和Drone1的控制代码基本完全一样，只是xyz的初始坐标值可能需要更换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Navigate</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.keyControl = Connect(vehicle_name=<span class="string">&#x27;Drone2&#x27;</span>)</span><br><span class="line">		self.init_drone2_x,self.init_drone2_y,self.init_drone2_z = <span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">auto_navigate</span>(<span class="params">self,navigate_point,direction</span>):</span></span><br><span class="line">		x,y,z,v = navigate_point[<span class="number">0</span>],navigate_point[<span class="number">1</span>],navigate_point[<span class="number">2</span>],navigate_point[<span class="number">3</span>]</span><br><span class="line">		x -= self.init_drone2_x</span><br><span class="line">		y -= self.init_drone2_y</span><br><span class="line">		z -= self.init_drone2_z</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-2-速度控制"><a href="#2-1-2-速度控制" class="headerlink" title="2.1.2 速度控制"></a>2.1.2 速度控制</h4><p><strong>Drone1控制</strong></p>
+<p>关于下面代码中的坐标系转换问题，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22597258">坐标转换参考</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NED = Body * A (yaw，直接获得的偏航角)</span><br><span class="line">Body = NED * A(-yaw，获得的偏航角取负)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Move</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.keyControl = Connect(vehicle_name=<span class="string">&#x27;Drone1&#x27;</span>)</span><br><span class="line">		self.desire_v = <span class="number">2</span> <span class="comment">#期望速度</span></span><br><span class="line">		self.thr = <span class="number">2</span>  <span class="comment"># 半径阈值</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># NED坐标转换为BODY坐标</span></span><br><span class="line">    <span class="comment"># 在实际控制过程中，从airsim中获取的姿态信息是属于NED坐标，而我们控制drone则属于BODY坐标控制</span></span><br><span class="line">    <span class="comment"># BODY坐标控制，即以drone的机头为前方，+x表示正前方飞行，+y表示正右方飞行，不论机头朝向何方，都是该控制规则</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">NED_TO_BODY</span>(<span class="params">self,ned_x,ned_y,ned_z</span>):</span></span><br><span class="line">		imu = self.keyControl.getImuInfo() <span class="comment"># 获取drone的imu信息</span></span><br><span class="line">		self.hudu = -imu[<span class="number">2</span>] <span class="comment"># imu:(pitch,roll,yaw)，获取的yaw取值范围为（-3.14，+3.14），即实际获取的为弧度信息；这里为什么添加了一个“-”，取相反值，是因为 NED = BODY * A (A表示转换矩阵)，如果要获取BODY坐标，则  BODY = NED * A^(-1)，这里涉及到了逆矩阵，还要考虑矩阵是否可逆；因此可以用  BODY = NED * A ，A里面的参数为-yaw即可</span></span><br><span class="line">		self.angle = <span class="built_in">round</span>(self.hudu,<span class="number">2</span>) / <span class="number">3.14</span> * <span class="number">180</span> <span class="comment">#将弧度转换为角度</span></span><br><span class="line">		NED = np.array([ned_x,ned_y,ned_z]) <span class="comment">#转换为数组形式，方便后面矩阵相乘</span></span><br><span class="line">		matrix_B_N = np.array([[<span class="built_in">round</span>(math.cos(self.hudu),<span class="number">2</span>),<span class="built_in">round</span>(math.sin(self.hudu),<span class="number">2</span>),<span class="number">0</span>],</span><br><span class="line">							   [<span class="built_in">round</span>(-math.sin(self.hudu),<span class="number">2</span>),<span class="built_in">round</span>(math.cos(self.hudu),<span class="number">2</span>),<span class="number">0</span>],</span><br><span class="line">							   [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>]]) <span class="comment">#转换矩阵A</span></span><br><span class="line">		Body = NED.dot(matrix_B_N) <span class="comment"># 矩阵乘法</span></span><br><span class="line">		<span class="keyword">return</span> Body</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">auto_movebyvelocity</span>(<span class="params">self,target_position,direction</span>):</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># 这里获取的xyz,x1,y1都是属于NED坐标</span></span><br><span class="line">		x,y,t = target_position[<span class="number">0</span>],target_position[<span class="number">1</span>],target_position[<span class="number">3</span>]</span><br><span class="line">		state = self.keyControl.getQuadrotorPose_Drone1() <span class="comment">#获取的实际坐标值已经在connect中进行了添加初始化坐标值操作</span></span><br><span class="line">		x1,y1 = state.position.x_val,state.position.y_val</span><br><span class="line"></span><br><span class="line">		delta_x ,delta_y = x-x1,y-y1 <span class="comment"># 获取xy方向的差值</span></span><br><span class="line">		vx,vy = delta_x / t,delta_y / t  <span class="comment"># 设定t=1，根据distance得到v</span></span><br><span class="line"></span><br><span class="line">		body = self.NED_TO_BODY(vx,vy,<span class="number">0</span>) <span class="comment">#将NED坐标转换为BODY坐标</span></span><br><span class="line">		vx,vy = body[<span class="number">0</span>],body[<span class="number">1</span>] <span class="comment">#BODY</span></span><br><span class="line">		</span><br><span class="line">        <span class="comment"># 对速度进行归一化，并用vx_,vy_表示真正要输入的速度控制值</span></span><br><span class="line">		vx_ = vx / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line">		vy_ = vy / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line">		vz = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span> math.sqrt(<span class="built_in">pow</span>((x - x1),<span class="number">2</span>) + <span class="built_in">pow</span>((y-y1),<span class="number">2</span>)) &gt; self.thr:<span class="comment">#判断是否到达目标区域</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> math.sqrt(<span class="built_in">pow</span>((x - x1),<span class="number">2</span>) + <span class="built_in">pow</span>((y-y1),<span class="number">2</span>)) &lt;= self.thr:</span><br><span class="line">				self.keyControl.moveByVelocity(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>) <span class="comment"># 到达目标区域，速度赋值为0</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				delta_x ,delta_y = x-x1,y-y1</span><br><span class="line">				vx,vy = delta_x / t,delta_y / t</span><br><span class="line"></span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;target position:&#x27;</span>,[x,y],<span class="string">&#x27;current position:&#x27;</span>,[x1,y1])</span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;vx:&#x27;</span>,vx,<span class="string">&#x27;vy:&#x27;</span>,vy)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">				body = self.NED_TO_BODY(vx,vy,<span class="number">0</span>)</span><br><span class="line">				vx,vy = body[<span class="number">0</span>],body[<span class="number">1</span>] <span class="comment">#BODY</span></span><br><span class="line"></span><br><span class="line">				</span><br><span class="line">				vx_ = vx / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line">				vy_ = vy / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line"></span><br><span class="line">				temp_vx_,temp_vy_ = vx_,vy_</span><br><span class="line">                </span><br><span class="line">				<span class="comment"># 根据不同的方向，实现+x永远朝着drone的机头正前方飞行</span></span><br><span class="line">				<span class="keyword">if</span> self.direction == <span class="string">&quot;North&quot;</span>:</span><br><span class="line">					<span class="built_in">print</span>(<span class="string">&#x27;North&#x27;</span>)</span><br><span class="line">					vx_,vy_ = temp_vx_,temp_vy_ <span class="comment"># x,y</span></span><br><span class="line">				<span class="keyword">elif</span> self.direction == <span class="string">&quot;West&quot;</span>: </span><br><span class="line">					<span class="built_in">print</span>(<span class="string">&#x27;West&#x27;</span>)</span><br><span class="line">					vx_,vy_ = temp_vy_,-temp_vx_ <span class="comment"># y -x</span></span><br><span class="line">				<span class="keyword">elif</span> self.direction == <span class="string">&quot;South&quot;</span>:</span><br><span class="line">					<span class="built_in">print</span>(<span class="string">&#x27;South&#x27;</span>)</span><br><span class="line">					vx_,vy_ = -temp_vx_,-temp_vy_  <span class="comment"># -x -y</span></span><br><span class="line">				<span class="keyword">elif</span> self.direction == <span class="string">&quot;East&quot;</span>:</span><br><span class="line">					<span class="built_in">print</span>(<span class="string">&#x27;East&#x27;</span>)</span><br><span class="line">					vx_,vy_ = -temp_vy_,temp_vx_ <span class="comment"># -y x</span></span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;vx_:&#x27;</span>,vx_,<span class="string">&#x27;vy_:&#x27;</span>,vy_)</span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">				self.keyControl.moveByVelocity(vx_,vy_,vz,t)<span class="comment"># 发送归一化后的速度控制指令，这里的t=1，即实现每秒飞行 1 * self.desire_v 米，因此不需要添加sleep操作</span></span><br><span class="line"></span><br><span class="line">			state = self.keyControl.getQuadrotorPose_Drone1()<span class="comment">#获取新的坐标值</span></span><br><span class="line">			x1,y1 = state.position.x_val,state.position.y_val</span><br><span class="line">        <span class="comment"># 进行转角操作</span></span><br><span class="line">        <span class="keyword">if</span> direction == <span class="string">&quot;left&quot;</span>:</span><br><span class="line">			self.keyControl.yaw_left()</span><br><span class="line">		<span class="keyword">elif</span> direction == <span class="string">&quot;right&quot;</span>:</span><br><span class="line">			self.keyControl.yaw_right()</span><br><span class="line"></span><br><span class="line">		self.direction = self.keyControl.direction <span class="comment">#获取新的无人机机头朝向</span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;direction&#x27;</span>,self.keyControl.direction)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	control = Move()</span><br><span class="line"></span><br><span class="line">	cmd_vel = [</span><br><span class="line">		[<span class="number">78.0</span>,-<span class="number">1.5</span>,-<span class="number">3</span>,<span class="number">1.0</span>],</span><br><span class="line">		[<span class="number">78.0</span>,-<span class="number">127.0</span>,-<span class="number">3</span>,<span class="number">1.0</span>],</span><br><span class="line">		[<span class="number">125.0</span>,-<span class="number">127.0</span>,-<span class="number">3</span>,<span class="number">1.0</span>],</span><br><span class="line">		[<span class="number">125.0</span>,<span class="number">125.5</span>,-<span class="number">3</span>,<span class="number">1.0</span>],</span><br><span class="line">		[<span class="number">1.5</span>,<span class="number">124.0</span>,-<span class="number">3</span>,<span class="number">1.0</span>],</span><br><span class="line">		[<span class="number">0.0</span>,<span class="number">0.0</span>,-<span class="number">3</span>,<span class="number">1.0</span>]</span><br><span class="line">	]</span><br><span class="line">	direction = [</span><br><span class="line">		<span class="string">&quot;left&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span>,</span><br><span class="line">		<span class="string">&quot;right&quot;</span></span><br><span class="line">	]</span><br><span class="line"></span><br><span class="line">	control.keyControl.takeoff()</span><br><span class="line">	control.direction = control.keyControl.direction</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;init direction&#x27;</span>,control.direction)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cmd_vel)):</span><br><span class="line">		control.auto_movebyvelocity(cmd_vel[i],direction[i])</span><br><span class="line"></span><br><span class="line">	control.keyControl.land()</span><br><span class="line">	control.keyControl.reset()</span><br></pre></td></tr></table></figure>
+<p><strong>Drone2控制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Move</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.keyControl = Connect(vehicle_name=<span class="string">&#x27;Drone2&#x27;</span>)</span><br><span class="line">		self.desire_v = <span class="number">2</span></span><br><span class="line">		self.thr = <span class="number">2</span></span><br><span class="line">其余的部分基本完全一样，只是在获取坐标的时候，将state = self.keyControl.getQuadrotorPose_Drone1()换成state = self.keyControl.getQuadrotorPose_Drone2()即可</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-UDP控制"><a href="#2-2-UDP控制" class="headerlink" title="2.2 UDP控制"></a>2.2 UDP控制</h3><blockquote>
+<p>目前暂时不考虑两台机器间的UDP通信控制，和API控制差不多的思想</p>
+<p>但在UDP的单机控制代码中，还没有将速度控制修改为2.1里面的坐标系转换和期望速度控制，这点需要注意</p>
+</blockquote>
+<h4 id="2-2-1-位置控制"><a href="#2-2-1-位置控制" class="headerlink" title="2.2.1 位置控制"></a>2.2.1 位置控制</h4><h4 id="2-2-2-速度控制"><a href="#2-2-2-速度控制" class="headerlink" title="2.2.2 速度控制"></a>2.2.2 速度控制</h4><h3 id="2-3-ROS控制"><a href="#2-3-ROS控制" class="headerlink" title="2.3 ROS控制"></a>2.3 ROS控制</h3><p> <strong>connect_simulator.py</strong></p>
+<blockquote>
+<p>更多的介绍和API控制中，稍微有些区别的地方，公共的地方将不再显示</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Connect</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,vehicle_name</span>):</span></span><br><span class="line">        self.count = <span class="number">0</span> <span class="comment"># 添加了计数器，用于判断ros的发送与接收频率是否接近一致</span></span><br><span class="line">        self.lock = threading.Lock() <span class="comment"># 添加线程锁</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># control command </span></span><br><span class="line">    <span class="comment"># 例如，在起飞的过程中，添加了一个线程锁，确保该指令执行完成</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">takeoff</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.lock.acquire()</span><br><span class="line">		self.client.takeoffAsync(vehicle_name=self.vehicle_name).join()</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;takeoff finished&#x27;</span>)</span><br><span class="line">		self.lock.release() </span><br><span class="line">    </span><br><span class="line">    <span class="comment">#在进行速度控制，通过count判断，这边接收到了多少天来自控制程序中的ros命令</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">moveByVelocity</span>(<span class="params">self,data</span>):</span></span><br><span class="line">		self.lock.acquire()</span><br><span class="line">		vx,vy,vz,t = data.vx,data.vy,data.vz,data.t</span><br><span class="line">		self.client.moveByVelocityAsync(vx,vy,vz,t,vehicle_name=self.vehicle_name).join()</span><br><span class="line">		self.count += <span class="number">1</span></span><br><span class="line">		<span class="comment">#self.client.moveByVelocityAsync(0,0,0,0.01).join()</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;linear velocity is:&#x27;</span>,vx,vy,vz)</span><br><span class="line">		self.lock.release() </span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;count:&#x27;</span>,self.count)</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># get data from airsim</span></span><br><span class="line">    <span class="comment"># 和之前有点不同的是，在这里获取drone的坐标值时，没有在加上初始坐标值</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getQuadrotorPose</span>(<span class="params">self</span>):</span> <span class="comment">#(x,y,z)</span></span><br><span class="line">		state = self.client.simGetVehiclePose(vehicle_name=self.vehicle_name)</span><br><span class="line">		<span class="comment">#print(&#x27;position:&#x27;,[state.position.x_val,state.position.y_val,state.position.z_val])</span></span><br><span class="line">		<span class="keyword">return</span> state</span><br></pre></td></tr></table></figure>
+<p><strong>drone1_pub_topic.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AirsimPubTopic</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.vehicle_name = <span class="string">&#x27;Drone1&#x27;</span></span><br><span class="line">		self.client = Connect(vehicle_name=self.vehicle_name)</span><br><span class="line">        <span class="comment">#在发布的时候，一定要注意topic名称，这里为/drone1/airsimPose，要将drone1和drone2区分开</span></span><br><span class="line">        self.rotor_pose_pub 	=	rospy.Publisher(<span class="string">&#x27;/drone1/airsimPose&#x27;</span>,PoseStamped,queue_size=<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># init difference coordinates (x,y,z)</span></span><br><span class="line">		<span class="comment"># =========  when I set the (x,y,z) in settings.json ,I got the coordinates will be (0,0,0) ==========</span></span><br><span class="line">		<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">			&quot;Drone1&quot;:&#123;</span></span><br><span class="line"><span class="string">			      &quot;VehicleType&quot;:&quot;SimpleFlight&quot;,</span></span><br><span class="line"><span class="string">			      &quot;X&quot;:0,&quot;Y&quot;:0,&quot;Z&quot;:0</span></span><br><span class="line"><span class="string">    		&#125;</span></span><br><span class="line"><span class="string">		&#x27;&#x27;&#x27;</span></span><br><span class="line">        <span class="comment"># 在这里设定了初始的对应于json的xyz坐标，但是设置的都为0，即相当于没有设置，在控制程序中进行了相关操作</span></span><br><span class="line">		self.ue4_x = <span class="number">0</span></span><br><span class="line">		self.ue4_y = <span class="number">0</span></span><br><span class="line">		self.ue4_z = <span class="number">0</span></span><br><span class="line">        self.rate = rospy.Rate(<span class="number">250</span>)  <span class="comment"># 频率设定的为250hz</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetAirsimPose</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">		multirotor_state = self.client.getQuadrotorPose()</span><br><span class="line">		pose = multirotor_state.position</span><br><span class="line">		orientation = multirotor_state.orientation</span><br><span class="line"></span><br><span class="line">		self.simPose = PoseStamped()</span><br><span class="line">        <span class="comment"># 在该处加上了xyz的初始坐标，而不是在connect里面添加</span></span><br><span class="line">		self.simPose.pose.position.x = pose.x_val + self.ue4_x</span><br><span class="line">		self.simPose.pose.position.y = pose.y_val + self.ue4_y</span><br><span class="line">		self.simPose.pose.position.z = pose.z_val + self.ue4_z</span><br><span class="line">		self.simPose.pose.orientation.w = orientation.w_val</span><br><span class="line">		self.simPose.pose.orientation.x = orientation.x_val</span><br><span class="line">		self.simPose.pose.orientation.y = orientation.y_val</span><br><span class="line">		self.simPose.pose.orientation.z = orientation.z_val</span><br><span class="line">		self.simPose.header.stamp = rospy.Time.now()</span><br><span class="line">		self.simPose.header.seq = <span class="number">1</span></span><br><span class="line">		self.simPose.header.frame_id = <span class="string">&quot;airsim_pose&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>drone1_sub_topic.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AirsimSubTopic</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line"></span><br><span class="line">		self.vehicle_name = <span class="string">&#x27;Drone1&#x27;</span></span><br><span class="line">		self.client = Connect(vehicle_name=self.vehicle_name)</span><br><span class="line">		self.direction = self.client.direction</span><br><span class="line">        <span class="comment"># 这里订阅的topic的名称也为drone1</span></span><br><span class="line">        self.subTakeoff = rospy.Subscriber(<span class="string">&quot;/drone1/airsim/takeoff&quot;</span>,Empty,self.SendTakeoff)</span><br><span class="line">        self.rate = rospy.Rate(<span class="number">250</span>)  <span class="comment"># 250hz</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">#在这里进行了转换，即保证+x永远朝着机头正前方飞行</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">SendVelocity</span>(<span class="params">self,data</span>):</span></span><br><span class="line">		<span class="comment">#self.client.moveByVelocity(data.vx,data.vy,data.vz,data.t)</span></span><br><span class="line">		vx,vy,vz,t = data.vx,data.vy,data.vz,data.t</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;velocity direction&#x27;</span>,self.direction)</span><br><span class="line">		<span class="keyword">if</span> self.direction == <span class="string">&quot;North&quot;</span>:</span><br><span class="line">			data.vx ,data.vy = vx,vy <span class="comment"># x,y</span></span><br><span class="line">		<span class="keyword">elif</span> self.direction == <span class="string">&quot;West&quot;</span>:</span><br><span class="line">			data.vx ,data.vy = vy,-vx <span class="comment"># y,-x</span></span><br><span class="line">		<span class="keyword">elif</span> self.direction == <span class="string">&quot;South&quot;</span>: </span><br><span class="line">			data.vx ,data.vy = -vx,-vy <span class="comment"># -x,-y</span></span><br><span class="line">		<span class="keyword">elif</span> self.direction == <span class="string">&quot;East&quot;</span>:</span><br><span class="line">			data.vx ,data.vy = -vy,vx <span class="comment"># -y,x</span></span><br><span class="line">		self.client.moveByVelocity(data)</span><br></pre></td></tr></table></figure>
+<p><strong>drone2_pub_topic.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AirsimPubTopic</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.vehicle_name = <span class="string">&#x27;Drone2&#x27;</span></span><br><span class="line">		self.client = Connect(vehicle_name=self.vehicle_name)</span><br><span class="line">        <span class="comment">#这里的名称为/drone2/airsimPose</span></span><br><span class="line">        self.rotor_pose_pub 	=	rospy.Publisher(<span class="string">&#x27;/drone2/airsimPose&#x27;</span>,PoseStamped,queue_size=<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 这里设置了drone2的坐标，其实相当于没有设置</span></span><br><span class="line">        self.ue4_x = <span class="number">0</span></span><br><span class="line">		self.ue4_y = <span class="number">0</span></span><br><span class="line">		self.ue4_z = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		self.rate = rospy.Rate(<span class="number">250</span>)  <span class="comment"># 10hz</span></span><br><span class="line">其他部分基本一样</span><br></pre></td></tr></table></figure>
+<p><strong>drone2_sub_topic.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> connect_simulator <span class="keyword">import</span> Connect</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AirsimSubTopic</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.vehicle_name = <span class="string">&#x27;Drone2&#x27;</span></span><br><span class="line">		self.client = Connect(vehicle_name=self.vehicle_name)</span><br><span class="line">		self.direction = self.client.direction</span><br><span class="line">		<span class="comment">#subScriber</span></span><br><span class="line">        <span class="comment"># 名称不一样，为drone2</span></span><br><span class="line">		self.subTakeoff = rospy.Subscriber(<span class="string">&quot;/drone2/airsim/takeoff&quot;</span>,Empty,self.SendTakeoff)</span><br><span class="line">        self.rate = rospy.Rate(<span class="number">250</span>)  <span class="comment"># 250hz</span></span><br></pre></td></tr></table></figure>
+<p><strong>ros_airsim.launch</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">	&lt;group ns = <span class="string">&quot;Drone1&quot;</span>&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">&quot;ros_controller&quot;</span> name=<span class="string">&quot;airsim_sub_topic&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;airsim_sub_topic.py&quot;</span> output=<span class="string">&quot;screen&quot;</span> /&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">&quot;ros_controller&quot;</span> name=<span class="string">&quot;airsim_pub_topic&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;airsim_pub_topic.py&quot;</span> /&gt;</span><br><span class="line">	&lt;/group&gt;</span><br><span class="line"></span><br><span class="line">	&lt;group ns = <span class="string">&quot;Drone2&quot;</span>&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">&quot;ros_controller&quot;</span> name=<span class="string">&quot;drone2_sub_topic&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;drone2_sub_topic.py&quot;</span> /&gt;</span><br><span class="line">		&lt;node pkg=<span class="string">&quot;ros_controller&quot;</span> name=<span class="string">&quot;drone2_pub_topic&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;drone2_pub_topic.py&quot;</span> /&gt;</span><br><span class="line">	&lt;/group&gt;</span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-1-位置控制"><a href="#2-3-1-位置控制" class="headerlink" title="2.3.1 位置控制"></a>2.3.1 位置控制</h4><p><strong>drone1控制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Drone1Controller</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 半径阈值</span></span><br><span class="line">		self.thr = <span class="number">2</span></span><br><span class="line">		<span class="comment"># 这里设定的初始坐标才有用，在pub里面设定的是没有用到的，pub中都设为0，即没有设置</span></span><br><span class="line">		self.init_drone1_x,self.init_drone1_y,self.init_drone1_z = <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">auto_navigate</span>(<span class="params">self,navigate_point,direction</span>):</span></span><br><span class="line">		x,y,z,v = navigate_point[<span class="number">0</span>],navigate_point[<span class="number">1</span>],navigate_point[<span class="number">2</span>],navigate_point[<span class="number">3</span>]</span><br><span class="line">		x1,y1 = self.pose.x,self.pose.y <span class="comment"># 利用sub订阅时刻获取drone的值</span></span><br><span class="line">        <span class="comment"># 在这里进行了相减，得到真实的实际值</span></span><br><span class="line">		x -= self.init_drone1_x</span><br><span class="line">		y -= self.init_drone1_y</span><br><span class="line">		z -= self.init_drone1_z</span><br><span class="line">		self.moveByPosition(x,y,z,v)</span><br><span class="line">        <span class="comment"># 由于ros的通信机制，在发布指令后，必须等待该指令响应完成，因此用阈值来进行判断，这是和API控制中的一个区别，也是ros的特性导致的</span></span><br><span class="line">		<span class="keyword">while</span> math.sqrt(<span class="built_in">pow</span>((x - x1),<span class="number">2</span>) + <span class="built_in">pow</span>((y-y1),<span class="number">2</span>)) &gt; self.thr:</span><br><span class="line">			self.rate.sleep() <span class="comment"># 隔1秒发布一次指令</span></span><br><span class="line">			x1,y1 = self.pose.x,self.pose.y</span><br><span class="line">            <span class="comment"># 输出当前位置时，需要加上初始值</span></span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&#x27;current position&#x27;</span>,x1+self.init_drone1_x,y1 + self.init_drone1_y)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> direction == <span class="string">&quot;left&quot;</span>:</span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&#x27;left&#x27;</span>)</span><br><span class="line">			self.pubYawLeft.publish(Empty())</span><br><span class="line">		<span class="keyword">elif</span> direction == <span class="string">&quot;right&quot;</span>:</span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&#x27;right&#x27;</span>)</span><br><span class="line">			self.pubYawRight.publish(Empty())</span><br><span class="line">		<span class="comment"># 这里添加响应时间，是为了使转向动作完成，否则，在转向过程中，ros已经发布了下一条指令了</span></span><br><span class="line">		time.sleep(<span class="number">2</span>)</span><br><span class="line">		self.hover()</span><br><span class="line">		time.sleep(<span class="number">8</span>)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	drone1_controller = Drone1Controller()</span><br><span class="line">	rospy.init_node(<span class="string">&#x27;drone1_controller&#x27;</span>)</span><br><span class="line">	drone1_controller.rate = rospy.Rate(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>drone2控制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Drone1Controller</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 设定xyz的初始值和json中保持一致，不在pub中进行设置</span></span><br><span class="line">        self.init_drone2_x,self.init_drone2_y,self.init_drone2_z = <span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	drone1_controller = Drone1Controller()</span><br><span class="line">	rospy.init_node(<span class="string">&#x27;drone2_controller&#x27;</span>)</span><br><span class="line">	drone1_controller.rate = rospy.Rate(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-2-速度控制"><a href="#2-3-2-速度控制" class="headerlink" title="2.3.2 速度控制"></a>2.3.2 速度控制</h4><p><strong>drone1控制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Drone1Controller</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.desire_v = <span class="number">2</span></span><br><span class="line">		self.thr = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">		self.count = <span class="number">0</span> <span class="comment">#计数，判断发送与接收的频率是否接近一致</span></span><br><span class="line">		self.init_drone1_x,self.init_drone1_y,self.init_drone1_z = <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 坐标系转换，使用 BODY = NED * A，即将yaw要取负值</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">NED_TO_BODY</span>(<span class="params">self,ned_x,ned_y,ned_z</span>):</span></span><br><span class="line">		self.hudu = -self.imu.yaw </span><br><span class="line">		self.angle = <span class="built_in">round</span>(self.hudu,<span class="number">2</span>) / <span class="number">3.14</span> * <span class="number">180</span></span><br><span class="line">		NED = np.array([ned_x,ned_y,ned_z])</span><br><span class="line">		<span class="comment">#print(&#x27;NED&#x27;,NED)</span></span><br><span class="line">		matrix_B_N = np.array([[<span class="built_in">round</span>(math.cos(self.hudu),<span class="number">2</span>),<span class="built_in">round</span>(math.sin(self.hudu),<span class="number">2</span>),<span class="number">0</span>],</span><br><span class="line">							   [<span class="built_in">round</span>(-math.sin(self.hudu),<span class="number">2</span>),<span class="built_in">round</span>(math.cos(self.hudu),<span class="number">2</span>),<span class="number">0</span>],</span><br><span class="line">							   [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>]])</span><br><span class="line">		<span class="comment"># print(&#x27;matrix&#x27;,matrix_B_N)</span></span><br><span class="line">		Body = NED.dot(matrix_B_N) <span class="comment"># </span></span><br><span class="line">		<span class="comment">#print(&#x27;body&#x27;,Body)</span></span><br><span class="line">		<span class="keyword">return</span> Body</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">auto_movebyvelocity</span>(<span class="params">self,target_position,direction</span>):</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># NED</span></span><br><span class="line">		x,y,t = target_position[<span class="number">0</span>],target_position[<span class="number">1</span>],target_position[<span class="number">3</span>]</span><br><span class="line">        <span class="comment"># 因为pub中，没有添加初始坐标，因此在这里添加了</span></span><br><span class="line">		x1,y1 = self.pose.x + self.init_drone1_x,self.pose.y + self.init_drone1_y</span><br><span class="line"></span><br><span class="line">		delta_x ,delta_y = x-x1,y-y1</span><br><span class="line">		vx,vy = delta_x / t,delta_y / t  <span class="comment"># NED </span></span><br><span class="line"></span><br><span class="line">		body = self.NED_TO_BODY(vx,vy,<span class="number">0</span>)</span><br><span class="line">		vx,vy = body[<span class="number">0</span>],body[<span class="number">1</span>] <span class="comment">#BODY</span></span><br><span class="line"></span><br><span class="line">		vx_ = vx / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line">		vy_ = vy / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line">		vz = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span> math.sqrt(<span class="built_in">pow</span>((x - x1),<span class="number">2</span>) + <span class="built_in">pow</span>((y-y1),<span class="number">2</span>)) &gt; self.thr:</span><br><span class="line">			<span class="keyword">if</span> math.sqrt(<span class="built_in">pow</span>((x - x1),<span class="number">2</span>) + <span class="built_in">pow</span>((y-y1),<span class="number">2</span>)) &lt;= self.thr:</span><br><span class="line">				self.moveByVelocity(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				delta_x ,delta_y = x-x1,y-y1</span><br><span class="line">				vx,vy = delta_x / t,delta_y / t</span><br><span class="line"></span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;target position:&#x27;</span>,[x,y],<span class="string">&#x27;current position:&#x27;</span>,[x1 + self.init_drone1_x,y1 + self.init_drone1_y])</span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;vx:&#x27;</span>,vx,<span class="string">&#x27;vy:&#x27;</span>,vy)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">				body = self.NED_TO_BODY(vx,vy,<span class="number">0</span>)</span><br><span class="line">				vx,vy = body[<span class="number">0</span>],body[<span class="number">1</span>] <span class="comment">#BODY</span></span><br><span class="line"></span><br><span class="line">				</span><br><span class="line">				vx_ = vx / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line">				vy_ = vy / (math.sqrt(<span class="built_in">pow</span>(delta_x,<span class="number">2</span>) + <span class="built_in">pow</span>(delta_y,<span class="number">2</span>))) * self.desire_v</span><br><span class="line"></span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;vx_:&#x27;</span>,vx_,<span class="string">&#x27;vy_:&#x27;</span>,vy_)</span><br><span class="line">				<span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">				self.moveByVelocity(vx_,vy_,vz,t)</span><br><span class="line">			self.rate.sleep() <span class="comment"># 隔1秒发一次，保持了发送与接收的频率接近一致</span></span><br><span class="line">			x1,y1 = self.pose.x + self.init_drone1_x ,self.pose.y + self.init_drone1_y</span><br><span class="line">			self.count += <span class="number">1</span></span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&#x27;count:&#x27;</span>,self.count) <span class="comment"># 显示发送次数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	drone1_controller = Drone1Controller()</span><br><span class="line">	rospy.init_node(<span class="string">&#x27;drone1_controller&#x27;</span>)</span><br><span class="line">	drone1_controller.rate = rospy.Rate(<span class="number">1</span>) <span class="comment"># 频率设置为1秒</span></span><br></pre></td></tr></table></figure>
+<p><strong>drone2控制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Drone1Controller</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		self.desire_v = <span class="number">2</span></span><br><span class="line">		self.thr = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">		self.count = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 这里的x设置为了4</span></span><br><span class="line">		self.init_drone2_x,self.init_drone2_y,self.init_drone2_z = <span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	drone1_controller = Drone1Controller()</span><br><span class="line">	rospy.init_node(<span class="string">&#x27;drone2_controller&#x27;</span>)</span><br><span class="line">	drone1_controller.rate = rospy.Rate(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="2-4-rviz显示多条轨迹"><a href="#2-4-rviz显示多条轨迹" class="headerlink" title="2.4 rviz显示多条轨迹"></a>2.4 rviz显示多条轨迹</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*-coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> nav_msgs.msg <span class="keyword">import</span>  Path</span><br><span class="line"><span class="keyword">from</span> geometry_msgs.msg <span class="keyword">import</span> PoseStamped</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">path</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.pose1_sub = rospy.Subscriber(<span class="string">&#x27;/drone1/airsimPose&#x27;</span>,PoseStamped,self.add_pose1_path)</span><br><span class="line">        self.pose2_sub = rospy.Subscriber(<span class="string">&#x27;/drone2/airsimPose&#x27;</span>,PoseStamped,self.add_pose2_path)</span><br><span class="line">        self.path_pub1 = rospy.Publisher(<span class="string">&#x27;/drone1/path&#x27;</span>, Path, queue_size=<span class="number">10</span>)</span><br><span class="line">        self.path_pub2 = rospy.Publisher(<span class="string">&#x27;/drone2/path&#x27;</span>, Path, queue_size=<span class="number">10</span>)</span><br><span class="line">        self.path1 = Path()</span><br><span class="line">        self.path2 = Path()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_pose1_path</span>(<span class="params">self,msg</span>):</span></span><br><span class="line">        self.path1.header = msg.header</span><br><span class="line">        self.path1.header.frame_id = <span class="string">&#x27;drone1&#x27;</span></span><br><span class="line">        pose = PoseStamped()</span><br><span class="line">        pose.header = msg.header</span><br><span class="line">        pose.pose = msg.pose</span><br><span class="line">        pose.pose.position.z = -pose.pose.position.z</span><br><span class="line">        pose.pose.position.y = -pose.pose.position.y</span><br><span class="line">        self.path1.poses.append(pose)</span><br><span class="line">        self.path_pub1.publish(self.path1)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;path&#x27;</span>,[msg.pose.position])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_pose2_path</span>(<span class="params">self,msg</span>):</span></span><br><span class="line">        self.path2.header = msg.header</span><br><span class="line">        self.path2.header.frame_id = <span class="string">&#x27;drone1&#x27;</span></span><br><span class="line">        pose = PoseStamped()</span><br><span class="line">        pose.header = msg.header</span><br><span class="line">        pose.pose = msg.pose</span><br><span class="line">        pose.pose.position.z = -pose.pose.position.z</span><br><span class="line">        pose.pose.position.y = -pose.pose.position.y</span><br><span class="line">        self.path2.poses.append(pose)</span><br><span class="line">        self.path_pub2.publish(self.path2)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;path&#x27;</span>,[msg.pose.position])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    rospy.init_node(<span class="string">&#x27;airsim_path&#x27;</span>)</span><br><span class="line">    mpath = path()</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line">        rospy.spin()</span><br></pre></td></tr></table></figure>
+<h2 id="三、ros控制的路径显示"><a href="#三、ros控制的路径显示" class="headerlink" title="三、ros控制的路径显示"></a>三、ros控制的路径显示</h2><blockquote>
+<p>在下面的两种控制中，drone2的坐标位置为（4,0,0），drone1的坐标位置为（0,0,0）</p>
+<p>不论是位置控制还是速度控制，都是先让drone2起飞一会，稍等几秒后，drone1再起飞。并且drone1和drone2的目标轨迹点完全相同</p>
+<p>红色的为drone2的运动轨迹，绿色的为drone1的运动轨迹</p>
+</blockquote>
+<h3 id="3-1-位置控制"><a href="#3-1-位置控制" class="headerlink" title="3.1 位置控制"></a>3.1 位置控制</h3><p><img src="/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/1.png" alt></p>
+<h3 id="3-2-速度控制"><a href="#3-2-速度控制" class="headerlink" title="3.2 速度控制"></a>3.2 速度控制</h3><p><img src="/2019/08/19/Airsim/%E5%88%9D%E5%A7%8BAirsim%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8B%E5%A4%9A%E6%9C%BA%E6%8E%A7%E5%88%B6/2.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>（1）在API控制这一块，其实是不需要考虑其下个指令的发布时间，直接发布位置控制或者速度控制，drone都会在到达目标点后执行下一个控制指令。而速度控制时，其实也是可以给定速度和时间，直接使其到达目标点左右，例如UDP的速度控制中，目前就是这种做法，但是该做法并不好，通过给定目标点和期望速度来控制，这样相对好很多</p>
+<p>（2）而在ros控制这一块，由于都是自定义的ros节点，进行发布。在进行速度控制和位置控制时，则不能像API控制那样，因为在ros的指令发布后，airsim响应需要时间，不能在这个响应时间内发布下一条ros命令（ros指令都会存储在缓存中，而airsim则会从缓存中响应的读取指令，于是最好保持发送和接收的一致），所以就添加了很多的操作。目前pub和sub中设置rate为250hz，控制程序中，设置频率为1hz，能保持其一致，但是为什么这样就保持一致了，还没怎么弄明白。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Airsim/" rel="tag"># Airsim</a>
+          
+            <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/15/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BActor-Critic/" rel="next" title="代码实现（六）之Actor-Critic">
+                <i class="fa fa-chevron-left"></i> 代码实现（六）之Actor-Critic
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/20/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%83%EF%BC%89%E4%B9%8B%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/" rel="prev" title="初识Airsim（七）之强化学习训练测试">
+                初识Airsim（七）之强化学习训练测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/header.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81settings-json%E8%AE%BE%E7%BD%AE"><span class="nav-text">一、settings.json设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="nav-text">二、代码部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-API%E6%8E%A7%E5%88%B6"><span class="nav-text">2.1 API控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6"><span class="nav-text">2.1.1位置控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-%E9%80%9F%E5%BA%A6%E6%8E%A7%E5%88%B6"><span class="nav-text">2.1.2 速度控制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-UDP%E6%8E%A7%E5%88%B6"><span class="nav-text">2.2 UDP控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6"><span class="nav-text">2.2.1 位置控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E9%80%9F%E5%BA%A6%E6%8E%A7%E5%88%B6"><span class="nav-text">2.2.2 速度控制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-ROS%E6%8E%A7%E5%88%B6"><span class="nav-text">2.3 ROS控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6"><span class="nav-text">2.3.1 位置控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-%E9%80%9F%E5%BA%A6%E6%8E%A7%E5%88%B6"><span class="nav-text">2.3.2 速度控制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-rviz%E6%98%BE%E7%A4%BA%E5%A4%9A%E6%9D%A1%E8%BD%A8%E8%BF%B9"><span class="nav-text">2.4 rviz显示多条轨迹</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81ros%E6%8E%A7%E5%88%B6%E7%9A%84%E8%B7%AF%E5%BE%84%E6%98%BE%E7%A4%BA"><span class="nav-text">三、ros控制的路径显示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6"><span class="nav-text">3.1 位置控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%80%9F%E5%BA%A6%E6%8E%A7%E5%88%B6"><span class="nav-text">3.2 速度控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '初始Airsim（六）之多机控制'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '初始Airsim（六）之多机控制'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

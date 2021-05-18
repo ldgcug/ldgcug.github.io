@@ -1,37 +1,1646 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,Drone Racing," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言 基于uzh的论文和其代码做的一些相关的无人机竞速实验  一、无人机环境配置 主要在Linux系统下使用，其安装过程不在这里具体介绍，点击这里，下载代码   系统版本：Ubuntu16.04  仿真环境：Gazebo7.16 配置好环境后，要确保启动test_racing.launch不报错才行。   二、实验相关操作位置说明2.1 训练数据收集测试 进入sim2real_drone_raci">
+<meta property="og:type" content="article">
+<meta property="og:title" content="uzh无人机竞速实验">
+<meta property="og:url" content="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="前言 基于uzh的论文和其代码做的一些相关的无人机竞速实验  一、无人机环境配置 主要在Linux系统下使用，其安装过程不在这里具体介绍，点击这里，下载代码   系统版本：Ubuntu16.04  仿真环境：Gazebo7.16 配置好环境后，要确保启动test_racing.launch不报错才行。   二、实验相关操作位置说明2.1 训练数据收集测试 进入sim2real_drone_raci">
+<meta property="og:locale">
+<meta property="og:image" content="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/01.png">
+<meta property="og:image" content="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/02.png">
+<meta property="og:image" content="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/03.png">
+<meta property="og:image" content="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/04.png">
+<meta property="og:image" content="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/05.png">
+<meta property="article:published_time" content="2020-06-07T09:42:37.000Z">
+<meta property="article:modified_time" content="2020-06-09T08:35:59.775Z">
+<meta property="article:author" content="ldg">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Drone Racing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2020/06/07/代码/Deep Learning/uzh无人机竞速实验/"/>
+
+
+
+
+
+  <title>uzh无人机竞速实验 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page,false) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">uzh无人机竞速实验</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-07T17:42:37+08:00">
+                2020-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BB%A3%E7%A0%81/" itemprop="url" rel="index">
+                    <span itemprop="name">代码</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/" class="leancloud_visitors" data-flag-title="uzh无人机竞速实验">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>基于uzh的论文和其代码做的一些相关的无人机竞速实验</p>
+</blockquote>
+<h1 id="一、无人机环境配置"><a href="#一、无人机环境配置" class="headerlink" title="一、无人机环境配置"></a>一、无人机环境配置</h1><blockquote>
+<p>主要在Linux系统下使用，其安装过程不在这里具体介绍，点击<a target="_blank" rel="noopener" href="https://github.com/uzh-rpg/sim2real_drone_racing">这里</a>，下载代码</p>
+</blockquote>
+<ul>
+<li><p><strong>系统版本：</strong>Ubuntu16.04</p>
+</li>
+<li><p><strong>仿真环境：</strong>Gazebo7.16</p>
+<p>配置好环境后，要确保启动test_racing.launch不报错才行。</p>
+</li>
+</ul>
+<h1 id="二、实验相关操作位置说明"><a href="#二、实验相关操作位置说明" class="headerlink" title="二、实验相关操作位置说明"></a>二、实验相关操作位置说明</h1><h2 id="2-1-训练数据收集测试"><a href="#2-1-训练数据收集测试" class="headerlink" title="2.1 训练数据收集测试"></a>2.1 训练数据收集测试</h2><blockquote>
+<p>进入<code>sim2real_drone_racing/drone_racing/resources/scripts</code>目录下，运行<code>collect_data.py</code>代码，首先验证下能否收集数据，运行不报错，且可以在相关文件夹下生成图像数据和label数据即可，然后停止运行该python代码</p>
+</blockquote>
+<p>​        确保训练数据收集测试无误，再继续执行后面步骤</p>
+<h2 id="2-2-网络模型保存位置修改"><a href="#2-2-网络模型保存位置修改" class="headerlink" title="2.2 网络模型保存位置修改"></a>2.2 网络模型保存位置修改</h2><blockquote>
+<p><code>train_model.sh</code>文件，在<code>sim2real_drone_racing/learning/deep_drone_racing_learner/src/ddr_learner/</code>目录下</p>
+<p>主要通过修改其中的<code>checkpoint_dir</code>的值来更换神经网络模型的保存位置，默认是存放在<code>/tmp/logs</code>文件夹下，因为该文件夹是Ubuntu系统的临时文件存放位置，因此可能在重启或其他的误操作后，该文件夹下的内容被清空，所以这里一定要进行修改</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">train_data=../../data/Training</span><br><span class="line">val_data=../../data/Training</span><br><span class="line"></span><br><span class="line">python2<span class="number">.7</span> train.py --checkpoint_dir=自定义路径  --f=<span class="number">0.5</span> --train_dir=$train_data --val_dir=$val_data --summary_freq=<span class="number">100</span> --batch_size=<span class="number">200</span> --max_epochs=迭代次数 --num_threads=<span class="number">6</span></span><br></pre></td></tr></table></figure>
+<p>​        模型保存位置修改后，运行<code>train_model.sh</code>文件，测试能否成功训练，操作无误后，继续执行后面步骤</p>
+<h2 id="2-3-训练背景图修改"><a href="#2-3-训练背景图修改" class="headerlink" title="2.3 训练背景图修改"></a>2.3 训练背景图修改</h2><blockquote>
+<p>因为我们训练的背景是根据当前的研究目标而设定的，因此，需要在仿真环境中更改为实际场景背景，该背景图片可以用手机拍摄，也可以通过其他方式来获取，修改过后的训练场景图如图所示</p>
+</blockquote>
+<p><img src="/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/01.png" alt="image-20200608134337180"></p>
+<h3 id="2-3-1-图片尺寸大小更改"><a href="#2-3-1-图片尺寸大小更改" class="headerlink" title="2.3.1 图片尺寸大小更改"></a>2.3.1 图片尺寸大小更改</h3><blockquote>
+<p>使用python代码，将图片大小全部修改为400*400像素</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">filename = os.listdir(<span class="string">&quot;/home/cug/Desktop/image/&quot;</span>)</span><br><span class="line">base_dir = <span class="string">&quot;/home/cug/Desktop/image/&quot;</span></span><br><span class="line">new_dir = <span class="string">&quot;/home/cug/Desktop/image/&quot;</span></span><br><span class="line"></span><br><span class="line">size_m = <span class="number">400</span></span><br><span class="line">size_n = <span class="number">400</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> filename:</span><br><span class="line">    image = Image.<span class="built_in">open</span>(base_dir + img)</span><br><span class="line">    image_size = image.resize((size_m,size_n),Image.ANTIALIAS)</span><br><span class="line">    image_size.save(new_dir +img)</span><br></pre></td></tr></table></figure>
+<p>更改过后的图片数据如下图：</p>
+<p><img src="/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/02.png" alt="image-20200608135043365"></p>
+<h3 id="2-3-2-训练背景替换"><a href="#2-3-2-训练背景替换" class="headerlink" title="2.3.2 训练背景替换"></a>2.3.2 训练背景替换</h3><blockquote>
+<p>在uzh的代码中，主要通过读取特定文件夹下的图片来作为训练背景，因此，只需要找到其文件夹，并将其中的图片替换为自己的图片即可。</p>
+</blockquote>
+<p>​        其训练背景图主要存放在<code>sim2real_drone_racing/drone_racing/drone_racing/resources/race_track/iros_materials/materials/textures/train_bkgs</code>目录下，可以将整个<code>train_bkgs</code>文件夹拷贝一份，并将复制的文件夹重名为<code>train_bkgs_init</code>，保存其初始背景图，然后将<code>train_bkgs</code>中的图片数据清空删除，并将上面的<code>01-04.jpg</code>图片拷贝到<code>train_bkgs</code>文件夹即可。</p>
+<p>​        最后可以重新运行<code>train_model.sh</code>文件，查看新收集的背景图是否修改来进行验证，也可以通过运行launch文件，并显示Gazebo界面来查看，如何显示Gazebo界面，会在后面进行介绍。</p>
+<h2 id="2-4-地面纹理图修改"><a href="#2-4-地面纹理图修改" class="headerlink" title="2.4 地面纹理图修改"></a>2.4 地面纹理图修改</h2><blockquote>
+<p>原实验是使用的小草图片作为地面纹理，也可根据自己需要修改成其他图片</p>
+</blockquote>
+<p>和2.3节一样，先运行python代码，将图片大小更改，然后进行数据替换。</p>
+<p>将<code>sim2real_drone_racing/drone_racing/drone_racing/resources/race_track/iros_materials/materials/textures</code>目录和<code>sim2real_drone_racing/drone_racing/drone_racing/resources/race_track/iros_materials/materials/textures/test_floor_bkgs</code>目录下的<code>asphalt.jpg</code>(小草图片)删除，然后将想要使用的地面纹理图，各拷贝一份到上面的两个目录下，重命名为<code>asphalt.jpg</code></p>
+<h2 id="2-5-Gazebo界面显示"><a href="#2-5-Gazebo界面显示" class="headerlink" title="2.5 Gazebo界面显示"></a>2.5 Gazebo界面显示</h2><blockquote>
+<p>Gazebo界面默认是关闭的，但我们平常做一些相关的修改后，想要快速的查看效果，就可以用Gazebo进行界面显示了</p>
+</blockquote>
+<p>​        在<code>sim2real_drone_racing/drone_racing/drone_racing/launch</code>目录下，打开<code>simulation_no_quad_gui.launch</code>文件，将其中第14行的<code>value</code>属性值修改为<code>true</code>，即如下代码所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>​        然后运行<code>test_racing.launch</code>命令，就会显示Gazebo界面了</p>
+<h2 id="2-6-全局轨迹生成"><a href="#2-6-全局轨迹生成" class="headerlink" title="2.6 全局轨迹生成"></a>2.6 全局轨迹生成</h2><blockquote>
+<p>全局轨迹对实验有着至关重要的作用，原代码默认有一个全局轨迹，但当我们修改了仿真平台中的某些数据后，也需要修改其轨迹。</p>
+</blockquote>
+<p>​        仿真环境主要由4部分组成：背景图（4个方向上的墙壁）、地面纹理、门框、门框纹理。</p>
+<p>​        其中，背景图和地面纹理的修改已在2.3、2.4节介绍。</p>
+<p>​        该节主要介绍门框坐标位置的修改。（修改时，门框的朝向不变）</p>
+<h3 id="2-6-1-Gazebo环境中修改门框坐标"><a href="#2-6-1-Gazebo环境中修改门框坐标" class="headerlink" title="2.6.1 Gazebo环境中修改门框坐标"></a>2.6.1 Gazebo环境中修改门框坐标</h3><blockquote>
+<p>主要通过修改<code>world</code>文件来实现</p>
+<p><code>race_track.world</code>文件，存放在<code>sim2real_drone_racing/drone_racing/drone_racing/resources/worlds</code>目录下</p>
+</blockquote>
+<p><img src="/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/03.png" alt="image-20200608185046302"></p>
+<p>​        总共有14个门框，每个门框都有其自定义的名称，通过修改其中的<code>pose</code>属性值，上图中的<code>18.2181,20.0025,2</code>表示门框的xyz坐标值，将上图中两处框出来的xyz坐标值都修改，最后的<code>-0.874979</code>为门框朝向值，这里不做修改。</p>
+<p>​        修改后，可以启动<code>test_racing.launch</code>文件，在Gazebo界面中，查看门框的位置</p>
+<h3 id="2-6-2-RVIZ界面中门框坐标修改"><a href="#2-6-2-RVIZ界面中门框坐标修改" class="headerlink" title="2.6.2 RVIZ界面中门框坐标修改"></a>2.6.2 RVIZ界面中门框坐标修改</h3><blockquote>
+<p>在飞行过程中，是通过RVIZ显示无人机、门框以及全局路线的，因此，要在相应的文件中，将门框坐标值与world中的门框坐标值一一对应起来。</p>
+<p><code>goals.yaml</code>文件，存放在<code>sim2real_drone_racing/drone_racing/drone_racing/parameters</code>目录下</p>
+</blockquote>
+<p>​        RVIZ界面显示如下：</p>
+<p><img src="/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/04.png" alt="image-20200608185555917"></p>
+<p><code>goals.yaml</code>中的代码如下：</p>
+<p>​        其中，<code>goal_positions中</code>的<code>xyz</code>坐标值表示<code>RVIZ</code>界面中门框的<code>xyz</code>坐标值</p>
+<p>​        <strong>注意：</strong></p>
+<p>​            （1）<code>xyz</code>坐标要与<code>world</code>文件中的<code>xyz</code>坐标一致</p>
+<p>​            （2）修改时，要注意空格，也要注意数字为实数，不是整数</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">goal_positions:</span></span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">2.7</span>, <span class="attr">y:</span> <span class="number">6.7</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">10.6</span>, <span class="attr">y:</span> <span class="number">4.2</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">19.0</span>, <span class="attr">y:</span> <span class="number">10.0</span>, <span class="attr">z:</span> <span class="number">1.9</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">26.6</span>, <span class="attr">y:</span> <span class="number">19.6</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">35.1</span>, <span class="attr">y:</span> <span class="number">26.5</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">45.0</span>, <span class="attr">y:</span> <span class="number">22.2</span>, <span class="attr">z:</span> <span class="number">1.9</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">47.4</span>, <span class="attr">y:</span> <span class="number">13.6</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">42.4</span>, <span class="attr">y:</span> <span class="number">5.8</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">33.7</span>, <span class="attr">y:</span> <span class="number">4.7</span>, <span class="attr">z:</span> <span class="number">1.9</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">26.0</span>, <span class="attr">y:</span> <span class="number">9.4</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">18.2</span>, <span class="attr">y:</span> <span class="number">20.0</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">10.2</span>, <span class="attr">y:</span> <span class="number">25.0</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">2.1</span>, <span class="attr">y:</span> <span class="number">22.0</span>, <span class="attr">z:</span> <span class="number">1.9</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">x:</span> <span class="number">-1.1</span>, <span class="attr">y:</span> <span class="number">13.2</span>, <span class="attr">z:</span> <span class="number">2.0</span>, <span class="attr">gate:</span> <span class="number">1.0</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="attr">goal_orientations:</span></span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">-0.44</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">0.0</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">0.97</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">-2.2</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">3.5</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">2.57</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">1.57</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">-2.6</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">3.1</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">-1.0</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">-0.9</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">-3.1</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">0.8</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">yaw:</span> <span class="number">-1.5</span>, <span class="attr">offset:</span> <span class="number">0.0</span>&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-3-全局轨迹生成"><a href="#2-6-3-全局轨迹生成" class="headerlink" title="2.6.3 全局轨迹生成"></a>2.6.3 全局轨迹生成</h3><blockquote>
+<p>在<code>world</code>文件和<code>yaml</code>文件中，修改了门框坐标后，就可以利用代码生成全局轨迹了</p>
+<p>可能有更好的方式生成，但我这里采用的是比较笨的方法</p>
+</blockquote>
+<p>（1）<strong><code>global_trajectory.cpp</code>文件</strong>，存放在<code>sim2real_drone_racing/drone_racing/drone_racing/src</code>目录下</p>
+<p>​        全局轨迹生成主要是通过调用<code>global_trajectory.cpp</code>文件中的<code>generateGlobalTrajectory</code>函数来实现的。</p>
+<p>​        主要代码贴出如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> maximal_des_thrust = <span class="number">18.0</span>;</span><br><span class="line"><span class="keyword">double</span> maximal_roll_pitch_rate = <span class="number">1.5</span>;</span><br><span class="line"><span class="keyword">bool</span> flag = <span class="literal">true</span>; <span class="comment">//添加的标签</span></span><br><span class="line"><span class="comment">//if(flag)&#123; //需要生成轨迹时，取消该注释，并将下一行的if判断注释</span></span><br><span class="line"><span class="keyword">if</span> (!load_existing_trajectory_) &#123;</span><br><span class="line">  ......<span class="comment">//此处代码省略</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (n); i++) &#123;</span><br><span class="line">    t = i % n * dt;</span><br><span class="line">    state = polynomial_trajectories::<span class="built_in">getPointFromTrajectory</span>(trajectory, ros::<span class="built_in">Duration</span>(t));</span><br><span class="line">    global_trajectory_sampled_.<span class="built_in">push_back</span>(state);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">saveGlobalTrajectory</span>();<span class="comment">//生成轨迹</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">loadGlobalTrajectory</span>();<span class="comment">//加载轨迹</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​        主要是通过判断<code>load_existing_trajectory_</code>值是否为真，来生成轨迹或加载轨迹，但在实验过程中，发现代码无法进入到<code>if</code>函数体中，反而都是进入到<code>else</code>函数体中了，因此，在<code>if</code>上一行，手动添加了一个<code>flag</code>标签，并且在需要生成轨迹的时候，使用<code>if(flag)</code>进行判断，而不使用<code>if (!load_existing_trajectory_)</code>来判断，当重新生成轨迹后，在使用 <code>if (!load_existing_trajectory_)</code>来判断。</p>
+<p>​        <strong>总结：</strong>在原代码基础上，添加两行代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> flag = <span class="literal">true</span>; <span class="comment">//添加的标签</span></span><br><span class="line"><span class="comment">//if(flag)&#123; //需要生成轨迹时，取消该注释，并将下一行的if判断注释</span></span><br></pre></td></tr></table></figure>
+<p>​            （1）生成新全局轨迹，<code>if(flag)</code>判断，注释<code>if (!load_existing_trajectory_)</code></p>
+<p>​            （2）加载全局轨迹，<code>if (!load_existing_trajectory_)</code>判断，注释<code>if(flag)</code></p>
+<p>（2）<strong>编译</strong></p>
+<blockquote>
+<p>由于改动了<code>cpp</code>文件，因此要重新编译，否则改动无效</p>
+<p>每次改动<code>cpp</code>文件后，都必须要重新编译</p>
+</blockquote>
+<p>​    在终端的<code>drone_racing_ws/catkin_ddr</code>目录下，执行如下命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">catkin build</span><br><span class="line">source devel/setup.bash </span><br></pre></td></tr></table></figure>
+<p>（3）<strong>启动<code>test_racing.launch</code>文件</strong></p>
+<blockquote>
+<p>修改完坐标值，启动launch文件，就可以重新生成轨迹了    </p>
+</blockquote>
+<p>​        启动<code>launch</code>文件过程中，注意终端的输出，若终端有大量红色错误信息输出，可能需要重新启动文件测试</p>
+<p>​        终端没有输出报错信息，则可以查看<code>global_trajectory.txt</code>文件内容，该文件存放在</p>
+<p><code>sim2real_drone_racing/drone_racing/drone_racing/resources/global_trajectories</code>目录下，并且该文件存储的是轨迹点上的值，或者在启动<code>launch</code>文件之前，直接删除或拷贝一份<code>global_trajectory.txt</code>文件，删除的话，则会重新生成一个<code>txt</code>文件，若不做任何修改，还需要查看一下<code>txt</code>中的值，来判断是否修改成功。</p>
+<h2 id="2-7-网络模型加载"><a href="#2-7-网络模型加载" class="headerlink" title="2.7 网络模型加载"></a>2.7 网络模型加载</h2><blockquote>
+<p>训练了神经网络模型，我们则需要利用神经网络模型进行测试，或接着上次的模型继续训练，因此，需要对网络模型进行加载</p>
+</blockquote>
+<p>​        在原代码中，通过使用<code>tensorflow</code>的函数去调用最新训练的网络模型，但我对该函数用的比较少，因此将代码修改为指定的模型。</p>
+<p>​        <strong>原代码：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">checkpoint = tf.train.latest_checkpoint(config.checkpoint_dir)</span><br><span class="line">self.saver.restore(sess, checkpoint)</span><br></pre></td></tr></table></figure>
+<p>​        将<code>self.saver.restore(sess, checkpoint)</code>中的<code>checkpoint</code>修改为指定模型路径就可以了。</p>
+<h3 id="2-7-1-接着上次的网络模型训练"><a href="#2-7-1-接着上次的网络模型训练" class="headerlink" title="2.7.1 接着上次的网络模型训练"></a>2.7.1 接着上次的网络模型训练</h3><blockquote>
+<p><code>base_learner.py</code>文件，存放在<code>sim2real_drone_racing/learning/deep_drone_racing_learner/src/ddr_learner/models</code>目录下</p>
+</blockquote>
+<p>​        在<code>base_learner.py</code>的<code>train</code>函数中，<code>self.saver.restore()</code>方法则是接着之前的网络进行训练</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> sv.managed_session(config=gpu_config) <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Number of params: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(sess.run(parameter_count)))</span><br><span class="line">    <span class="keyword">if</span> config.resume_train:</span><br><span class="line">        ......</span><br><span class="line">        <span class="comment">#self.saver.restore(sess, checkpoint)</span></span><br><span class="line">        self.saver.restore(sess, <span class="string">&#x27;/home/cug/drone_racing_ws/catkin_ddr/src/sim2real_drone_racing/learning/deep_drone_racing_learner/src/ddr_learner/download_model_checkpoint/model-1812&#x27;</span>)<span class="comment">#这里将checkpoint修改为了特定路径</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/06/07/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C/05.png" alt="image-20200609154658757"></p>
+<h3 id="2-7-2-使用训练过的神经网络模型测试"><a href="#2-7-2-使用训练过的神经网络模型测试" class="headerlink" title="2.7.2 使用训练过的神经网络模型测试"></a>2.7.2 使用训练过的神经网络模型测试</h3><blockquote>
+<p><code>Networ.py</code>文件，存放在<code>sim2real_drone_racing/learning/deep_drone_racing_learning_node/src/Network</code>目录下</p>
+</blockquote>
+<p>​        在<code>Networ.py</code>的<code>callback_feedthrough</code>函数中，<code>self.saver.restore()</code>方法则是使用神经网络进行测试</p>
+<p>​        这里也没有使用<code>tf.train.latest_checkpoint()</code>方法，而是指定神经网络模型路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">callback_feedthrough</span>(<span class="params">self, data</span>):</span></span><br><span class="line">     self.use_network_out = data.data</span><br><span class="line">     <span class="keyword">if</span> self.use_network_out:</span><br><span class="line">......</span><br><span class="line">         self.saver.restore(self.sess, <span class="string">&#x27;/home/cug/drone_racing_ws/catkin_ddr/src/sim2real_drone_racing/learning/deep_drone_racing_learner/src/ddr_learner/results/best_model/navigation_model/4-lab3/model1002/model-1002&#x27;</span>)<span class="comment">#指定模型路径</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Restored checkpoint file &#123;&#125;&quot;</span>.<span class="built_in">format</span>(checkpoint))</span><br></pre></td></tr></table></figure>
+<h2 id="2-8-神经网络模型结构"><a href="#2-8-神经网络模型结构" class="headerlink" title="2.8 神经网络模型结构"></a>2.8 神经网络模型结构</h2><blockquote>
+<p>论文中的神经网络模型结构选用的是<code>DroNet</code>，也可以使用其他的网络模型结构。</p>
+<p><code>nets.py</code>文件，存放在<code>sim2real_drone_racing/learning/deep_drone_racing_learner/src/ddr_learner/models</code>目录下</p>
+</blockquote>
+<p>​            代码如下所示，论文使用的是resnet函数中的网络结构，如果要使用其他网络结构，如Vgg16，可以重写一个函数，并将函数方法名修改为resnet即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Vgg16网络结构</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">resnet8</span>(<span class="params">img_input, output_dim, scope=<span class="string">&#x27;Prediction&#x27;</span>, reuse=<span class="literal">False</span>, f=<span class="number">0.25</span></span>):</span></span><br><span class="line">    x1 = Conv2D(<span class="built_in">int</span>(<span class="number">64</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(img_input)</span><br><span class="line">    x1 = Conv2D(<span class="built_in">int</span>(<span class="number">64</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x1)</span><br><span class="line">    x1 = MaxPooling2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>),strides=(<span class="number">2</span>,<span class="number">2</span>),padding=<span class="string">&#x27;same&#x27;</span>)(x1)</span><br><span class="line"></span><br><span class="line">    x2 = Conv2D(<span class="built_in">int</span>(<span class="number">128</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x1)</span><br><span class="line">    x2 = Conv2D(<span class="built_in">int</span>(<span class="number">128</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x2)</span><br><span class="line">    x2 = MaxPooling2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>),strides=(<span class="number">2</span>,<span class="number">2</span>),padding=<span class="string">&#x27;same&#x27;</span>)(x2)</span><br><span class="line"></span><br><span class="line">    x3 = Conv2D(<span class="built_in">int</span>(<span class="number">256</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x2)</span><br><span class="line">    x3 = Conv2D(<span class="built_in">int</span>(<span class="number">256</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x3)</span><br><span class="line">    x3 = MaxPooling2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>),strides=(<span class="number">2</span>,<span class="number">2</span>),padding=<span class="string">&#x27;same&#x27;</span>)(x3)</span><br><span class="line"></span><br><span class="line">    x4 = Conv2D(<span class="built_in">int</span>(<span class="number">512</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x3)</span><br><span class="line">    x4 = Conv2D(<span class="built_in">int</span>(<span class="number">512</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x3)</span><br><span class="line">    x4 = Conv2D(<span class="built_in">int</span>(<span class="number">512</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x3)</span><br><span class="line">    x4 = MaxPooling2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>),strides=(<span class="number">2</span>,<span class="number">2</span>),padding=<span class="string">&#x27;same&#x27;</span>)(x4)</span><br><span class="line"></span><br><span class="line">    x5 = Conv2D(<span class="built_in">int</span>(<span class="number">512</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x4)</span><br><span class="line">    x5 = Conv2D(<span class="built_in">int</span>(<span class="number">512</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x5)</span><br><span class="line">    x5 = Conv2D(<span class="built_in">int</span>(<span class="number">512</span>*f),(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="string">&#x27;same&#x27;</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x5)</span><br><span class="line">    x5 = MaxPooling2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>),strides=(<span class="number">2</span>,<span class="number">2</span>),padding=<span class="string">&#x27;same&#x27;</span>)(x5)</span><br><span class="line"></span><br><span class="line">    x6 = Flatten()(x5)</span><br><span class="line"></span><br><span class="line">    x7 = Dense(<span class="number">4096</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x6)</span><br><span class="line">    x7 = Dropout(<span class="number">0.5</span>)(x7)</span><br><span class="line">    x7 = Dense(<span class="number">4096</span>,activation=<span class="string">&#x27;relu&#x27;</span>)(x7)</span><br><span class="line">    x7 = Dropout(<span class="number">0.5</span>)(x7)</span><br><span class="line"></span><br><span class="line">    x8 = Activation(<span class="string">&#x27;softmax&#x27;</span>)(x7)</span><br><span class="line">    logits = Dense(output_dim)(x8)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;======================&#x27;</span>)</span><br><span class="line">    <span class="comment">#logits = Dense(output_dim)(x)</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;logits&#x27;</span>,logits)</span><br><span class="line">    <span class="keyword">return</span> logits</span><br><span class="line"></span><br><span class="line"><span class="comment"># resnet8  ，论文的原网络结构  ，名字已修改</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dronet_network</span>(<span class="params">img_input, output_dim, scope=<span class="string">&#x27;Prediction&#x27;</span>, reuse=<span class="literal">False</span>, f=<span class="number">0.25</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Define model architecture. The parameter &#x27;f&#x27; controls the network width.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    img_input = Input(tensor=img_input)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(scope, reuse=reuse):</span><br><span class="line">        x1 = Conv2D(<span class="built_in">int</span>(<span class="number">32</span>*f), (<span class="number">5</span>, <span class="number">5</span>), strides=[<span class="number">2</span>, <span class="number">2</span>], padding=<span class="string">&#x27;same&#x27;</span>)(img_input)</span><br><span class="line">        x1 = MaxPooling2D(pool_size=(<span class="number">3</span>, <span class="number">3</span>), strides=[<span class="number">2</span>, <span class="number">2</span>])(x1)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># First residual block</span></span><br><span class="line">        x2 = Activation(<span class="string">&#x27;relu&#x27;</span>)(x1)</span><br><span class="line">        x2 = Conv2D(<span class="built_in">int</span>(<span class="number">32</span>*f), (<span class="number">3</span>, <span class="number">3</span>), strides=[<span class="number">2</span>, <span class="number">2</span>], padding=<span class="string">&#x27;same&#x27;</span>,</span><br><span class="line">                    kernel_initializer=<span class="string">&quot;he_normal&quot;</span>,</span><br><span class="line">                    kernel_regularizer=regularizers.l2(<span class="number">1e-4</span>))(x2)</span><br><span class="line"></span><br><span class="line">        x2 = Activation(<span class="string">&#x27;relu&#x27;</span>)(x2)</span><br><span class="line">        x2 = Conv2D(<span class="built_in">int</span>(<span class="number">32</span>*f), (<span class="number">3</span>, <span class="number">3</span>), padding=<span class="string">&#x27;same&#x27;</span>,</span><br><span class="line">                    kernel_initializer=<span class="string">&quot;he_normal&quot;</span>,</span><br><span class="line">                    kernel_regularizer=regularizers.l2(<span class="number">1e-4</span>))(x2)</span><br><span class="line"></span><br><span class="line">        x1 = Conv2D(<span class="built_in">int</span>(<span class="number">32</span>*f), (<span class="number">1</span>, <span class="number">1</span>), strides=[<span class="number">2</span>, <span class="number">2</span>], padding=<span class="string">&#x27;same&#x27;</span>)(x1)</span><br><span class="line">        x3 = add([x1, x2])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Second residual block</span></span><br><span class="line">        x4 = Activation(<span class="string">&#x27;relu&#x27;</span>)(x3)</span><br><span class="line">        x4 = Conv2D(<span class="built_in">int</span>(<span class="number">64</span>*f), (<span class="number">3</span>, <span class="number">3</span>), strides=[<span class="number">2</span>, <span class="number">2</span>], padding=<span class="string">&#x27;same&#x27;</span>,</span><br><span class="line">                    kernel_initializer=<span class="string">&quot;he_normal&quot;</span>,</span><br><span class="line">                    kernel_regularizer=regularizers.l2(<span class="number">1e-4</span>))(x4)</span><br><span class="line">        x4 = Activation(<span class="string">&#x27;relu&#x27;</span>)(x4)</span><br><span class="line">        x4 = Conv2D(<span class="built_in">int</span>(<span class="number">64</span>*f), (<span class="number">3</span>, <span class="number">3</span>), padding=<span class="string">&#x27;same&#x27;</span>,</span><br><span class="line">                    kernel_initializer=<span class="string">&quot;he_normal&quot;</span>,</span><br><span class="line">                    kernel_regularizer=regularizers.l2(<span class="number">1e-4</span>))(x4)</span><br><span class="line"></span><br><span class="line">        x3 = Conv2D(<span class="built_in">int</span>(<span class="number">64</span>*f), (<span class="number">1</span>, <span class="number">1</span>), strides=[<span class="number">2</span>, <span class="number">2</span>], padding=<span class="string">&#x27;same&#x27;</span>)(x3)</span><br><span class="line">        x5 = add([x3, x4])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Third residual block</span></span><br><span class="line">        x6 = Activation(<span class="string">&#x27;relu&#x27;</span>)(x5)</span><br><span class="line">        x6 = Conv2D(<span class="built_in">int</span>(<span class="number">128</span>*f), (<span class="number">3</span>, <span class="number">3</span>), strides=[<span class="number">2</span>, <span class="number">2</span>], padding=<span class="string">&#x27;same&#x27;</span>,</span><br><span class="line">                    kernel_initializer=<span class="string">&quot;he_normal&quot;</span>,</span><br><span class="line">                    kernel_regularizer=regularizers.l2(<span class="number">1e-4</span>))(x6)</span><br><span class="line"></span><br><span class="line">        x6 = Activation(<span class="string">&#x27;relu&#x27;</span>)(x6)</span><br><span class="line">        x6 = Conv2D(<span class="built_in">int</span>(<span class="number">128</span>*f), (<span class="number">3</span>, <span class="number">3</span>), padding=<span class="string">&#x27;same&#x27;</span>,</span><br><span class="line">                    kernel_initializer=<span class="string">&quot;he_normal&quot;</span>,</span><br><span class="line">                    kernel_regularizer=regularizers.l2(<span class="number">1e-4</span>))(x6)</span><br><span class="line"></span><br><span class="line">        x5 = Conv2D(<span class="built_in">int</span>(<span class="number">128</span>*f), (<span class="number">1</span>, <span class="number">1</span>), strides=[<span class="number">2</span>, <span class="number">2</span>], padding=<span class="string">&#x27;same&#x27;</span>)(x5)</span><br><span class="line">        x7 = add([x5, x6])</span><br><span class="line"></span><br><span class="line">        x = Flatten()(x7)</span><br><span class="line">        x = Activation(<span class="string">&#x27;relu&#x27;</span>)(x)</span><br><span class="line">        x = Dropout(<span class="number">0.5</span>)(x)</span><br><span class="line">        x = Dense(<span class="built_in">int</span>(<span class="number">256</span>*f))(x)</span><br><span class="line">        x = Activation(<span class="string">&#x27;relu&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Output channel</span></span><br><span class="line">        logits = Dense(output_dim)(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> logits</span><br></pre></td></tr></table></figure>
+<h2 id="2-9-动态门框设置"><a href="#2-9-动态门框设置" class="headerlink" title="2.9 动态门框设置"></a>2.9 动态门框设置</h2><blockquote>
+<p>神经网络模型也在动态场景下进行了测试</p>
+<p><code>main.yaml</code>文件，存放在<code>sim2real_drone_racing/drone_racing/drone_racing/parameters</code>目录下</p>
+</blockquote>
+<p>​        默认设置为<code>false</code>，如果需要移动门框，则设置为<code>true</code>，另外这里的<code>gates_dyn_amplitude</code>属性我也没怎么搞懂</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Moving the gates</span></span><br><span class="line"><span class="attr">moving_gates:</span> <span class="literal">false</span>                 <span class="comment"># triggers dynamically moving gates</span></span><br><span class="line"><span class="attr">gates_dyn_amplitude:</span> <span class="number">0.3</span>       <span class="comment"># max amplitude for moving at test time</span></span><br><span class="line"><span class="attr">speed_moving_gates:</span> <span class="number">1.8</span>          <span class="comment"># max speed moving gates</span></span><br><span class="line"><span class="attr">gates_static_amplitude:</span> <span class="number">0.0</span>         <span class="comment"># max amplitude for statically replacing the gates at new runs</span></span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><blockquote>
+<p>整个代码真的太过复杂，到现在为止，对里面的很多细节还没弄清楚，如</p>
+<p>（1）算法收集数据时，如何收集的，封装了topic，又是如何封装的？只知道执行py文件，就可以收集数据了</p>
+<p>（2）控制到底是如何实现的？C++代码编写topic？我想要简单的控制无人机，如何给定合适的电机转速值？</p>
+<p>（3）ROS与Gazebo的封装性太高了，确实只会用。</p>
+<p>（4）除了sim2real_droneracing包，还有那么多的其他包都是干啥的？轨迹生成用到了其他包。</p>
+</blockquote>
+<p>​        下面是对我用到过的文件写个简单的功能介绍：</p>
+<ol>
+<li><p><strong>launch文件</strong>，<code>sim2real_drone_racing/drone_racing/drone_racing/launch</code>目录</p>
+<p><code>simulation_no_quad_gui.launch</code>文件中，可以设置属性值，打开Gazebo界面或关闭Gazebo界面</p>
+</li>
+<li><p><strong>yaml文件，</strong><code>sim2real_drone_racing/drone_racing/drone_racing/parameters</code>目录</p>
+<ul>
+<li>goals.yaml文件，设置RVIZ界面中门框的坐标值，并图形显示</li>
+<li>main.yaml文件，设置门框是否移动，默认为false，不移动</li>
+</ul>
+</li>
+<li><p><strong>resources目录下</strong>，完整目录为<code>sim2real_drone_racing/drone_racing/drone_racing/resources</code></p>
+<ul>
+<li>global_trajectories文件夹，存放的是全局最优轨迹的txt文件</li>
+<li><strong>race_track文件夹</strong>：超级重要的文件夹，仿真环境的所有背景及纹理基本都在该文件夹下，需要多看看</li>
+<li>scripts文件夹，收集训练数据python代码</li>
+<li>worlds文件夹，Gazebo<code>中的模型坐标设置文件</code></li>
+</ul>
+</li>
+<li><p><strong>ddr_learner目录下</strong>，完整目录为<code>sim2real_drone_racing/learning/deep_drone_racing_learner/src/ddr_learner</code></p>
+<ul>
+<li>train_model.sh文件：训练神经网络，并设置最大迭代次数，以及保存模型文件位置</li>
+<li>models目录下：<ul>
+<li>base_learner.py：继续上次训练模型参数训练</li>
+<li>nets.py：可以自己设置神经网络模型结构</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Network目录下</strong>，完整目录为<code>sim2real_drone_racing/learning/deep_drone_racing_learning_node/src/Network</code></p>
+<ul>
+<li>Network.py：使用神经网络进行测试，可以选择训练过的其他网络</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/Drone-Racing/" rel="tag"># Drone Racing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/06/%E5%BD%B1%E8%AF%84/%E7%94%B5%E8%A7%86%E5%89%A7/%E8%AF%B7%E5%9B%9E%E7%AD%941988/" rel="next" title="请回答1988">
+                <i class="fa fa-chevron-left"></i> 请回答1988
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/10/%E4%BB%A3%E7%A0%81/Deep%20Learning/uzh%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%AB%9E%E9%80%9F%E5%AE%9E%E9%AA%8C%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="uzh无人机竞速实验（二）">
+                uzh无人机竞速实验（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/header.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%97%A0%E4%BA%BA%E6%9C%BA%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">一、无人机环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E4%BD%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-text">二、实验相关操作位置说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%E6%B5%8B%E8%AF%95"><span class="nav-text">2.1 训练数据收集测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%BF%9D%E5%AD%98%E4%BD%8D%E7%BD%AE%E4%BF%AE%E6%94%B9"><span class="nav-text">2.2 网络模型保存位置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E8%AE%AD%E7%BB%83%E8%83%8C%E6%99%AF%E5%9B%BE%E4%BF%AE%E6%94%B9"><span class="nav-text">2.3 训练背景图修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E5%9B%BE%E7%89%87%E5%B0%BA%E5%AF%B8%E5%A4%A7%E5%B0%8F%E6%9B%B4%E6%94%B9"><span class="nav-text">2.3.1 图片尺寸大小更改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E8%AE%AD%E7%BB%83%E8%83%8C%E6%99%AF%E6%9B%BF%E6%8D%A2"><span class="nav-text">2.3.2 训练背景替换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E5%9C%B0%E9%9D%A2%E7%BA%B9%E7%90%86%E5%9B%BE%E4%BF%AE%E6%94%B9"><span class="nav-text">2.4 地面纹理图修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-Gazebo%E7%95%8C%E9%9D%A2%E6%98%BE%E7%A4%BA"><span class="nav-text">2.5 Gazebo界面显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-%E5%85%A8%E5%B1%80%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90"><span class="nav-text">2.6 全局轨迹生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-1-Gazebo%E7%8E%AF%E5%A2%83%E4%B8%AD%E4%BF%AE%E6%94%B9%E9%97%A8%E6%A1%86%E5%9D%90%E6%A0%87"><span class="nav-text">2.6.1 Gazebo环境中修改门框坐标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-2-RVIZ%E7%95%8C%E9%9D%A2%E4%B8%AD%E9%97%A8%E6%A1%86%E5%9D%90%E6%A0%87%E4%BF%AE%E6%94%B9"><span class="nav-text">2.6.2 RVIZ界面中门框坐标修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-3-%E5%85%A8%E5%B1%80%E8%BD%A8%E8%BF%B9%E7%94%9F%E6%88%90"><span class="nav-text">2.6.3 全局轨迹生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E5%8A%A0%E8%BD%BD"><span class="nav-text">2.7 网络模型加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-1-%E6%8E%A5%E7%9D%80%E4%B8%8A%E6%AC%A1%E7%9A%84%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-text">2.7.1 接着上次的网络模型训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-2-%E4%BD%BF%E7%94%A8%E8%AE%AD%E7%BB%83%E8%BF%87%E7%9A%84%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E6%B5%8B%E8%AF%95"><span class="nav-text">2.7.2 使用训练过的神经网络模型测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-8-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="nav-text">2.8 神经网络模型结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-9-%E5%8A%A8%E6%80%81%E9%97%A8%E6%A1%86%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.9 动态门框设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'uzh无人机竞速实验'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'uzh无人机竞速实验'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
