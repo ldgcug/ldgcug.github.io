@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="设计模型," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、OOP七大原则1、开闭原则 对扩展开放，对修改关闭 ​    当应用需求发生改变时，尽量不修改原来代码功能块，可以在上面进行扩展  2、里氏替换原则 继承必须确保超类所拥有的性质在子类中仍然成立 ​    子类可以扩展父类功能，尽量不要修改原有父类的功能  3、依赖倒置原则 要面向接口编程，不要面向实现编程 ​    抽象不依赖细节，细节依赖于抽象  4、单一职责原则 控制类的粒度大小、将对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式（一）之创建型模式">
+<meta property="og:url" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="一、OOP七大原则1、开闭原则 对扩展开放，对修改关闭 ​    当应用需求发生改变时，尽量不修改原来代码功能块，可以在上面进行扩展  2、里氏替换原则 继承必须确保超类所拥有的性质在子类中仍然成立 ​    子类可以扩展父类功能，尽量不要修改原有父类的功能  3、依赖倒置原则 要面向接口编程，不要面向实现编程 ​    抽象不依赖细节，细节依赖于抽象  4、单一职责原则 控制类的粒度大小、将对象">
+<meta property="og:locale">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210531231607722.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210531234405245.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210531235452051.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604222914414.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604224341255.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604225217110.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604225349433.png">
+<meta property="article:published_time" content="2021-05-19T14:59:59.000Z">
+<meta property="article:modified_time" content="2021-06-08T16:10:14.710Z">
+<meta property="article:author" content="ldg">
+<meta property="article:tag" content="设计模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210531231607722.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2021/05/19/设计模式/设计模式（一）之创建型模式/"/>
+
+
+
+
+
+  <title>设计模式（一）之创建型模式 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式（一）之创建型模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-19T22:59:59+08:00">
+                2021-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/" class="leancloud_visitors" data-flag-title="设计模式（一）之创建型模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、OOP七大原则"><a href="#一、OOP七大原则" class="headerlink" title="一、OOP七大原则"></a>一、OOP七大原则</h1><h2 id="1、开闭原则"><a href="#1、开闭原则" class="headerlink" title="1、开闭原则"></a>1、开闭原则</h2><blockquote>
+<p><strong>对扩展开放，对修改关闭</strong></p>
+<p>​    当应用需求发生改变时，尽量不修改原来代码功能块，可以在上面进行扩展</p>
+</blockquote>
+<h2 id="2、里氏替换原则"><a href="#2、里氏替换原则" class="headerlink" title="2、里氏替换原则"></a>2、里氏替换原则</h2><blockquote>
+<p><strong>继承</strong>必须确保<strong>超类</strong>所拥有的性质在<strong>子类</strong>中仍然成立</p>
+<p>​    子类可以扩展父类功能，尽量不要修改原有父类的功能</p>
+</blockquote>
+<h2 id="3、依赖倒置原则"><a href="#3、依赖倒置原则" class="headerlink" title="3、依赖倒置原则"></a>3、依赖倒置原则</h2><blockquote>
+<p>要面向<strong>接口编程</strong>，不要面向<strong>实现编程</strong></p>
+<p>​    抽象不依赖细节，细节依赖于抽象</p>
+</blockquote>
+<h2 id="4、单一职责原则"><a href="#4、单一职责原则" class="headerlink" title="4、单一职责原则"></a>4、单一职责原则</h2><blockquote>
+<p><strong>控制类的粒度大小、将对象解耦、提高其内聚性</strong></p>
+<p>​    一个方法尽量做一个事情</p>
+</blockquote>
+<h2 id="5、接口隔离原则"><a href="#5、接口隔离原则" class="headerlink" title="5、接口隔离原则"></a>5、接口隔离原则</h2><blockquote>
+<p>要为各个类建立它们需要的专用接口</p>
+</blockquote>
+<h2 id="6、迪米特法则"><a href="#6、迪米特法则" class="headerlink" title="6、迪米特法则"></a>6、迪米特法则</h2><blockquote>
+<p>只与你的直接朋友交谈，不跟“陌生人”说话</p>
+<p>​    A与B相关，B与C相关，A尽量不与C直接交流</p>
+</blockquote>
+<h2 id="7、合成复用原则"><a href="#7、合成复用原则" class="headerlink" title="7、合成复用原则"></a>7、合成复用原则</h2><blockquote>
+<p>尽量先使用组合或者聚合等关联关系来实现，其次才考虑使用继承关系来实现</p>
+</blockquote>
+<h1 id="二、设计模型"><a href="#二、设计模型" class="headerlink" title="二、设计模型"></a>二、设计模型</h1><blockquote>
+<p>设计模式又称为GoF 23，是一种思维、一种态度、一种进步</p>
+<p>设计模式主要分为三大类，每一类又分为多个小类</p>
+<p>（1）创建型模式</p>
+<p>​        单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式</p>
+<p>（2）结构型模式</p>
+<p>​        适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模式</p>
+<p>（3）行为型模式</p>
+<p>​        模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式</p>
+</blockquote>
+<h1 id="三、创建型模式"><a href="#三、创建型模式" class="headerlink" title="三、创建型模式"></a>三、创建型模式</h1><blockquote>
+<p>待补充创建型模式</p>
+</blockquote>
+<h2 id="1、单例模式"><a href="#1、单例模式" class="headerlink" title="1、单例模式"></a>1、单例模式</h2><blockquote>
+<p>单例模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。</p>
+<p>注意：</p>
+<p>（1）单例类只能有一个实例</p>
+<p>（2）单例类必须自己创建自己的唯一实例</p>
+<p>（3）单例类必须给所有其他对象提供这一实例</p>
+</blockquote>
+<h3 id="1-1-饿汉式"><a href="#1-1-饿汉式" class="headerlink" title="1.1 饿汉式"></a>1.1 饿汉式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hungry</span> </span>&#123;</span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Hungry</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//final 修饰对象，对象内容可变，引用地址不可变</span></span><br><span class="line">    <span class="comment">//static 修饰变量，又属于静态变量，可以通过类名访问，无需创建对象访问</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Hungry HUNGRY = <span class="keyword">new</span> Hungry();</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Hungry <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> HUNGRY;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>缺点</strong>：在类加载时就初始化，<font size="5">浪费内存</font></p>
+</blockquote>
+<h3 id="1-2-懒汉式"><a href="#1-2-懒汉式" class="headerlink" title="1.2 懒汉式"></a>1.2 懒汉式</h3><h4 id="1-2-1-线程不安全"><a href="#1-2-1-线程不安全" class="headerlink" title="1.2.1 线程不安全"></a>1.2.1 线程不安全</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>缺点：<font size="5">线程不安全</font>，不支持多线程操作</p>
+<p>修改上述代码，然后进行测试</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">&quot;:ok!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//多线程并发</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span> ;i++)&#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">                LazyMan.getInstance();</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果1</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Thread-<span class="number">0</span>:ok!</span><br><span class="line">Thread-<span class="number">2</span>:ok!</span><br><span class="line">Thread-<span class="number">1</span>:ok!</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果2</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Thread-<span class="number">0</span>:ok!</span><br><span class="line">Thread-<span class="number">3</span>:ok!</span><br><span class="line">Thread-<span class="number">2</span>:ok!</span><br><span class="line">Thread-<span class="number">1</span>:ok!</span><br><span class="line">Thread-<span class="number">4</span>:ok!</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析：</p>
+<p>​        从运行结果来看，每次运行时，输出结果都不一致，而实际想要的应该只输出一个线程名才对。因为在加载时，构造器私有应该只被执行一次才对，所以，该单例模式在多线程下是不安全的。</p>
+</blockquote>
+<h4 id="1-2-2-线程安全（synchronized锁方法）"><a href="#1-2-2-线程安全（synchronized锁方法）" class="headerlink" title="1.2.2 线程安全（synchronized锁方法）"></a>1.2.2 线程安全（synchronized锁方法）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">&quot;:ok!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">//synchronized锁方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//多线程并发</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span> ;i++)&#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">                LazyMan.getInstance();</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果（多次运行）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Thread-<span class="number">0</span>:ok!</span><br></pre></td></tr></table></figure>
+<p>缺点：当getInstance()的方法使用比较频繁时，添加synchronized锁会严重影响性能</p>
+</blockquote>
+<h4 id="1-2-3-线程安全（双重检验锁，DCL：Double-Checked-locking）"><a href="#1-2-3-线程安全（双重检验锁，DCL：Double-Checked-locking）" class="headerlink" title="1.2.3 线程安全（双重检验锁，DCL：Double-Checked locking）"></a>1.2.3 线程安全（双重检验锁，DCL：Double-Checked locking）</h4><blockquote>
+<p>（1）常规的加synchronized锁，仍然存在多线程下的不安全性</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不完整的双重检验锁</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">&quot;:ok!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 双重检测锁 的懒汉式单例 DCL </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//多线程并发</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span> ;i++)&#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">                LazyMan.getInstance();</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果（多次运行），但是仍然是不安全的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Thread-<span class="number">0</span>:ok!</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​        synchronized使用的是类锁，类的对象实例可以有多个，但是每一个类只有一个class对象。但类锁只是一个概念上的东西，并不是真实存在的。</p>
+<p>（2）加volatile锁，禁止指令重排，保证多线程下的安全性</p>
+<p>分析：</p>
+<p>​        上述代码存在什么问题？</p>
+<pre><code>     主要是该代码，在多线程下存在问题：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lazyMan = <span class="keyword">new</span> LazyMan();<span class="comment">//不是一个原子性操作</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  1、分配内存空间</span></span><br><span class="line"><span class="comment">  2、执行构造方法，初始化对象</span></span><br><span class="line"><span class="comment">  3、把这个对象指向这个空间</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>​        当一个线程new一个对象过程时，我们希望该线程按照123的步骤执行，但是在CPU内部，不影响单线程的结果的情况下，是会发生指令重排的事情，因此CPU的内部结果执行顺序很有可能是132。</p>
+<p>​        即线程A的执行步骤可能是132，但在线程A还未完成构造（2）时，线程B执行getInstance()操作，发现该对象已经指向某一个空间，线程B会返回lazyMan对象，但lazyMan还没有完成构造。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">&quot;:ok!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//volatile关键字 禁止指令重排</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 双重检测锁 的懒汉式单例 DCL</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//多线程并发</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span> ;i++)&#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">                LazyMan.getInstance();</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-4-静态内部类"><a href="#1-2-4-静态内部类" class="headerlink" title="1.2.4 静态内部类"></a>1.2.4 静态内部类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Holder</span></span>&#123;</span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Holder</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> statuic Holder <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> InnerClass.HOLDER;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Holder HOLDER = <span class="keyword">new</span> Holder();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-反射破坏单例模式"><a href="#1-3-反射破坏单例模式" class="headerlink" title="1.3 反射破坏单例模式"></a>1.3 反射破坏单例模式</h3><h4 id="1-3-1-反射破坏单例"><a href="#1-3-1-反射破坏单例" class="headerlink" title="1.3.1 反射破坏单例"></a>1.3.1 反射破坏单例</h4><blockquote>
+<p>（1）反射破坏单例</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Lazy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">&quot;:ok!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">//有参构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">(Integer hello)</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+hello+<span class="string">&quot;:hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//volatile关键字 禁止指令重排</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 双重检测锁 的懒汉式单例 DCL</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//反射破坏单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        LazyMan instance = LazyMan.getInstance();<span class="comment">//创建一个类对象</span></span><br><span class="line">		<span class="comment">//获取LazyMan的无参构造函数-----（1）获取无参构造器</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan.class.getDeclaredConstructor(<span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;declaredConstructor构造器签名:&quot;</span>+declaredConstructor.toString());</span><br><span class="line">        <span class="comment">//获取LazyMan的有参构造函数（这里要传的是类名）</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor1 = LazyMan.class.getDeclaredConstructor(Integer.class);</span><br><span class="line">        <span class="comment">//修改访问权限-----（2）修改构造方法的访问权限</span></span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">     	<span class="comment">//调用构造方法-----（3）调用构造方法，创建LazyMan的对象实例</span></span><br><span class="line">        LazyMan instance2 = declaredConstructor.newInstance();</span><br><span class="line">        LazyMan instance3 = declaredConstructor1.newInstance(<span class="number">2</span>);</span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">        System.out.println(instance3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 输出结果:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">main:ok!</span><br><span class="line">declaredConstructor构造器签名:<span class="keyword">private</span> com.ldg.GoF23.single.LazyMan()</span><br><span class="line">main:ok!</span><br><span class="line">main2:hello!</span><br><span class="line">com.ldg.GoF23.single.LazyMan@2a84aee7</span><br><span class="line">com.ldg.GoF23.single.LazyMan<span class="meta">@a09ee92</span></span><br><span class="line">com.ldg.GoF23.single.LazyMan@30f39991</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​        （1）LazyMan.class.getDeclaredConstructor需要抛出异常，所以添加了throws Exception</p>
+<p>​        （2）LazyMan.class.getDeclaredConstructor存在有参和无参的情况，有参函数的需要用装箱表示，如Integer；在使用构造进行传参时，要传Integer.class；</p>
+<p>​        （3）三个instance的输出不一致，就表示单例模式被破坏</p>
+</blockquote>
+<h4 id="1-3-2-单例防止反射破坏"><a href="#1-3-2-单例防止反射破坏" class="headerlink" title="1.3.2 单例防止反射破坏"></a>1.3.2 单例防止反射破坏</h4><blockquote>
+<p>对私有构造器添加synchronized类锁，防止反射破坏单例</p>
+<p>双重检验锁升级为了三重检测锁</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 添加synchronized锁，防止反射破坏单例</span></span><br><span class="line">        <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">            <span class="keyword">if</span>(lazyMan != <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;不要试图使用反射破坏异常！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有参构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">(Integer hello)</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+hello+<span class="string">&quot;:hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//volatile关键字 禁止指令重排</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 双重检测锁 的懒汉式单例 DCL</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//反射破坏单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        LazyMan instance = LazyMan.getInstance();<span class="comment">//创建一个类对象</span></span><br><span class="line">        <span class="comment">//获取LazyMan的无参构造函数-----（1）获取无参构造器</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan.class.getDeclaredConstructor(<span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;declaredConstructor构造器签名:&quot;</span>+declaredConstructor.toString());</span><br><span class="line">        <span class="comment">//获取LazyMan的有参构造函数（这里要传的是类名）</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor1 = LazyMan.class.getDeclaredConstructor(Integer.class);</span><br><span class="line">        <span class="comment">//修改访问权限-----（2）修改构造方法的访问权限</span></span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//调用构造方法-----（3）调用构造方法，创建LazyMan的对象实例</span></span><br><span class="line">        LazyMan instance2 = declaredConstructor.newInstance();</span><br><span class="line">        LazyMan instance3 = declaredConstructor1.newInstance(<span class="number">2</span>);</span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">        System.out.println(instance3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运行结果：</p>
+<p><img src="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210531231607722.png" alt="image-20210531231607722"></p>
+<p>分析：</p>
+<p>​        三重检验锁的第一个instance实例是通过类的getInstance()获取的，若完全不用类进行获取，三重检验锁是否仍然可以防止反射破坏呢？</p>
+</blockquote>
+<h4 id="1-3-3-反射创建对象破坏三重检验锁单例"><a href="#1-3-3-反射创建对象破坏三重检验锁单例" class="headerlink" title="1.3.3 反射创建对象破坏三重检验锁单例"></a>1.3.3 反射创建对象破坏三重检验锁单例</h4><blockquote>
+<p>不通过 LazyMan.getInstance()获取实例，而直接用反射获取实例，结果又不一致</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 添加synchronized锁，防止反射破坏单例</span></span><br><span class="line">        <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">            <span class="keyword">if</span>(lazyMan != <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;不要试图使用反射破坏异常！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有参构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">(Integer hello)</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+hello+<span class="string">&quot;:hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//volatile关键字 禁止指令重排</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 双重检测锁 的懒汉式单例 DCL</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//反射破坏单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//LazyMan instance = LazyMan.getInstance();//创建一个类对象</span></span><br><span class="line">        <span class="comment">//获取LazyMan的无参构造函数-----（1）获取无参构造器</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan.class.getDeclaredConstructor(<span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;declaredConstructor构造器签名:&quot;</span>+declaredConstructor.toString());</span><br><span class="line">        <span class="comment">//获取LazyMan的有参构造函数（这里要传的是类名）</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor1 = LazyMan.class.getDeclaredConstructor(Integer.class);</span><br><span class="line">        <span class="comment">//修改访问权限-----（2）修改构造方法的访问权限</span></span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//调用构造方法-----（3）调用构造方法，创建LazyMan的对象实例</span></span><br><span class="line">        LazyMan instance = declaredConstructor.newInstance();</span><br><span class="line">        LazyMan instance2 = declaredConstructor.newInstance();</span><br><span class="line">        LazyMan instance3 = declaredConstructor1.newInstance(<span class="number">2</span>);</span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">        System.out.println(instance3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">declaredConstructor构造器签名:<span class="keyword">private</span> single.LazyMan()</span><br><span class="line">main2:hello!</span><br><span class="line">single.LazyMan@1b6d3586</span><br><span class="line">single.LazyMan@4554617c</span><br><span class="line">single.LazyMan@74a14482	</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="1-3-4-红绿灯方法防止反射对象破坏单例"><a href="#1-3-4-红绿灯方法防止反射对象破坏单例" class="headerlink" title="1.3.4 红绿灯方法防止反射对象破坏单例"></a>1.3.4 红绿灯方法防止反射对象破坏单例</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> ldg = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 添加synchronized锁，防止反射破坏单例</span></span><br><span class="line">        <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">            <span class="keyword">if</span>(ldg == <span class="keyword">false</span>)&#123;</span><br><span class="line">                ldg = <span class="keyword">true</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;不要试图使用反射破坏异常！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有参构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">(Integer hello)</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+hello+<span class="string">&quot;:hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//volatile关键字 禁止指令重排</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 双重检测锁 的懒汉式单例 DCL</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//反射破坏单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//LazyMan instance = LazyMan.getInstance();//创建一个类对象</span></span><br><span class="line">        <span class="comment">//获取LazyMan的无参构造函数-----（1）获取无参构造器</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan.class.getDeclaredConstructor(<span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;declaredConstructor构造器签名:&quot;</span>+declaredConstructor.toString());</span><br><span class="line">        <span class="comment">//获取LazyMan的有参构造函数（这里要传的是类名）</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor1 = LazyMan.class.getDeclaredConstructor(Integer.class);</span><br><span class="line">        <span class="comment">//修改访问权限-----（2）修改构造方法的访问权限</span></span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//调用构造方法-----（3）调用构造方法，创建LazyMan的对象实例</span></span><br><span class="line">        LazyMan instance = declaredConstructor.newInstance();</span><br><span class="line">        LazyMan instance2 = declaredConstructor.newInstance();</span><br><span class="line">        LazyMan instance3 = declaredConstructor1.newInstance(<span class="number">2</span>);</span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">        System.out.println(instance3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：如下图所示，即使使用构造类创建的对象，通过这种红绿灯方式，也可以避免其破坏单例</p>
+<p><img src="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210531234405245.png" alt="image-20210531234405245"></p>
+</blockquote>
+<h4 id="1-3-5-反编译破解红绿灯方法，破坏单例"><a href="#1-3-5-反编译破解红绿灯方法，破坏单例" class="headerlink" title="1.3.5 反编译破解红绿灯方法，破坏单例"></a>1.3.5 反编译破解红绿灯方法，破坏单例</h4><blockquote>
+<p>假设代码被反编译，能找到其中的属性值：ldg，并对其进行破坏，是否仍然可以破坏单例呢？</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> ldg = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 添加synchronized锁，防止反射破坏单例</span></span><br><span class="line">        <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">            <span class="keyword">if</span>(ldg == <span class="keyword">false</span>)&#123;</span><br><span class="line">                ldg = <span class="keyword">true</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;不要试图使用反射破坏异常！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有参构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">(Integer hello)</span></span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+hello+<span class="string">&quot;:hello!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//volatile关键字 禁止指令重排</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 双重检测锁 的懒汉式单例 DCL</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//反射破坏单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//LazyMan instance = LazyMan.getInstance();//创建一个类对象</span></span><br><span class="line"></span><br><span class="line">        Field ldg = LazyMan.class.getDeclaredField(<span class="string">&quot;ldg&quot;</span>);<span class="comment">//假设已知ldg的字段名</span></span><br><span class="line">        ldg.setAccessible(<span class="keyword">true</span>);<span class="comment">//破坏其私有权限</span></span><br><span class="line">        <span class="comment">//获取LazyMan的无参构造函数-----（1）获取无参构造器</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan.class.getDeclaredConstructor(<span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;declaredConstructor构造器签名:&quot;</span>+declaredConstructor.toString());</span><br><span class="line">        <span class="comment">//获取LazyMan的有参构造函数（这里要传的是类名）</span></span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor1 = LazyMan.class.getDeclaredConstructor(Integer.class);</span><br><span class="line">        <span class="comment">//修改访问权限-----（2）修改构造方法的访问权限</span></span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//调用构造方法-----（3）调用构造方法，创建LazyMan的对象实例</span></span><br><span class="line">        LazyMan instance = declaredConstructor.newInstance();</span><br><span class="line"></span><br><span class="line">        ldg.set(instance,<span class="keyword">false</span>);<span class="comment">//将第一个对象的值改为false</span></span><br><span class="line">        LazyMan instance2 = declaredConstructor.newInstance();</span><br><span class="line">        LazyMan instance3 = declaredConstructor1.newInstance(<span class="number">2</span>);</span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">        System.out.println(instance3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：如下所示，单例又被破坏</p>
+<pre><code>    declaredConstructor构造器签名:private single.LazyMan()
+    main2:hello!
+    single.LazyMan@4554617c
+    single.LazyMan@74a14482
+    single.LazyMan@1540e19d
+</code></pre></blockquote>
+<h4 id="1-3-6-源码分析"><a href="#1-3-6-源码分析" class="headerlink" title="1.3.6 源码分析"></a>1.3.6 源码分析</h4><blockquote>
+<p>通过对newInstance()的源码分析，发现反射不能破坏枚举类型</p>
+</blockquote>
+<p><img src="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210531235452051.png" alt="image-20210531235452051"></p>
+<blockquote>
+<p>（1）在IDEA工具中，查看class源码，发现枚举类的构造函数是无参构造</p>
+<p><img src="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604222914414.png" alt="image-20210604222914414"></p>
+<p>（2）先获取一个枚举类，然后用反射实例化一个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"></span><br><span class="line"><span class="comment">// enum 是什么？本身也是一个Class类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">EnumSingle</span> </span>&#123;</span><br><span class="line">    INSATNCE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> EnumSingle <span class="title">getInsatnce</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> INSATNCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException </span>&#123;</span><br><span class="line">        EnumSingle instance = EnumSingle.INSATNCE;</span><br><span class="line">        <span class="comment">//使用无参构造函数</span></span><br><span class="line">        Constructor&lt;EnumSingle&gt; declaredConstructor = EnumSingle.class.getDeclaredConstructor(<span class="keyword">null</span>);</span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        EnumSingle instance2 = declaredConstructor.newInstance();</span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p>​        如下所示，异常说明，类中没有该构造器方法，但Idea中的class类显示为无参构造，且报错信息与源码中的破坏信息不一致，因此需要进一步深究其原因。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.lang.NoSuchMethodException: single.EnumSingle.&lt;init&gt;()</span><br><span class="line">at java.lang.Class.getConstructor0(Class.java:<span class="number">3082</span>)</span><br><span class="line">at java.lang.Class.getDeclaredConstructor(Class.java:<span class="number">2178</span>)</span><br><span class="line">at single.Test.main(EnumSingle.java:<span class="number">28</span>)</span><br></pre></td></tr></table></figure>
+<p>（3）打开build后的class类源文件所在位置，并在该目录下，打开cmd窗口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javap -p EnumSingle.class</span><br></pre></td></tr></table></figure>
+<p>从EnumSingle的源码中，可以看到，枚举是一个class类，继承一个类，且其构造参数也是无参构造参数，但是程序的结果却和我们想要的结果：<strong>Cannot reflectively create enum objects</strong> 不一致，因此需要使用专有的反编译工具</p>
+<p><img src="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604224341255.png" alt="image-20210604224341255"></p>
+<p>（4）使用jad反编译工具，反编译类（<a target="_blank" rel="noopener" href="http://www.javadecompilers.com/jad">jad下载</a>）</p>
+<p>​        将下载好的jad.exe和class文件放在同一层级，并使用如下代码反编译类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jad -sjava EnumSingle.class</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604225217110.png" alt="image-20210604225217110"></p>
+<p>​    查看反编译后的java文件，发现其参数是有参构造函数</p>
+<p><img src="/2021/05/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210604225349433.png" alt="image-20210604225349433"></p>
+<p>（5）修改反射代码中的无参为有参</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">EnumSingle</span> </span>&#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> EnumSingle <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException </span>&#123;</span><br><span class="line">        EnumSingle instance = EnumSingle.INSTANCE;</span><br><span class="line">        Constructor&lt;EnumSingle&gt; declaredConstructor = EnumSingle.class.getDeclaredConstructor(String.class,<span class="keyword">int</span>.class);<span class="comment">//有参构造函数</span></span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        EnumSingle instance2 = declaredConstructor.newInstance();</span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p>​        该结果才与最初始的源码错误保持一致，且证明了反射不能破坏枚举的单例类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.lang.IllegalArgumentException: Cannot reflectively create <span class="class"><span class="keyword">enum</span> <span class="title">objects</span></span></span><br><span class="line"><span class="class">	<span class="title">at</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">reflect</span>.<span class="title">Constructor</span>.<span class="title">newInstance</span>(<span class="title">Constructor</span>.<span class="title">java</span>:417)</span></span><br><span class="line"><span class="class">	<span class="title">at</span> <span class="title">com</span>.<span class="title">ldg</span>.<span class="title">GoF23</span>.<span class="title">single</span>.<span class="title">Test</span>.<span class="title">main</span>(<span class="title">EnumSingle</span>.<span class="title">java</span>:18)</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.runoob.com/design-pattern/singleton-pattern.html">菜鸟教程单例模式</a></p>
+<h2 id="2、工厂模式"><a href="#2、工厂模式" class="headerlink" title="2、工厂模式"></a>2、工厂模式</h2><blockquote>
+<p>作用：<strong>实现了创建者和调用者的分离</strong></p>
+</blockquote>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%9E%8B/" rel="tag"># 设计模型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/18/%E7%B3%BB%E7%BB%9F/%EF%BC%88%E8%BD%AC%EF%BC%89win10%E5%AE%89%E8%A3%85git%E6%8A%A5exit%20code128%E9%94%99%E8%AF%AF/" rel="next" title="(转)win10 git安装 exit code128错误">
+                <i class="fa fa-chevron-left"></i> (转)win10 git安装 exit code128错误
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/header.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81OOP%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="nav-text">一、OOP七大原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99"><span class="nav-text">1、开闭原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="nav-text">2、里氏替换原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99"><span class="nav-text">3、依赖倒置原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="nav-text">4、单一职责原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99"><span class="nav-text">5、接口隔离原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99"><span class="nav-text">6、迪米特法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81%E5%90%88%E6%88%90%E5%A4%8D%E7%94%A8%E5%8E%9F%E5%88%99"><span class="nav-text">7、合成复用原则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%9E%8B"><span class="nav-text">二、设计模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-text">三、创建型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-text">1、单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%A5%BF%E6%B1%89%E5%BC%8F"><span class="nav-text">1.1 饿汉式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%87%92%E6%B1%89%E5%BC%8F"><span class="nav-text">1.2 懒汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8"><span class="nav-text">1.2.1 线程不安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%88synchronized%E9%94%81%E6%96%B9%E6%B3%95%EF%BC%89"><span class="nav-text">1.2.2 线程安全（synchronized锁方法）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-3-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%88%E5%8F%8C%E9%87%8D%E6%A3%80%E9%AA%8C%E9%94%81%EF%BC%8CDCL%EF%BC%9ADouble-Checked-locking%EF%BC%89"><span class="nav-text">1.2.3 线程安全（双重检验锁，DCL：Double-Checked locking）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-4-%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">1.2.4 静态内部类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%8F%8D%E5%B0%84%E7%A0%B4%E5%9D%8F%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-text">1.3 反射破坏单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-%E5%8F%8D%E5%B0%84%E7%A0%B4%E5%9D%8F%E5%8D%95%E4%BE%8B"><span class="nav-text">1.3.1 反射破坏单例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-%E5%8D%95%E4%BE%8B%E9%98%B2%E6%AD%A2%E5%8F%8D%E5%B0%84%E7%A0%B4%E5%9D%8F"><span class="nav-text">1.3.2 单例防止反射破坏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-3-%E5%8F%8D%E5%B0%84%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%A0%B4%E5%9D%8F%E4%B8%89%E9%87%8D%E6%A3%80%E9%AA%8C%E9%94%81%E5%8D%95%E4%BE%8B"><span class="nav-text">1.3.3 反射创建对象破坏三重检验锁单例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-4-%E7%BA%A2%E7%BB%BF%E7%81%AF%E6%96%B9%E6%B3%95%E9%98%B2%E6%AD%A2%E5%8F%8D%E5%B0%84%E5%AF%B9%E8%B1%A1%E7%A0%B4%E5%9D%8F%E5%8D%95%E4%BE%8B"><span class="nav-text">1.3.4 红绿灯方法防止反射对象破坏单例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-5-%E5%8F%8D%E7%BC%96%E8%AF%91%E7%A0%B4%E8%A7%A3%E7%BA%A2%E7%BB%BF%E7%81%AF%E6%96%B9%E6%B3%95%EF%BC%8C%E7%A0%B4%E5%9D%8F%E5%8D%95%E4%BE%8B"><span class="nav-text">1.3.5 反编译破解红绿灯方法，破坏单例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-6-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">1.3.6 源码分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-text">2、工厂模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = '设计模式（一）之创建型模式'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '设计模式（一）之创建型模式'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
