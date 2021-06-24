@@ -7702,10 +7702,7 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
 <p>（3）行为型模式</p>
 <p>​        模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式</p>
 </blockquote>
-<h1 id="三、创建型模式"><a href="#三、创建型模式" class="headerlink" title="三、创建型模式"></a>三、创建型模式</h1><blockquote>
-<p>待补充创建型模式</p>
-</blockquote>
-<h2 id="1、单例模式"><a href="#1、单例模式" class="headerlink" title="1、单例模式"></a>1、单例模式</h2><blockquote>
+<h1 id="三、创建型模式"><a href="#三、创建型模式" class="headerlink" title="三、创建型模式"></a>三、创建型模式</h1><h2 id="1、单例模式"><a href="#1、单例模式" class="headerlink" title="1、单例模式"></a>1、单例模式</h2><blockquote>
 <p>单例模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。</p>
 <p>注意：</p>
 <p>（1）单例类只能有一个实例</p>
@@ -7933,15 +7930,79 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
 <p><img src="/2021/06/16/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210619124330093.png" alt="image-20210619124330093"></p>
 <blockquote>
 <p>如果将上诉的Bilibili类进行修改，如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bilibili</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="comment">//原型对象 v1</span></span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        Video v1 = <span class="keyword">new</span> Video(<span class="string">&quot;狂神说Java&quot;</span>,date);</span><br><span class="line">        <span class="comment">//调用clone方法需要抛出异常CloneNotSupportedException</span></span><br><span class="line">        Video v2 = (Video) v1.clone(); <span class="comment">// v1 克隆v2</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v2=&gt;&quot;</span>+v2);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;=====================&quot;</span>);</span><br><span class="line">        date.setTime(<span class="number">123465645</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bilibili</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="comment">//原型对象 v1</span></span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        Video v1 = <span class="keyword">new</span> Video(<span class="string">&quot;狂神说Java&quot;</span>,date);</span><br><span class="line">        <span class="comment">//调用clone方法需要抛出异常CloneNotSupportedException</span></span><br><span class="line">        Video v2 = (Video) v1.clone(); <span class="comment">// v1 克隆v2</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v2=&gt;&quot;</span>+v2);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;=====================&quot;</span>);</span><br><span class="line">        date.setTime(<span class="number">123465645</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v2=&gt;&quot;</span>+v2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>结果：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">v1=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Sat Jun <span class="number">19</span> <span class="number">12</span>:<span class="number">47</span>:<span class="number">32</span> CST <span class="number">2021</span>&#125;</span><br><span class="line">v2=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Sat Jun <span class="number">19</span> <span class="number">12</span>:<span class="number">47</span>:<span class="number">32</span> CST <span class="number">2021</span>&#125;</span><br><span class="line">=====================</span><br><span class="line">v1=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Fri Jan <span class="number">02</span> <span class="number">18</span>:<span class="number">17</span>:<span class="number">45</span> CST <span class="number">1970</span>&#125;</span><br><span class="line">v1=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Fri Jan <span class="number">02</span> <span class="number">18</span>:<span class="number">17</span>:<span class="number">45</span> CST <span class="number">1970</span>&#125;</span><br></pre></td></tr></table></figure>
 <p>分析：</p>
-<p>​        修改date的值后，发现v1和v2的date值全部改变</p>
+<p>​        修改date的值后，发现v1和v2的date值全部改变，这与我们所期望的不符，即一个修改，不影响另一个值</p>
 </blockquote>
 <h3 id="1-2-深克隆"><a href="#1-2-深克隆" class="headerlink" title="1.2  深克隆"></a>1.2  深克隆</h3><blockquote>
 <p>深克隆：新对象除了与老对象的八大基本类型的赋值一致以外，其类类型的对象在保证赋值一致的基础上，指向的是一段新的内存空间。</p>
 </blockquote>
+<p><img src="/2021/06/16/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8B%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/image-20210619220352293.png" alt="image-20210619220352293"></p>
+<blockquote>
+<p>通过修改clone方法的模式，实现深克隆</p>
+</blockquote>
+<h4 id="1-2-1-Video类—原型类"><a href="#1-2-1-Video类—原型类" class="headerlink" title="1.2.1 Video类—原型类"></a>1.2.1 Video类—原型类</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  1、实现一个接口 Cloneable</span></span><br><span class="line"><span class="comment">  2、重写一个方法 clone()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Video</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Date createDateTime;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException</span>&#123;</span><br><span class="line">        Object obj = <span class="keyword">super</span>.clone();</span><br><span class="line">        <span class="comment">//通过对子对象或子成员变量clone来实现深克隆~   还可以通过序列化、反序列化实现深克隆</span></span><br><span class="line">        Video v = (Video) obj;</span><br><span class="line">        v.createDateTime = (Date) <span class="keyword">this</span>.createDateTime.clone();<span class="comment">//将这个对象的属性也进行克隆</span></span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Video</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Video</span><span class="params">(String name, Date createDateTime)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.createDateTime = createDateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getCreateDateTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> createDateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCreateDateTime</span><span class="params">(Date createDateTime)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.createDateTime = createDateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Video&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, createDateTime=&quot;</span> + createDateTime +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-2-Bilibili类"><a href="#1-2-2-Bilibili类" class="headerlink" title="1.2.2 Bilibili类"></a>1.2.2 Bilibili类</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bilibili</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="comment">//原型对象 v1</span></span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        Video v1 = <span class="keyword">new</span> Video(<span class="string">&quot;狂神说Java&quot;</span>,date);</span><br><span class="line">        Video v2 = (Video) v1.clone(); <span class="comment">// v1 克隆v2</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v2=&gt;&quot;</span>+v2);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;=====================&quot;</span>);</span><br><span class="line">        date.setTime(<span class="number">465478789</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v2=&gt;&quot;</span>+v2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">v1=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Sat Jun <span class="number">19</span> <span class="number">23</span>:<span class="number">15</span>:<span class="number">04</span> CST <span class="number">2021</span>&#125;</span><br><span class="line">v2=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Sat Jun <span class="number">19</span> <span class="number">23</span>:<span class="number">15</span>:<span class="number">04</span> CST <span class="number">2021</span>&#125;</span><br><span class="line">=====================</span><br><span class="line">v1=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Tue Jan <span class="number">06</span> <span class="number">17</span>:<span class="number">17</span>:<span class="number">58</span> CST <span class="number">1970</span>&#125;</span><br><span class="line">v2=&gt;Video&#123;name=<span class="string">&#x27;狂神说Java&#x27;</span>, createDateTime=Sat Jun <span class="number">19</span> <span class="number">23</span>:<span class="number">15</span>:<span class="number">04</span> CST <span class="number">2021</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​        从结果中，就可以看出v1和v2的时间不同，因此，实现了原型的深克隆</p>
+</blockquote>
+<h3 id="序列化-amp-反序列化"><a href="#序列化-amp-反序列化" class="headerlink" title="序列化&amp;反序列化"></a>序列化&amp;反序列化</h3><blockquote>
+<p>概念：</p>
+<ul>
+<li>序列化：把Java对象转换为字节序列的过程</li>
+<li>反序列化：把字节序列恢复为Java对象的过程</li>
+</ul>
+<p>序列化用途：</p>
+<ul>
+<li>把对象得到的字节序列永久地保存到硬盘上，通常存放在一个文件中（持久化对象）</li>
+<li>在网络上传送对象的字节序列（网络传输对象）</li>
+</ul>
+<p>序列化使用：必须实现<strong>Serializable</strong>接口</p>
+</blockquote>
+<h3 id="1-3-序列化实现深克隆"><a href="#1-3-序列化实现深克隆" class="headerlink" title="1.3 序列化实现深克隆"></a>1.3 序列化实现深克隆</h3><h4 id="1-3-1-Video类—原型类"><a href="#1-3-1-Video类—原型类" class="headerlink" title="1.3.1 Video类—原型类"></a>1.3.1 Video类—原型类</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Video</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Date createDateTime;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Video</span><span class="params">()</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Video</span><span class="params">(String name,Date createDateTime)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.createDateTime = createDateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//深克隆：通过对象的序列化实现</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">deepClone</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">        Video v = <span class="keyword">new</span> Video(); <span class="comment">//要克隆的对象</span></span><br><span class="line">        <span class="comment">//序列化</span></span><br><span class="line">        ByteArrayOutputStream bos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(bos); <span class="comment">//需要抛出IO异常</span></span><br><span class="line">        oos.writeObject(<span class="keyword">this</span>);<span class="comment">//将当前这个对象以对象流的方式输出</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//反序列化</span></span><br><span class="line">        ByteArrayInputStream bis = <span class="keyword">new</span> ByteArrayInputStream(bos.toByteArray());</span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(bis);</span><br><span class="line">        Video v1 = (Video)ois.readObject();<span class="comment">//需要抛出ClassNotFoundException异常</span></span><br><span class="line">        <span class="keyword">return</span> v1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getCreateDateTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> createDateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCreateDateTime</span><span class="params">(Date createDateTime)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.createDateTime = createDateTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Video&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, createDateTime=&quot;</span> + createDateTime +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="1-3-2-Bilibili类"><a href="#1-3-2-Bilibili类" class="headerlink" title="1.3.2 Bilibili类"></a>1.3.2 Bilibili类</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bilibili</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">        <span class="comment">//原型对象 v1</span></span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line"></span><br><span class="line">        Video v1 = <span class="keyword">new</span> Video(<span class="string">&quot;ldg原型&quot;</span>,date);</span><br><span class="line">        Video v2 = (Video)v1.deepClone(); <span class="comment">//需要抛出IOException, ClassNotFoundException异常</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v2=&gt;&quot;</span>+v2);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;======================&quot;</span>);</span><br><span class="line">        date.setTime(<span class="number">45547456</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;v1=&gt;&quot;</span>+v1);</span><br><span class="line">        System.out.println(<span class="string">&quot;v2=&gt;&quot;</span>+v2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">v1=&gt;Video&#123;name=<span class="string">&#x27;ldg原型&#x27;</span>, createDateTime=Tue Jun <span class="number">22</span> <span class="number">22</span>:<span class="number">35</span>:<span class="number">27</span> CST <span class="number">2021</span>&#125;</span><br><span class="line">v2=&gt;Video&#123;name=<span class="string">&#x27;ldg原型&#x27;</span>, createDateTime=Tue Jun <span class="number">22</span> <span class="number">22</span>:<span class="number">35</span>:<span class="number">27</span> CST <span class="number">2021</span>&#125;</span><br><span class="line">======================</span><br><span class="line">v1=&gt;Video&#123;name=<span class="string">&#x27;ldg原型&#x27;</span>, createDateTime=Thu Jan <span class="number">01</span> <span class="number">20</span>:<span class="number">39</span>:<span class="number">07</span> CST <span class="number">1970</span>&#125;</span><br><span class="line">v2=&gt;Video&#123;name=<span class="string">&#x27;ldg原型&#x27;</span>, createDateTime=Tue Jun <span class="number">22</span> <span class="number">22</span>:<span class="number">35</span>:<span class="number">27</span> CST <span class="number">2021</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​    通过序列化与反序列化的方式，也可以实现深克隆</p>
+</blockquote>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>浅克隆：克隆对象的值相同，且克隆对象指向的内存空间也相同</p>
+<blockquote>
+<p>可通过实现Cloneable接口和重写clone方法实现</p>
+</blockquote>
+</li>
+<li><p>深克隆：克隆对象的值相同，且克隆对象指向的内存空间不相同</p>
+<blockquote>
+<ol>
+<li><p>实现Cloneable接口和重写clone方法实现</p>
+<p>在重写clone方法时，对子对象也需要克隆。比如A1包含A2，要想真正实现A1的深克隆，则还需要克隆A2</p>
+</li>
+<li><p>通过序列化和反序列化的方式实现克隆</p>
+<p>需要实现Serializable接口</p>
+<ul>
+<li>序列化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//序列化</span></span><br><span class="line">      ByteArrayOutputStream bos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">      ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(bos); <span class="comment">//需要抛出IO异常</span></span><br><span class="line">      oos.writeObject(<span class="keyword">this</span>);<span class="comment">//将当前这个对象以对象流的方式输出</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>反序列化</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//反序列化</span></span><br><span class="line">       ByteArrayInputStream bis = <span class="keyword">new</span> ByteArrayInputStream(bos.toByteArray());</span><br><span class="line">       ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(bis);</span><br><span class="line">       Video v1 = (Video)ois.readObject();<span class="comment">//需要抛出ClassNotFoundException异常</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><h4 id="Java中的序列化与反序列化"><a href="#Java中的序列化与反序列化" class="headerlink" title="Java中的序列化与反序列化"></a><a href="https://www.zhihu.com/question/47794528/answer/672095170">Java中的序列化与反序列化</a></h4></li>
+</ul>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -8101,6 +8162,190 @@ w = w + \beta \delta\phi(s,a)</script><p>通过对均方误差损失函数求导
       <tags>
         <tag>设计模式</tag>
         <tag>工厂模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/06/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<h1 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h1><blockquote>
+<p>作用：从程序的结构上实现松耦合，从而可以扩大整体的类结构，用来解决更大的问题</p>
+<p>分类：</p>
+<ul>
+<li>适配器模式</li>
+<li>代理模式</li>
+<li>桥接模式</li>
+<li>装饰模式</li>
+<li>组合模式</li>
+<li>外观模式</li>
+<li>享元模式</li>
+</ul>
+</blockquote>
+<h1 id="一、适配器模式"><a href="#一、适配器模式" class="headerlink" title="一、适配器模式"></a>一、适配器模式</h1><blockquote>
+<p>适配器模式是作为两个不兼容的接口之前的桥梁，它结合了两个独立接口的功能。</p>
+<p>以USB网线转换器为例，如下图：</p>
+<p>​    笔记本不能直接接网线，需要使用一个USB网线转换器（一面接网线，一面接笔记本USB接口），从而使笔记本通过网线上网</p>
+</blockquote>
+<p><img src="/2021/06/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/image-20210622231252326.png" alt="image-20210622231252326"></p>
+<h2 id="1-1-代码实例—继承（类适配器：单继承）"><a href="#1-1-代码实例—继承（类适配器：单继承）" class="headerlink" title="1.1 代码实例—继承（类适配器：单继承）"></a>1.1 代码实例—继承（类适配器：单继承）</h2><h3 id="1-1-1-Adaptee类"><a href="#1-1-1-Adaptee类" class="headerlink" title="1.1.1 Adaptee类"></a>1.1.1 Adaptee类</h3><blockquote>
+<p>要被适配的类：网线</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//要被适配的类：网线</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adaptee</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;连接网线上网&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-2-NetToUsb接口"><a href="#1-1-2-NetToUsb接口" class="headerlink" title="1.1.2 NetToUsb接口"></a>1.1.2 NetToUsb接口</h3><blockquote>
+<p>接口转换器的抽象实现</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//接口转换器的抽象实现</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">NetToUsb</span> </span>&#123;</span><br><span class="line">    <span class="comment">//作用：处理请求，网线=&gt;usb</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-3-Adapter类"><a href="#1-1-3-Adapter类" class="headerlink" title="1.1.3 Adapter类"></a>1.1.3 Adapter类</h3><blockquote>
+<p>真正的适配器：实现NetToUsb接口</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//真正的适配器，需要连接USB，连接网线</span></span><br><span class="line"><span class="comment">//extends Adaptee，使用继承，可以直接调用父类的request方法实现上网</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span>  <span class="title">Adaptee</span> <span class="keyword">implements</span> <span class="title">NetToUsb</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="1-1-4-Computer类"><a href="#1-1-4-Computer类" class="headerlink" title="1.1.4 Computer类"></a>1.1.4 Computer类</h3><blockquote>
+<p>客户端类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//客户端类：想上网，插不上网线</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    <span class="comment">//我们的电脑需要连接上转接器才可以上网</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">net</span><span class="params">(NetToUsb adapter)</span></span>&#123;</span><br><span class="line">        <span class="comment">//上网的具体实现，找一个转接头</span></span><br><span class="line">        adapter.handleRequest();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//电脑，适配器，网线</span></span><br><span class="line">        Computer computer = <span class="keyword">new</span> Computer();<span class="comment">//电脑</span></span><br><span class="line">        Adaptee adaptee = <span class="keyword">new</span> Adaptee();<span class="comment">//网线</span></span><br><span class="line">        Adapter adapter = <span class="keyword">new</span> Adapter();<span class="comment">//转接器</span></span><br><span class="line">        computer.net(adapter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">连接网线上网</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​    Computer类中的Adaptee adaptee = new Adaptee();好像并没有什么作用？</p>
+<p>​    因为Adapter类中继承了adaptee 父类，因此，adapter类自带上网功能，所以也就无需使用adaptee类。</p>
+<p>​    但该网线只能适用于自己电脑，并不适合其他类型的电脑，因此可以使用<strong>组合</strong>代替继承来匹配其他类型的电脑。</p>
+</blockquote>
+<h2 id="1-2-代码实例—对象适配器（常用）"><a href="#1-2-代码实例—对象适配器（常用）" class="headerlink" title="1.2 代码实例—对象适配器（常用）"></a>1.2 代码实例—对象适配器（常用）</h2><h3 id="1-2-1-Adaptee类"><a href="#1-2-1-Adaptee类" class="headerlink" title="1.2.1 Adaptee类"></a>1.2.1 Adaptee类</h3><blockquote>
+<p>要被适配的类：网线</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//要被适配的类：网线</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adaptee</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;连接网线上网&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-2-NetToUsb接口"><a href="#1-2-2-NetToUsb接口" class="headerlink" title="1.2.2 NetToUsb接口"></a>1.2.2 NetToUsb接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//接口转换器的抽象实现</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">NetToUsb</span> </span>&#123;</span><br><span class="line">    <span class="comment">//作用：处理请求，网线=&gt;usb</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-3-Adapter类"><a href="#1-2-3-Adapter类" class="headerlink" title="1.2.3 Adapter类"></a>1.2.3 Adapter类</h3><blockquote>
+<p>真正的适配器</p>
+<p><strong>区别：将之前的继承修改为组合</strong></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//真正的适配器，需要连接usb，连接网线</span></span><br><span class="line"><span class="comment">//组合：对象适配器，常用</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">implements</span> <span class="title">NetToUsb</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Adaptee adaptee;<span class="comment">//使用组合方式</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Adapter</span><span class="params">(Adaptee adaptee)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.adaptee = adaptee;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        adaptee.request();<span class="comment">//可以上网了</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-4-Computer类"><a href="#1-2-4-Computer类" class="headerlink" title="1.2.4 Computer类"></a>1.2.4 Computer类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//客户端类：想上网，插不上网线</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//我们的电脑需要连接上转接器才可以上网</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">net</span><span class="params">(NetToUsb adapter)</span></span>&#123;</span><br><span class="line">        <span class="comment">//上网的具体实现，找一个转接头</span></span><br><span class="line">        adapter.handleRequest();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//电脑，适配器，网线</span></span><br><span class="line">        Computer computer = <span class="keyword">new</span> Computer();<span class="comment">//电脑</span></span><br><span class="line">        Adaptee adaptee = <span class="keyword">new</span> Adaptee();<span class="comment">//网线</span></span><br><span class="line">        Adapter adapter = <span class="keyword">new</span> Adapter(adaptee);<span class="comment">//适配器</span></span><br><span class="line">        computer.net(adapter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">连接网线上网</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​    和继承相比，组合的优势在哪?</p>
+<ul>
+<li>​    使用继承时，只能对某一个网线类（被继承的类）产生作用。而只用组合，可以对多个网线类都产生作用。</li>
+</ul>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="适配器模式定义"><a href="#适配器模式定义" class="headerlink" title="适配器模式定义"></a>适配器模式定义</h3><blockquote>
+<p>将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以在一起工作！</p>
+</blockquote>
+<h3 id="角色分析"><a href="#角色分析" class="headerlink" title="角色分析"></a>角色分析</h3><blockquote>
+<ol>
+<li><strong>目标接口：</strong>客户所期待的接口，目标可以是具体的或抽象的类，也可以是接口。对应代码中的<strong>USB接口</strong></li>
+<li><strong>需要适配的类：</strong>需要适配的类或者适配者类。对应代码中的<strong>网线接口</strong></li>
+<li><strong>适配器：</strong>通过包装一个需要适配的对象，把原接口转换成目标对象。对应代码中的<strong>USB转换器</strong></li>
+</ol>
+</blockquote>
+<h3 id="图形化理解"><a href="#图形化理解" class="headerlink" title="图形化理解"></a>图形化理解</h3><p><img src="/2021/06/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/截图.png" alt="img"></p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><blockquote>
+<p>对象适配器优点：</p>
+<ul>
+<li>一个对象适配器可以把多个不同的适配者适配到同一目标</li>
+<li>可以适配一个适配者的子类，由于适配器和适配者之间是关联关系，根据<strong>里氏替换原则</strong>（<strong>继承</strong>必须确保<strong>超类</strong>所拥有的性质在<strong>子类</strong>中仍然成立），适配者的子类也可以通过该适配器适配</li>
+</ul>
+<p>类适配器缺点：</p>
+<ul>
+<li>对于Java、C#等不支持多重类继承的语言，一次最多只能适配一个适配者类，不能同时适配多个适配者。</li>
+<li>在Java、C#等语言中，类适配器模式中的目标抽象类只能为接口，不能为类，其使用有一定的局限性（因此推荐使用组合方式）</li>
+</ul>
+</blockquote>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><blockquote>
+<ul>
+<li>系统需要使用一些现有的类，而这些类的接口（如方法名）不太符合系统的需要，甚至都没有这些类的源代码</li>
+<li>想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的类，包括一些可能在将来引进的类（<strong>待了解</strong>）<ul>
+<li>InputStreamReader(InputStream)，转换流</li>
+<li>SpringMVC  DISPatchHandler</li>
+<li>GUI 编程</li>
+<li>springboot</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="二、桥接模式"><a href="#二、桥接模式" class="headerlink" title="二、桥接模式"></a>二、桥接模式</h1><blockquote>
+<p>桥接模式是将抽象部分与它的实现部分分离，使它们都可以独立地变化。又称为柄体模式或接口模式</p>
+</blockquote>
+<h2 id="1、简单例子说明"><a href="#1、简单例子说明" class="headerlink" title="1、简单例子说明"></a>1、简单例子说明</h2><blockquote>
+<p>如下图所示：</p>
+<p>​        电脑分为：台式电脑、笔记本电脑、平板电脑</p>
+<p>​        台式电脑又分为：联想台式、苹果台式、戴尔台式等</p>
+<p>以这种结构进行架构设计时，若想新增一个手表电脑，则在手表电脑下面需要新增三个类，特别繁琐。</p>
+<p>且每一个类都违反了<strong>单一职责原则</strong>（一个方法尽量做一个事情），一个类负责了两个功能：品牌和类型。</p>
+</blockquote>
+<p><img src="/2021/06/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/image-20210624224411770.png" alt="image-20210624224411770"></p>
+<blockquote>
+<p>因此，可以将上述的场景进行分离，分析发现，该场景有两个变化的维度：品牌，类型。</p>
+<p>然后将品牌和类型通过一个连接点连接起来即可。</p>
+</blockquote>
+<p><img src="/2021/06/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/image-20210624232818462.png" alt="image-20210624232818462"></p>
+<h2 id="2、代码实例"><a href="#2、代码实例" class="headerlink" title="2、代码实例"></a>2、代码实例</h2><h3 id="2-1-Brand类：接口类"><a href="#2-1-Brand类：接口类" class="headerlink" title="2.1 Brand类：接口类"></a>2.1 Brand类：接口类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//品牌</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Brand</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">info</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-接口实现类"><a href="#2-2-接口实现类" class="headerlink" title="2.2 接口实现类"></a>2.2 接口实现类</h3><blockquote>
+<p>接口实现类也可以在接口类中写</p>
+</blockquote>
+<h4 id="2-2-1-Lenovo类"><a href="#2-2-1-Lenovo类" class="headerlink" title="2.2.1 Lenovo类"></a>2.2.1 Lenovo类</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//联想品牌</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Lenovo</span> <span class="keyword">implements</span> <span class="title">Brand</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">info</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.print(<span class="string">&quot;联想&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-Apple类"><a href="#2-2-2-Apple类" class="headerlink" title="2.2.2 Apple类"></a>2.2.2 Apple类</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//苹果品牌</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">implements</span> <span class="title">Brand</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">info</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.print(<span class="string">&quot;苹果&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-Computer-java"><a href="#2-3-Computer-java" class="headerlink" title="2.3 Computer.java"></a>2.3 Computer.java</h3><blockquote>
+<p>在同一个类中写，2.2小节中的代码也可以写在2.1里面</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//抽象的电脑类型，可以加abstract，也可以不加</span></span><br><span class="line"><span class="comment">//使用类，而不是接口，是因为，品牌是电脑的一个属性，可以使用组合</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//组合，品牌~桥</span></span><br><span class="line">    <span class="comment">//protected 可以让子类访问，如果设置为私有，只能类本身访问</span></span><br><span class="line">    <span class="keyword">protected</span> Brand brand;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Computer</span><span class="params">(Brand brand)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.brand = brand;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">info</span><span class="params">()</span></span>&#123;</span><br><span class="line">        brand.info();<span class="comment">//自带品牌</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Desktop</span> <span class="keyword">extends</span>  <span class="title">Computer</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Desktop</span><span class="params">(Brand brand)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(brand);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">info</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.info();</span><br><span class="line">        System.out.print(<span class="string">&quot;台式机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Laptop</span> <span class="keyword">extends</span>  <span class="title">Computer</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Laptop</span><span class="params">(Brand brand)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(brand);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">info</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.info();</span><br><span class="line">        System.out.print(<span class="string">&quot;笔记本&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-4-Test类"><a href="#2-4-Test类" class="headerlink" title="2.4 Test类"></a>2.4 Test类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//苹果笔记本</span></span><br><span class="line">        Computer computer = <span class="keyword">new</span> Laptop(<span class="keyword">new</span> Apple());</span><br><span class="line">        computer.info();</span><br><span class="line">        <span class="comment">//联想台式机</span></span><br><span class="line">        computer = <span class="keyword">new</span> Desktop(<span class="keyword">new</span> Lenovo());</span><br><span class="line">        computer.info();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">苹果笔记本联想台式机</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​    若想新增加一个品牌，则只需新增一个接口实现类，如Dell即可</p>
+<p>​    若想新增加一个类型，则只需新增一个类继承Computer即可。不需要修改原来的任何代码</p>
+</blockquote>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><h3 id="图形化理解-1"><a href="#图形化理解-1" class="headerlink" title="图形化理解"></a>图形化理解</h3><p><img src="/2021/06/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/截图-1624549400443.png" alt="img"></p>
+<blockquote>
+<p>分析：</p>
+<p>​    从上图中，可以看出，该场景有两个维度，并且可以将每一个维度抽离出来，分为Brand和电脑</p>
+<p>​    其Brand（品牌）是一个接口，Lenovo、Apple都可以各自实现该接口，并且方便扩展。比如新增Dell品牌，只需实现Brand接口即可。</p>
+<p>​    电脑是一个类，且使用组合方式，自带Brand，且台式和笔记本都可以继承该类。在扩展时，只需要继承电脑类即可。比如，新增一个手表，也只是需要继承电脑，会自带Brand属性。</p>
+<p>电脑和Brand如何建立连接？</p>
+<ul>
+<li>可以通过桥接模式，在电脑类中通过组合方式，将Brand接口组合在电脑类中，进行桥接，这样每一个电脑都会自带品牌，并且可以随意组装。</li>
+</ul>
+</blockquote>
+<h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><blockquote>
+<p>优点：</p>
+<ul>
+<li>桥接模式偶尔类似于多继承方案，但是多继承方案违背了类的<strong>单一职责原则</strong>（一个方法只做一件事情），复用性比较差，类的个数也非常多。桥接模式是比多继承方案更好的解决方法，极大地减少了子类的个数，从而降低管理和维护的成本。</li>
+<li>桥接模式提高了系统的可扩展性，在两个变化维度中任意扩展一个维度，都不需要修改原有系统。符合<strong>开闭原则</strong>（对修改关闭，对扩展开放），就像一座桥，可以把两个变化的维度连接起来。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>桥接模式的引入会增加系统的理解与设计难度，由于聚合关联关系建立在抽象层，要求开发者对抽象进行设计与编程。</li>
+<li>桥接模式要求正确识别出系统中<strong>两个独立变化的维度</strong>，因此其使用范围具有一定的局限性。</li>
+</ul>
+</blockquote>
+<h3 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h3><blockquote>
+<ul>
+<li>如果一个系统需要在构建的抽象化角色和具体化角色之间增加更多的灵活性，避免在两个层次之间建立静态的继承联系，通过桥接模式可以使它们在抽象层建立一个关联关系。抽象化角色和实现化角色可以以继承的方式独立扩展而互不影响，在程序运行时可以动态将一个抽象化子类的对象和一个实现化子类的对象进行组合，即系统需要对抽象化角色和实现化角色进行动态耦合。</li>
+<li>一个类存在两个独立变化的维度，且这两个维度都需要进行扩展</li>
+<li>虽然在系统中使用继承时没有问题的，但是由于抽象化角色和具体化角色需要独立变化，设计要求需要独立管理这两者。对于那些不希望使用继承或因为多层次继承导致系统类的个数急剧增加的系统，桥接模式尤为适用。</li>
+</ul>
+</blockquote>
+<h3 id="场景（待学习）"><a href="#场景（待学习）" class="headerlink" title="场景（待学习）"></a>场景（待学习）</h3><blockquote>
+<ol>
+<li><p>Java语言通过Java虚拟机实现了平台的无关性。</p>
+<p><img src="/2021/06/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/截图-1624550142642.png" alt="img"></p>
+</li>
+<li><p>AWT中的Peer架构</p>
+</li>
+<li><p>JDBC驱动程序也是桥接模式的应用之一</p>
+</li>
+</ol>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>适配器模式</tag>
+        <tag>桥接模式</tag>
       </tags>
   </entry>
 </search>
