@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ldgcug.xyz/"/>
-  <updated>2021-07-18T15:25:19.232Z</updated>
+  <updated>2021-07-26T16:46:53.183Z</updated>
   <id>https://ldgcug.xyz/</id>
   
   <author>
@@ -15,6 +15,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式（十一）之行为型模式--命令模式</title>
+    <link href="https://ldgcug.xyz/2021/07/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B9%8B%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://ldgcug.xyz/2021/07/27/设计模式/设计模式（十一）之行为型模式-命令模式/</id>
+    <published>2021-07-26T16:46:53.000Z</published>
+    <updated>2021-07-26T16:46:53.183Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://ldgcug.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="命令模式" scheme="https://ldgcug.xyz/tags/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式（十）之行为型模式--模板方法模式</title>
+    <link href="https://ldgcug.xyz/2021/07/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8B%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://ldgcug.xyz/2021/07/22/设计模式/设计模式（十）之行为型模式-模板方法模式/</id>
+    <published>2021-07-22T14:43:51.000Z</published>
+    <updated>2021-07-26T16:46:07.411Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一、行为型模式&quot;&gt;&lt;a href=&quot;#一、行为型模式&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://ldgcug.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="模板模式" scheme="https://ldgcug.xyz/tags/%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式（九）之结构型模式-享元模式</title>
+    <link href="https://ldgcug.xyz/2021/07/19/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8B%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://ldgcug.xyz/2021/07/19/设计模式/设计模式（九）之结构型模式-享元模式/</id>
+    <published>2021-07-19T14:48:48.000Z</published>
+    <updated>2021-07-21T16:10:44.080Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一、享元模式&quot;&gt;&lt;a href=&quot;#一、享元模式&quot; class=&quot;headerlink&quot; title=&quot;一、享元模式&quot;&gt;&lt;/a&gt;一、享元模式&lt;/h1&gt;&lt;h2 id=&quot;1、案例分析&quot;&gt;&lt;a href=&quot;#1、案例分析&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://ldgcug.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="享元模式" scheme="https://ldgcug.xyz/tags/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式（八）之结构型模式-外观模式</title>
@@ -477,96 +547,6 @@
     
     
       <category term="Git" scheme="https://ldgcug.xyz/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>初识Airsim（十）之Lidar数据获取并显示</title>
-    <link href="https://ldgcug.xyz/2019/08/30/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8BLidar%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E5%B9%B6%E6%98%BE%E7%A4%BA/"/>
-    <id>https://ldgcug.xyz/2019/08/30/Airsim/初识Airsim（十）之Lidar数据获取并显示/</id>
-    <published>2019-08-30T05:38:55.000Z</published>
-    <updated>2019-08-30T08:39:11.045Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
-    
-    
-      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
-    
-      <category term="Lidar" scheme="https://ldgcug.xyz/tags/Lidar/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>代码实现（七）之DDPG</title>
-    <link href="https://ldgcug.xyz/2019/08/24/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%83%EF%BC%89%E4%B9%8BDDPG/"/>
-    <id>https://ldgcug.xyz/2019/08/24/代码/DRL/代码实现（七）之DDPG/</id>
-    <published>2019-08-24T05:33:03.000Z</published>
-    <updated>2019-08-24T07:40:40.131Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="代码" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/"/>
-    
-      <category term="深度强化学习" scheme="https://ldgcug.xyz/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="DRL" scheme="https://ldgcug.xyz/tags/DRL/"/>
-    
-      <category term="OpenAI gym" scheme="https://ldgcug.xyz/tags/OpenAI-gym/"/>
-    
-      <category term="DDPG" scheme="https://ldgcug.xyz/tags/DDPG/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>初识Airsim（九）之Pixhawk配置（Ubuntu16下HITL配置）</title>
-    <link href="https://ldgcug.xyz/2019/08/22/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B9%9D%EF%BC%89%E4%B9%8BPixhawk%E9%85%8D%E7%BD%AE%EF%BC%88Ubuntu16%E4%B8%8BHITL%E9%85%8D%E7%BD%AE%EF%BC%89/"/>
-    <id>https://ldgcug.xyz/2019/08/22/Airsim/初识Airsim（九）之Pixhawk配置（Ubuntu16下HITL配置）/</id>
-    <published>2019-08-22T05:31:10.000Z</published>
-    <updated>2019-08-22T06:47:58.396Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在Airsim上做PX4的集成，并简单完成其算法验证&lt;/p&gt;
-&lt;font
-        
-      
-    
-    </summary>
-    
-      <category term="Airsim" scheme="https://ldgcug.xyz/categories/Airsim/"/>
-    
-    
-      <category term="Airsim" scheme="https://ldgcug.xyz/tags/Airsim/"/>
-    
-      <category term="PX4" scheme="https://ldgcug.xyz/tags/PX4/"/>
     
   </entry>
   
