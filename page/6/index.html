@@ -297,6 +297,404 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/13/ROS/ros%E8%87%AA%E5%AE%9A%E4%B9%89msg%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B%E5%8F%8Aroslaunch%E5%90%AF%E5%8A%A8%E5%A4%9A%E8%8A%82%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/13/ROS/ros%E8%87%AA%E5%AE%9A%E4%B9%89msg%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B%E5%8F%8Aroslaunch%E5%90%AF%E5%8A%A8%E5%A4%9A%E8%8A%82%E7%82%B9/" itemprop="url">ros自定义msg消息类型及roslaunch启动多节点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-13T20:15:35+08:00">
+                2019-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/13/ROS/ros%E8%87%AA%E5%AE%9A%E4%B9%89msg%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B%E5%8F%8Aroslaunch%E5%90%AF%E5%8A%A8%E5%A4%9A%E8%8A%82%E7%82%B9/" class="leancloud_visitors" data-flag-title="ros自定义msg消息类型及roslaunch启动多节点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          前言
+有时候需要自己定制一些特定的msg消息类型，而原有的就不一定能满足，这时候就需要自己进行一些相关的设置了
+对于自定义的ros节点，也能通过roslaunch启动节点（py程序）
+
+rosmsg相关设置默认msg消息类型
+官网
+
+如geometry_msgs：msg API
+
+一、创建工作空间
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/13/ROS/ros%E8%87%AA%E5%AE%9A%E4%B9%89msg%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B%E5%8F%8Aroslaunch%E5%90%AF%E5%8A%A8%E5%A4%9A%E8%8A%82%E7%82%B9/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/10/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BQGC%E3%80%81SITL%E3%80%81%E6%88%B7%E5%A4%96UE4%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/10/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BQGC%E3%80%81SITL%E3%80%81%E6%88%B7%E5%A4%96UE4%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE/" itemprop="url">初识Airsim（四）之QGC、SITL、户外UE4场景配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T13:20:06+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Airsim/" itemprop="url" rel="index">
+                    <span itemprop="name">Airsim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/10/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BQGC%E3%80%81SITL%E3%80%81%E6%88%B7%E5%A4%96UE4%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE/" class="leancloud_visitors" data-flag-title="初识Airsim（四）之QGC、SITL、户外UE4场景配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          前言
+这篇博客，更多的是记录一下ubuntu下QGC的安装及使用，Airsim的SITL配置以及如何添加UE4的定制场景等。但是在Airsim的HITL配置方面还没有成功过
+
+相关关键词
+QGC
+SITL
+PX4
+
+一、PX4 SITL配置1.1 设置dialout用户1sudo usermod -
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/10/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BQGC%E3%80%81SITL%E3%80%81%E6%88%B7%E5%A4%96UE4%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/10/%E7%B3%BB%E7%BB%9F/Windows%E4%B8%8Bsublime%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1855,396 +2253,6 @@ Airsim 1.2
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/06/16/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ldg个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/16/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" itemprop="url">初识Airsim（一）之Airsim平台搭建</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-16T21:54:08+08:00">
-                2019-06-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Airsim/" itemprop="url" rel="index">
-                    <span itemprop="name">Airsim</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/16/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="leancloud_visitors" data-flag-title="初识Airsim（一）之Airsim平台搭建">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言
-基于Airsim，搭建一个更逼真的仿真环境，比原有的Gazebo效果更好
-
-一、相关概念介绍
-Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unreal Engine）上的无人机以及其它自主移动设备的模拟器。 它支持硬件在循环与流行的飞行控制器的物理和视觉逼真模拟。它被
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/Airsim/%E5%88%9D%E8%AF%86Airsim%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BAirsim%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/06/09/Hexo/%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E7%A7%BB%E6%A4%8D%E6%97%A7%E7%94%B5%E8%84%91%E4%B8%8A%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ldg个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/09/Hexo/%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E7%A7%BB%E6%A4%8D%E6%97%A7%E7%94%B5%E8%84%91%E4%B8%8A%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/" itemprop="url">新电脑上移植旧电脑上博客笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-09T22:34:43+08:00">
-                2019-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/09/Hexo/%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E7%A7%BB%E6%A4%8D%E6%97%A7%E7%94%B5%E8%84%91%E4%B8%8A%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/" class="leancloud_visitors" data-flag-title="新电脑上移植旧电脑上博客笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  600
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          在新的电脑上移植旧电脑博客前言：
-由于一些需要，有时可能需要在新的电脑上继续原来的工作，如博客整理、github本地文件等等，但这篇笔记只用来记录博客整理部分~
-
-一、准备工作1、拷贝博客项目
-将整个博客项目文件拷贝到新的电脑上，如旧电脑存放在D盘根目录，这里新电脑也同样的存放在D盘根目录
-
-2、相
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/09/Hexo/%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E7%A7%BB%E6%A4%8D%E6%97%A7%E7%94%B5%E8%84%91%E4%B8%8A%E5%8D%9A%E5%AE%A2%E7%AC%94%E8%AE%B0/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2299,7 +2307,7 @@ Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unr
               
                 <a href="/archives/%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
               
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">86</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2321,7 +2329,7 @@ Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unr
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -3126,7 +3134,7 @@ Airsim：AirSim 是微软开源的一个跨平台的建立在虚幻引擎（ Unr
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("Windows下sublime相关配置");titles.push("Ubuntu16下GPU Tensorflow安装详细步骤");titles.push("初识Airsim（三）之Ubuntu下Airsim平台搭建");titles.push("(转)双系统之Win重装后linux引导损坏");titles.push("ubuntu下科学上网");titles.push("初识Airsim（二）之Windows下ROS安装配置");titles.push("VS2017配置（二）之GDAL配置");titles.push("VS2017配置（一）之opencv配置");titles.push("初识Airsim（一）之Airsim平台搭建");titles.push("新电脑上移植旧电脑上博客笔记");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("ros自定义msg消息类型及roslaunch启动多节点");titles.push("初识Airsim（四）之QGC、SITL、户外UE4场景配置");titles.push("Windows下sublime相关配置");titles.push("Ubuntu16下GPU Tensorflow安装详细步骤");titles.push("初识Airsim（三）之Ubuntu下Airsim平台搭建");titles.push("(转)双系统之Win重装后linux引导损坏");titles.push("ubuntu下科学上网");titles.push("初识Airsim（二）之Windows下ROS安装配置");titles.push("VS2017配置（二）之GDAL配置");titles.push("VS2017配置（一）之opencv配置");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
