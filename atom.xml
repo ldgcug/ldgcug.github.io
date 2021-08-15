@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ldgcug.xyz/"/>
-  <updated>2021-08-10T23:31:26.419Z</updated>
+  <updated>2021-08-15T15:36:25.626Z</updated>
   <id>https://ldgcug.xyz/</id>
   
   <author>
@@ -17,11 +17,89 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>设计模式（二十）之行为型模式--职责链模式</title>
+    <link href="https://ldgcug.xyz/2021/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%E5%8D%81%EF%BC%89%E4%B9%8B%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://ldgcug.xyz/2021/08/15/设计模式/设计模式（二十）之行为型模式-职责链模式/</id>
+    <published>2021-08-15T14:52:03.000Z</published>
+    <updated>2021-08-15T15:36:25.626Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一、职责链模式&quot;&gt;&lt;a href=&quot;#一、职责链模式&quot; class=&quot;headerlink&quot; title=&quot;一、职责链模式&quot;&gt;&lt;/a&gt;一、职责链模式&lt;/h1&gt;&lt;h2 id=&quot;1、案例&quot;&gt;&lt;a href=&quot;#1、案例&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://ldgcug.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="职责链模式" scheme="https://ldgcug.xyz/tags/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式（十九）之行为型模式--策略模式</title>
+    <link href="https://ldgcug.xyz/2021/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%E4%B9%8B%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://ldgcug.xyz/2021/08/15/设计模式/设计模式（十九）之行为型模式-策略模式/</id>
+    <published>2021-08-15T13:38:08.000Z</published>
+    <updated>2021-08-15T14:52:02.500Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一、策略模式&quot;&gt;&lt;a href=&quot;#一、策略模式&quot; class=&quot;headerlink&quot; title=&quot;一、策略模式&quot;&gt;&lt;/a&gt;一、策略模式&lt;/h1&gt;&lt;h2 id=&quot;1、案例&quot;&gt;&lt;a href=&quot;#1、案例&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://ldgcug.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="策略模式" scheme="https://ldgcug.xyz/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式（十八）之行为型模式-状态模式</title>
+    <link href="https://ldgcug.xyz/2021/08/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%E4%B9%8B%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://ldgcug.xyz/2021/08/14/设计模式/设计模式（十八）之行为型模式-状态模式/</id>
+    <published>2021-08-14T15:50:43.000Z</published>
+    <updated>2021-08-15T13:37:22.634Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一、状态模式&quot;&gt;&lt;a href=&quot;#一、状态模式&quot; class=&quot;headerlink&quot; title=&quot;一、状态模式&quot;&gt;&lt;/a&gt;一、状态模式&lt;/h1&gt;&lt;h2 id=&quot;1、案例&quot;&gt;&lt;a href=&quot;#1、案例&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://ldgcug.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="状态模式" scheme="https://ldgcug.xyz/tags/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>设计模式（十七）之行为型模式-解释器模式</title>
     <link href="https://ldgcug.xyz/2021/08/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%E4%B9%8B%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
     <id>https://ldgcug.xyz/2021/08/10/设计模式/设计模式（十七）之行为型模式-解释器模式/</id>
     <published>2021-08-10T13:58:46.000Z</published>
-    <updated>2021-08-10T23:31:26.419Z</updated>
+    <updated>2021-08-15T13:29:30.816Z</updated>
     
     <summary type="html">
     
@@ -462,82 +540,6 @@
     
     
       <category term="设计模型" scheme="https://ldgcug.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%9E%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>(转)win10 git安装 exit code128错误</title>
-    <link href="https://ldgcug.xyz/2021/05/18/%E7%B3%BB%E7%BB%9F/%EF%BC%88%E8%BD%AC%EF%BC%89win10%E5%AE%89%E8%A3%85git%E6%8A%A5exit%20code128%E9%94%99%E8%AF%AF/"/>
-    <id>https://ldgcug.xyz/2021/05/18/系统/（转）win10安装git报exit code128错误/</id>
-    <published>2021-05-18T13:40:08.168Z</published>
-    <updated>2019-06-09T15:17:09.015Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="系统" scheme="https://ldgcug.xyz/categories/%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="系统" scheme="https://ldgcug.xyz/tags/%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大学生落户</title>
-    <link href="https://ldgcug.xyz/2021/05/18/%E9%9A%8F%E7%AC%94/%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%90%BD%E6%88%B7/"/>
-    <id>https://ldgcug.xyz/2021/05/18/随笔/大学生落户/</id>
-    <published>2021-05-17T23:20:03.000Z</published>
-    <updated>2021-05-19T13:32:31.764Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;大学生落户准备资料&quot;&gt;&lt;a href=&quot;#大学生落户准备资料&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="随笔" scheme="https://ldgcug.xyz/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="房" scheme="https://ldgcug.xyz/tags/%E6%88%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树的相关知识</title>
-    <link href="https://ldgcug.xyz/2021/05/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/"/>
-    <id>https://ldgcug.xyz/2021/05/07/数据结构/树的相关知识/</id>
-    <published>2021-05-07T14:17:03.000Z</published>
-    <updated>2021-05-16T14:29:00.268Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;树&quot;&gt;&lt;a href=&quot;#树&quot; class=&quot;headerlink&quot; title=&quot;树&quot;&gt;&lt;/a&gt;树&lt;/h1&gt;&lt;h2 id=&quot;1、为什么需要树？&quot;&gt;&lt;a href=&quot;#1、为什么需要树？&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="数据结构" scheme="https://ldgcug.xyz/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   
