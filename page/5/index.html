@@ -297,6 +297,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/" itemprop="url">代码实现（四）之 Dueling DQN</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-10T23:14:28+08:00">
+                2019-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BB%A3%E7%A0%81/" itemprop="url" rel="index">
+                    <span itemprop="name">代码</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BB%A3%E7%A0%81/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">深度强化学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/" class="leancloud_visitors" data-flag-title="代码实现（四）之 Dueling DQN">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          前言
+Dueling  DQN 相比较于之前的Double DQN（目标Q值方面的优化）、Prioritized Experience Replay（经验回放池的优化），这次注重的是神经网络的优化，即将最后的Q网络分为V网络和A网络。
+其中，V网络仅仅与状态S有关，与具体要采用的动作A无关，通常称为
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/10/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B-Dueling-DQN/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/08/09/%E4%BB%A3%E7%A0%81/DRL/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BPrioritized-Experience-Replay/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2129,204 +2332,6 @@ B电脑：10.10.100.54
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2019/07/25/Carla/%E5%88%9D%E5%A7%8BCarla%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BCarla%E9%A2%84%E7%BC%96%E8%AF%91%E7%89%88%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ldg个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/25/Carla/%E5%88%9D%E5%A7%8BCarla%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BCarla%E9%A2%84%E7%BC%96%E8%AF%91%E7%89%88%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" itemprop="url">初始Carla（一）之Carla预编译版安装使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T14:18:45+08:00">
-                2019-07-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Carla/" itemprop="url" rel="index">
-                    <span itemprop="name">Carla</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/07/25/Carla/%E5%88%9D%E5%A7%8BCarla%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BCarla%E9%A2%84%E7%BC%96%E8%AF%91%E7%89%88%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" class="leancloud_visitors" data-flag-title="初始Carla（一）之Carla预编译版安装使用">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  808
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言
-Carla和Airsim都是基于UE4引擎的仿真模拟器，但是经过安装笔记，Carla的源码安装是真的比Airsim复杂很多，因为之前源码安装的失败了，因此这里先记录如何使用预编译版的Carla
-
-版本说明
-Ubuntu16.04
-CARLA_0.9.6
-
-
-后面的安装步骤都是在刚装完ubunt
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/25/Carla/%E5%88%9D%E5%A7%8BCarla%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BCarla%E9%A2%84%E7%BC%96%E8%AF%91%E7%89%88%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2381,7 +2386,7 @@ CARLA_0.9.6
               
                 <a href="/archives/%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
               
-                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-count">92</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2403,7 +2408,7 @@ CARLA_0.9.6
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -3208,7 +3213,7 @@ CARLA_0.9.6
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("代码实现（三）之Prioritized Experience Replay");titles.push("代码实现（二）之Double DQN");titles.push("代码实现（一）之Nature DQN");titles.push("搭建OpenAI gym环境并简单测试");titles.push("DRL论文阅读（九）之A3C算法");titles.push("DRL论文阅读（八）之DDPG算法");titles.push("DRL论文阅读（七）之DPG方法");titles.push("DRL（六）之Actor-Critic算法介绍");titles.push("Python UDP编程");titles.push("初始Carla（一）之Carla预编译版安装使用");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("代码实现（四）之 Dueling DQN");titles.push("代码实现（三）之Prioritized Experience Replay");titles.push("代码实现（二）之Double DQN");titles.push("代码实现（一）之Nature DQN");titles.push("搭建OpenAI gym环境并简单测试");titles.push("DRL论文阅读（九）之A3C算法");titles.push("DRL论文阅读（八）之DDPG算法");titles.push("DRL论文阅读（七）之DPG方法");titles.push("DRL（六）之Actor-Critic算法介绍");titles.push("Python UDP编程");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
