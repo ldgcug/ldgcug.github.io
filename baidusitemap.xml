@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2021-11-30</lastmod>
+  </url>
+  <url>
     <loc>https://ldgcug.xyz/2021/10/31/Redis/Redis%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E6%8C%81%E4%B9%85%E5%8C%96%E3%80%81%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E7%A9%BF%E9%80%8F/</loc>
     <lastmod>2021-11-07</lastmod>
   </url>

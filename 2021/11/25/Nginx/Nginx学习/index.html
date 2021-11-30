@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nginx," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ldg个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Nginx学习背景1、在项目最开始的时候，低并发情形下，一个客户端，一个服务器即可满足要求  2、随着平台的用户数增加，并发的需求量增加，一台服务器无法满足我们要求  3、进行横向扩展，增加服务器，这时，几个项目启动在不同的服务器上，用户要访问，就需要增加一个代理服务器，通过代理服务器来帮我们转发和处理请求。  4、我们希望这个代理服务器可以帮助我们接收用户的请求，然后将用户的请求按照规则帮我们转">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx学习">
+<meta property="og:url" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="ldg个人博客">
+<meta property="og:description" content="Nginx学习背景1、在项目最开始的时候，低并发情形下，一个客户端，一个服务器即可满足要求  2、随着平台的用户数增加，并发的需求量增加，一台服务器无法满足我们要求  3、进行横向扩展，增加服务器，这时，几个项目启动在不同的服务器上，用户要访问，就需要增加一个代理服务器，通过代理服务器来帮我们转发和处理请求。  4、我们希望这个代理服务器可以帮助我们接收用户的请求，然后将用户的请求按照规则帮我们转">
+<meta property="og:locale">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-59a89b9ed48cf48a.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-6e85ab67995519c7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-c262491592cf3d75.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/e017e4a620d6.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-dab55e3e2ce58b79.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-f947e88192f9a8b7.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-6333fb7dadb8fd8f-1637853783605.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-9c00a5e13dfb63ad.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637855569630.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637856402367.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637856994644.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637857113780.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637857894337.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637858391291.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/截图.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/2021.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638276452873.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638276560804.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638277716190.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638277852571.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638278019522.png">
+<meta property="og:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638280183949.png">
+<meta property="article:published_time" content="2021-11-25T14:54:46.000Z">
+<meta property="article:modified_time" content="2021-11-30T13:57:09.762Z">
+<meta property="article:author" content="ldg">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-59a89b9ed48cf48a.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":"true    //返回顶部按钮的百分比","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ldgcug.xyz/2021/11/25/Nginx/Nginx学习/"/>
+
+
+
+
+
+  <title>Nginx学习 | ldg个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ldg个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home                       //首页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user                //关于"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags                  //标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th        //分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive       //归档"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ldgcug.xyz/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ldg个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nginx学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-25T22:54:46+08:00">
+                2021-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/" class="leancloud_visitors" data-flag-title="Nginx学习">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Nginx学习"><a href="#Nginx学习" class="headerlink" title="Nginx学习"></a>Nginx学习</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>1、在项目最开始的时候，低并发情形下，一个客户端，一个服务器即可满足要求</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-59a89b9ed48cf48a.png" alt="img"></p>
+<p>2、随着平台的用户数增加，并发的需求量增加，一台服务器无法满足我们要求</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-6e85ab67995519c7.png" alt="img"></p>
+<p>3、进行横向扩展，增加服务器，这时，几个项目启动在不同的服务器上，用户要访问，就需要增加一个代理服务器，通过代理服务器来帮我们转发和处理请求。</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-c262491592cf3d75.png" alt="img"></p>
+<p>4、我们希望这个代理服务器可以帮助我们接收用户的请求，然后将用户的请求按照规则帮我们转发到不同的服务器节点之上。这个过程用户是无感知的，用户不知道是哪个服务器返回的结果，我们还希望他可以按照服务器的性能提供不同的权重选择。保证用户最佳体验！所以使用了Nginx</p>
+<h2 id="1、什么是Nginx？"><a href="#1、什么是Nginx？" class="headerlink" title="1、什么是Nginx？"></a>1、什么是Nginx？</h2><blockquote>
+<p>Nginx（engine x）是一个高性能的HTTP和反向代理web服务器。</p>
+</blockquote>
+<h2 id="2、Nginx作用？"><a href="#2、Nginx作用？" class="headerlink" title="2、Nginx作用？"></a>2、Nginx作用？</h2><blockquote>
+<p>Http代理，反向代理：作为web服务器最常用的功能之一，尤其是反向代理。</p>
+</blockquote>
+<h2 id="3、正向代理"><a href="#3、正向代理" class="headerlink" title="3、正向代理"></a>3、正向代理</h2><blockquote>
+<p>对客户端进行代理</p>
+</blockquote>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/e017e4a620d6.png" alt="img"></p>
+<h2 id="4、反向代理"><a href="#4、反向代理" class="headerlink" title="4、反向代理"></a>4、反向代理</h2><blockquote>
+<p>对服务端进行代理</p>
+</blockquote>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-dab55e3e2ce58b79.png" alt="img"></p>
+<h2 id="5、负载均衡策略"><a href="#5、负载均衡策略" class="headerlink" title="5、负载均衡策略"></a>5、负载均衡策略</h2><h3 id="5-1-内置策略"><a href="#5-1-内置策略" class="headerlink" title="5.1 内置策略"></a>5.1 内置策略</h3><ul>
+<li><p>轮询</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-f947e88192f9a8b7.png" alt="img"></p>
+</li>
+<li><p>加权轮询</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-6333fb7dadb8fd8f-1637853783605.png" alt="img"></p>
+</li>
+<li><p>Ip Hash</p>
+<blockquote>
+<p>Ip Hash对客户端请求的IP进行Hash操作，然后根据Hash结果将同一个客户端的IP的请求分发给同一台服务器进行处理，可以解决session不共享的问题。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/25016246-9c00a5e13dfb63ad.png" alt="img"></p>
+<h3 id="5-2-扩展策略"><a href="#5-2-扩展策略" class="headerlink" title="5.2 扩展策略"></a>5.2 扩展策略</h3><blockquote>
+<p>自己想</p>
+</blockquote>
+<h2 id="6、环境配置"><a href="#6、环境配置" class="headerlink" title="6、环境配置"></a>6、环境配置</h2><h3 id="6-1-基础环境"><a href="#6-1-基础环境" class="headerlink" title="6.1 基础环境"></a>6.1 基础环境</h3><ul>
+<li><p>gcc</p>
+<blockquote>
+<p>源码编译需要依赖gcc环境</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pcre pcre-devel</p>
+<blockquote>
+<p>主要是nginx的http模块需要使用pcre来解析正则表达式</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pcre pcre-devel</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>zlib</p>
+<blockquote>
+<p>nginx使用zlib对http包的内容进行gzip</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y zlib zlib-devel</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>OpenSSL</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="6-2-Nginx安装"><a href="#6-2-Nginx安装" class="headerlink" title="6.2 Nginx安装"></a>6.2 Nginx安装</h3><blockquote>
+<p>Nginx<a target="_blank" rel="noopener" href="https://nginx.org/en/download.html">下载地址</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://nginx.org/download/nginx-1.20.2.tar.gz</span><br><span class="line">tar -zxvf nginx-1.20.2.tar.gz </span><br><span class="line"><span class="built_in">cd</span> nginx-1.20.2/</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>查看nginx安装路径</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis nginx</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637855569630.png" alt="1637855569630"></p>
+<blockquote>
+<p>Nginx常用命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin <span class="comment"># 进入启动目录</span></span><br><span class="line">./nginx <span class="comment"># 启动</span></span><br><span class="line">./nginx -s stop <span class="comment"># 停止</span></span><br><span class="line">./nginx -s quit <span class="comment"># 安全退出，需要先启动nginx</span></span><br><span class="line">./nginx -s reload <span class="comment"># 重新加载配置文件，需要先启动nginx</span></span><br><span class="line"> ps aux | grep nginx <span class="comment"># 查看nginx进程 或 ps -ef | grep nginx</span></span><br></pre></td></tr></table></figure>
+<p>nginx启动后，访问ip:80，即可看到如下成功页面</p>
+<p><strong>腾讯云服务器需要安全组开放端口</strong></p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637856402367.png" alt="1637856402367"></p>
+<h3 id="6-3-Java配置"><a href="#6-3-Java配置" class="headerlink" title="6.3 Java配置"></a>6.3 Java配置</h3><blockquote>
+<p>Java<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/">下载地址</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span></span><br><span class="line">mkdir java</span><br><span class="line"><span class="comment"># 在windows上下载jdk-8u202-linux-x64.tar.gz文件，然后用远程工具上传至服务器</span></span><br><span class="line"><span class="comment"># 用wget无法下载jdk，需要登录Oracle账号，尝试登录几次都没有登录成功</span></span><br><span class="line"><span class="comment"># 将jdk-8u202-linux-x64.tar.gz拷贝至/usr/local/java目录</span></span><br><span class="line">tar -zxvf jdk-8u202-linux-x64.tar.gz </span><br><span class="line">vim /etc/profile</span><br><span class="line"><span class="comment"># 将如下代码拷贝至profile文件末尾</span></span><br><span class="line"><span class="comment">#export JAVA_HOME=/usr/local/java/jdk1.8.0_202</span></span><br><span class="line"><span class="comment">#export PATH=$PATH:$JAVA_HOME/bin</span></span><br><span class="line"><span class="comment">#export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span></span><br><span class="line"><span class="comment">#export JRE_HOME=$JAVA_HOME/jre</span></span><br><span class="line"><span class="comment"># :wq 保存</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637856994644.png" alt="1637856994644"></p>
+<p>查看java版本信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637857113780.png" alt="1637857113780"></p>
+<h3 id="6-4-Tomcat配置"><a href="#6-4-Tomcat配置" class="headerlink" title="6.4 Tomcat配置"></a>6.4 Tomcat配置</h3><blockquote>
+<p>Tomcat<a target="_blank" rel="noopener" href="http://tomcat.apache.org/">下载地址</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.73/bin/apache-tomcat-8.5.73.tar.gz</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/</span><br><span class="line">mkdir tomcat8</span><br><span class="line"><span class="built_in">cd</span> tomcat8/</span><br><span class="line">cp apache-tomcat-8.5.73.tar.gz  /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73.tar.gz</span><br><span class="line">tar -zxvf apache-tomcat-8.5.73.tar.gz </span><br><span class="line"><span class="built_in">cd</span> apache-tomcat-8.5.73/</span><br><span class="line"><span class="built_in">cd</span> bin/</span><br><span class="line">./startup.sh </span><br></pre></td></tr></table></figure>
+<p>部署完成后，启动Tomcat</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637857894337.png" alt="1637857894337"></p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1637858391291.png" alt="1637858391291"></p>
+<h2 id="7、Web项目部署"><a href="#7、Web项目部署" class="headerlink" title="7、Web项目部署"></a>7、Web项目部署</h2><h3 id="7-1-IEDA新建web项目"><a href="#7-1-IEDA新建web项目" class="headerlink" title="7.1 IEDA新建web项目"></a>7.1 IEDA新建web项目</h3><p>1、FILE    -&gt;    NEW   -&gt; Moudle… -&gt;Spring Initializr</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/截图.png" alt="img"></p>
+<p>下一步-&gt;下一步，Developer Tools勾选lambok，web勾选Spring Web</p>
+<p>2、logback-spring.xml</p>
+<blockquote>
+<p>在resources文件夹下创建该文件</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 日志级别从低到高分为TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR &lt; FATAL，如果设置为WARN，则低于WARN的信息都不会输出 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。</span></span><br><span class="line"><span class="comment">     当scan为true时，此属性生效。默认的时间间隔为1分钟。 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- de<span class="doctag">bug:</span>当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- &lt;configuration  scan=&quot;true&quot; scanPeriod=&quot;10 seconds&quot;&gt;--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义后，可以使“$&#123;&#125;”来使用变量。 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">resource</span>=<span class="string">&quot;org/springframework/boot/logging/logback/defaults.xml&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- appender 输出到控制台</span></span><br><span class="line"><span class="comment">        此日志appender是为开发使用，只配置最低级别，控制台输出的日志级别是大于或等于此级别的日志信息--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">&quot;CONSOLE&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.ConsoleAppender&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.classic.filter.LevelFilter&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">level</span>&gt;</span>INFO<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span> <span class="comment">&lt;!-- encoder 日志文件输出格式--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 通过添加%red，“%”后面的是颜色名称，可以实现彩色日志输出，其格式为%red() --&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>%red(%date) %green([%thread]) %highlight(%-5level) %boldMagenta([%logger&#123;50&#125;]) %file:%line - %cyan(%msg%n)<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- &lt;pattern&gt;%date [%thread] %-5level [%logger&#123;50&#125;] %file:%line - %msg%n&lt;/pattern&gt;--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">charset</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span> <span class="comment">&lt;!-- 此处设置字符集 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--时间滚动输出，level为INFO日志，输出到文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">&quot;FILE_INFO&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--如果只是想要 Info 级别的日志，只是过滤 info 还是会输出 Error 日志，因为 Error 的级别高，</span></span><br><span class="line"><span class="comment">         所以我们使用下面的策略，可以避免输出 Error 的日志--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.classic.filter.LevelFilter&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--过滤 Error--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">level</span>&gt;</span>ERROR<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--匹配到就禁止--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">onMatch</span>&gt;</span>DENY<span class="tag">&lt;/<span class="name">onMatch</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--没有匹配到就允许--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">onMismatch</span>&gt;</span>ACCEPT<span class="tag">&lt;/<span class="name">onMismatch</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 此日志文件只记录info级别的</span></span><br><span class="line"><span class="comment">       &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;</span></span><br><span class="line"><span class="comment">           &lt;level&gt;info&lt;/level&gt;</span></span><br><span class="line"><span class="comment">           &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;</span></span><br><span class="line"><span class="comment">           &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;</span></span><br><span class="line"><span class="comment">       &lt;/filter&gt;</span></span><br><span class="line"><span class="comment">        --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则如果同时有</span></span><br><span class="line"><span class="comment">        &lt;File&gt;和&lt;FileNamePattern&gt;，那么当天日志是&lt;File&gt;，明天会自动把今天的日志改名为今天的日期</span></span><br><span class="line"><span class="comment">        。即，&lt;File&gt; 的日志都是当天的。--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">File</span>&gt;</span>E:\java_example\springboot-logback-test\src\main\resources\logs\info.log<span class="tag">&lt;/<span class="name">File</span>&gt;</span>--&gt;<span class="comment">&lt;!-- 正在记录的日志文件的路径及文件名 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--滚动策略，按照时间滚动 TimeBasedRollingPolicy--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">FileNamePattern</span>&gt;</span></span><br><span class="line">                E:\java_example\springboot-logback-test\src\main\resources\logs\info.created_on_%d&#123;yyyy-MM-dd&#125;.part_%i.log</span><br><span class="line">            <span class="tag">&lt;/<span class="name">FileNamePattern</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--只保留最近90天的日志--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">maxHistory</span>&gt;</span>90<span class="tag">&lt;/<span class="name">maxHistory</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;totalSizeCap&gt;1GB&lt;/totalSizeCap&gt;--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">timeBasedFileNamingAndTriggeringPolicy</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- maxFileSize:这是活动文件的大小，默认值是10MB,本篇设置为1KB，只是为了演示 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">maxFileSize</span>&gt;</span>10MB<span class="tag">&lt;/<span class="name">maxFileSize</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">timeBasedFileNamingAndTriggeringPolicy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--&lt;triggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;maxFileSize&gt;1KB&lt;/maxFileSize&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;/triggeringPolicy&gt;--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span> <span class="comment">&lt;!-- encoder 日志文件输出格式--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>%date [%thread] %-5level [%logger&#123;50&#125;] %file:%line - %msg%n<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">charset</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span><span class="comment">&lt;!-- 此处设置字符集 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--时间滚动输出，level为ERROR日志--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span>  <span class="attr">name</span>=<span class="string">&quot;FILE_ERROR&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--如果只是想要 Error 级别的日志，那么需要过滤一下，默认是 info 级别的，ThresholdFilter--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">level</span>&gt;</span>Error<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则如果同时</span></span><br><span class="line"><span class="comment">        有&lt;File&gt;和&lt;FileNamePattern&gt;，那么当天日志是&lt;File&gt;，明天会自动把今天的日志改名为今天</span></span><br><span class="line"><span class="comment">        的日期。即，&lt;File&gt; 的日志都是当天的。--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;File&gt;logs/error.spring-boot-demo-logback.log&lt;/File&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--滚动策略，按照时间滚动 TimeBasedRollingPolicy--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">FileNamePattern</span>&gt;</span></span><br><span class="line">                logs/spring-boot-demo-logback/error.created_on_%d&#123;yyyy-MM-dd&#125;.part_%i.log</span><br><span class="line">            <span class="tag">&lt;/<span class="name">FileNamePattern</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--只保留最近90天的日志--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">maxHistory</span>&gt;</span>90<span class="tag">&lt;/<span class="name">maxHistory</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">timeBasedFileNamingAndTriggeringPolicy</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- maxFileSize:这是活动文件的大小，默认值是10MB,本篇设置为1KB，只是为了演示 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">maxFileSize</span>&gt;</span>2MB<span class="tag">&lt;/<span class="name">maxFileSize</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">timeBasedFileNamingAndTriggeringPolicy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span> <span class="comment">&lt;!-- encoder 日志文件输出格式--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>%date [%thread] %-5level [%logger&#123;50&#125;] %file:%line - %msg%n<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">charset</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span><span class="comment">&lt;!-- 此处设置字符集 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 指定appender级别，使用的是info级别--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">&quot;info&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">&quot;CONSOLE&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">&quot;FILE_INFO&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">&quot;FILE_ERROR&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>3、Controller类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value=&quot;/test&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;Test OK!&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、运行Tomcat，访问<a target="_blank" rel="noopener" href="http://localhost:8080/nginx/test">http://localhost:8080/nginx/test</a></p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/2021.png" alt="img"></p>
+<p>5、编译，生成war包</p>
+<h3 id="7-2-Linux下部署"><a href="#7-2-Linux下部署" class="headerlink" title="7.2 Linux下部署"></a>7.2 Linux下部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep tomcat <span class="comment"># 查看进程id</span></span><br><span class="line"><span class="built_in">kill</span> -9 进程id <span class="comment"># 关闭tomcat</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73/webapps/</span><br><span class="line">cp springboot-logback-test-0.0.1-SNAPSHOT.war /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73/webapps/</span><br><span class="line">rm -rf ROOT <span class="comment">#删除tomcat下原有的ROOT文件</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73/bin</span><br><span class="line">./startup.sh</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73/webapps/</span><br><span class="line">mv springboot-logback-test-0.0.1-SNAPSHOT/ ROOT <span class="comment">#将解压后的web项目改名为ROOT</span></span><br><span class="line"><span class="built_in">cd</span> ROOT/WEB-INF/classes</span><br><span class="line">rm -rf logback-spring.xml <span class="comment">#删除xml文件是因为在启动过程中报错，因此删除</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73/bin</span><br><span class="line">./shutdown.sh</span><br><span class="line">./startup.sh</span><br></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8080/<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638276452873.png" alt="1638276452873"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73/logs</span><br><span class="line">tail -n 100 catalina.out  <span class="comment">#查看输出内容</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638276560804.png" alt="1638276560804"></p>
+<h2 id="8、搭建两个Tomcat环境"><a href="#8、搭建两个Tomcat环境" class="headerlink" title="8、搭建两个Tomcat环境"></a>8、搭建两个Tomcat环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep tomcat <span class="comment"># 查看进程id</span></span><br><span class="line"><span class="built_in">kill</span> -9 进程id <span class="comment"># 关闭tomcat</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8</span><br><span class="line">cp -r apache-tomcat-8.5.73 tomcat-one</span><br><span class="line">vim /etc/profile <span class="comment">#在profile的尾部添加如下</span></span><br><span class="line">    <span class="comment"># set tomcat</span></span><br><span class="line">    <span class="built_in">export</span> CATALINA_HOME1=/usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73</span><br><span class="line">    <span class="built_in">export</span> CATALINA_BASE1=/usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73</span><br><span class="line">    <span class="built_in">export</span> TOMCAT_HOME1=/usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set tomcat-one</span></span><br><span class="line">    <span class="built_in">export</span> CATALINA_HOME2=/usr/<span class="built_in">local</span>/tomcat8/tomcat-one</span><br><span class="line">    <span class="built_in">export</span> CATALINA_BASE2=/usr/<span class="built_in">local</span>/tomcat8/tomcat-one</span><br><span class="line">    <span class="built_in">export</span> TOMCAT_HOME2=/usr/<span class="built_in">local</span>/tomcat8/tomcat-one</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/tomcat-one/conf/</span><br><span class="line">vim server.xml</span><br><span class="line">	&lt;Server port=<span class="string">&quot;8095&quot;</span> shutdown=<span class="string">&quot;SHUTDOWN&quot;</span>&gt; <span class="comment"># 将8005修改为8095</span></span><br><span class="line">	&lt;Connector port=<span class="string">&quot;8090&quot;</span> protocol=<span class="string">&quot;HTTP/1.1&quot;</span></span><br><span class="line">               connectionTimeout=<span class="string">&quot;20000&quot;</span></span><br><span class="line">               redirectPort=<span class="string">&quot;8443&quot;</span> /&gt; <span class="comment">#将8080修改为8090</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/apache-tomcat-8.5.73/bin/</span><br><span class="line">./startup.sh <span class="comment">#启动tomcat1</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat8/tomcat-one/bin/</span><br><span class="line">./startup.sh <span class="comment">#启动tomcat2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep tomcat <span class="comment">#显示两个tomcat</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638277716190.png" alt="1638277716190"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8080/<span class="built_in">test</span></span><br><span class="line">curl http://127.0.0.1:8090/<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638277852571.png" alt="1638277852571"></p>
+<p>查看两个tomcat下的catalina.out文件内容</p>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638278019522.png" alt="1638278019522"></p>
+<h2 id="9、Nginx代理配置"><a href="#9、Nginx代理配置" class="headerlink" title="9、Nginx代理配置"></a>9、Nginx代理配置</h2><p>nginx.conf配置简单讲解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">全局配置</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http&#123;</span><br><span class="line">	http配置</span><br><span class="line">	</span><br><span class="line">	upstream xx&#123;</span><br><span class="line">		//负载均衡配置</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line">        //代理</span><br><span class="line">        </span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置Nginx代理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/nginx/sbin</span><br><span class="line">./nginx <span class="comment"># 启动nginx</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/conf</span><br><span class="line">vim nginx.conf</span><br><span class="line">	http &#123;</span><br><span class="line">        http 配置 <span class="comment"># 这里被简略</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#gzip  on;</span></span><br><span class="line">		<span class="comment"># 添加负载均衡配置，其中test是名称，在后续会用到，weight是权重</span></span><br><span class="line">        upstream <span class="built_in">test</span> &#123;</span><br><span class="line">            server 127.0.0.1:8080 weight=1;<span class="comment"># 要代理的ip和端口，权重为1</span></span><br><span class="line">            server 127.0.0.1:8090 weight=1;<span class="comment"># 要代理的ip和端口，权重为1</span></span><br><span class="line">        &#125;</span><br><span class="line">        server &#123;</span><br><span class="line">            listen       80;</span><br><span class="line">            server_name  localhost;</span><br><span class="line"></span><br><span class="line">            <span class="comment">#charset koi8-r;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">            location / &#123;</span><br><span class="line">                root   html;</span><br><span class="line">                index  index.html index.htm;</span><br><span class="line">                proxy_pass http://<span class="built_in">test</span>; <span class="comment">#进行代理配置，test是前面负载均衡配置的名字</span></span><br><span class="line">             &#125;</span><br><span class="line">    &#125;</span><br><span class="line">/usr/<span class="built_in">local</span>/nginx/sbin</span><br><span class="line">./nginx -s reload <span class="comment">#重新加载配置</span></span><br></pre></td></tr></table></figure>
+<p>配置好后，默认用80端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1/<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/25/Nginx/Nginx%E5%AD%A6%E4%B9%A0/1638280183949.png" alt="1638280183949"></p>
+<p>若多次运行，则可以在两个tomcat下的 catalina.out 文件中进行查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1/<span class="built_in">test</span></span><br><span class="line">curl http://127.0.0.1/<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="comment"># 第一次在8080端口输出</span></span><br><span class="line">2021-11-30 21:50:19.624  INFO 7588 --- [nio-8080-exec-5] c.l.s.Controller.TestController          : Test OK!</span><br><span class="line"><span class="comment"># 第二次在8090端口输出</span></span><br><span class="line">2021-11-30 21:50:49.385  INFO 9675 --- [nio-8090-exec-1] c.l.s.Controller.TestController          : Test OK!</span><br></pre></td></tr></table></figure>
+<p>若修改权重，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在con/nging.conf中修改8090的权重</span></span><br><span class="line">upstream <span class="built_in">test</span> &#123;</span><br><span class="line">	server 127.0.0.1:8080 weight=3;<span class="comment"># 要代理的ip和端口，权重为3</span></span><br><span class="line">	server 127.0.0.1:8090 weight=1;<span class="comment"># 要代理的ip和端口，权重为1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载nginx</span></span><br><span class="line">/usr/<span class="built_in">local</span>/nginx/sbin</span><br><span class="line">./nginx -s reload <span class="comment">#重新加载配置</span></span><br></pre></td></tr></table></figure>
+<p>再次多次运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1/<span class="built_in">test</span></span><br><span class="line">curl http://127.0.0.1/<span class="built_in">test</span></span><br><span class="line">curl http://127.0.0.1/<span class="built_in">test</span></span><br><span class="line">curl http://127.0.0.1/<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 8080端口，3次输出</span></span><br><span class="line">2021-11-30 21:53:41.170  INFO 7588 --- [nio-8080-exec-6] c.l.s.Controller.TestController          : Test OK!</span><br><span class="line">2021-11-30 21:53:45.748  INFO 7588 --- [nio-8080-exec-7] c.l.s.Controller.TestController          : Test OK!</span><br><span class="line">2021-11-30 21:53:49.017  INFO 7588 --- [nio-8080-exec-8] c.l.s.Controller.TestController          : Test OK!</span><br><span class="line"><span class="comment"># 8090端口一次输出</span></span><br><span class="line">2021-11-30 21:53:47.518  INFO 9675 --- [nio-8090-exec-2] c.l.s.Controller.TestController          : Test OK!</span><br></pre></td></tr></table></figure>
+<h1 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h1><blockquote>
+<p>web项目在linux上部署的时候，将logbach-spring.xml文件配置后，tomcat启动报错，在下次进行改进</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/31/Redis/Redis%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8B%E6%8C%81%E4%B9%85%E5%8C%96%E3%80%81%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E7%A9%BF%E9%80%8F/" rel="next" title="Redis学习（四）之持久化、缓存雪崩穿透">
+                <i class="fa fa-chevron-left"></i> Redis学习（四）之持久化、缓存雪崩穿透
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDMwNi8yMDgzOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/header.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive%20%20%20%20%20%20%20/%E5%BD%92%E6%A1%A3">
+              
+                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ldgcug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ldg569167692@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5310112145/profile?rightmod=1&wvr=6&mod=personnumber&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/ldg1996" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx%E5%AD%A6%E4%B9%A0"><span class="nav-text">Nginx学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFNginx%EF%BC%9F"><span class="nav-text">1、什么是Nginx？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Nginx%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="nav-text">2、Nginx作用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-text">3、正向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-text">4、反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="nav-text">5、负载均衡策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%86%85%E7%BD%AE%E7%AD%96%E7%95%A5"><span class="nav-text">5.1 内置策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E6%89%A9%E5%B1%95%E7%AD%96%E7%95%A5"><span class="nav-text">5.2 扩展策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">6、环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83"><span class="nav-text">6.1 基础环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-Nginx%E5%AE%89%E8%A3%85"><span class="nav-text">6.2 Nginx安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-Java%E9%85%8D%E7%BD%AE"><span class="nav-text">6.3 Java配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-Tomcat%E9%85%8D%E7%BD%AE"><span class="nav-text">6.4 Tomcat配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81Web%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2"><span class="nav-text">7、Web项目部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-IEDA%E6%96%B0%E5%BB%BAweb%E9%A1%B9%E7%9B%AE"><span class="nav-text">7.1 IEDA新建web项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-Linux%E4%B8%8B%E9%83%A8%E7%BD%B2"><span class="nav-text">7.2 Linux下部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%E3%80%81%E6%90%AD%E5%BB%BA%E4%B8%A4%E4%B8%AATomcat%E7%8E%AF%E5%A2%83"><span class="nav-text">8、搭建两个Tomcat环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9%E3%80%81Nginx%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE"><span class="nav-text">9、Nginx代理配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E8%B6%B3"><span class="nav-text">不足</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ldg</span>
+  
+  
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+    year - 作为date对象的年份，为4位年份值
+    month - 0-11之间的整数，做为date对象的月份
+    day - 1-31之间的整数，做为date对象的天数
+    hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+    minutes - 0-59之间的整数，做为date对象的分钟数
+    seconds - 0-59之间的整数，做为date对象的秒数
+    microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+    var t1 = Date.UTC(2019,05,14,00,00,00); //北京时间2019-5-14 00:00:00
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+  siteTime();
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">
+      本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("meAnsoGF3bFDi7X7E4d3t0Tq-gzGzoHsz", "hsB14uJ799Sp0Gm2VwjgU2Qa");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/zh-tw/docs/variables.html
+      var isPost = 'Nginx学习'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'Nginx学习'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
